@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teknikåttan</title>
+<style type="text/css">
+body{
+  background-image: url('images/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right bottom; 
+  font-family: "Verdana", sans-serif;
+  font-size: 1.2em;
+  margin: 0px;
+}
+td {border:1px solid black;padding:20px;}
+
+#header h1{
+  float: right;
+  font-size: 4em;
+  margin: 0px;
+}
+#header{
+  clear: both;
+  padding: 1%;
+}
+#mainimage{
+  max-width: 80%;
+  max-height: 15em;
+  margin: auto;
+  display: block;
+  clear: both;
+}
+#main{
+  width: 90%;
+  margin: auto;
+  font-size: 2em;
+}
+
+</style>
+</head>
+<body>
+<div id="header">
+  <img src="images/logo.png" />
+  <h1 id="title"></h1>
+</div>
+
+<div id="main">
+  <h1>Välkomna till regionfinal!</h1>
+  <h2>Stort lycka till nu!</h2>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="js/answers.js"></script>
+</body>
+</html>
