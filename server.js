@@ -67,6 +67,20 @@ function nextPressed(){
         startTimer(question.time);
         nextState = "showBeforeAnswer";
         break;
+    case 'showHints':
+        console.log('Handle hints for question ' + currentQuestion);
+        if(showHints(question)){
+            console.log("Change state to show before answer");
+            nextState = 'showBeforeAnswer';
+        }
+        break;
+    case 'showTrueFalse':
+        console.log('Handle true/false statements for question ' + currentQuestion);
+        if(showTrueFalse(question)){
+            nextState = 'showImage';
+            currentQuestion++;
+        }
+        break;
     case 'showBeforeAnswer':
         console.log("Show just before answer " + currentQuestion);
         publishBeforeAnswer();
@@ -114,24 +128,16 @@ function showQuestion(question){
         return;
     }
     
-    // When no more parts of the question has to be shown we continue on
+    // When no more parts of the question has to be shown we continue on:
     switch(question.type){
     case 'normal':
         nextState = 'startTimer';
         break;
     case 'hints':
-        console.log('Handle hints questions');
-        if(showHints(question)){
-            console.log("Change state to show before answer");
-            nextState = 'showBeforeAnswer';
-        }
+        nextState = 'showHints';
         break;
     case 'truefalse':
-        console.log('Handle truefalse questions');
-        if(showTrueFalse(question)){
-            nextState = 'showImage';
-            currentQuestion++;
-        }
+        nextState = 'showTrueFalse';
         break;
     default:
         console.warn("No question handler for type: " + question.type);
