@@ -25,6 +25,15 @@ $(function () {
         $('#left').append(msg.leftText);
         $('#right').html(msg.rightText);
     });
+    socket.on('hint', function(msg){
+        if(msg.index == 0){
+            $('#right').html("<ol type='1' id='hints'></ol>");
+        }
+        $('#hints').append("<li>"+msg.hint+"</li>");
+    });
+    socket.on('truefalse', function(msg){
+        $('#right').html("<h2>"+msg.hint+"</h2>");
+    });
     socket.on('time', function(msg){
         $('#time').html(msg);
     });

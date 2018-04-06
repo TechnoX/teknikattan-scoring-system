@@ -64,7 +64,8 @@ function nextPressed(){
         break;
     case 'startTimer':
         console.log("Start timer for question " + currentQuestion);
-        startTimer(question);
+        startTimer(question.time);
+        nextState = "showBeforeAnswer";
         break;
     case 'showBeforeAnswer':
         console.log("Show just before answer " + currentQuestion);
@@ -120,14 +121,17 @@ function showQuestion(question){
         break;
     case 'hints':
         console.log('Handle hints questions');
-        showHints(question);
-        nextState = 'showBeforeAnswer';
+        if(showHints(question)){
+            console.log("Change state to show before answer");
+            nextState = 'showBeforeAnswer';
+        }
         break;
     case 'truefalse':
-        console.log('Handle hints questions');
-        showTrueFalse(question);
-        nextState = 'showImage';
-        currentQuestion++;
+        console.log('Handle truefalse questions');
+        if(showTrueFalse(question)){
+            nextState = 'showImage';
+            currentQuestion++;
+        }
         break;
     default:
         console.warn("No question handler for type: " + question.type);
@@ -135,8 +139,9 @@ function showQuestion(question){
     }
 }
 
-function startTimer(question){
-    var time = question.time;
+function startTimer(totalTime){
+    var time = totalTime;
+    clearInterval(currentTimer);
     console.log("Current question: " + currentQuestion);
     console.log("Time: " + time);
     currentTimer = setInterval(function(){
@@ -145,7 +150,6 @@ function startTimer(question){
         if(time == 0)
             clearInterval(currentTimer);
     }, 1000);
-    nextState = "showBeforeAnswer";
 }
 
 
@@ -188,27 +192,45 @@ function resetCounters(){
 function showHints(question){
     console.log('Show the hints, one after each other');
     if(hintIndex < question.hints.length){
-        publishHint(question.hints[hintIndex], hintIndex);
+        publishHint(question.hints[hintIndex], hintIndex, question.time);
         hintIndex++;
     }
+    // Are we done?!
+    if(hintIndex < question.hints.length){
+        console.log("Not done with all hints yet");
+        return false;
+    }
+    console.log("Done with all hints");
+    return true;
 }
 
 function showTrueFalse(question){
     console.log('Show the true false hints, one after each other');
     if(trueFalseIndex < question.hints.length){
-        publishTrueFalse(question.hints[trueFalseIndex], trueFalseIndex);
+        publishTrueFalse(question.hints[trueFalseIndex], trueFalseIndex, question.time);
         trueFalseIndex++;
     }
+    // Are we done?!
+    if(trueFalseIndex >= question.hints.length){
+        return true;
+    }return false;
 }
 
-function publishTrueFalse(hint, index){
-    console.warn("Not implemented publish true false")
+function publishTrueFalse(hint, index, time){
     console.log("Publish True/False statement " + index);
+    var msg = {};
+    msg.hint = hint;
+    io.emit('truefalse', msg);
+    startTimer(time)
 }
 
-function publishHint(hint, index){
-    console.warn("Not implemented publish hint")
+function publishHint(hint, index, time){
     console.log("Publish hint " + index);
+    var msg = {};
+    msg.hint = hint;
+    msg.index = index;
+    io.emit('hint', msg);
+    startTimer(time)
 }
 
 function publishSlideForAudience(question){
