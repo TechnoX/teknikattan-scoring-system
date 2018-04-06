@@ -13,6 +13,10 @@ app.get('/competitors', function(req, res){
   res.sendFile(__dirname + '/views/competitors.html');
 })
 
+app.get('/projector', function(req, res){
+  res.sendFile(__dirname + '/views/projector.html');
+})
+
 
 var questions = [/*{type: 'normal', title: 'Testfråga', image: 'images/spindel.png', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'},
                  {type: 'normal', title: 'Förmörkelser', image: 'images/formorkelse.png', leftText: '<p>Trots att solen ligger mycket längre bort från jorden än vad månen gör ser de ungefär lika stora ut på himlen eftersom solen är mycket större. En följd av detta är att månen ibland täcker för solen &ndash; en så kallad solförmörkelse &ndash; och att jorden ibland skuggar för månen, vilket kallas månförmörkelse. Nu följer några frågor kring hur sol- och månförmörkelser beter sig sett från en plats på jorden.</p><p>Använd bilderna för att svara på frågorna. (Obs! Bilderna är ej skalenliga.)</p><ol type="a"><li>I vilken månfas kan det bli en solförmörkelse?</li><li>I vilken månfas kan det bli en månförmörkelse?</li><li>Vilken typ av förmörkelse kan vara längst tid?</li><li>Vilken typ av förmörkelse kan ses från störst del av jorden?</li><li>Är det sant att månförmörkelser bara kan ses kring midnatt?</li><li>Stämmer det att solförmörkelser bara kan uppstå på sommarhalvåret?</li></ol>', rightText: '<p><img src="images/formorkelse1.jpg" width="100%" /></p><p><img src="images/formorkelse2.jpg" width="100%" /></p>', timeText: '3 minuter', scoringText: '1 poäng per rätt svar', maxScoringText: '6 poäng', time: 3*60, slides: ['<p>Trots att solen ligger mycket längre bort från jorden än vad månen gör ser de ungefär lika stora ut på himlen eftersom solen är mycket större. En följd av detta är att månen ibland täcker för solen &ndash; en så kallad solförmörkelse &ndash; och att jorden ibland skuggar för månen, vilket kallas månförmörkelse.</p><ol type="a"><li>I vilken månfas kan det bli en solförmörkelse?</li><li>I vilken månfas kan det bli en månförmörkelse?</li><li>Vilken typ av förmörkelse kan vara längst tid?</li><li>Vilkentyp av förmörkelse kan ses från störst del av jorden?</li><li>Är det sant att månförmörkelser bara kan ses kring midnatt?</li><li>Stämmer det att solförmörkelser bara kan uppstå på sommarhalvåret?</li></ol>'], answer: '<ol type="a"><li>Det kan bli solförmörkelse vid <strong>nymåne</strong>.</li><li>Det kan bli månförmörkelse vid <strong>fullmåne</strong>.</li><li><strong>Månförmörkelser</strong> kan vara längst tid.</li><li><strong>Månförmörkelser</strong> kan ses från störst del av jorden.</li><li>Det är <strong>falskt</strong> att månförmörkelser bara kan ses kring midnatt.</li><li>Det är <strong>falskt</strong> att solförmörkelser bara kan uppstå på sommaren.</li></ol>'},
@@ -239,8 +243,12 @@ function publishHint(hint, index, time){
     startTimer(time)
 }
 
-function publishSlideForAudience(question){
-    console.warn("Not implemented any publisher for audience");
+function publishSlideForAudience(question, slideIndex){
+    console.log("Publish slide for audience");
+    var msg = {};
+    msg.image = question.image;
+    msg.slide = question.slides[slideIndex];
+    io.emit('slide', msg);
 }
 function publishQuestionForTeam(question){
     console.log("Publish question for team");
