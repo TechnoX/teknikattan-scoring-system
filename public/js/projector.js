@@ -3,7 +3,7 @@ $(function () {
     socket.on('image', function(msg){
         $('#titleimage').empty();
         $('#title').html(msg.index + ". " + msg.title);
-        $('#main').html("<img src='"+msg.image+"' style='max-width: 80%; max-height: 15em; margin: auto; display: block;'/>");
+        $('#main').html("<img src='"+msg.image+"' id='mainimage'/>");
         $('#time').html(msg.time);
         if(msg.timeText){
             $('#timeText').html(msg.timeText);
