@@ -33,10 +33,56 @@ td {border:1px solid black;padding:20px;}
 }
 #main{
   width: 90%;
+  heigh: 90%;
   margin: auto;
   font-size: 2em;
 }
+#truefalse{
+  width: 100%;
+  height: 100%;
+}
+#true{
+  background-color: darkgreen;
+}
+#false{
+  background-color: darkred;
+}
+.marked{
+  border: 10px solid black;
+}
 
+
+
+/* The container */
+.choice {
+cursor: pointer;
+font-size: 22px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.choice input {
+display: none;
+cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.choice:hover input ~ .checkmark {
+background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.choice input:checked ~ .checkmark {
+background-color: #2196F3;
+}
 </style>
 </head>
 <body>

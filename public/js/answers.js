@@ -61,30 +61,27 @@ $(function () {
 
     function numberAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: </label><input type='number' onchange='send' id='answer"+index+"'></input></li>");
+            $('#answer-list').append("<li><label>Svar: </label><input type='number' onchange='send();' id='answer"+index+"'></input></li>");
         }else{
-            $('#main').html("<label>Svar: </label><input type='number' onchange='send' id='answer"+index+"'></input>");
+            $('#main').html("<label>Svar: </label><input type='number' onchange='send();' id='answer"+index+"'></input>");
         }
     }
     function textAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: <input type='text' onchange='send' id='answer"+index+"'></input></label></li>");
+            $('#answer-list').append("<li><label>Svar: <input type='text' onchange='send();' id='answer"+index+"'></input></label></li>");
         }else{
-            $('#main').html("<label>Svar: <input type='text' onchange='send' id='answer"+index+"'></input></label>");
+            $('#main').html("<label>Svar: <input type='text' onchange='send();' id='answer"+index+"'></input></label>");
         }
     }
     function selectAnswer(alternatives, index, isJustOneQuestion){
-        var table = "<table><tr>";
-        console.log(alternatives.length)
-        console.log(alternatives)
+        var choices = "";
         for(var i = 0; i < alternatives.length; i++){
-            table += "<td>"+alternatives[i]+"</td>";
+            choices += "<label class='choice'><input type='radio' onchange='send();' name='choice"+index+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
         }
-        table += "</tr></table>";
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Välj en av följande: </label>"+table+"</li>");
+            $('#answer-list').append("<li><label>Välj en av följande: </label>"+choices+"</li>");
         }else{
-            $('#main').html("<label>Välj en av följande: </label>"+table);
+            $('#main').html("<label>Välj en av följande: </label>"+choices);
         }
     }
 
@@ -93,11 +90,23 @@ $(function () {
     }
     function hintsAnswer(numberOfHints){
         $('#main').html("<ol type='a' id='answer-list'></ol>");
-        for(var i = 0; i < 0; i++){
-            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' onchange='send' id='hint"+i+"'></input></label></li>")
+        for(var i = 0; i < numberOfHints; i++){
+            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' onchange='send();' id='hint"+i+"'></input></label></li>")
         }
     }
     function trueFalseAnswer(){
-        $('#main').html("<table id='truefalse'><tr><td id='true'>Sant</td><td id='false'>Falskt</td></tr></table>");
-    }    
+        $('#main').html("<table id='truefalse'><tr><td id='true' onclick='trueClick();'>Sant</td><td id='false' onclick='falseClick()'>Falskt</td></tr></table>");
+    }
+
+
 });
+
+function trueClick(){
+    $("#false").removeClass("marked");
+    $("#true").addClass("marked");
+}
+
+function falseClick(){
+    $("#true").removeClass("marked");
+    $("#false").addClass("marked");
+}
