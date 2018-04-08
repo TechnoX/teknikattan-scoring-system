@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Teknikåttan</title>
-<style type="text/css">
+  <style type="text/css">
+body, html{
+  height: 100%;
+}
 body{
   background-image: url('images/background.jpg');
   background-repeat: no-repeat;
@@ -33,22 +36,33 @@ td {border:1px solid black;padding:20px;}
 }
 #main{
   width: 90%;
-  heigh: 90%;
+  height: 80%;
   margin: auto;
   font-size: 2em;
 }
+
+
+
 #truefalse{
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
+}
+#truefalse td{
+  width: 50%;
+  text-align: center;
+  font-size: 4em;
 }
 #true{
   background-color: darkgreen;
+  color: lightgreen;
 }
 #false{
   background-color: darkred;
+  color: pink;
 }
 .marked{
-  border: 10px solid black;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 
@@ -83,6 +97,11 @@ background-color: #ccc;
 .choice input:checked ~ .checkmark {
 background-color: #2196F3;
 }
+
+
+
+
+
 #selectables div{
   margin: 30px;
 }
