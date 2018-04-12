@@ -2,8 +2,16 @@ var express = require('express')
 var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
+var bodyParser = require('body-parser');
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+// Handles static data
 app.use(express.static('public'))
+
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
@@ -24,6 +32,19 @@ app.get('/answers', function(req, res){
 app.get('/judges', function(req, res){
   res.sendFile(__dirname + '/views/judges.html');
 })
+
+app.post('/truefalse', function(req, res){
+    console.log('value: ' + req.body.value);
+    res.send('OK');
+});
+
+app.post('/text', function(req, res){
+    console.log('value: ' + req.body.value + ", index: " + req.body.index);
+    res.send('OK');
+});
+
+
+var teams = [{name: 'Skolgårda skola', id: '1', scoring: 0, answers: []},{name: 'Berzeliusskolan', id: '2', scoring: 0, answers: []},{name: 'Sjöängsskolan', id: '4', scoring: 0, answers: []}];
 
 
 var questions = [/*{type: 'normal', title: 'Testfråga', answer_type: ['number'], image: 'images/spider.jpg', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'},

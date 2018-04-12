@@ -61,22 +61,22 @@ $(function () {
 
     function numberAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: </label><input type='number' onchange='send();' id='answer"+index+"'></input></li>");
+            $('#answer-list').append("<li><label>Svar: </label><input type='number' onchange='send(this,"+index+");' id='answer"+index+"'></input></li>");
         }else{
-            $('#main').html("<label>Svar: </label><input type='number' onchange='send();' id='answer"+index+"'></input>");
+            $('#main').html("<label>Svar: </label><input type='number' onchange='send(this,"+index+");' id='answer"+index+"'></input>");
         }
     }
     function textAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: <input type='text' onchange='send();' id='answer"+index+"'></input></label></li>");
+            $('#answer-list').append("<li><label>Svar: <input type='text' onchange='send(this,"+index+");' id='answer"+index+"'></input></label></li>");
         }else{
-            $('#main').html("<label>Svar: <input type='text' onchange='send();' id='answer"+index+"'></input></label>");
+            $('#main').html("<label>Svar: <input type='text' onchange='send(this,"+index+");' id='answer"+index+"'></input></label>");
         }
     }
     function selectAnswer(alternatives, index, isJustOneQuestion){
         var choices = "";
         for(var i = 0; i < alternatives.length; i++){
-            choices += "<label class='choice'><input type='radio' onchange='send();' name='choice"+index+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
+            choices += "<label class='choice'><input type='radio' onchange='send(this,"+index+");' name='choice"+index+"' value='"+alternatives[i]+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
         }
         if(!isJustOneQuestion){
             $('#answer-list').append("<li><label>Välj en av följande: </label>"+choices+"</li>");
@@ -115,7 +115,7 @@ $(function () {
     function hintsAnswer(numberOfHints){
         $('#main').html("<ol type='a' id='answer-list'></ol>");
         for(var i = 0; i < numberOfHints; i++){
-            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' onchange='send();' id='hint"+i+"'></input></label></li>")
+            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' onchange='send(this,"+i+");' id='hint"+i+"'></input></label></li>")
         }
     }
     function trueFalseAnswer(){
@@ -125,14 +125,35 @@ $(function () {
 
 });
 
+
+function send(element, index){
+    $.post("text", {'value': element.value, 'index': index}, function( data ) {
+        // Do nothing
+    }).fail(function() {
+        alert("Error!!");
+        console.error("Error: ", element.value, element.id, index);
+    });
+}
+
+
 function trueClick(){
-    $("#false").removeClass("marked");
-    $("#true").addClass("marked");
+    $.post("truefalse", {'value': 'true'}, function( data ) {
+        $("#false").removeClass("marked");
+        $("#true").addClass("marked");
+    }).fail(function() {
+        alert("Error!!");
+        console.error("Error: true click");
+    });
 }
 
 function falseClick(){
-    $("#true").removeClass("marked");
-    $("#false").addClass("marked");
+    $.post("truefalse", {'value': 'false'}, function( data ) {
+        $("#true").removeClass("marked");
+        $("#false").addClass("marked");
+    }).fail(function() {
+        alert("Error!!");
+        console.error("Error: false click");
+    });
 }
 
 function allowDrop(ev) {
@@ -155,6 +176,9 @@ function drop(ev) {
     console.log("drop");
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    if(!sendDrop(data, ev.target.id)){
+        return false;
+    }
     if (ev.target.getAttribute("draggable") == "true"){
         console.log("Drop on old label")
         console.log("add new element to cell")
@@ -170,4 +194,14 @@ function drop(ev) {
         console.log("add new element to cell")
         ev.target.appendChild(document.getElementById(data));
     }
+}
+
+function sendDrop(draggedID, droppedID){
+    $.post("drop", {'dragged': draggedID, 'dropped': droppedID}, function( data ) {
+        return true;
+    }, "json").fail(function() {
+        alert("Error!!");
+        console.error("Error: ", draggedID, droppedID);
+        return false;
+    });
 }
