@@ -319,7 +319,7 @@ function publishQuestionForTeam(question){
 }
 
 function publishTimesUp(){
-    var msg = {};
+    var msg = {'hintIndex': hintIndex};
     io.emit('timesUp', msg);
 }
 

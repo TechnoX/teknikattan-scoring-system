@@ -1,11 +1,15 @@
 $(function () {
     var socket = io();
+
+    var state = 'begin';
+    
     socket.on('image', function(msg){
         $('#title').html(msg.index + ". " + msg.title);
         $('#main').html("<img src='"+msg.image+"' id='mainimage'/>");
     });
     socket.on('question', function(msg){
         if(Array.isArray(msg.answer_type)){
+            state = 'subquestions'
             var isJustOneQuestion = (msg.answer_type.length==1)
 
             if(!isJustOneQuestion){
@@ -29,6 +33,7 @@ $(function () {
                 }
             }
         }else{
+            state = msg.answer_type;
             switch(msg.answer_type){
             case 'pairing':
                 pairingAnswer(msg.pairs[0], msg.pairs[1]);
@@ -47,10 +52,17 @@ $(function () {
             }
         }
     });
-    socket.on('timeout', function(msg){
+    socket.on('timesUp', function(msg){
         // Lås tidigare fält så man inte kan mata in mer
-        if(msg.index == 0){
-            
+        timesUp = true;
+        if(state == 'hints'){
+            for(var i = 0; i < msg.hintIndex; i++){
+                console.log("Lock hint "+ msg.hintIndex);
+                $("#hint"+i).prop('disabled', true);
+                $("#hint"+i).addClass('hintlock');
+            }
+            console.log("Set focus to hint "+ msg.hintIndex);
+            $("#hint"+msg.hintIndex).focus()
         }
     });
     socket.on('end', function(msg){
