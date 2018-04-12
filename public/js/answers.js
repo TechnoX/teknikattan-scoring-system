@@ -233,6 +233,11 @@ function drop(ev) {
 }
 
 function sendDrop(draggedID, droppedID){
+    /*
+      var draggedText = document.getElementById(draggedID).innerHTML;
+      var droppedText = document.getElementById(droppedID).nextElementSibling.innerHTML || document.getElementById(droppedID).previousElementSibling.innerHTML;
+    */
+    
     $.post("drop", {'dragged': draggedID, 'dropped': droppedID}, function( data ) {
         // Do nothing
     }).fail(function() {
