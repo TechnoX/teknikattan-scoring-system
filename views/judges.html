@@ -125,10 +125,15 @@ background-color: #2196F3;
 
 
 .team{
-width: 33%;
-height: 100%;
-float: left;
+  width: 33%;
+  height: 100%;
+  float: left;
+  border: 2px solid black;
 }
+.team h2{
+  text-align: center;
+}
+/*
 #team1{
   background-color: red;
 }
@@ -137,7 +142,7 @@ float: left;
 }
 #team3{
   background-color: green;
-}
+}*/
 
 </style>
 </head>
@@ -148,9 +153,9 @@ float: left;
 </div>
 
 <div id="main">
-<div id="team1" class="team"></div>
-<div id="team2" class="team"></div>
-<div id="team3" class="team"></div>
+<div id="team1" class="team"><h2>Skolgårda skola</h2></div>
+<div id="team2" class="team"><h2>Berzeliusskolan</h2></div>
+<div id="team3" class="team"><h2>Sjöängsskolan</h2></div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
