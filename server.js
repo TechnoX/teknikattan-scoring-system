@@ -13,6 +13,9 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 
+// --------------------------------------------------
+// Static pages
+// --------------------------------------------------
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 })
@@ -30,31 +33,72 @@ app.get('/answers', function(req, res){
 })
 
 app.get('/judges', function(req, res){
-  res.sendFile(__dirname + '/views/judges.html');
+    res.sendFile(__dirname + '/views/judges.html');
 })
 
+
+
+// --------------------------------------------------
+// Post responses
+// --------------------------------------------------
 app.post('/truefalse', function(req, res){
     console.log('value: ' + req.body.value);
+    publishJudge("<span style='color: "+((req.body.value=='true')?"darkgreen":"darkred")+"'>"+((req.body.value=='true')?"Sant":"Falskt")+"</span>", trueFalseIndex);
     res.send('OK');
 });
 
 app.post('/text', function(req, res){
     console.log('value: ' + req.body.value + ", index: " + req.body.index);
+    publishJudge(req.body.value, req.body.index);
     res.send('OK');
 });
 
 app.post('/drop', function(req, res){
     console.log('drag: ' + req.body.dragged + ", drop: " + req.body.dropped);
+    var dragIndex = req.body.dragged.slice(4);
+    var dropIndex = req.body.dropped.slice(4);
+    var question = questions[currentQuestion];
+    var part1, part2;
+    if(question.pairs[0].length >= question.pairs[1].length){
+        part1 = question.pairs[0][dragIndex];
+        part2 = question.pairs[1][dropIndex];
+    }else{
+        part1 = question.pairs[0][dropIndex];
+        part2 = question.pairs[1][dragIndex];
+    }
+    console.log(part1, part2);
+    publishJudge(part1+" &hArr; "+part2, dropIndex);
+    
+    res.send('OK');
+});
+
+app.post('/scoring', function(req, res){
+    console.log('Update score for team '+req.body.teamIndex+' with: ' + req.body.score);
+   
+    teams[req.body.teamIndex].answers[req.body.questionIndex] = Number(req.body.score);
+   
+    var totalScore = 0;
+    for(var i = 0; i < teams[req.body.teamIndex].answers.length; i++){
+        if(teams[req.body.teamIndex].answers[i]){
+            totalScore += teams[req.body.teamIndex].answers[i];
+        }
+    }
+    teams[req.body.teamIndex].score = totalScore;
+    publishScoresJudge(req.body.teamIndex);
     res.send('OK');
 });
 
 
-var teams = [{name: 'Skolgårda skola', id: '1', scoring: 0, answers: []},{name: 'Berzeliusskolan', id: '2', scoring: 0, answers: []},{name: 'Sjöängsskolan', id: '4', scoring: 0, answers: []}];
 
+// --------------------------------------------------
+// Database
+// --------------------------------------------------
 
-var questions = [/*{type: 'normal', title: 'Testfråga', answer_type: ['number'], image: 'images/spider.jpg', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'},
+var teams = [{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []},{name: 'Sjöängsskolan', score: 0, answers: []}];
+
+var questions = [{type: 'normal', title: 'Testfråga', answer_type: ['number'], image: 'images/spider.jpg', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'},
                  {type: 'normal', title: 'Förmörkelser', answer_type: [['Nymåne', 'Halvmåne', 'Fullmåne'],['Nymåne', 'Halvmåne', 'Fullmåne'],['Solförmörkelse', 'Månförmörkelse'],['Solförmörkelse', 'Månförmörkelse'], ['Ja','Nej'], ['Ja','Nej']], image: 'images/formorkelser.jpg', leftText: '<p>Trots att solen ligger mycket längre bort från jorden än vad månen gör ser de ungefär lika stora ut på himlen eftersom solen är mycket större. En följd av detta är att månen ibland täcker för solen &ndash; en så kallad solförmörkelse &ndash; och att jorden ibland skuggar för månen, vilket kallas månförmörkelse. Nu följer några frågor kring hur sol- och månförmörkelser beter sig sett från en plats på jorden.</p><p>Använd bilderna för att svara på frågorna. (Obs! Bilderna är ej skalenliga.)</p><ol type="a"><li>I vilken månfas kan det bli en solförmörkelse?</li><li>I vilken månfas kan det bli en månförmörkelse?</li><li>Vilken typ av förmörkelse kan vara längst tid?</li><li>Vilken typ av förmörkelse kan ses från störst del av jorden?</li><li>Är det sant att månförmörkelser bara kan ses kring midnatt?</li><li>Stämmer det att solförmörkelser bara kan uppstå på sommarhalvåret?</li></ol>', rightText: '<p><img src="images/solformorkelse.jpg" width="100%" /></p><p><img src="images/manformorkelse.jpg" width="100%" /></p>', timeText: '3 minuter', scoringText: '1 poäng per rätt svar', maxScoringText: '6 poäng', time: 3*60/18, slides: ['<p>Trots att solen ligger mycket längre bort från jorden än vad månen gör ser de ungefär lika stora ut på himlen eftersom solen är mycket större. En följd av detta är att månen ibland täcker för solen &ndash; en så kallad solförmörkelse &ndash; och att jorden ibland skuggar för månen, vilket kallas månförmörkelse.</p><ol type="a"><li>I vilken månfas kan det bli en solförmörkelse?</li><li>I vilken månfas kan det bli en månförmörkelse?</li><li>Vilken typ av förmörkelse kan vara längst tid?</li><li>Vilkentyp av förmörkelse kan ses från störst del av jorden?</li><li>Är det sant att månförmörkelser bara kan ses kring midnatt?</li><li>Stämmer det att solförmörkelser bara kan uppstå på sommarhalvåret?</li></ol>'], answer: '<ol type="a"><li>Det kan bli solförmörkelse vid <strong>nymåne</strong>.</li><li>Det kan bli månförmörkelse vid <strong>fullmåne</strong>.</li><li><strong>Månförmörkelser</strong> kan vara längst tid.</li><li><strong>Månförmörkelser</strong> kan ses från störst del av jorden.</li><li>Det är <strong>falskt</strong> att månförmörkelser bara kan ses kring midnatt.</li><li>Det är <strong>falskt</strong> att solförmörkelser bara kan uppstå på sommaren.</li></ol>'},
-                 */{type: 'normal', title: 'Arbetsfördelning', answer_type: 'pairing', pairs: [['Mitokondrie ...', 'Cellkärna med kromosomer ...', 'Golgiapparat ...', 'Lysosomer ...', 'Cellmembran ...', 'Ribosomer ...'],['... styr arbetet i cellen', '... bildar proteiner', '... håller rent i cellen', '... utvinner energi ur näringsämnen']], image: 'images/arbetsfordelning.jpg', leftText: '<p>Kroppen hos en vuxen person innehåller ungefär 100 000 miljarder celler. För att cellerna skall kunna fungera behöver en mängd olika arbeten utföras. Olika delar av cellerna utför olika arbetsuppgifter. Er uppgift är att para ihop celldelarna med de arbetsuppgifter som de utför.</p><p>Markera vilka som hör ihop genom att dra celldelen till arbetsuppgiften som den utför. Eftersom det finns fler celldelar än arbetsuppgifter kommer det att bli celldelar som inte kan paras ihop med någon arbetsuppgift.</p>', timeText: '2 minuter', scoringText: '1 poäng per rätt svar', maxScoringText: '4 poäng', time: 3*60/18, slides: ['<p>Kroppen hos en vuxen person innehåller ungefär 100 000 miljarder celler.</p><p>För att cellerna skall kunna fungera behöver en mängd olika arbeten utföras. Olika delar av cellerna utför olika arbetsuppgifter.</p><p>Para ihop celldelarna med de arbetsuppgifter som de utför.</p>','<p>Para ihop celldelarna med de arbetsuppgifter som de utför.</p><table><tr><th>Celldelar</th><th>Arbetsuppgifter</th></tr><tr><td><ol type="1"><li>Mitokondrie</li><li>Cellkärna med kromosomer</li><li>Golgiapparat</li><li>Lysosomer</li><li>Cellmembran</li><li>Ribosomer</li></ol></td><td><ol type="A"><li>Styr arbetet i cellen</li><li>Bildar proteiner</li><li>Håller rent i cellen</li><li>Utvinner energi ur näringsämnen</li></ol></td></tr></table>'], answer: '<p>Mitokondire utvinner energi ur näringsämnen</p><p>Cellkärna med kromosomer styr arbetet i cellen</p><p>Lysosomer håller rent i cellen</p><p>Ribosomer bildar proteiner</p>'},
+                 {type: 'normal', title: 'Arbetsfördelning', answer_type: 'pairing', pairs: [['Mitokondrie ...', 'Cellkärna med kromosomer ...', 'Golgiapparat ...', 'Lysosomer ...', 'Cellmembran ...', 'Ribosomer ...'],['... styr arbetet i cellen', '... bildar proteiner', '... håller rent i cellen', '... utvinner energi ur näringsämnen']], image: 'images/arbetsfordelning.jpg', leftText: '<p>Kroppen hos en vuxen person innehåller ungefär 100 000 miljarder celler. För att cellerna skall kunna fungera behöver en mängd olika arbeten utföras. Olika delar av cellerna utför olika arbetsuppgifter. Er uppgift är att para ihop celldelarna med de arbetsuppgifter som de utför.</p><p>Markera vilka som hör ihop genom att dra celldelen till arbetsuppgiften som den utför. Eftersom det finns fler celldelar än arbetsuppgifter kommer det att bli celldelar som inte kan paras ihop med någon arbetsuppgift.</p>', timeText: '2 minuter', scoringText: '1 poäng per rätt svar', maxScoringText: '4 poäng', time: 3*60/18, slides: ['<p>Kroppen hos en vuxen person innehåller ungefär 100 000 miljarder celler.</p><p>För att cellerna skall kunna fungera behöver en mängd olika arbeten utföras. Olika delar av cellerna utför olika arbetsuppgifter.</p><p>Para ihop celldelarna med de arbetsuppgifter som de utför.</p>','<p>Para ihop celldelarna med de arbetsuppgifter som de utför.</p><table><tr><th>Celldelar</th><th>Arbetsuppgifter</th></tr><tr><td><ol type="1"><li>Mitokondrie</li><li>Cellkärna med kromosomer</li><li>Golgiapparat</li><li>Lysosomer</li><li>Cellmembran</li><li>Ribosomer</li></ol></td><td><ol type="A"><li>Styr arbetet i cellen</li><li>Bildar proteiner</li><li>Håller rent i cellen</li><li>Utvinner energi ur näringsämnen</li></ol></td></tr></table>'], answer: '<p>Mitokondire utvinner energi ur näringsämnen</p><p>Cellkärna med kromosomer styr arbetet i cellen</p><p>Lysosomer håller rent i cellen</p><p>Ribosomer bildar proteiner</p>'},
                  {type: 'hints', title: 'Ledtråden', answer_type: 'hints', image: 'images/ledtrad.jpg', leftText: '<p>I uppgiften kommer ni att få fem ledtrådar som alla leder fram till ett och samma ord.</p><p>Ledtrådarna kommer att läsas upp en och en. Ni har 15 sekunder på er att skriva ned ert svar efter det att en ledtråd lästs klart.</p><p>Skriv svaret på samma radnummer som den ledtråd som lästes upp.</p><p>Ni får inga minuspoäng om ni gissar på ett felaktigt svar, så ni förlorar inget på att chansa.</p><p>Varje rad med rätt svar ger en poäng.</p><p><strong>Kom ihåg att alla ledtrådar leder till ett och samma ord.</strong></p>', timeText: '15 sekunder per ledtråd', scoringText: '1 poäng per rätt svar', maxScoringText: '5 poäng', time: 15, slides: ['Fem ledtrådar som leder till samma ord'], hints: ['Konserveringsmedel som också fungerar som näring till jästsvampar.', 'Ursprunget kan vara från rör. Finns i förädlad form som bitar.', 'Är energirikt och kan bidra till många livsstilssjukdomar.', 'Kolhydrat som bland annat finns i leverpastej och fruktyoghurt.', 'Finns i brun eller vit kristallform. Ett annat namn är sackaros.'], answer: '<p><img src="images/sugar.jpg" width="30%"></p><p><h2>Socker</h2></p>'},
                  {type: 'truefalse', title: 'Sant eller falskt', answer_type: 'truefalse', image: 'images/sant_eller_falskt.png', leftText: '<p>Genom åren har det förekommit en mängd olika sätt att kommunicera. Här kommer några frågor med anknytning till olika sätt att kommunicera.</p><p>Vilka påståenden är sanna och vilka är falska?</p><p>Tryck på den gröna området om det frågeledaren läser upp är sant och det röda området om det är falskt.</p><p>Betänketiden är endast 10 sekunder per påstående. Era svar går inte att ändra efter att tiden gått ut.</p><p>Ni kommer inte få dessa frågor på skärmen, utan det gäller att lyssna noga på vad som sägs.</p>', timeText: '10 sekunder per påstående', scoringText: '1 poäng per rätt svar', maxScoringText: '6 poäng', time: 10, slides: ['<p>Genom åren har det förekommit en mängd olika sätt att kommunicera. Här kommer några frågor med anknytning till olika sätt att kommunicera. </p><p>Vilka påståenden är sanna och vilka är falska?</p><p>Håll upp en grön skylt om det är sant och en röd skylt om det är falskt.</p>'], hints: ['Den första iPaden någonsin introducerades 2010.', 'Futharken, eller runalfabetet, hade 365 olika runor och varje runa symboliserade en särskild dag på året.', 'Radiovågor fortplantar sig genom svängningar i luftmolekylerna.', 'Brevduvor användes för att transportera meddelanden under andra världskriget.', 'Varje dag sänds mer än 10 miljarder e-postmeddelanden.', 'Sveriges första telefonnät byggdes 1920 i Göteborg.']},
     {type: 'normal', title: 'Lampor', answer_type: 'pairing', pairs: [['Brytare D stängd, brytare E öppen:','Brytare D öppen, brytare E stängd:', 'Brytare D stängd, brytare E stängd:'],['Ingen lampa lyser','Endast lampa A lyser', 'Endast lampa B och C lyser', 'Alla lampor lyser med samma styrka', 'Alla lampor lyser, men A lyser starkare än B och C', 'Alla lampor lyser, men A lyser svagare än B och C']], image: 'images/lampor.jpg', leftText: '<p>I figuren till höger finns kopplingsschemat till en elektrisk krets med tre likadana lampor och två strömbrytare.</p><p>När en strömbrytare är stängd kan det gå ström genom brytaren. Om den är öppen kan det inte gå någon ström genom den. Beroende på vilka strömbrytare som är öppna och vilka som är stängda kommer olika lampor att lysa.</p><p>Fyll i tabellen med korrekt svarsalternativ för varje situation.</p>', rightText: '<p><img src="images/kopplingsschema.png" width="80%"/></p>', timeText: '2 minuter', scoringText: '2 poäng per rätt svar', maxScoringText: '6 poäng', time: 2*60/18, slides: ['<p>I figuren finns kopplingsschemat till en elektrisk krets med tre likadana lampor och två strömbrytare.</p><p><img src="images/kopplingsschema.png"/></p><p>När en strömbrytare är stängd kan det gå ström genom brytaren. Om den är öppen kan det inte gå någon ström genom den. Beroende på vilka strömbrytare som är öppna och vilka som är stängda kommer olika lampor att lysa.</p>', '<p><img src="images/kopplingsschema.png"/></p><table><tr><th>Situation</th><th>Svarsalternativ</th></tr><tr><td><p>Brytare D stängd, brytare E öppen<br>Brytare D öppen, brytare E stängd<br>Brytare D stängd, brytare E stängd</p></td><td><ol type="1"><li>Ingen lampa lyser</li><li>Endast lampa A lyser</li><li>Endast lampa B och C lyser</li><li>Alla lampor lyser med samma styrka</li><li>Alla lampor lyser men A lyser starkare än B och C</li><li>Alla lampor lyser men A lyser svagare än B och C</li></ol></td></tr></table>'], answer: '<p>Bilder och grejer. Alt2 osv osv </p>'}
@@ -71,14 +115,15 @@ var currentTimer; // The current timer that was started by setInterval
 
 io.on('connection', function(socket){
     console.log('a user connected')
+    publishScoresJudge(0)
+    publishScoresJudge(1)
+    publishScoresJudge(2)
 
     switch(previousState){
     case "asdf":
         break;
     }
     
-
-
     
     socket.on('disconnect', function(){
         console.log('user disconnected')
@@ -339,4 +384,22 @@ function formatTime(seconds){
         seconds = '0' + seconds;
     }
     return minutes + ":" + seconds;
+}
+
+
+function publishJudge(text, index){
+    console.log("Publish answer for judges");
+    var msg = {};
+    msg.teamIndex = 1;
+    msg.text = text;
+    msg.index = index;
+    io.emit('answerToJudges', msg);
+}
+
+function publishScoresJudge(teamIndex){
+    console.log("Publish total score and name etc. for judges");
+    var msg = {};
+    msg.teamIndex = teamIndex;
+    msg.team = teams[teamIndex];
+    io.emit('generalToJudges', msg);
 }
