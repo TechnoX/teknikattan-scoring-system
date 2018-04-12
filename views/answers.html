@@ -65,16 +65,22 @@ height: 100%;
   font-weight: bold;
 }
 
+input{
+  font-size: 1em;
+}
+
 
 
 /* The container */
 .choice {
 cursor: pointer;
-font-size: 22px;
 -webkit-user-select: none;
 -moz-user-select: none;
 -ms-user-select: none;
 user-select: none;
+margin-left: 22px;
+border: 2px solid black;
+line-height: 1.5em;
 }
 
 /* Hide the browser's default radio button */
@@ -100,8 +106,6 @@ background-color: #2196F3;
 
 
 
-
-
 #selectables div{
   margin: 30px;
 }
@@ -124,6 +128,22 @@ background-color: #2196F3;
   padding: 0px;
 }
 
+
+#lock{
+  width: 400px;
+  z-index: 90;
+  transform: translate(-50%,-50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: none;
+}
+.hintlock{
+  background: url(images/lock-icon.png) no-repeat scroll 3px 3px;
+  background-size: 1em;
+  padding-left: 60px;
+}
+
 </style>
 </head>
 <body>
@@ -131,7 +151,7 @@ background-color: #2196F3;
   <img src="images/logo.png" />
   <h1 id="title"></h1>
 </div>
-
+<img src="images/lock.png" id="lock" />
 <div id="main">
   <h1>Välkomna till regionfinal!</h1>
   <h2>Stort lycka till nu!</h2>

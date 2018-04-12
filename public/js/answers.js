@@ -2,10 +2,25 @@ $(function () {
     var socket = io();
 
     var state = 'begin';
-    
+
+    // Remove lock when new title image, and show image
     socket.on('image', function(msg){
+        timesUp = false;
+        $("#lock").hide();
         $('#title').html(msg.index + ". " + msg.title);
         $('#main').html("<img src='"+msg.image+"' id='mainimage'/>");
+    });
+    // Remove lock when new true/false statement
+    socket.on('truefalse', function(msg){
+        timesUp = false;
+        $("#lock").hide();
+        $("#false").removeClass("marked");
+        $("#true").removeClass("marked");
+    });
+    // Remove lock when end message comes
+    socket.on('end', function(msg){
+        timesUp = false;
+        $("#lock").hide();
     });
     socket.on('question', function(msg){
         if(Array.isArray(msg.answer_type)){
@@ -56,13 +71,17 @@ $(function () {
         // Lås tidigare fält så man inte kan mata in mer
         timesUp = true;
         if(state == 'hints'){
+            console.log("State: hints: ", msg.hintIndex);
             for(var i = 0; i < msg.hintIndex; i++){
-                console.log("Lock hint "+ msg.hintIndex);
+                console.log("Lock hint " + i);
                 $("#hint"+i).prop('disabled', true);
                 $("#hint"+i).addClass('hintlock');
             }
             console.log("Set focus to hint "+ msg.hintIndex);
             $("#hint"+msg.hintIndex).focus()
+        }else{
+            $("input").prop('disabled', true);
+            $("#lock").show(2000);
         }
     });
     socket.on('end', function(msg){
@@ -73,22 +92,22 @@ $(function () {
 
     function numberAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: </label><input type='number' onchange='send(this,"+index+");' id='answer"+index+"'></input></li>");
+            $('#answer-list').append("<li><label>Svar: </label><input type='number' oninput='send(this,"+index+");' id='answer"+index+"'></input></li>");
         }else{
-            $('#main').html("<label>Svar: </label><input type='number' onchange='send(this,"+index+");' id='answer"+index+"'></input>");
+            $('#main').html("<label>Svar: </label><input type='number' oninput='send(this,"+index+");' id='answer"+index+"'></input>");
         }
     }
     function textAnswer(index, isJustOneQuestion){
         if(!isJustOneQuestion){
-            $('#answer-list').append("<li><label>Svar: <input type='text' onchange='send(this,"+index+");' id='answer"+index+"'></input></label></li>");
+            $('#answer-list').append("<li><label>Svar: <input type='text' oninput='send(this,"+index+");' id='answer"+index+"'></input></label></li>");
         }else{
-            $('#main').html("<label>Svar: <input type='text' onchange='send(this,"+index+");' id='answer"+index+"'></input></label>");
+            $('#main').html("<label>Svar: <input type='text' oninput='send(this,"+index+");' id='answer"+index+"'></input></label>");
         }
     }
     function selectAnswer(alternatives, index, isJustOneQuestion){
         var choices = "";
         for(var i = 0; i < alternatives.length; i++){
-            choices += "<label class='choice'><input type='radio' onchange='send(this,"+index+");' name='choice"+index+"' value='"+alternatives[i]+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
+            choices += "<label class='choice'><input type='radio' oninput='send(this,"+index+");' name='choice"+index+"' value='"+alternatives[i]+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
         }
         if(!isJustOneQuestion){
             $('#answer-list').append("<li><label>Välj en av följande: </label>"+choices+"</li>");
@@ -127,18 +146,17 @@ $(function () {
     function hintsAnswer(numberOfHints){
         $('#main').html("<ol type='a' id='answer-list'></ol>");
         for(var i = 0; i < numberOfHints; i++){
-            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' onchange='send(this,"+i+");' id='hint"+i+"'></input></label></li>")
+            $("#answer-list").append("<li><label>Ledtråd "+(i+1)+": <input type='text' oninput='send(this,"+i+");' id='hint"+i+"'></input></label></li>")
         }
     }
     function trueFalseAnswer(){
         $('#main').html("<table id='truefalse'><tr><td id='true' onclick='trueClick();'>Sant</td><td id='false' onclick='falseClick()'>Falskt</td></tr></table>");
     }
-
-
 });
 
 
 function send(element, index){
+    console.log(element.value);
     $.post("text", {'value': element.value, 'index': index}, function( data ) {
         // Do nothing
     }).fail(function() {
@@ -149,6 +167,8 @@ function send(element, index){
 
 
 function trueClick(){
+    if(timesUp)
+        return false;
     $.post("truefalse", {'value': 'true'}, function( data ) {
         $("#false").removeClass("marked");
         $("#true").addClass("marked");
@@ -159,6 +179,8 @@ function trueClick(){
 }
 
 function falseClick(){
+    if(timesUp)
+        return false;
     $.post("truefalse", {'value': 'false'}, function( data ) {
         $("#true").removeClass("marked");
         $("#false").addClass("marked");
@@ -179,18 +201,20 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+    if(timesUp)
+        return false;
     console.log("drag");
     ev.dataTransfer.setData("text", ev.target.id);
     console.log(ev.dataTransfer.getData("text"));
 }
 
 function drop(ev) {
-    console.log("drop");
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    if(!sendDrop(data, ev.target.id)){
+    if(timesUp)
         return false;
-    }
+    console.log("drop");
+    var data = ev.dataTransfer.getData("text");
+    sendDrop(data, ev.target.id);
     if (ev.target.getAttribute("draggable") == "true"){
         console.log("Drop on old label")
         console.log("add new element to cell")
@@ -210,10 +234,9 @@ function drop(ev) {
 
 function sendDrop(draggedID, droppedID){
     $.post("drop", {'dragged': draggedID, 'dropped': droppedID}, function( data ) {
-        return true;
-    }, "json").fail(function() {
+        // Do nothing
+    }).fail(function() {
         alert("Error!!");
         console.error("Error: ", draggedID, droppedID);
-        return false;
     });
 }
