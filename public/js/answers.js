@@ -107,7 +107,7 @@ $(function () {
     function selectAnswer(alternatives, index, isJustOneQuestion){
         var choices = "";
         for(var i = 0; i < alternatives.length; i++){
-            choices += "<label class='choice'><input type='radio' oninput='send(this,"+index+");' name='choice"+index+"' value='"+alternatives[i]+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
+            choices += "<label class='choice'><input type='radio' onchange='send(this,"+index+");' name='choice"+index+"' value='"+alternatives[i]+"'><span class='checkmark'>"+alternatives[i]+"</span></label>";
         }
         if(!isJustOneQuestion){
             $('#answer-list').append("<li><label>Välj en av följande: </label>"+choices+"</li>");
