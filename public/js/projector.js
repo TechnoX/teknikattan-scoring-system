@@ -2,7 +2,7 @@ $(function () {
     var socket = io();
     socket.on('image', function(msg){
         $('#titleimage').empty();
-        $('#title').html((msg.index-msg.numberOffset) + ". " + msg.title);
+        $('#title').html(msg.title);
         $('#main').html("<img src='"+msg.image+"' id='mainimage'/>");
         $('#time').html(msg.time);
         if(msg.timeText){

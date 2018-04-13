@@ -7,7 +7,7 @@ $(function () {
     socket.on('image', function(msg){
         timesUp = false;
         $("#lock").hide();
-        $('#title').html((msg.index-msg.numberOffset) + ". " + msg.title);
+        $('#title').html(msg.title);
         $('#main').html("<img src='"+msg.image+"' id='mainimage'/>");
     });
     // Remove lock when new true/false statement

@@ -221,10 +221,11 @@ function publishImage(question){
     msg.image = question.image;
     if(question.no_number){
         numberOfQuestionsWithoutNumber++;
+        msg.title = question.title;
+    }else{
+        msg.title = (currentQuestion-numberOfQuestionsWithoutNumber) + ". " + question.title;
     }
     msg.index = currentQuestion;
-    msg.numberOffset = numberOfQuestionsWithoutNumber;
-    msg.title = question.title;
     msg.timeText = question.timeText;
     msg.scoringText = question.scoringText;
     msg.maxScoringText = question.maxScoringText;
