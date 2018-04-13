@@ -36,6 +36,10 @@ app.get('/judges', function(req, res){
     res.sendFile(__dirname + '/views/judges.html');
 })
 
+app.get('/result', function(req, res){
+    res.sendFile(__dirname + '/views/result.html');
+})
+
 
 
 // --------------------------------------------------

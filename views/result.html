@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teknikåttan</title>
+  <style type="text/css">
+body, html{
+  height: 100%;
+}
+body{
+  background-image: url('images/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right bottom; 
+  font-family: "Verdana", sans-serif;
+  font-size: 1.2em;
+  margin: 0px;
+}
+td {
+  border:1px solid black;
+  padding:20px;
+  text-align: center;
+}
+th{
+  padding: 0px 30px;
+}
+#header h1{
+  float: right;
+  font-size: 4em;
+  margin: 0px;
+}
+#header{
+  clear: both;
+  padding: 1%;
+}
+#main{
+  width: 90%;
+  height: 80%;
+  margin: auto;
+  font-size: 2em;
+}
+</style>
+</head>
+<body>
+<div id="header">
+  <img src="images/logo.png" />
+  <h1 id="title">Resultat</h1>
+</div>
+
+<div id="main">
+  <table>
+    <tr id="schools">
+      <th>Fråga</th>
+      <th class="team0">Skola 1</th>
+      <th class="team1">Skola 2</th>
+      <th class="team2">Skola 3</th>
+    </tr>
+    <tr id="question0">
+      <th>1</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question1">
+      <th>2</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question2">
+      <th>3</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question3">
+      <th>4</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question4">
+      <th>5</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question5">
+      <th>6</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question6">
+      <th>7</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="question7">
+      <th>8</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+    <tr id="total">
+      <th>=</th>
+      <td class="team0"></td>
+      <td class="team1"></td>
+      <td class="team2"></td>
+    </tr>
+  </table>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="js/result.js"></script>
+</body>
+</html>
