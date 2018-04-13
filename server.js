@@ -125,7 +125,6 @@ var slideIndex = 0;
 var hintIndex = 0;
 var trueFalseIndex = 0;
 var nextState = 'showImage';
-var previousState = 'begin';
 var currentTimer; // The current timer that was started by setInterval
 var numberOfQuestionsWithoutNumber = 0;
 
@@ -135,11 +134,6 @@ io.on('connection', function(socket){
     publishScoresJudge(0)
     publishScoresJudge(1)
     publishScoresJudge(2)
-
-    switch(previousState){
-    case "asdf":
-        break;
-    }
     
     
     socket.on('disconnect', function(){
@@ -148,24 +142,16 @@ io.on('connection', function(socket){
     socket.on('next', function(msg){
         nextPressed();
     });
-    socket.on('previous', function(msg){
-        previousPressed();
-    });
 })
 
 http.listen(3000, function () {
   console.log('Magic is happening on port 3000!')
 })
 
-function previousPressed(){
-    
-}
-
 function nextPressed(){
     var question = questions[currentQuestion];
     if(!question){
         console.error("No questions left");
-        previousState = nextState;
         nextState = "end";
     }
     switch(nextState){
@@ -181,21 +167,18 @@ function nextPressed(){
     case 'startTimer':
         console.log("Start timer for question " + currentQuestion);
         startTimer(question.time);
-        previousState = nextState;
         nextState = "showBeforeAnswer";
         break;
     case 'showHints':
         console.log('Handle hints for question ' + currentQuestion);
         if(showHints(question)){
             console.log("Change state to show before answer");
-            previousState = nextState;
             nextState = 'showBeforeAnswer';
         }
         break;
     case 'showTrueFalse':
         console.log('Handle true/false statements for question ' + currentQuestion);
         if(showTrueFalse(question)){
-            previousState = nextState;
             nextState = 'showImage';
             currentQuestion++;
         }
@@ -234,7 +217,6 @@ function publishImage(question){
     msg.maxScoringText = question.maxScoringText;
     msg.time = formatTime(question.time);
     io.emit('image', msg);
-    previousState = nextState;
     nextState = 'showQuestion';
 }
 
@@ -257,15 +239,12 @@ function showQuestion(question){
     // When no more parts of the question has to be shown we continue on:
     switch(question.type){
     case 'normal':
-        previousState = nextState;
         nextState = 'startTimer';
         break;
     case 'hints':
-        previousState = nextState;
         nextState = 'showHints';
         break;
     case 'truefalse':
-        previousState = nextState;
         nextState = 'showTrueFalse';
         break;
     default:
@@ -294,7 +273,6 @@ function publishBeforeAnswer(){
     console.log("Publish before answer");
     var msg = {};
     io.emit('beforeAnswer', msg);
-    previousState = nextState;
     nextState = "showAnswer";
 }
 
@@ -306,7 +284,6 @@ function publishAnswer(question){
     io.emit('answer', msg);
 
     currentQuestion++;
-    previousState = nextState;
     nextState = "showImage";
 }
 
