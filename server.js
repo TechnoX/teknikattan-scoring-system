@@ -149,6 +149,9 @@ http.listen(3000, function () {
 })
 
 function nextPressed(){
+    if(nextState == 'showImage'){
+        currentQuestion++;
+    }
     var question = questions[currentQuestion];
     if(!question){
         console.error("No questions left");
@@ -157,7 +160,6 @@ function nextPressed(){
     switch(nextState){
     case 'showImage':
         resetCounters();
-        currentQuestion++;
         console.log("Show title image for question " + currentQuestion);
         publishImage(question);
         break;
@@ -294,8 +296,7 @@ function publishEnd(question){
     console.log("Publish end message");
     var msg = {};
     io.emit('end', msg);
-    currentQuestion = -1;
-    nextState = "showImage";
+    process.exit(1);
 }
 
 
