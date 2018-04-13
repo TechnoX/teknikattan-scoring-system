@@ -68,6 +68,20 @@ label{
 #info{
   float: left;
 }
+
+
+}
+
+ol { counter-reset: item }
+ol li { display: block; padding-left: 30px; position: relative; }
+ol li:before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  width: 2em;
+  position:absolute;
+  left: 0;
+}
+
 </style>
 </head>
 <body>
