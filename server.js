@@ -120,7 +120,7 @@ var questions = [{type: 'normal', title: 'Förmörkelser', answer_type: [['Nymå
              ]
 */
 
-var currentQuestion = 0;
+var currentQuestion = -1;
 var slideIndex = 0;
 var hintIndex = 0;
 var trueFalseIndex = 0;
@@ -157,6 +157,7 @@ function nextPressed(){
     switch(nextState){
     case 'showImage':
         resetCounters();
+        currentQuestion++;
         console.log("Show title image for question " + currentQuestion);
         publishImage(question);
         break;
@@ -184,7 +185,6 @@ function nextPressed(){
         console.log('Handle true/false statements for question ' + currentQuestion);
         if(showTrueFalse(question)){
             nextState = 'showImage';
-            currentQuestion++;
         }
         break;
     case 'showBeforeAnswer':
@@ -286,8 +286,6 @@ function publishAnswer(question){
     var msg = {};
     msg.answer = question.answer;
     io.emit('answer', msg);
-
-    currentQuestion++;
     nextState = "showImage";
 }
 
