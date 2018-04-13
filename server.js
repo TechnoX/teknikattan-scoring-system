@@ -103,7 +103,7 @@ app.post('/scoring', function(req, res){
 var teams = [{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []},{name: 'Sjöängsskolan', score: 0, answers: []}];
 //var teams = [{name: 'Södervärnsskolan', score: 0, answers: []},{name: 'Malmlättsskolan', score: 0, answers: []},{name: 'Hultdalsskola', score: 0, answers: []}];
 
-var questions = [{type: 'practical', title: 'Klassuppgift', no_number: true, answer_type: ['practical'], image: 'images/katapult.jpg', leftText: '<p>Klassuppgift</p>', rightText: '', timeText: '1 minut', scoringText: '4 poäng per träff', maxScoringText: '40 poäng', time: 10, slides: ['<p>Klassuppgift</p>'], answer: '<p></p>'},
+var questions = [{type: 'normal', title: 'Klassuppgift', no_number: true, answer_type: ['practical'], image: 'images/katapult.jpg', leftText: '<p>Klassuppgift</p>', rightText: '', timeText: '1 minut', scoringText: '4 poäng per träff', maxScoringText: '40 poäng', time: 10, slides: ['<p>Klassuppgift</p>'], answer: '<p></p>'},
                  {type: 'normal', title: 'Testfråga', no_number: true, answer_type: ['number'], image: 'images/spider.jpg', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'}
                 ]
 
@@ -167,7 +167,11 @@ function nextPressed(){
     case 'startTimer':
         console.log("Start timer for question " + currentQuestion);
         startTimer(question.time);
-        nextState = "showBeforeAnswer";
+        if(question.answer_type == 'practical'){
+            nextState = 'showImage';
+        }else{
+            nextState = "showBeforeAnswer";
+        }
         break;
     case 'showHints':
         console.log('Handle hints for question ' + currentQuestion);
