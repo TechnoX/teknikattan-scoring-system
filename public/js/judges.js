@@ -52,7 +52,7 @@ $(function () {
 
     socket.on('generalToJudges', function(msg){
         $("#team"+msg.teamIndex+" .total-score").html(msg.team.score);
-        $("#team"+msg.teamIndex+" h2").html(msg.team.name);
+        $("#team"+msg.teamIndex+" h5").html(msg.team.name);
     });
 
 
