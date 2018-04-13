@@ -1,7 +1,7 @@
 $(function () {
     var socket = io();
     socket.on('image', function(msg){
-        $('#title').html(msg.index + ". " + msg.title);
+        $('#title').html((msg.index-msg.numberOffset) + ". " + msg.title);
         $('#left').html("<p><img src='"+msg.image+"' style='max-width: 65%; max-height: 15em'/></p>");
         $('#right').empty();
         $('#time').html(msg.time);

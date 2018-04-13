@@ -6,7 +6,7 @@ $(function () {
         currentQuestion = msg.index;
         $('.scoring').show();
         $('input').val('');
-        $('#title').html(msg.index + ". " + msg.title);
+        $('#title').html((msg.index-msg.numberOffset) + ". " + msg.title);
         $('.answers').html("<img src='"+msg.image+"' class='mainimage'/>");
     });
     socket.on('question', function(msg){

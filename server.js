@@ -124,6 +124,8 @@ var trueFalseIndex = 0;
 var nextState = 'showImage';
 var previousState = 'begin';
 var currentTimer; // The current timer that was started by setInterval
+var numberOfQuestionsWithoutNumber = 0;
+
 
 io.on('connection', function(socket){
     console.log('a user connected')
@@ -217,7 +219,11 @@ function publishImage(question){
     console.log("Publish title image");
     var msg = {};
     msg.image = question.image;
+    if(question.no_number){
+        numberOfQuestionsWithoutNumber++;
+    }
     msg.index = currentQuestion;
+    msg.numberOffset = numberOfQuestionsWithoutNumber;
     msg.title = question.title;
     msg.timeText = question.timeText;
     msg.scoringText = question.scoringText;
