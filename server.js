@@ -294,6 +294,8 @@ function publishEnd(question){
     console.log("Publish end message");
     var msg = {};
     io.emit('end', msg);
+    currentQuestion = -1;
+    nextState = "showImage";
 }
 
 
