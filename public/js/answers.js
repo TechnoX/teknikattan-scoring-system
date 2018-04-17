@@ -60,6 +60,7 @@ $(function () {
                 trueFalseAnswer()
                 break
             case 'practical':
+                practicalAnswer();
                 break
             default:
                 console.warn("Unknown answer type: " + msg.answer_type);
@@ -151,6 +152,9 @@ $(function () {
     }
     function trueFalseAnswer(){
         $('#main').html("<table id='truefalse'><tr><td id='true' onclick='trueClick();'>Sant</td><td id='false' onclick='falseClick()'>Falskt</td></tr></table>");
+    }
+    function practicalAnswer(){
+        $('#main').html("<p>Här får ni lägga undan paddan och jobba praktiskt.</p>");
     }
 });
 
