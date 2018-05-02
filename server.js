@@ -40,6 +40,10 @@ app.get('/result', function(req, res){
     res.sendFile(__dirname + '/views/result.html');
 })
 
+app.get('/regionfinal', function(req, res){
+    res.sendFile(__dirname + '/views/regionfinal.html');
+})
+
 
 
 // --------------------------------------------------
@@ -80,8 +84,8 @@ app.post('/scoring', function(req, res){
     console.log('Update score for team '+req.body.teamIndex+' with: ' + req.body.score);
    
     // Ignores the test question
-    if(questions[req.body.questionIndex].title == 'Testfråga')
-        return;
+/*    if(questions[req.body.questionIndex].title == 'Testfråga')
+        return;*/
     teams[req.body.teamIndex].answers[req.body.questionIndex] = Number(req.body.score);
     var totalScore = 0;
     for(var i = 0; i < teams[req.body.teamIndex].answers.length; i++){
