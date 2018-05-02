@@ -1,0 +1,39 @@
+<section>
+  <h1>Lägg till informationsslide:</h1>
+
+  <label>
+    Text på projektorn:<br>
+    <textarea ng-model="text-projector"></textarea>
+  </label>
+
+  <table>
+    <tr>
+      <td>
+        <label>
+          Vänster kolumn på tävlandes skärm:<br>
+          <textarea ng-model="text-left"></textarea>
+        </label>
+      </td>
+      <td>
+        <label ng-show="question_type == 'normal'"><!-- only showed when "normal" question --> 
+          Höger kolumn på tävlandes skärm:<br>
+          <textarea ng-model="text-right"></textarea>
+        </label>
+      </td>
+    </tr>
+  </table>
+
+  <label>Ska ha nedräkning: <input type="checkbox" ng-model="hasTimer"></label>
+  <label ng-show="hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="time">sekunder</label>
+</section>
+
+
+
+<section id="add-slide">
+  <h1>Lägg till en ny: </h1>
+  <ul>
+    <li id="add-question"><i class="fas fa-plus-circle"></i> Fråga</li>
+    <li id="add-info"><i class="fas fa-plus-circle"></i> Informationsslide</li>
+    <li id="add-answer"><i class="fas fa-plus-circle"></i> Svarsslide (rätt svar)</li>
+  </ul>
+</section>
