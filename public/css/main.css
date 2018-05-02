@@ -4,20 +4,20 @@ html, body{
 }
 
 h1{
-    font-size: 4vw;
+    font-size: 3vw;
     font-weight: bold;
     text-align: center;
     padding: 4vh 0vw;
 }
 
 h2{
-    font-size: 2vw;
+    font-size: 1.5vw;
     font-weight: bold;
     text-align: center;
 }
 
 h1 input{
-    font-size: 4vw;
+    font-size: 3vw;
     width: 10em;
 }
 
