@@ -118,25 +118,24 @@ $(function () {
     }
 
     function pairingAnswer(pair1, pair2){
-        var html = "<div id='selectables'>";
+        var selectables = $("<div id='selectables'></div>");
         if(pair1.length >= pair2.length){
             for(var i = 0; i < pair1.length; i++){
-                html += "<div class='selectable' draggable='true' ondragstart='drag(event)' id='drag"+i+"'>"+pair1[i]+"</div>";
+                $("<div class='selectable' id='drag"+i+"'>"+pair1[i]+"</div>").appendTo(selectables).draggable();;
             }
-            html += "</div>";
-            html += "<table id='pairing'>";
+
+            var table = $("<table id='pairing'></table>");
             for(var i = 0; i < pair2.length; i++){
-                html += "<tr><td id='drop"+i+"' ondrop='drop(event)' ondragover='allowDrop(event)'></td><td>"+pair2[i]+"</td></tr>";
+                html += "<tr><td id='drop"+i+"'></td><td>"+pair2[i]+"</td></tr>";
             }
-            html += "</table>";
         }else{
             for(var i = 0; i < pair2.length; i++){
-                html += "<div class='selectable' draggable='true' ondragstart='drag(event)' id='drag"+i+"'>"+pair2[i]+"</div>";
+                html += "<div class='selectable' id='drag"+i+"'>"+pair2[i]+"</div>";
             }
             html += "</div>";
             html += "<table id='pairing'>";
             for(var i = 0; i < pair1.length; i++){
-                html += "<tr><td>"+pair1[i]+"</td><td id='drop"+i+"' ondrop='drop(event)' ondragover='allowDrop(event)'></td></tr>";
+                html += "<tr><td>"+pair1[i]+"</td><td id='drop"+i+"'></td></tr>";
             }
             html += "</table>";
         }
@@ -192,48 +191,6 @@ function falseClick(){
         alert("Error!!");
         console.error("Error: false click");
     });
-}
-
-function allowDrop(ev) {
-    console.log("allowdrop");
-    ev.preventDefault();/*
-    if (ev.target.getAttribute("draggable") == "true")
-        ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
-    else
-        ev.dataTransfer.dropEffect = "all"; // drop it like it's hot
-    */
-}
-
-function drag(ev) {
-    if(timesUp)
-        return false;
-    console.log("drag");
-    ev.dataTransfer.setData("text", ev.target.id);
-    console.log(ev.dataTransfer.getData("text"));
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    if(timesUp)
-        return false;
-    console.log("drop");
-    var data = ev.dataTransfer.getData("text");
-    sendDrop(data, ev.target.id);
-    if (ev.target.getAttribute("draggable") == "true"){
-        console.log("Drop on old label")
-        console.log("add new element to cell")
-        ev.target.parentNode.insertBefore(document.getElementById(data), ev.target);
-        console.log("move old cell up to pickable list")
-        document.getElementById('selectables').appendChild(ev.target);
-    }else{
-        console.log("drop in table cell")
-        if(ev.target.firstChild){
-            console.log("table cell already contains data, removes the old data")
-            document.getElementById('selectables').appendChild(ev.target.firstChild);
-        }
-        console.log("add new element to cell")
-        ev.target.appendChild(document.getElementById(data));
-    }
 }
 
 function sendDrop(draggedID, droppedID){

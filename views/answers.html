@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Teknikåttan</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/base/jquery-ui.css">
   <style type="text/css">
 body, html{
   height: 100%;
@@ -16,7 +17,10 @@ body{
   font-size: 1.2em;
   margin: 0px;
 }
-td {border:1px solid black;padding:20px;}
+td {
+  border:1px solid black;
+  padding:20px;
+}
 h1{
   margin: 0px;
 }
@@ -117,11 +121,11 @@ background-color: #2196F3;
 
 
 #selectables div{
-  margin: 30px;
+  margin: 5px;
 }
 .selectable{
   float: left;
-  padding: 10px;
+  padding: 4px;
   border: 3px solid black;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,6 +137,10 @@ background-color: #2196F3;
 }
 #pairing td{
   width: 50%;
+  padding: 2px;
+}
+#pairing img{
+  display: block;
 }
 #pairing td div{
   padding: 0px;
@@ -168,6 +176,7 @@ background-color: #2196F3;
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <script src="js/answers.js"></script>
 </body>
 </html>
