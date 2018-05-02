@@ -126,7 +126,8 @@ $(function () {
 
             var table = $("<table id='pairing'></table>");
             for(var i = 0; i < pair2.length; i++){
-                html += "<tr><td id='drop"+i+"'></td><td>"+pair2[i]+"</td></tr>";
+                // TODO: Here am I working on drag and drop stuff! Replacing html +=  with jQuery equivalent
+                $("<tr><td id='drop"+i+"'></td><td>"+pair2[i]+"</td></tr>";
             }
         }else{
             for(var i = 0; i < pair2.length; i++){
