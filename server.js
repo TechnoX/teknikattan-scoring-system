@@ -44,6 +44,10 @@ app.get('/regionfinal', function(req, res){
     res.sendFile(__dirname + '/views/regionfinal.html');
 })
 
+app.get('/editor', function(req, res){
+    res.sendFile(__dirname + '/views/editor.html');
+})
+
 
 
 // --------------------------------------------------
