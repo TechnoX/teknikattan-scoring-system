@@ -100,8 +100,9 @@ app.post('/scoring', function(req, res){
 // Database
 // --------------------------------------------------
 
-//var teams = [{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []},{name: 'Sjöängsskolan', score: 0, answers: []}];
-var teams = [{name: 'Södervärnsskolan', score: 0, answers: []},{name: 'Malmlättsskolan', score: 0, answers: []},{name: 'Hultdalsskola', score: 0, answers: []}];
+//var teams = [{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []},{name: 'Södervärnsskolan', score: 0, answers: []}];
+//var teams = [{name: 'Sjöängsskolan', score: 0, answers: []},{name: 'Malmlättsskolan', score: 0, answers: []},{name: 'Hultdalskolan', score: 0, answers: []}];
+var teams = [{name: 'Sjöängsskolan', score: 0, answers: []},{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []}];
 
 var questions = [{type: 'normal', title: 'Klassuppgift', no_number: true, answer_type: 'practical', image: 'images/trebuchet.jpg', leftText: '<p style="color: red;">Vad ska stå här? Hur lång tid? Poäng? Maxpoäng?</p>', rightText: '', timeText: '1 minut', scoringText: '4 poäng per träff', maxScoringText: '40 poäng', time: 10, slides: ['<p style="color: red;">Vad ska stå här? Hur lång tid? Poäng? Maxpoäng?</p>']},
                  {type: 'normal', title: 'Testfråga', no_number: true, answer_type: ['number'], image: 'images/spider.jpg', leftText: '<p>Hur många ben har en spindel?</p>', rightText: '', timeText: '10 sekunder', scoringText: '0 poäng per fråga', maxScoringText: '0 poäng', time: 10, slides: ['<p>Hur många ben har en spindel?</p>'], answer: '<p>En spindel har <strong>åtta</strong> ben!</p>'},
