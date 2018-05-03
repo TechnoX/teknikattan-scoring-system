@@ -1,30 +1,53 @@
 <section>
   <h1>Lägg till informationsslide:</h1>
 
-  <label>
-    Text på projektorn:<br>
-    <textarea ng-model="text-projector"></textarea>
-  </label>
+  
+  <article class="projector">
+    <header>
+      <img src="images/logo.png" />
+      <h1>{{title}}</h1>
+    </header>
+    <figure><img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350"/></figure>
 
-  <table>
-    <tr>
-      <td>
-        <label>
-          Vänster kolumn på tävlandes skärm:<br>
-          <textarea ng-model="text-left"></textarea>
-        </label>
-      </td>
-      <td>
-        <label ng-show="question_type == 'normal'"><!-- only showed when "normal" question --> 
-          Höger kolumn på tävlandes skärm:<br>
-          <textarea ng-model="text-right"></textarea>
-        </label>
-      </td>
-    </tr>
-  </table>
+    <main ng-model="textProjector">Här är en fråga för publiken</main>
+    <footer>
+      <time>{{time}}</time>
+      <section>
+        <label>Tid:</label> {{timeText}}<br>
+        <label>Poäng:</label> {{scoringText}}<br>
+        <label>Maxpoäng:</label> {{maxScoringText}}<br>
+      </section>
+    </footer>
+  </article>
 
-  <label>Ska ha nedräkning: <input type="checkbox" ng-model="hasTimer"></label>
-  <label ng-show="hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="time">sekunder</label>
+
+  <article class="competitor">
+    <header>
+      <img src="images/logo.png" />
+      <h1>{{title}}</h1>
+    </header>
+    <main>
+      <img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350" />
+      <p>Tävlandes skärm!</p>
+    </main>
+    <aside>Höger kolumn!</aside>
+    <footer>
+      <time>{{time}}</time>
+      <section>
+        <label>Tid:</label> {{timeText}}<br>
+        <label>Poäng:</label> {{scoringText}}<br>
+        <label>Maxpoäng:</label> {{maxScoringText}}<br>
+      </section>
+    </footer>
+  </article>
+
+
+ 
+  
+  <p style="clear: both;">
+    <label>Ska ha nedräkning: <input type="checkbox" ng-model="hasTimer"></label><br>
+    <label ng-show="hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="time">sekunder</label>
+  </p>
 </section>
 
 

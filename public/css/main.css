@@ -7,7 +7,7 @@ h1{
     font-size: 3vw;
     font-weight: bold;
     text-align: center;
-    padding: 4vh 0vw;
+    padding: 0.67em 0em;
 }
 
 h2{
@@ -69,10 +69,93 @@ h1 input{
 }
 
 
-#question{
-    background-image: url('images/background.jpg');
+
+
+article{
+    background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: right bottom;
-    background-size: contain;
+    background-size: 70%;
+    font-family: "Verdana", sans-serif;
+    font-size: 0.5vw;
+    margin: 0px;
+    border: 2px solid black;
+    width: 40vw;
+    height: 22.5vw;
+    margin: 0vw 2vw;
+    float: left;
+    position: relative;
+}
+
+
+article header{
+    clear: both;
+    padding: 1%;
+}
+article header h1{
+    float: right;
+    font-size: 4em;
+    margin: 0px;
+}
+article header img{
+    height: 9em;
+}
+article main{
+    box-sizing: border-box;
+    padding-left: 2em;
+    height: 75%;
+}
+.competitor main{
+    width: 50%;
+    float: left;
+}
+article aside{
+    box-sizing: border-box;
+    padding-left: 2em;
+    height: 75%;
+    width: 50%;
+    float: left;
+}
+article footer{
+    clear: both;
+    padding: 1%;
+    position: absolute;
+    bottom: 0px;
+}
+article footer label{
+    font-weight: bold;
+}
+article footer time{
+    float: left;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.1em;
+    font-weight: bold;
+    width: 4em;
+}
+article footer section{
+    float: left;
+}
+
+.projector figure {
+    float: right;
+    padding: 1%;
+    width: 25%;
+}
+.projector figure img{
+    width: 100%;
+}
+.projector main{
+    font-size: 2em;
+}
+.projector main figure{
+    max-width: 80%;
+    max-height: 15em;
+    margin: auto;
+    display: block;
+    clear: both;
+}
+
+.competitor main img{
+    max-width: 65%;
+    max-height: 15em;
 }
