@@ -19,10 +19,10 @@
   
   <table id="timeline">
     <tr>
-      <td ng-repeat="s in slides"><projector slide="s"></projector></td>
+      <td ng-repeat="s in slides | orderBy: 'index'" ng-click="changeSlide(s)"><projector slide="s"></projector></td>
     </tr>
     <tr>
-      <td ng-repeat="s in slides"><competitor slide="s"></competitor></td>
+      <td ng-repeat="s in slides | orderBy: 'index'" ng-click="changeSlide(s)"><competitor slide="s"></competitor></td>
     </tr>
   </table>
 </body>
