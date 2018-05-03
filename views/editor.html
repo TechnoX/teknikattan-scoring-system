@@ -15,7 +15,29 @@
 </head>
 <body ng-app="t8" ng-controller="editorCtrl">
 
-  <div id="editor" ng-include="'/template/editor_info.html'"></div>
+  <div id="editor">
+    <section>
+      <projector slide="currSlide" editable="editOptions"></projector>
+      <competitor slide="currSlide" editable="editOptions"></competitor>
+      
+      <section id="countdown-settings">
+        <label>Startar nedräkning när man trycker nästa efter denna slide: <input type="checkbox" ng-model="currSlide.hasTimer"></label><br>
+        <label ng-show="currSlide.hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="currSlide.time" min="0" max="3599">sekunder</label>
+      </section>
+    </section>
+    
+    
+    
+    <section id="add-slide">
+      <h1>Lägg till: </h1>
+      <ul>
+        <li id="add-question"><i class="fas fa-plus-circle"></i> Helt ny fråga</li>
+        <li id="add-info"><i class="fas fa-plus-circle"></i> Extra slide till denna fråga</li>
+        <li id="add-answer"><i class="fas fa-plus-circle"></i> Svar till denna fråga</li>
+        <li id="add-answer"><i class="fas fa-plus-circle"></i> Extra slide utan fråga</li>
+      </ul>
+    </section>
+  </div>
   
   <table id="timeline">
     <tr>
