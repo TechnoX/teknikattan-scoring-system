@@ -16,11 +16,10 @@ h2{
     text-align: center;
 }
 
-h1 input{
-    font-size: 3vw;
-    width: 10em;
+input{
+    font-size: inherit;
+    width: 12em;
 }
-
 #editor{
     width: 100%;
     height: 60%;
@@ -59,10 +58,6 @@ h1 input{
     font-weight: bold;
 }
 
-#countdown-settings{
-    clear: both;
-    margin: 0vw 2vw;
-}
 #timeline {
     width: 100%;
     height: 40%;
@@ -145,6 +140,7 @@ article footer{
     padding: 1%;
     position: absolute;
     bottom: 0px;
+    width: 100%;
 }
 article footer label{
     font-weight: bold;
