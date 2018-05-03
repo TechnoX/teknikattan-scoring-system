@@ -73,22 +73,25 @@ h1 input{
 }
 
 
-
-
 article{
     background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 70%;
     font-family: "Verdana", sans-serif;
+    font-size: 0.8vw;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#editor article{
     font-size: 0.5vw;
-    margin: 0px;
     border: 2px solid black;
     width: 40vw;
     height: 22.5vw;
     margin: 0vw 2vw;
     float: left;
-    position: relative;
 }
 
 
@@ -112,12 +115,14 @@ article main{
 .competitor main{
     width: 50%;
     float: left;
-    display: flex;
-    flex-direction: column;
+}
+.competitor main img{
+    max-height: 30%;
+    max-width: 25em;
+    padding-bottom: 2%;
 }
 .competitor main div{
-    clear: both;
-    flex: 1;
+    height: 67%;
 }
 article aside{
     box-sizing: border-box;
@@ -166,9 +171,4 @@ article footer section{
     margin: auto;
     display: block;
     clear: both;
-}
-
-.competitor main img{
-    max-width: 65%;
-    max-height: 15em;
 }
