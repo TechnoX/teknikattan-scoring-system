@@ -9,9 +9,9 @@
     </header>
     <figure><img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350"/></figure>
 
-    <main ng-model="textProjector">Här är en fråga för publiken</main>
+    <main ui-tinymce="tinymceOptions" ng-model="textProjector"></main>
     <footer>
-      <time>{{time}}</time>
+      <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
       <section>
         <label>Tid:</label> {{timeText}}<br>
         <label>Poäng:</label> {{scoringText}}<br>
@@ -28,11 +28,11 @@
     </header>
     <main>
       <img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350" />
-      <p>Tävlandes skärm!</p>
+      <div ui-tinymce="tinymceOptions" ng-model="textLeft"></div>
     </main>
-    <aside>Höger kolumn!</aside>
+    <aside ui-tinymce="tinymceOptions" ng-model="textRight"></aside>
     <footer>
-      <time>{{time}}</time>
+      <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
       <section>
         <label>Tid:</label> {{timeText}}<br>
         <label>Poäng:</label> {{scoringText}}<br>

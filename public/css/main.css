@@ -108,6 +108,12 @@ article main{
 .competitor main{
     width: 50%;
     float: left;
+    display: flex;
+    flex-direction: column;
+}
+.competitor main div{
+    clear: both;
+    flex: 1;
 }
 article aside{
     box-sizing: border-box;
@@ -131,6 +137,9 @@ article footer time{
     font-size: 3.1em;
     font-weight: bold;
     width: 4em;
+}
+article footer time.hidden{
+    visibility: hidden;
 }
 article footer section{
     float: left;
