@@ -1,8 +1,6 @@
 <section>
-  <h1>Lägg till informationsslide:</h1>
-
-  <article class="projector" ng-include="'/template/projector.html'"></article>
-  <competitor></competitor>
+  <projector slide="slides[currIndex]"></projector>
+  <competitor slide="slides[currIndex]"></competitor>
   
   <section id="countdown-settings">
     <label>Startar nedräkning när man trycker nästa efter denna slide: <input type="checkbox" ng-model="hasTimer"></label><br>

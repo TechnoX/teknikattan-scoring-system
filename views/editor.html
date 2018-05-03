@@ -17,35 +17,11 @@
   <div id="editor" ng-include="'/template/editor_info.html'"></div>
   
   <table id="timeline">
-    <tr id="projector">
-      <td>bild 1</td>
-      <td>bild 2</td>
-      <td>bild 3</td>
-      <td>bild 4</td>
-      <td>bild 5</td>
-      <td>bild 6</td>
-      <td>bild 7</td>
-      <td>bild 8</td>
-      <td>bild 9</td>
-      <td>bild 10</td>
-      <td>bild 11</td>
-      <td>bild 12</td>
-      <td>bild 13</td>
+    <tr>
+      <td ng-repeat="s in slides"><projector slide="s"></projector></td>
     </tr>
-    <tr id="participants">
-      <td>skärm 1</td>
-      <td>skärm 2</td>
-      <td>skärm 3</td>
-      <td>skärm 4</td>
-      <td>skärm 5</td>
-      <td>skärm 6</td>
-      <td>skärm 7</td>
-      <td>skärm 8</td>
-      <td>skärm 9</td>
-      <td>skärm 10</td>
-      <td>skärm 11</td>
-      <td>skärm 12</td>
-      <td>skärm 13</td>
+    <tr>
+      <td ng-repeat="s in slides"><competitor slide="s"></competitor></td>
     </tr>
   </table>
 </body>

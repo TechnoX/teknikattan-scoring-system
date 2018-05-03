@@ -1,15 +1,19 @@
-<header>
-  <img src="images/logo.png" />
-  <h1>{{title}}</h1>
-</header>
-<figure><img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350"/></figure>
-
-<main ui-tinymce="tinymceOptions" ng-model="textProjector"></main>
-<footer>
-  <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
-  <section>
-    <label>Tid:</label> {{timeText}}<br>
-    <label>Poäng:</label> {{scoringText}}<br>
-    <label>Maxpoäng:</label> {{maxScoringText}}<br>
-  </section>
-</footer>
+<article class="projector">
+  <header>
+    <img src="images/logo.png" />
+    <h1>{{title}}</h1>
+  </header>
+  <figure><img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350"/></figure>
+  <main>
+    <div ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="textProjector"></div>
+    <div ng-if="!tinymceOptions" ng-bind-html="textProjector"></div>
+  </main>
+  <footer>
+    <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
+    <section>
+      <label>Tid:</label> {{timeText}}<br>
+      <label>Poäng:</label> {{scoringText}}<br>
+      <label>Maxpoäng:</label> {{maxScoringText}}<br>
+    </section>
+  </footer>
+</article>
