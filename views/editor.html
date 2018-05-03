@@ -26,10 +26,10 @@
     <section id="add-slide">
       <h1>Lägg till: </h1>
       <ul>
-        <li id="add-question"><i class="fas fa-plus-circle"></i> Helt ny fråga</li>
-        <li id="add-info"><i class="fas fa-plus-circle"></i> Extra slide till denna fråga</li>
-        <li id="add-answer"><i class="fas fa-plus-circle"></i> Svar till denna fråga</li>
-        <li id="add-answer"><i class="fas fa-plus-circle"></i> Extra slide utan fråga</li>
+        <li id="add-question" ng-if="canAddQuestion()" ng-click="addQuestion()">Helt ny fråga</li>
+        <li id="add-info" ng-if="canAddExtraSlide()" ng-click="addExtraSlide()">Extra slide till frågan</li>
+        <li id="add-answer" ng-if="canAddAnswer()" ng-click="addAnswer()">Svar till frågan</li>
+        <li id="add-answer" ng-if="canAddSeparateSlide()" ng-click="addSeparateSlide()">Lös slide utan fråga</li>
       </ul>
     </section>
   </div>
