@@ -1,17 +1,21 @@
-<header>
-  <img src="images/logo.png" />
-  <h1>{{title}}</h1>
-</header>
-<main>
-  <img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350" />
-  <div ui-tinymce="tinymceOptions" ng-model="textLeft"></div>
-</main>
-<aside ui-tinymce="tinymceOptions" ng-model="textRight"></aside>
-<footer>
-  <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
-  <section>
-    <label>Tid:</label> {{timeText}}<br>
-    <label>Poäng:</label> {{scoringText}}<br>
-    <label>Maxpoäng:</label> {{maxScoringText}}<br>
-  </section>
-</footer>
+<article class="competitor">
+  <header>
+    <img src="images/logo.png" />
+    <h1>{{title}}</h1>
+  </header>
+  <main>
+    <img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350" />
+    <div ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="textLeft"></div>
+    <div ng-if="!tinymceOptions" ng-bind-html="textLeft"></div>
+  </main>
+  <aside ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="textRight"></aside>
+  <aside ng-if="!tinymceOptions" ng-bind-html="textRight"></aside>
+  <footer>
+    <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
+    <section>
+      <label>Tid:</label> {{timeText}}<br>
+      <label>Poäng:</label> {{scoringText}}<br>
+      <label>Maxpoäng:</label> {{maxScoringText}}<br>
+    </section>
+  </footer>
+</article>

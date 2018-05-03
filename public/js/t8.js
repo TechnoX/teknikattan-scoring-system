@@ -36,7 +36,7 @@ app.controller('editorCtrl', function($scope) {
 
 });
 
-app.controller('questionCtrl', function($scope) {
+app.controller('questionCtrl', ['$scope', '$sce', function($scope, $sce) {
     $scope.numHints = 1;
     $scope.numTruefalse = 1;
     $scope.numQuestions = 1;
@@ -48,11 +48,32 @@ app.controller('questionCtrl', function($scope) {
     $scope.scoringText = "1 poäng per rätt påstående";
     $scope.maxScoringText = "Totalt 6 poäng";
     $scope.time = 15;
-    $scope.textLeft = "<p>Initial <strong>content</strong> left</p>";
-    $scope.textRight = "<p style='color: red;'>Initial <strong>content</strong> right</p>";
-    $scope.textProjector = "Initial <strong>content</strong> projector";
+    $scope.hasTimer = true;
+    $scope.textLeft =  $sce.trustAsHtml("<p>Initial <strong>content</strong> left</p>");
+    $scope.textRight =  $sce.trustAsHtml("<p style='color: red;'>Initial <strong>content</strong> right</p>");
+    $scope.textProjector =  $sce.trustAsHtml("Initial <strong>content</strong> projector");
 
+    
+}]);
+
+app.directive("competitor", function(){
+    return {
+        templateUrl: "/template/competitor.html",
+        restrict: "E",
+        link: function(scope, el, attr) {
+            scope.some_value = scope.some_value;
+            scope.updateChg = function(){
+                alert(scope.some_value)
+            }
+        }
+    }
 });
+
+
+
+
+
+
 app.controller('answerCtrl', function($scope) {
     // TODO: Implement
 });
