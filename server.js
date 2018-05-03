@@ -3,11 +3,15 @@ var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var bodyParser = require('body-parser');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart({ uploadDir: './uploads' });
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+
+//app.use(multipart({uploadDir: config.tmp }));
 
 // Handles static data
 app.use(express.static('public'))
@@ -48,6 +52,14 @@ app.get('/editor', function(req, res){
     res.sendFile(__dirname + '/views/editor.html');
 })
 
+app.post('/upload', multipartMiddleware, function(req, res) {
+    console.log(req.body, req.files);
+    // don't forget to delete all req.files when done
+    var file = req.files.file;
+    console.log(file.name);
+    console.log(file.type);
+    res.status(200).send('OK');
+});
 
 
 // --------------------------------------------------

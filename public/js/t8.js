@@ -1,7 +1,24 @@
+var app = angular.module('t8', ['ui.tinymce', 'ngSanitize', 'ngFileUpload']);
 
+app.controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+    // upload on file select or drop
+    $scope.upload = function (file) {
+        console.log("Start upload");
+        Upload.upload({
+            url: '/upload',
+            data: {file: file}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
+}]);
 
-var app = angular.module('t8', ['ui.tinymce', 'ngSanitize']);
-app.controller('editorCtrl', function($scope) {
+app.controller('editorCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     $scope.slides = [
         {index: 1, order: 2, title: "TitelPåFråga", image: "/images/ogonmatt.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
         {index: 2, order: 4, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
@@ -21,7 +38,7 @@ app.controller('editorCtrl', function($scope) {
     $scope.numAlternatives = 1;
     $scope.numPairsB = 1;
     $scope.numPairsA = 1;
-    
+
     /*
     $scope.addNewQuestion = function () {
         $scope.slides.push({
@@ -46,7 +63,7 @@ app.controller('editorCtrl', function($scope) {
         return new Array(n);
     };
 
-});
+}]);
 
 
 

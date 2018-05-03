@@ -1,10 +1,19 @@
 <article class="competitor">
   <header>
     <h1 ng-click="edit='title'">{{slide.index}}. <input type="text" ng-show="edit=='title'" ng-model="slide.title" /><span ng-show="edit!='title'">{{slide.title}}</span></h1>
-    <img src="images/logo.png" ng-click="changeImage()"/>
+    <img src="images/logo.png"/>
   </header>
   <main>
-    <img src="{{slide.image}}" />
+    
+    <form ng-controller="MyCtrl" name="form">
+      <div class="button" ngf-select="upload($file)">Upload on file select</div>
+      <!--<div ngf-select="upload($file)" ngf-pattern="'image/*'"
+         ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
+         ngf-resize-if="$width > 800 || $height > 800"
+         ngf-resize="{width: 400}">Välj en bild</div>-->
+    </form>
+    <img ng-src="{{slide.image}}" ng-click="edit='image'" ng-show="edit!='image'"/>
+ 
     <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
