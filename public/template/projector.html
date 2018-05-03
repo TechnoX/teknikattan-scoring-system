@@ -1,19 +1,19 @@
 <article class="projector">
   <header>
+    <h1>{{slide.index}}. {{slide.title}}</h1>
     <img src="images/logo.png" />
-    <h1>{{title}}</h1>
   </header>
-  <figure><img src="https://images.pexels.com/photos/36744/agriculture-arable-clouds-countryside.jpg?auto=compress&cs=tinysrgb&h=350"/></figure>
+  <figure><img src="{{slide.image}}"/></figure>
   <main>
-    <div ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="textProjector"></div>
-    <div ng-if="!tinymceOptions" ng-bind-html="textProjector"></div>
+    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textProjector"></div>
+    <div ng-if="!editable" ng-bind-html="slide.textProjector"></div>
   </main>
   <footer>
-    <time ng-class="{'hidden': !hasTimer}">{{time*1000 | date:'mm:ss'}}</time>
+    <time ng-class="{'hidden': !slide.hasTimer}">{{slide.time*1000 | date:'mm:ss'}}</time>
     <section>
-      <label>Tid:</label> {{timeText}}<br>
-      <label>Poäng:</label> {{scoringText}}<br>
-      <label>Maxpoäng:</label> {{maxScoringText}}<br>
+      <label>Tid:</label> {{slide.timeText}}<br>
+      <label>Poäng:</label> {{slide.scoringText}}<br>
+      <label>Maxpoäng:</label> {{slide.maxScoringText}}<br>
     </section>
   </footer>
 </article>

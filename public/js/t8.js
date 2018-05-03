@@ -10,7 +10,7 @@ app.controller('editorCtrl', function($scope) {
         {index: 5, title: "Lampor", image: "/images/lampor.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p style='color: red;'>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}];
 
 
-    $scope.currIndex = 0;
+    $scope.currSlide = $scope.slides[0];
     $scope.numHints = 1;
     $scope.numTruefalse = 1;
     $scope.numQuestions = 1;
@@ -25,7 +25,7 @@ app.controller('editorCtrl', function($scope) {
         });
     };*/
     
-    $scope.tinymceOptions = {
+    $scope.editOptions = {
         theme: 'inlite',
         plugins: 'image media table link paste contextmenu textpattern autolink',
         insert_toolbar: 'quickimage quicktable media',
@@ -49,7 +49,8 @@ app.directive("competitor", function() {
     return {
         templateUrl: "/template/competitor.html",
         scope: {
-            slide: '@',
+            slide: '=',
+            editable: '='
         },
         restrict: "E"
     }
@@ -59,6 +60,10 @@ app.directive("competitor", function() {
 app.directive("projector", function(){
     return {
         templateUrl: "/template/projector.html",
+        scope: {
+            slide: '=',
+            editable: '='
+        },
         restrict: "E"
     }
 });

@@ -1,15 +1,15 @@
 <article class="competitor">
   <header>
-    <img src="images/logo.png" />
     <h1>{{slide.index}}. {{slide.title}}</h1>
+    <img src="images/logo.png" />
   </header>
   <main>
     <img src="{{slide.image}}" />
-    <div ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="slide.textLeft"></div>
-    <div ng-if="!tinymceOptions" ng-bind-html="slide.textLeft"></div>
+    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
+    <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
-  <aside ng-if="tinymceOptions" ui-tinymce="tinymceOptions" ng-model="slide.textRight"></aside>
-  <aside ng-if="!tinymceOptions" ng-bind-html="slide.textRight"></aside>
+  <aside ng-if="editable" ui-tinymce="editable" ng-model="slide.textRight"></aside>
+  <aside ng-if="!editable" ng-bind-html="slide.textRight"></aside>
   <footer>
     <time ng-class="{'hidden': !slide.hasTimer}">{{slide.time*1000 | date:'mm:ss'}}</time>
     <section>
