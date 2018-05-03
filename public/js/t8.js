@@ -1,6 +1,6 @@
 
 
-var app = angular.module('t8', ['ui.tinymce']);
+var app = angular.module('t8', ['ui.tinymce', 'ngSanitize']);
 app.controller('editorCtrl', function($scope) {
     $scope.slides = [
         {index: 1, title: "TitelPåFråga", image: "/images/ogonmatt.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p style='color: red;'>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
