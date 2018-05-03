@@ -3,80 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Teknikåttan</title>
-  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-<style type="text/css">
-body{
-  background-image: url('images/background.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: right bottom; 
-  font-family: "Verdana", sans-serif;
-  font-size: 1.2em;
-  margin: 0px;
-}
-h1{
-  float: right;
-  font-size: 4em;
-  margin: 0px;
-}
-label{
-  font-weight: bold;
-}
-#header{
-  clear: both;
-  padding: 1%;
-}
-#left{
-  float: left;
-  width: 48%;
-  padding: 1%;
-}
-#right{
-  float: left;
-  width: 48%;
-  padding: 1%;
-}
-#center{
-  width: 50%;
-  margin: auto;
-  background-color: red;
-}
-#footer{
-  clear: both;
-  padding: 1%;
-  position: absolute;
-  bottom: 0px;
-}
-#time{
-  float: left;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3.1em;
-  font-weight: bold;
-  width: 4em;
-}
-#info{
-  float: left;
-}
-</style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=b64t93vwkjvchfm40w8k1z2p3ie3bj2b6li8fne5w3if12b2"></script>
+  <script src="js/tinymce.min.js"></script>
+  <link href="css/reset.css" rel="stylesheet" type="text/css">
+  <link href="css/main.css" rel="stylesheet" type="text/css">
+  <script src="js/t8.js"></script>  
 </head>
-<body>
-<div id="header">
-  <img src="images/logo.png" />
-  <h1 id="title"></h1>
-</div>
-
-<div id="left"><h2>Välkomna till Teknikåttan!</h2>Vi önskar er ett stort lycka till!</div>
-<div id="right"></div>
-<div id="footer">
-  <div id="time"></div>
-  <div id="info">
-    <label>Tid:</label> <span id="timeText"></span><br>
-    <label>Poäng:</label> <span id="scoringText"></span><br>
-    <label>Maxpoäng:</label> <span id="maxScoringText"></span><br>
-  </div>
-</div>
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="js/competitors.js"></script>
+<body ng-app="t8" ng-controller="questionCtrl">
+  <article class="competitor" ng-include="'/template/competitor.html'"></article>
 </body>
 </html>
