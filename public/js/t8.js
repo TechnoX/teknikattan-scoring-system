@@ -12,7 +12,7 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
         }).then(function (resp) {
             if(resp.data.success){
                 var path = resp.data.path;
-                $scope.$parent.$parent.$parent.currQuestion.image = path;
+                $scope.$parent.$parent.currQuestion.image = path;
                 console.log('Success uploaded. Response: ', path);
             }
         }, function (resp) {
