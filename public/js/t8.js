@@ -69,7 +69,13 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
              {time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]}
     ];
-
+    $scope.index = function(question){
+        var index = -1;
+        $scope.questions.some(function(obj, i) {
+            return obj === question ? index = i : false;
+        });
+        return index+1;
+    }
     $scope.changeSlide = function(question,slide){
         $scope.currQuestion=question;
         $scope.currSlide=slide;
