@@ -20,7 +20,7 @@
         <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="question.hints[$index]" style="width: 25em;" /></label>
         <a ng-click="removeHint($index)" href="#">Ta bort</a>
       </li>
-      <li><a ng-click="addHint(question.hints, '')" href="#">Lägg till ledtråd</a></li>
+      <li><a ng-click="addHint()" href="#">Lägg till ledtråd</a></li>
     </ol>
     <ol ng-show="question.type == 'truefalse'">
       <li ng-repeat="statement in question.statements track by $index">
