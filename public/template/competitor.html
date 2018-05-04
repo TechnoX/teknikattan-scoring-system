@@ -5,14 +5,12 @@
   </header>
   <main>
     
-    <form ng-controller="MyCtrl" name="form">
-      <div class="button" ngf-select="upload($file)">Upload on file select</div>
-      <!--<div ngf-select="upload($file)" ngf-pattern="'image/*'"
-         ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-         ngf-resize-if="$width > 800 || $height > 800"
-         ngf-resize="{width: 400}">Välj en bild</div>-->
+    <form ng-controller="UploadCtrl" name="form">
+      <img ng-src="{{slide.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
+           ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
+           ngf-resize-if="$width > 800 || $height > 800"
+           ngf-resize="{width: 400}" />
     </form>
-    <img ng-src="{{slide.image}}" ng-click="editable ? edit='image' : null" ng-show="edit!='image'"/>
  
     <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>

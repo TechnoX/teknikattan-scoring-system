@@ -4,7 +4,7 @@ var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var bodyParser = require('body-parser');
 var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart({ uploadDir: './uploads' });
+var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -63,7 +63,7 @@ app.post('/upload', multipartMiddleware, function(req, res) {
     var file = req.files.file;
     console.log(file.name);
     console.log(file.type);
-    res.status(200).json({'path': file.path});
+    res.status(200).json({'path': file.path.substr(7)});
 });
 
 

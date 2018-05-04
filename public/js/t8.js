@@ -1,6 +1,6 @@
 var app = angular.module('t8', ['ui.tinymce', 'ngSanitize', 'ngFileUpload']);
 
-app.controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     // upload on file select or drop
     $scope.upload = function (file) {
         console.log("Start upload");
@@ -9,6 +9,7 @@ app.controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
             data: {file: file}
         }).then(function (resp) {
             var path = resp.data.path;
+            $scope.$parent.$parent.currSlide.image = path;
             console.log('Success uploaded. Response: ', path);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
@@ -19,7 +20,7 @@ app.controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     };
 }]);
 
-app.controller('editorCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+app.controller('editorCtrl', ['$scope', function ($scope) {
     $scope.slides = [
         {index: 1, order: 2, title: "TitelPåFråga", image: "/images/ogonmatt.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
         {index: 2, order: 4, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
