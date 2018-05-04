@@ -54,6 +54,11 @@ app.get('/editor', function(req, res){
 
 app.post('/upload', multipartMiddleware, function(req, res) {
     console.log(req.body, req.files);
+    if(req.body.file == 'null'){
+        console.log("Failed to upload image")
+        res.status(500).json({'success': false});
+        return
+    }
     // don't forget to delete all req.files when done
     var file = req.files.file;
     console.log(file.name);
