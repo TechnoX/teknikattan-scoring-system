@@ -19,13 +19,12 @@
   <footer>
     <time ng-click="editable ? edit='timer' : null" ng-show="edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
     <section ng-show="edit=='timer'">
-      <label>Aktivera timer: <input type="checkbox" ng-model="slide.hasTimer"></label><br>
-      <label ng-show="slide.hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="slide.time" min="0" max="3599"></label>
+      <label>Tid innan svarsskärmen låses:<br><input type="number" ng-model="slide.time" min="0" max="3599" ng-blur="edit='none'"></label>
     </section>
     <ul>
-      <li ng-click="editable ? edit='time' : null"><label>Tid:</label> <input type="text" ng-show="edit=='time'" ng-model="question.timeText" /><span ng-show="edit!='time'">{{question.timeText}}</span></li>
-      <li ng-click="editable ? edit='scoring' : null"><label>Poäng:</label> <input type="text" ng-show="edit=='scoring'" ng-model="question.scoringText" /><span ng-show="edit!='scoring'">{{question.scoringText}}</span></li>
-      <li ng-click="editable ? edit='maxscoring' : null"><label>Maxpoäng:</label> <input type="text" ng-show="edit=='maxscoring'" ng-model="question.maxScoringText" /><span ng-show="edit!='maxscoring'">{{question.maxScoringText}}</span></li>
+      <li ng-click="editable ? edit='time' : null"><label>Tid:</label> <input type="text" ng-show="edit=='time'" ng-model="question.timeText" ng-blur="edit='none'" /><span ng-show="edit!='time'">{{question.timeText}}</span></li>
+      <li ng-click="editable ? edit='scoring' : null"><label>Poäng:</label> <input type="text" ng-show="edit=='scoring'" ng-model="question.scoringText" ng-blur="edit='none'" /><span ng-show="edit!='scoring'">{{question.scoringText}}</span></li>
+      <li ng-click="editable ? edit='maxscoring' : null"><label>Maxpoäng:</label> <input type="text" ng-show="edit=='maxscoring'" ng-model="question.maxScoringText" ng-blur="edit='none'" /><span ng-show="edit!='maxscoring'">{{question.maxScoringText}}</span></li>
     </ul>
   </footer>
 </article>

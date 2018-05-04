@@ -7,7 +7,7 @@ h1{
     font-size: 3vw;
     font-weight: bold;
     text-align: center;
-    padding: 0.67em 0em;
+    padding: 0.2em 0em;
 }
 
 h2{
@@ -172,4 +172,5 @@ article > footer > section{
 }
 .projector > main{
     font-size: 2em;
+    width: 75%;
 }
