@@ -8,7 +8,8 @@ app.controller('MyCtrl', ['$scope', 'Upload', function ($scope, Upload) {
             url: '/upload',
             data: {file: file}
         }).then(function (resp) {
-            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            var path = resp.data.path;
+            console.log('Success uploaded. Response: ', path);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
