@@ -1,4 +1,4 @@
-var app = angular.module('t8', ['ui.tinymce', 'ngSanitize', 'ngFileUpload']);
+var app = angular.module('t8', ['ui.tinymce', 'ngSanitize', 'ngFileUpload','ui.bootstrap']);
 
 app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     // upload on file select or drop
@@ -24,7 +24,31 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     };
 }]);
 
-app.controller('editorCtrl', ['$scope', function ($scope) {
+app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
+    $scope.items = ['item1', 'item2', 'item3'];
+    $scope.selected = "";
+    $scope.open = function (size, parentSelector) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            size: size,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            console.log("modal result");
+            $scope.selected = selectedItem;
+        }, function () {
+            console.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    
     $scope.questions = [
         {title: "TitelPåFråga",
          type: "normal",
@@ -170,6 +194,24 @@ app.directive("projector", function(){
 });
 
 
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
 
 
 app.controller('questionCtrl', function($scope){
