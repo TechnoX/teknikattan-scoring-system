@@ -63,7 +63,7 @@ app.post('/upload', multipartMiddleware, function(req, res) {
     var file = req.files.file;
     console.log(file.name);
     console.log(file.type);
-    res.status(200).json({'path': file.path.substr(7)});
+    res.status(200).json({'success': true, 'path': file.path.substr(7)});
 });
 
 
