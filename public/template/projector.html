@@ -15,7 +15,7 @@
     <div ng-if="!editable" ng-bind-html="slide.textProjector"></div>
   </main>
   <footer>
-    <time ng-click="editable ? edit='timer' : null" ng-show="edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
+    <time ng-class="{'hidden':slide.time<=0}" ng-click="editable ? edit='timer' : null" ng-show="edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
     <section ng-show="edit=='timer'">
       <label>Tid innan svar låses:<br><input type="number" ng-model="slide.time" min="0" max="3599" ng-blur="edit='none'"></label>
     </section>

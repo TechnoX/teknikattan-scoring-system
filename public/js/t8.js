@@ -32,7 +32,7 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
          slides: [
-             {hasTimer: true, time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+             {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Solförmörkelser",
          image: "/images/solformorkelse.jpg",
@@ -40,9 +40,9 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
          scoringText: "2 poäng per rätt",
          maxScoringText: "Totalt 6 poäng",
          slides: [
-             {hasTimer: true, time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-             {hasTimer: true, time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-             {hasTimer: true, time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
+             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
+             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Spagettitorn",
          image: "/images/spagettitorn.jpg",
@@ -50,7 +50,7 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
          scoringText: "5 poäng per rätt påstående",
          maxScoringText: "10 poäng",
          slides: [
-             {time: 2*60, hasTimer: true, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+             {time: 2*60, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Arbetsfördelning",
          image: "/images/arbetsfordelning.jpg",
@@ -58,7 +58,7 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
          slides: [
-             {time: 15, hasTimer: true, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+             {time: 15, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Lampor",
          image: "/images/lampor.jpg",
@@ -66,7 +66,7 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
          slides: [
-             {time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+             {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]}
     ];
     $scope.index = function(question){
