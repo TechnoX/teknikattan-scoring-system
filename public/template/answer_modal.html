@@ -1,0 +1,79 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Konfigurera svar</h3>
+</div>
+<div class="modal-body" id="modal-body">
+
+  <label>
+    Svarstyp:
+    <select ng-model="answer.type">
+      <option value="multi">Ett eller flera svar söks</option>
+      <option value="practical">Praktisk uppgift (inget digitalt svar söks)</option>
+      <option value="pairing">Para ihop svarsalternativ</option>
+    </select>
+  </label>
+
+  <!-- Om flera delfrågor -->
+  <section ng-show="answer.type == 'multi'">
+    <ol>
+      <li ng-repeat="sq in answer.subQuestions track by $index">
+        <label>
+          Svarstyp på delfråga {{$index + 1}})
+          <select ng-model="answer.subQuestions[$index].type">
+            <option value="text" selected="selected">Text</option>
+            <option value="number">Numeriskt</option>
+            <option value="select">Välj ett av flera alternativ</option>
+          </select>
+        </label><br>
+        <ol ng-show="answer.subQuestions[$index].type == 'select'">
+          <li ng-repeat="a in answer.subQuestions[$index].alternatives track by $index">
+            <label>
+              Alternativ {{$index + 1}}:
+              <input type="text" ng-model="answer.subQuestions[$parent.$index].alternatives[$index]"/>
+            </label>
+            <a ng-click="remove(answer.subQuestions[$parent.$index].alternatives, $index)" href="#">Ta bort</a>
+          </li>
+          <li><a ng-click="add(answer.subQuestions[$index].alternatives)" href="#">Lägg till alternativ</a></li>
+        </ol>
+      </li>
+      <li><a ng-click="add(answer.subQuestions)" href="#">Lägg till delfråga</a></li>
+    </ol>
+  </section>
+
+
+  <section ng-show="answer.type == 'pairing'">
+    <table>
+      <tr>
+        <td>
+          <ol>
+            <li ng-repeat="p in answer.pairs[0] track by $index">
+              <label>
+                Alternativ {{$index + 1}}:
+                <input type="text" ng-model="answer.pairs[0][$index]"/>
+              </label>
+              <a ng-click="remove(answer.pairs[0], $index)" href="#">Ta bort</a>
+            </li>
+            <li><a ng-click="add(answer.pairs[0])" href="#">Lägg till alternativ</a></li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li ng-repeat="p in answer.pairs[1] track by $index">
+              <label>
+                Alternativ {{$index + 1}}:
+                <input type="text" ng-model="answer.pairs[1][$index]"/>
+              </label>
+              <a ng-click="remove(answer.pairs[1], $index)" href="#">Ta bort</a>
+            </li>
+            <li><a ng-click="add(answer.pairs[1])" href="#">Lägg till alternativ</a></li>
+          </ol>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

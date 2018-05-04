@@ -25,24 +25,23 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 }]);
 
 app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
-    $scope.items = ['item1', 'item2', 'item3'];
-    $scope.selected = "";
-    $scope.open = function (size, parentSelector) {
+   
+    $scope.open = function () {
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: 'myModalContent.html',
+            templateUrl: '/template/answer_modal.html',
             controller: 'ModalInstanceCtrl',
-            size: size,
+            size: 'lg',
             resolve: {
-                items: function () {
-                    return $scope.items;
+                answer: function () {
+                    return $scope.currQuestion.answer;
                 }
             }
         });
 
-        modalInstance.result.then(function (selectedItem) {
-            console.log("modal result");
-            $scope.selected = selectedItem;
+        modalInstance.result.then(function (answer) {
+            console.log("modal result", answer);
+            $scope.currQuestion.answer = answer;
         }, function () {
             console.info('Modal dismissed at: ' + new Date());
         });
@@ -121,11 +120,6 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
     }
     $scope.currQuestion = $scope.questions[0];
     $scope.currSlide = $scope.currQuestion.slides[0];
-    $scope.numQuestions = 1;
-    $scope.numAlternatives = 1;
-    $scope.numPairsB = 1;
-    $scope.numPairsA = 1;
-
     /*
     $scope.addNewQuestion = function () {
         $scope.slides.push({
@@ -198,16 +192,23 @@ app.directive("projector", function(){
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-    $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
+app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, answer) {
+    $scope.answer = answer;
+    $scope.answer = {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]};
 
+
+    $scope.remove = function(array, index){
+        array.splice(index, 1);
+    }
+
+    $scope.add = function(array){
+        array.push('');
+    }
+    
     $scope.ok = function () {
-        $uibModalInstance.close($scope.selected.item);
+        $uibModalInstance.close($scope.answer);
     };
-
+    
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };

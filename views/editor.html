@@ -19,21 +19,6 @@
 </head>
 <body ng-app="t8" ng-controller="editorCtrl">
   <script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-      <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-    </div>
-    <div class="modal-body" id="modal-body">
-      <ul>
-        <li ng-repeat="item in items">
-          <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-        </li>
-      </ul>
-      Selected: <b>{{ selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>
   </script>
   <div id="editor">
     <section>
@@ -43,8 +28,7 @@
         <label><input type="radio" ng-model="currQuestion.type" value="normal"> Normal</label><br>
         <label><input type="radio" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
         <label><input type="radio" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label><br>
-        <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
-        
+        <button type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>        
       </form>
       <competitor question="currQuestion" slide="currSlide" editable="editOptions"></competitor>
     </section>
