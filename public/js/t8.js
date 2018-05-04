@@ -57,6 +57,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
+         answer: {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
          slides: [
              {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
@@ -68,6 +69,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
          timeText: "4 minuter",
          scoringText: "2 poäng per rätt",
          maxScoringText: "Totalt 6 poäng",
+         answer: {type: 'multi', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
          slides: [
              {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
              {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
@@ -79,8 +81,9 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
          statements: [],
          image: "/images/spagettitorn.jpg",
          timeText: "2 minuer",
-         scoringText: "5 poäng per rätt påstående",
-         maxScoringText: "10 poäng",
+         scoringText: "Högsta får 6p, näst högsta 4p och lägsta 2p",
+         maxScoringText: "6 poäng",
+         answer: {type: 'practical', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
          slides: [
              {time: 2*60, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
@@ -92,6 +95,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
+         answer: {type: 'multi', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
          slides: [
              {time: 15, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
@@ -103,6 +107,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
          maxScoringText: "Totalt 6 poäng",
+         answer: {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
          slides: [
              {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]}
@@ -194,8 +199,6 @@ app.directive("projector", function(){
 
 app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, answer) {
     $scope.answer = answer;
-    $scope.answer = {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]};
-
 
     $scope.remove = function(array, index){
         array.splice(index, 1);

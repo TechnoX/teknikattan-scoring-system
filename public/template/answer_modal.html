@@ -23,7 +23,7 @@
             <option value="number">Numeriskt</option>
             <option value="select">Välj ett av flera alternativ</option>
           </select>
-        </label><br>
+        </label> <a ng-click="remove(answer.subQuestions, $index)" href="#">Ta bort</a><br>
         <ol ng-show="answer.subQuestions[$index].type == 'select'">
           <li ng-repeat="a in answer.subQuestions[$index].alternatives track by $index">
             <label>
@@ -74,6 +74,5 @@
 
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" type="button" ng-click="ok()">Stäng</button>
 </div>

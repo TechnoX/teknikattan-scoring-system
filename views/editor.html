@@ -25,10 +25,10 @@
       <projector question="currQuestion" slide="currSlide" editable="editOptions"></projector>
       <form>
         <h3>Frågetyp:</h3>
-        <label><input type="radio" ng-model="currQuestion.type" value="normal"> Normal</label><br>
         <label><input type="radio" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
         <label><input type="radio" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label><br>
-        <button type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>        
+        <label><input type="radio" ng-model="currQuestion.type" value="normal"> Övriga</label><br>
+        <button ng-show="currQuestion.type == 'normal'" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>        
       </form>
       <competitor question="currQuestion" slide="currSlide" editable="editOptions"></competitor>
     </section>
