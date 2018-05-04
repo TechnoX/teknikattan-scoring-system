@@ -1,33 +1,6 @@
 <section>
 <h1>Lägg till ny fråga:</h1>
 
-<label>Frågebild: <input type="file" ng-model="imageFile"></label><br>
-<label>Poäng: <input type="text" ng-model="textScoring"></label><br>
-<label>Maxpoäng: <input type="text" ng-model="textMaxScoring"></label><br>
-<label>Tid (fritext-fält, själva tiden sätts på den slide som har nedräknare): <input type="text" ng-model="textTime"></label><br>
-
-<label>
-  Frågetyp:<br>
-  <select ng-model="question_type">
-    <option value="normal">Normal</option>
-    <option value="hints">Ledtrådar</option><!-- Hide answer type -->
-    <option value="truefalse">Sant / Falskt</option><!-- Hide answer type -->
-  </select>
-</label><br>
-
-
-<label ng-show="question_type == 'hints'">Antal ledtrådar: <input type="number" ng-model="numHints" min="1" max="10"/></label>
-<label ng-show="question_type == 'truefalse'">Antal sant/falskt - påståenden: <input type="number" ng-model="numTruefalse" min="1" max="10"/></label>
-
-<ol ng-show="question_type == 'hints'">
-  <li ng-repeat="a in range(numHints) track by $index"><label>Ledtråd {{$index + 1}}: <input type="text" ng-model="hint[$index]"/></label></li>
-</ol>
-
-<ol ng-show="question_type == 'truefalse'">
-  <li ng-repeat="a in range(numTruefalse) track by $index"><label>Påstående {{$index + 1}}: <input type="text" ng-model="truefalse[$index]"/></label></li>
-</ol>
-</section>
-
 <section ng-show="question_type == 'normal'">
   <label>
     Svarstyp:
@@ -63,8 +36,6 @@
       </li>
     </ol>
   </section>
-
-
 
 
   <section ng-show="answer_type == 'pairing'">

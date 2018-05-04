@@ -27,6 +27,9 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 app.controller('editorCtrl', ['$scope', function ($scope) {
     $scope.questions = [
         {title: "TitelPåFråga",
+         type: "normal",
+         hints: [],
+         statements: ["hejsan","hoppsan","jaja","ett till påstående", "hejsan hoppsan?"],
          image: "/images/ogonmatt.jpg",
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
@@ -35,6 +38,9 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
              {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Solförmörkelser",
+         type: "normal",
+         hints: [],
+         statements: [],
          image: "/images/solformorkelse.jpg",
          timeText: "4 minuter",
          scoringText: "2 poäng per rätt",
@@ -45,6 +51,9 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
              {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Spagettitorn",
+         type: "normal",
+         hints: [],
+         statements: [],
          image: "/images/spagettitorn.jpg",
          timeText: "2 minuer",
          scoringText: "5 poäng per rätt påstående",
@@ -53,6 +62,9 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
              {time: 2*60, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Arbetsfördelning",
+         type: "normal",
+         hints: [],
+         statements: [],
          image: "/images/arbetsfordelning.jpg",
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
@@ -61,6 +73,9 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
              {time: 15, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
          ]},
         {title: "Lampor",
+         type: "normal",
+         hints: [],
+         statements: [],
          image: "/images/lampor.jpg",
          timeText: "15 sekunder per påstående",
          scoringText: "1 poäng per rätt påstående",
@@ -82,8 +97,6 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
     }
     $scope.currQuestion = $scope.questions[0];
     $scope.currSlide = $scope.currQuestion.slides[0];
-    $scope.numHints = 1;
-    $scope.numTruefalse = 1;
     $scope.numQuestions = 1;
     $scope.numAlternatives = 1;
     $scope.numPairsB = 1;
@@ -120,12 +133,26 @@ app.controller('editorCtrl', ['$scope', function ($scope) {
 app.directive("competitor", function() {
     return {
         templateUrl: "/template/competitor.html",
+        restrict: "E",
         scope: {
             slide: '=',
             question: '=',
             editable: '='
         },
-        restrict: "E"
+        link: function(scope) {
+            scope.removeHint = function(index){
+                scope.question.hints.splice(index, 1);
+            }
+            scope.removeStatement = function(index){
+                scope.question.statements.splice(index, 1);
+            }
+            scope.addHint = function(){
+                scope.question.hints.push('');
+            }
+            scope.addStatement = function(){
+                scope.question.statements.push('');
+            }
+        }
     }
 });
 

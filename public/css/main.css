@@ -15,10 +15,14 @@ h2{
     font-weight: bold;
     text-align: center;
 }
-
 input{
     font-size: inherit;
+}
+input[type=text]{
     width: 12em;
+}
+input[type=number]{
+    width: 4em;
 }
 #editor{
     width: 100%;
@@ -70,6 +74,11 @@ input{
     display: table-cell;
 }
 
+#editor > section > form{
+    float: left;
+    margin: 2vw 0vw;
+}
+
 article{
     background-image: url('/images/background.jpg');
     background-repeat: no-repeat;
@@ -97,7 +106,6 @@ article{
     height: 9vw;
     margin: 0.1vw 0.4vw;
 }
-
 
 article > header{
     clear: both;

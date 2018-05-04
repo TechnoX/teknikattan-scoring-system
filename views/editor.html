@@ -20,9 +20,16 @@
   <div id="editor">
     <section>
       <projector question="currQuestion" slide="currSlide" editable="editOptions"></projector>
+      <form>
+        <h3>Frågetyp:</h3>
+        <label><input type="radio" ng-model="currQuestion.type" value="normal"> Normal</label><br>
+        <label><input type="radio" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
+        <label><input type="radio" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label><br>
+      </form>
       <competitor question="currQuestion" slide="currSlide" editable="editOptions"></competitor>
     </section>
     
+    <section style="clear: both; text-align: center;">hej hej</section>
     
     
     <section id="add-slide">
