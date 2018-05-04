@@ -19,8 +19,8 @@
 
   <div id="editor">
     <section>
-      <projector slide="currSlide" editable="editOptions"></projector>
-      <competitor slide="currSlide" editable="editOptions"></competitor>
+      <projector question="currQuestion" slide="currSlide" editable="editOptions"></projector>
+      <competitor question="currQuestion" slide="currSlide" editable="editOptions"></competitor>
     </section>
     
     
@@ -36,13 +36,16 @@
     </section>
   </div>
   
-  <table id="timeline">
-    <tr>
-      <td ng-repeat="s in slides | orderBy: 'index'" ng-click="changeSlide(s)"><projector slide="s"></projector></td>
-    </tr>
-    <tr>
-      <td ng-repeat="s in slides | orderBy: 'index'" ng-click="changeSlide(s)"><competitor slide="s"></competitor></td>
-    </tr>
-  </table>
+  <ol id="timeline">
+    <li ng-repeat="q in questions">
+      <ol>
+        <li ng-repeat="s in q.slides">
+          <projector slide="s" question="q" ng-click="changeSlide(q,s)"></projector>
+          <competitor slide="s" question="q" ng-click="changeSlide(q,s)"></competitor>
+        </li>
+      </ol>
+    </li>
+  </ol>
+
 </body>
 </html>

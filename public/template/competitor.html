@@ -1,17 +1,16 @@
 <article class="competitor">
   <header>
-    <h1 ng-click="editable ? edit='title': null">{{slide.index}}. <input type="text" ng-show="edit=='title'" ng-model="slide.title" /><span ng-show="edit!='title'">{{slide.title}}</span></h1>
+    <h1 ng-click="editable ? edit='title': null">{{question.index}}. <input type="text" ng-show="edit=='title'" ng-model="question.title" /><span ng-show="edit!='title'">{{question.title}}</span></h1>
     <img src="images/logo.png"/>
   </header>
   <main>
-    
-    <form ng-controller="UploadCtrl" name="form">
-      <img ng-src="{{slide.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
+    <form ng-if="editable" ng-controller="UploadCtrl" name="form">
+      <img ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
            ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
            ngf-resize-if="$width > 800 || $height > 800"
-           ngf-resize="{width: 400}" />
+           ngf-resize="{width: 400}" class="titleimage" />
     </form>
- 
+    <img ng-if="!editable" ng-src="{{question.image}}" class="titleimage" />
     <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
@@ -24,9 +23,9 @@
       <label ng-show="slide.hasTimer">Tid innan svarsskärmen låses: <input type="number" ng-model="slide.time" min="0" max="3599"></label>
     </section>
     <ul>
-      <li ng-click="editable ? edit='time' : null"><label>Tid:</label> <input type="text" ng-show="edit=='time'" ng-model="slide.timeText" /><span ng-show="edit!='time'">{{slide.timeText}}</span></li>
-      <li ng-click="editable ? edit='scoring' : null"><label>Poäng:</label> <input type="text" ng-show="edit=='scoring'" ng-model="slide.scoringText" /><span ng-show="edit!='scoring'">{{slide.scoringText}}</span></li>
-      <li ng-click="editable ? edit='maxscoring' : null"><label>Maxpoäng:</label> <input type="text" ng-show="edit=='maxscoring'" ng-model="slide.maxScoringText" /><span ng-show="edit!='maxscoring'">{{slide.maxScoringText}}</span></li>
+      <li ng-click="editable ? edit='time' : null"><label>Tid:</label> <input type="text" ng-show="edit=='time'" ng-model="question.timeText" /><span ng-show="edit!='time'">{{question.timeText}}</span></li>
+      <li ng-click="editable ? edit='scoring' : null"><label>Poäng:</label> <input type="text" ng-show="edit=='scoring'" ng-model="question.scoringText" /><span ng-show="edit!='scoring'">{{question.scoringText}}</span></li>
+      <li ng-click="editable ? edit='maxscoring' : null"><label>Maxpoäng:</label> <input type="text" ng-show="edit=='maxscoring'" ng-model="question.maxScoringText" /><span ng-show="edit!='maxscoring'">{{question.maxScoringText}}</span></li>
     </ul>
   </footer>
 </article>

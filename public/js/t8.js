@@ -25,19 +25,57 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 }]);
 
 app.controller('editorCtrl', ['$scope', function ($scope) {
-    $scope.slides = [
-        {index: 1, order: 2, title: "TitelPåFråga", image: "/images/ogonmatt.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, order: 4, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, order: 6, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, order: 5, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: true, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 3, order: 1, title: "Spagettitorn", image: "/images/spagettitorn.jpg", timeText: "2 minuer", scoringText: "5 poäng per rätt påstående", maxScoringText: "10 poäng", time: 2*60, hasTimer: true, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 4, order: 2, title: "Arbetsfördelning", image: "/images/arbetsfordelning.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 5, order: 5, title: "Lampor", image: "/images/lampor.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}];
+    $scope.questions = [
+        {title: "TitelPåFråga",
+         image: "/images/ogonmatt.jpg",
+         timeText: "15 sekunder per påstående",
+         scoringText: "1 poäng per rätt påstående",
+         maxScoringText: "Totalt 6 poäng",
+         slides: [
+             {hasTimer: true, time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+         ]},
+        {title: "Solförmörkelser",
+         image: "/images/solformorkelse.jpg",
+         timeText: "4 minuter",
+         scoringText: "2 poäng per rätt",
+         maxScoringText: "Totalt 6 poäng",
+         slides: [
+             {hasTimer: true, time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
+             {hasTimer: true, time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
+             {hasTimer: true, time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+         ]},
+        {title: "Spagettitorn",
+         image: "/images/spagettitorn.jpg",
+         timeText: "2 minuer",
+         scoringText: "5 poäng per rätt påstående",
+         maxScoringText: "10 poäng",
+         slides: [
+             {time: 2*60, hasTimer: true, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+         ]},
+        {title: "Arbetsfördelning",
+         image: "/images/arbetsfordelning.jpg",
+         timeText: "15 sekunder per påstående",
+         scoringText: "1 poäng per rätt påstående",
+         maxScoringText: "Totalt 6 poäng",
+         slides: [
+             {time: 15, hasTimer: true, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+         ]},
+        {title: "Lampor",
+         image: "/images/lampor.jpg",
+         timeText: "15 sekunder per påstående",
+         scoringText: "1 poäng per rätt påstående",
+         maxScoringText: "Totalt 6 poäng",
+         slides: [
+             {time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
+         ]}
+    ];
 
-    $scope.changeSlide = function(slide){
+    $scope.changeSlide = function(question,slide){
+        $scope.currQuestion=question;
         $scope.currSlide=slide;
     }
-    $scope.currSlide = $scope.slides[0];
+    $scope.currQuestion = $scope.questions[0];
+    $scope.currSlide = $scope.currQuestion.slides[0];
     $scope.numHints = 1;
     $scope.numTruefalse = 1;
     $scope.numQuestions = 1;
@@ -78,6 +116,7 @@ app.directive("competitor", function() {
         templateUrl: "/template/competitor.html",
         scope: {
             slide: '=',
+            question: '=',
             editable: '='
         },
         restrict: "E"
@@ -90,6 +129,7 @@ app.directive("projector", function(){
         templateUrl: "/template/projector.html",
         scope: {
             slide: '=',
+            question: '=',
             editable: '='
         },
         restrict: "E"
@@ -100,16 +140,7 @@ app.directive("projector", function(){
 
 
 app.controller('questionCtrl', function($scope){
-    $scope.slides = [
-        {index: 1, title: "TitelPåFråga", image: "/images/ogonmatt.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: false, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 2, title: "Solförmörkelser", image: "/images/solformorkelse.jpg", timeText: "4 minuter", scoringText: "2 poäng per rätt", maxScoringText: "Totalt 6 poäng", time: 4*60, hasTimer: true, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 3, title: "Spagettitorn", image: "/images/spagettitorn.jpg", timeText: "2 minuer", scoringText: "5 poäng per rätt påstående", maxScoringText: "10 poäng", time: 2*60, hasTimer: true, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 4, title: "Arbetsfördelning", image: "/images/arbetsfordelning.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-        {index: 5, title: "Lampor", image: "/images/lampor.jpg", timeText: "15 sekunder per påstående", scoringText: "1 poäng per rätt påstående", maxScoringText: "Totalt 6 poäng", time: 15, hasTimer: true, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}];
-
-    $scope.currSlide = $scope.slides[5];
+    // TODO: Implement
 });
 
 

@@ -41,7 +41,7 @@ input{
     transition: opacity .25s ease-in-out .0s;
 }
 
-#add-slide h1{
+#add-slide > h1{
     font-size: 1vw;
     vertical-align: middle;
     text-align: left;
@@ -66,6 +66,9 @@ input{
     white-space: nowrap;
 }
 
+#timeline li{
+    display: table-cell;
+}
 
 article{
     background-image: url('/images/background.jpg');
@@ -96,66 +99,66 @@ article{
 }
 
 
-article header{
+article > header{
     clear: both;
     padding: 1%;
 }
-article header h1{
+article > header > h1{
     float: right;
     font-size: 4em;
     margin: 0px;
 }
-article header img{
+article > header > img{
     height: 9em;
 }
-article main{
+article > main{
     box-sizing: border-box;
     padding-left: 2em;
     height: 75%;
 }
-article main div{
+article > main > div{
     height: 100%;
 }
-.competitor main{
+.competitor > main{
     width: 50%;
     float: left;
 }
-.competitor main img{
+.competitor > main img.titleimage{
     max-height: 30%;
     max-width: 25em;
     padding-bottom: 2%;
 }
-.competitor main div{
+.competitor > main > div{
     height: 67%;
 }
-article aside{
+article > aside{
     box-sizing: border-box;
     padding-left: 2em;
     height: 75%;
     width: 50%;
     float: left;
 }
-article footer{
+article > footer{
     clear: both;
     padding: 1%;
     position: absolute;
     bottom: 0px;
     width: 100%;
 }
-article footer label{
+article > footer label{
     font-weight: bold;
 }
-article footer time{
+article > footer > time{
     float: left;
     font-family: 'Orbitron', sans-serif;
     font-size: 3.1em;
     font-weight: bold;
     width: 4em;
 }
-article footer time.hidden{
+article > footer > time.hidden{
     visibility: hidden;
 }
-article footer section{
+article > footer > section{
     float: left;
 }
 
@@ -164,16 +167,9 @@ article footer section{
     padding: 1%;
     width: 25%;
 }
-.projector figure img{
+.projector figure img.titleimage{
     width: 100%;
 }
-.projector main{
+.projector > main{
     font-size: 2em;
-}
-.projector main figure{
-    max-width: 80%;
-    max-height: 15em;
-    margin: auto;
-    display: block;
-    clear: both;
 }
