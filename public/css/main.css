@@ -65,7 +65,24 @@ input[type=number]{
 
 #timeline > li, #timeline > li > ol > li{
     display: table-cell;
+    position: relative;
 }
+
+.remove-slide{
+    position: absolute;
+    right: 0.6vw;
+    top: 0.2vw;
+    cursor: pointer;
+    z-index: 99;
+    font-size: 1.8vw;
+    background-color: white;
+    padding: 0.2vw;
+}
+
+.remove-slide:hover{
+    color: red;
+}
+
 
 #editor > section > form{
     float: left;

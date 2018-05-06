@@ -122,6 +122,16 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
         $scope.currQuestion=question;
         $scope.currSlide=slide;
     }
+    $scope.removeSlide = function(question,slide){
+        // TODO: Handle removing currSlide / currQuestion, hoppa till frågan framför om den finns (annars frågan bakom)
+        if(question.slides.length == 1){
+            var index = $scope.index(question) - 1;
+            $scope.questions.splice(index, 1);
+        }else{
+            var index = question.slides.indexOf(slide);
+            question.slides.splice(index, 1);
+        }
+    }
     $scope.currQuestion = $scope.questions[0];
     $scope.currSlide = $scope.currQuestion.slides[0];
     
