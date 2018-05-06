@@ -124,12 +124,41 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
     }
     $scope.removeSlide = function(question,slide){
         // TODO: Handle removing currSlide / currQuestion, hoppa till frågan framför om den finns (annars frågan bakom)
+        
+        
+        
         if(question.slides.length == 1){
-            var index = $scope.index(question) - 1;
-            $scope.questions.splice(index, 1);
+            var questionIndex = $scope.index(question) - 1;
+
+            // Only update current viewed question if it was the deleted one
+            if(question === $scope.currQuestion){
+                // If this was the last question, take the one before, otherwise the one after
+                if(questionIndex == $scope.questions.length - 1){
+                    // Question before
+                    $scope.currQuestion = $scope.questions[questionIndex - 1];
+                    // Last slide in this new question
+                    $scope.currSlide = $scope.currQuestion.slides[$scope.currQuestion.slides.length - 1];
+                }else{
+                    // Question after
+                    $scope.currQuestion = $scope.questions[questionIndex + 1];
+                    // First slide in this new question
+                    $scope.currSlide = $scope.currQuestion.slides[0];
+                }
+            }
+            $scope.questions.splice(questionIndex, 1);
         }else{
-            var index = question.slides.indexOf(slide);
-            question.slides.splice(index, 1);
+            var slideIndex = question.slides.indexOf(slide);
+            
+            // Only update current viewed slide if it was the deleted one
+            if(slide === $scope.currSlide){
+                // If this was the last slide, take the one before, otherwise the one after
+                if(slideIndex == question.slides.length - 1){
+                    $scope.currSlide = question.slides[slideIndex - 1];
+                }else{
+                    $scope.currSlide = question.slides[slideIndex + 1];
+                }
+            }
+            question.slides.splice(slideIndex, 1);
         }
     }
     $scope.currQuestion = $scope.questions[0];
