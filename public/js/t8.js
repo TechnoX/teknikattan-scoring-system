@@ -181,12 +181,15 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
                         ]
                        };
         $scope.questions.splice(index, 0, question);
+        $scope.currQuestion = $scope.questions[index];
+        $scope.currSlide = $scope.currQuestion.slides[0];
     };
 
     $scope.addSlide = function () {
         var slide = {time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"};
         var index = $scope.currQuestion.slides.indexOf($scope.currSlide) + 1;
         $scope.currQuestion.slides.splice(index, 0, slide);
+        $scope.currSlide = $scope.currQuestion.slides[index];
     };
     
     $scope.editOptions = {
