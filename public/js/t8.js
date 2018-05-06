@@ -123,10 +123,6 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
         $scope.currSlide=slide;
     }
     $scope.removeSlide = function(question,slide){
-        // TODO: Handle removing currSlide / currQuestion, hoppa till frågan framför om den finns (annars frågan bakom)
-        
-        
-        
         if(question.slides.length == 1){
             var questionIndex = $scope.index(question) - 1;
 
@@ -136,8 +132,13 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
                 if(questionIndex == $scope.questions.length - 1){
                     // Question before
                     $scope.currQuestion = $scope.questions[questionIndex - 1];
-                    // Last slide in this new question
-                    $scope.currSlide = $scope.currQuestion.slides[$scope.currQuestion.slides.length - 1];
+                    // If we remove the last existing slide?
+                    if(!$scope.currQuestion){
+                        $scope.currSlide = null;
+                    }else{
+                        // Last slide in this new question
+                        $scope.currSlide = $scope.currQuestion.slides[$scope.currQuestion.slides.length - 1];
+                    }
                 }else{
                     // Question after
                     $scope.currQuestion = $scope.questions[questionIndex + 1];

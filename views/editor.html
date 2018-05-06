@@ -22,7 +22,7 @@
   </script>
   <div id="editor">
     <section>
-      <projector question="currQuestion" slide="currSlide" editable="editOptions"></projector>
+      <projector question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></projector>
       <form>
         <h3>Frågetyp:</h3>
         <label><input type="radio" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
@@ -30,7 +30,7 @@
         <label><input type="radio" ng-model="currQuestion.type" value="normal"> Övriga</label><br>
         <button ng-show="currQuestion.type == 'normal'" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>        
       </form>
-      <competitor question="currQuestion" slide="currSlide" editable="editOptions"></competitor>
+      <competitor question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></competitor>
     </section>
     
     <section style="clear: both; text-align: center;">hej hej</section>
@@ -40,7 +40,7 @@
       <h1>Lägg till: </h1>
       <ul>
         <li id="add-question" ng-click="addQuestion()">Ny fråga</li>
-        <li id="add-info" ng-click="addSlide()">Extra slide</li>
+        <li id="add-info" ng-show="currSlide" ng-click="addSlide()">Extra slide</li>
         <li id="add-answer" ng-click="addSeparateSlide()" ng-show="false">Lös slide</li>
       </ul>
     </section>
