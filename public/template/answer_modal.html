@@ -11,7 +11,6 @@
       <option value="pairing">Para ihop svarsalternativ</option>
     </select>
   </label>
-
   <!-- Om flera delfrågor -->
   <section ng-show="answer.type == 'multi'">
     <ol>
@@ -71,7 +70,13 @@
     </table>
   </section>
 
-
+  <br>
+  <label>Visa svarsslide: <input type="checkbox" ng-model="answer.show" /></label>
+  
+  <section ng-show="answer.show">
+    <div ui-tinymce="tinymceOptions" ng-model="answer.text"></div>
+  </section>
+  
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" type="button" ng-click="ok()">Stäng</button>
