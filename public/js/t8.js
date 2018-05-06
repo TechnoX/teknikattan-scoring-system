@@ -124,13 +124,24 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
     }
     $scope.currQuestion = $scope.questions[0];
     $scope.currSlide = $scope.currQuestion.slides[0];
-    /*
-    $scope.addNewQuestion = function () {
-        $scope.slides.push({
-            title: 'NyFråga',
-            image: '/asd/asd'
-        });
-    };*/
+    
+    $scope.addQuestion = function () {
+        var index = $scope.index($scope.currQuestion);
+        var question = {title: "TitelPåFråga",
+                        type: "normal",
+                        hints: [],
+                        statements: [],
+                        image: "/images/dummy.jpg",
+                        timeText: "? minuter",
+                        scoringText: "? poäng per rätt svar",
+                        maxScoringText: "Totalt ? poäng",
+                        answer: {type: 'multi', pairs: [[],[]], subQuestions: []},
+                        slides: [
+                            {time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"}
+                        ]
+                       };
+        $scope.questions.splice(index, 0, question);
+    };
     
     $scope.editOptions = {
         theme: 'inlite',

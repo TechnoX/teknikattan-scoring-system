@@ -37,14 +37,7 @@ input[type=number]{
     right: 0px;
     top: 0px;
     padding: 10% 0% 0% 0%;
-    opacity:0;
 }
-#add-slide:hover{
-    opacity:1;
-    -webkit-transition: opacity .25s ease-in-out .0s;
-    transition: opacity .25s ease-in-out .0s;
-}
-
 #add-slide > h1{
     font-size: 1vw;
     vertical-align: middle;
