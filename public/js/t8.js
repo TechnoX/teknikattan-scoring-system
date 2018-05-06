@@ -227,8 +227,12 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, answer)
         array.splice(index, 1);
     }
 
-    $scope.add = function(array){
-        array.push('');
+    $scope.add = function(array, subquestion){
+        if(subquestion){
+            array.push({type: 'text', alternatives: []});
+        }else{
+            array.push('');
+        }
     }
     
     $scope.ok = function () {
