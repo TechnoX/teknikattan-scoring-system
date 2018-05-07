@@ -24,6 +24,17 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     };
 }]);
 
+app.controller('competitionsCtrl', ['$scope', '$uibModal', '$http', function ($scope, $uibModal, $http) {
+    $scope.competitions = [
+        {id: 23, name: "Regionsemifinal 1", teams:['Skolgårda skola', 'Berzeliusskolan', 'Södervärnsskolan']},
+        {id: 36, name: "Regionsemifinal 2", teams:['Sjöängsskolan', 'Malmlättsskolan', 'Hultdalskolan']},
+        {id: 74, name: "Regionfinal", teams:['Sjöängsskolan', 'Skolgårda skola', 'Berzeliusskolan']},
+        {id: 92, name: "Riksfinal", teams:['IFM', 'MAI', 'IDA']}
+    ];
+
+
+
+}]);
 app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, $uibModal, $http) {
     
     $scope.open = function () {

@@ -64,6 +64,10 @@ app.get('/editor', function(req, res){
     res.sendFile(__dirname + '/views/editor.html');
 })
 
+app.get('/competitions', function(req, res){
+    res.sendFile(__dirname + '/views/competitions.html');
+})
+
 // --------------------------------------------------
 // Post responses
 // --------------------------------------------------
