@@ -5,6 +5,18 @@ var io = require('socket.io')(http)
 var bodyParser = require('body-parser');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
+var MongoClient = require('mongodb').MongoClient
+
+
+var database;
+MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
+    if (err) throw err
+    database = db.db('teknikattan');
+    
+    http.listen(3000, function () {
+        console.log('Magic is happening on port 3000!')
+    })
+})
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -52,6 +64,32 @@ app.get('/editor', function(req, res){
     res.sendFile(__dirname + '/views/editor.html');
 })
 
+// --------------------------------------------------
+// Post responses
+// --------------------------------------------------
+
+app.put('/questions', function(req, res){
+    console.log(req.body);
+    database.collection('questions').remove({}, function(err, result) {
+        if (err) return console.log(err);
+        console.log('removed everything:');
+        
+        database.collection('questions').insertMany(req.body, function(err, result) {
+            if (err) return console.log(err);
+            console.log('saved data to database:');
+            console.log(result);
+            res.status(200).json({'success': true});
+        });
+    });
+});
+
+app.get('/questions', function(req, res){
+    database.collection('questions').find().toArray(function(err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+    });
+});
+
 app.post('/upload', multipartMiddleware, function(req, res) {
     console.log(req.body, req.files);
     if(req.body.file == 'null'){
@@ -67,9 +105,6 @@ app.post('/upload', multipartMiddleware, function(req, res) {
 });
 
 
-// --------------------------------------------------
-// Post responses
-// --------------------------------------------------
 app.post('/truefalse', function(req, res){
     console.log('value: ' + req.body.value);
     publishJudge("<span style='color: "+((req.body.value=='true')?"darkgreen":"darkred")+"'>"+((req.body.value=='true')?"Sant":"Falskt")+"</span>", trueFalseIndex);
@@ -175,9 +210,6 @@ io.on('connection', function(socket){
     });
 })
 
-http.listen(3000, function () {
-  console.log('Magic is happening on port 3000!')
-})
 
 function nextPressed(){
     if(nextState == 'showImage'){

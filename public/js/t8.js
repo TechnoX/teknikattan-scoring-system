@@ -24,8 +24,8 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
     };
 }]);
 
-app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
-   
+app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, $uibModal, $http) {
+    
     $scope.open = function () {
         var modalInstance = $uibModal.open({
             animation: true,
@@ -47,70 +47,25 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
     };
 
     
-    $scope.questions = [
-        {title: "TitelPåFråga",
-         type: "normal",
-         hints: [],
-         statements: ["hejsan","hoppsan","jaja","ett till påstående", "hejsan hoppsan?"],
-         image: "/images/ogonmatt.jpg",
-         timeText: "15 sekunder per påstående",
-         scoringText: "1 poäng per rätt påstående",
-         maxScoringText: "Totalt 6 poäng",
-         answer: {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}]},
-         slides: [
-             {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
-         ]},
-        {title: "Solförmörkelser",
-         type: "normal",
-         hints: [],
-         statements: [],
-         image: "/images/solformorkelse.jpg",
-         timeText: "4 minuter",
-         scoringText: "2 poäng per rätt",
-         maxScoringText: "Totalt 6 poäng",
-         answer: {type: 'multi', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}], show: true, text: "<p>En spindel har <strong>fyra</strong> ben</p>"},
-         slides: [
-             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"},
-             {time: 4*60, textLeft: "<p>Lite mer text.. ASft. eft</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
-         ]},
-        {title: "Spagettitorn",
-         type: "normal",
-         hints: [],
-         statements: [],
-         image: "/images/spagettitorn.jpg",
-         timeText: "2 minuer",
-         scoringText: "Högsta får 6p, näst högsta 4p och lägsta 2p",
-         maxScoringText: "6 poäng",
-         answer: {type: 'practical', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}], show: true, text: "<p>Svart betyder 0<br>Grön betyder 5<br>Röd betyder 2<br>Blå betyder 6</p>"},
-         slides: [
-             {time: 2*60, textLeft: "<p>Initial adsas aasd a sd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
-         ]},
-        {title: "Arbetsfördelning",
-         type: "normal",
-         hints: [],
-         statements: [],
-         image: "/images/arbetsfordelning.jpg",
-         timeText: "15 sekunder per påstående",
-         scoringText: "1 poäng per rätt påstående",
-         maxScoringText: "Totalt 6 poäng",
-         answer: {type: 'multi', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}], show: false, text:"<p></p>"},
-         slides: [
-             {time: 15, textLeft: "<p>Initial sdfsddsfsdjfhsdfhsdjfkhsdfjkhsdfjksdb dh sdfkjhd fjh sdjkfh sdfjkh sdfjkh sdfj hsdjf sdjkfh sdfjh sdjkfh sdkjfh sdjkfh sdjkfh sdfjkhsd fjkhsd fjksdh fsjh  hjdsf hsdkjfh sdfjkhsd fjkhsd fjhsd fjksdfh sdjkfh sdfjkhsd fjksdh fjksdh dfhsd fjkls sfhdsdhfjksdhfjksdhfsdjkhfjkashfjkasdhfjksdhfjkahsdfkjhaskldfh asd asd asd asd left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
-         ]},
-        {title: "Lampor",
-         type: "normal",
-         hints: [],
-         statements: [],
-         image: "/images/lampor.jpg",
-         timeText: "15 sekunder per påstående",
-         scoringText: "1 poäng per rätt påstående",
-         maxScoringText: "Totalt 6 poäng",
-         answer: {type: 'pairing', pairs: [['svart','grön','röd','blå'],['0','5','2','6']], subQuestions: [{type: 'number', alternatives: []},{type:'number', alternatives: []},{type:'text'},{type:'select', alternatives: ['hund','katt','varg','lejon','elefant']}], show: false, text: "<p></p>"},
-         slides: [
-             {time: 15, textLeft: "<p>Initial <strong>content</strong> left</p>", textRight: "<p>Initial <strong>content</strong> right</p>", textProjector: "Initial <strong>content</strong> projector"}
-         ]}
-    ];
+    $scope.questions = [];
+    $scope.currQuestion = null;
+    $scope.currSlide = null;
+
+    $http.get('/questions').then(function(response) {
+        $scope.questions = response.data;
+        $scope.currQuestion = $scope.questions[0];
+        $scope.currSlide = $scope.currQuestion.slides[0];
+    });
+
+    $scope.save = function(question){
+        $http.put('/questions', $scope.questions).then(function(res){
+            alert("Allting sparades korrekt!");
+            console.log(res);
+        }, function(res){
+            alert("Något gick fel när det skulle sparas!");
+            console.log(res);
+        });
+    }
     $scope.index = function(question){
         var index = -1;
         $scope.questions.some(function(obj, i) {
@@ -162,8 +117,6 @@ app.controller('editorCtrl', ['$scope', '$uibModal', function ($scope, $uibModal
             question.slides.splice(slideIndex, 1);
         }
     }
-    $scope.currQuestion = $scope.questions[0];
-    $scope.currSlide = $scope.currQuestion.slides[0];
     
     $scope.addQuestion = function () {
         var index = $scope.index($scope.currQuestion);
