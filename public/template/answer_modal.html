@@ -22,7 +22,9 @@
             <option value="number">Numeriskt</option>
             <option value="select">Välj ett av flera alternativ</option>
           </select>
-        </label> <a ng-click="remove(answer.subQuestions, $index)" href="#">Ta bort</a><br>
+        </label>
+        Visas på slide: <ol style="display: inline-block;"><li ng-repeat="slide in question.slides track by $index" style="float: left;"><label>{{$index}}. <input type="checkbox" ng-model="answer.subQuestions[$parent.$index].show[$index]" /></label></li></ol>
+        <a ng-click="remove(answer.subQuestions, $index)" href="#">Ta bort</a><br>
         <ol ng-show="answer.subQuestions[$index].type == 'select'">
           <li ng-repeat="a in answer.subQuestions[$index].alternatives track by $index">
             <label>
@@ -34,7 +36,7 @@
           <li><a ng-click="add(answer.subQuestions[$index].alternatives)" href="#">Lägg till alternativ</a></li>
         </ol>
       </li>
-      <li><a ng-click="add(answer.subQuestions, true)" href="#">Lägg till delfråga</a></li>
+      <li><a ng-click="add(answer.subQuestions, true, question.slides.length)" href="#">Lägg till delfråga</a></li>
     </ol>
   </section>
 

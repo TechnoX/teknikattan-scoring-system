@@ -44,8 +44,8 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
             controller: 'ModalInstanceCtrl',
             size: 'lg',
             resolve: {
-                answer: function () {
-                    return $scope.currQuestion.answer;
+                question: function () {
+                    return $scope.currQuestion;
                 }
             }
         });
@@ -220,8 +220,9 @@ app.directive("projector", function(){
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, answer) {
-    $scope.answer = answer;
+app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, question) {
+    $scope.answer = question.answer;
+    $scope.question = question;
     $scope.tinymceOptions = {
         plugins: 'image media paste contextmenu textpattern lists',
         menubar: 'edit insert',
@@ -234,9 +235,9 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, answer)
         array.splice(index, 1);
     }
 
-    $scope.add = function(array, subquestion){
+    $scope.add = function(array, subquestion,length){
         if(subquestion){
-            array.push({type: 'text', alternatives: []});
+            array.push({type: 'text', alternatives: [], show: Array(length).fill(true)});
         }else{
             array.push('');
         }
