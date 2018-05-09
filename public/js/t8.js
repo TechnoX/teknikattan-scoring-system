@@ -62,8 +62,8 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
     $scope.currQuestion = null;
     $scope.currSlide = null;
 
-    $http.get('/questions').then(function(response) {
-        $scope.questions = response.data;
+    $http.get('/questions').then(function(resp) {
+        $scope.questions = resp.data;
         $scope.currQuestion = $scope.questions[0];
         $scope.currSlide = $scope.currQuestion.slides[0];
     });
