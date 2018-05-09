@@ -253,9 +253,51 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
 });
 
 
-app.controller('questionCtrl', function($scope){
-    // TODO: Implement
-});
+app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
+    $http.get('/questions').then(function(resp) {
+        $scope.questions = resp.data;
+        console.log("Got questions: ", $scope.questions);
+        $http.get('/state').then(function(resp) {
+            console.log("Got current state: ",  resp.data);
+            switch(resp.data.state){
+            case 'showImage':
+                $scope.state = "image";
+                break;
+            case 'showQuestion':
+                $scope.state = "question";
+                break;
+            case 'startTimer':
+                break;
+            case 'showHints':
+                break;
+            case 'showTrueFalse':
+                break;
+            case 'showBeforeAnswer':
+                $scope.state = "beforeAnswer";
+                break;
+            case 'showAnswer':
+                $scope.state = "answer";
+                break;
+            case 'end':
+                $scope.state = "end";
+                break;
+            }
+            $scope.currQuestion = $scope.questions[resp.data.questionIndex];
+            $scope.currSlide = $scope.currQuestion.slides[resp.data.slideIndex];
+        });
+    });
+    $scope.state = "";
+    $scope.questions = [];
+    
+    $scope.index = function(question){
+        var index = -1;
+        $scope.questions.some(function(obj, i) {
+            return obj === question ? index = i : false;
+        });
+        return index+1;
+    }
+    
+}]);
 
 
 app.controller('answerCtrl', function($scope) {

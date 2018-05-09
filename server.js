@@ -98,6 +98,10 @@ app.get('/questions', function(req, res){
     });
 });
 
+app.get('/state', function(req, res){
+    res.status(200).json({'state': nextState, 'questionIndex': currentQuestion, 'slideIndex': slideIndex});
+});
+
 app.post('/upload', multipartMiddleware, function(req, res) {
     console.log(req.body, req.files);
     if(req.body.file == 'null'){
