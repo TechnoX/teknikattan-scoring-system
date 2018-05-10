@@ -99,7 +99,7 @@ app.get('/questions', function(req, res){
 });
 
 app.get('/state', function(req, res){
-    res.status(200).json({'state': nextState, 'questionIndex': currentQuestion, 'slideIndex': slideIndex});
+    res.status(200).json({'state': nextState, 'questionIndex': questionIndex, 'slideIndex': slideIndex});
 });
 
 app.post('/upload', multipartMiddleware, function(req, res) {
@@ -119,7 +119,7 @@ app.post('/upload', multipartMiddleware, function(req, res) {
 
 app.post('/truefalse', function(req, res){
     console.log('value: ' + req.body.value);
-    publishJudge("<span style='color: "+((req.body.value=='true')?"darkgreen":"darkred")+"'>"+((req.body.value=='true')?"Sant":"Falskt")+"</span>", trueFalseIndex);
+    publishJudge("<span style='color: "+((req.body.value=='true')?"darkgreen":"darkred")+"'>"+((req.body.value=='true')?"Sant":"Falskt")+"</span>", statementIndex);
     res.send('OK');
 });
 
@@ -133,7 +133,7 @@ app.post('/drop', function(req, res){
     console.log('drag: ' + req.body.dragged + ", drop: " + req.body.dropped);
     var dragIndex = req.body.dragged.slice(4);
     var dropIndex = req.body.dropped.slice(4);
-    var question = questions[currentQuestion];
+    var question = questions[questionIndex];
     var part1, part2;
     if(question.pairs[0].length >= question.pairs[1].length){
         part1 = question.pairs[0][dragIndex];
