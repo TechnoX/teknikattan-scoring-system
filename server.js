@@ -177,20 +177,22 @@ app.post('/scoring', function(req, res){
 var teams = [{name: 'Sjöängsskolan', score: 0, answers: []},{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []}];
 var questions = [];
 
-var currentQuestion = -1;
+// State could be: start, image, question (is active and visible), beforeanswer, answer, end
+var currentState = "start";
+var questionIndex = -1;
 var slideIndex = 0;
 var hintIndex = 0;
-var trueFalseIndex = 0;
-var nextState = 'showImage';
+var statementIndex = 0;
+//var nextState = 'showImage';
 var currentTimer; // The current timer that was started by setInterval
 
 
 io.on('connection', function(socket){
     console.log('a user connected')
-    publishScoresJudge(0)
+    /*publishScoresJudge(0)
     publishScoresJudge(1)
     publishScoresJudge(2)
-    
+    displayState();*/
     
     socket.on('disconnect', function(){
         console.log('user disconnected')
@@ -201,6 +203,98 @@ io.on('connection', function(socket){
 })
 
 
+
+function nextPressed(){
+    updateState();
+    displayState();
+}
+
+function displayState(){
+    console.log("---------------------");
+    console.log("State: " + currentState);
+    console.log("question: " + questionIndex + ", slide: " + slideIndex);
+    console.log("hintIndex: " + hintIndex + ", statementIndex: " + statementIndex);
+}
+
+function updateState(){
+    var oldState = currentState;
+    var nextState = "";
+    // State could be: start, image, question (is active and visible), beforeanswer, answer, end
+    switch(oldState){
+    case 'start':
+        nextState = gotoNextQuestion();
+        break;
+    case 'image':
+        nextState = 'question';
+        break;
+    case 'question':
+        if(hasMoreSlides()){ // Go through all slides.
+            nextSlide();
+            nextState = oldState;
+        }else if(hasMoreHints()){ // Go through all hints.
+            nextHint();
+            nextState = oldState;
+        }else if(hasMoreStatements()){ // Go through all statements.
+            nextStatement();
+            nextState = oldState;
+        }else{
+            if(questions[questionIndex].answer.show){
+                nextState = 'beforeanswer';
+            }else{
+                nextState = gotoNextQuestion();
+            }
+        }
+        break;
+    case 'beforeanswer':
+        nextState = 'answer';
+        break;
+    case 'answer':
+        nextState = gotoNextQuestion();
+        break;
+    case 'end':
+        nextState = oldState;
+        break;
+    }
+    currentState = nextState;
+}
+
+function hasMoreSlides(){
+    console.log("index: " + slideIndex + ", length: " + questions[questionIndex].slides.length);
+    return slideIndex + 1 < questions[questionIndex].slides.length;
+}
+
+function nextSlide(){
+    slideIndex++;
+}
+
+function hasMoreHints(){
+    return questions[questionIndex].type == 'hints' && hintIndex + 1 < questions[questionIndex].hints.length;
+}
+
+function nextHint(){
+    hintIndex++;
+}
+
+function hasMoreStatements(){
+    return questions[questionIndex].type == 'truefalse' && statementIndex + 1 < questions[questionIndex].statements.length;
+}
+
+function nextStatement(){
+    statementIndex++;
+}
+
+function gotoNextQuestion(){
+    questionIndex++;
+    slideIndex = 0;
+    if(questionIndex >= questions.length){
+        return 'end';
+    }else{
+        return 'image';
+    }
+}
+
+
+/*
 function nextPressed(){
     if(nextState == 'showImage'){
         currentQuestion++;
@@ -258,7 +352,7 @@ function nextPressed(){
         console.warn("No state handler for state: " + nextState);
     }
 }
-
+*/
 function publishImage(question){
     // Display image
     console.log("Publish title image");
