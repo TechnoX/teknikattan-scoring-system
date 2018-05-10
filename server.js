@@ -181,8 +181,8 @@ var questions = [];
 var currentState = "start";
 var questionIndex = -1;
 var slideIndex = 0;
-var hintIndex = 0;
-var statementIndex = 0;
+var hintIndex = -1;
+var statementIndex = -1;
 //var nextState = 'showImage';
 var currentTimer; // The current timer that was started by setInterval
 
@@ -228,15 +228,17 @@ function updateState(){
         nextState = 'question';
         break;
     case 'question':
+    case 'hints':
+    case 'statements':
         if(hasMoreSlides()){ // Go through all slides.
             nextSlide();
             nextState = oldState;
         }else if(hasMoreHints()){ // Go through all hints.
             nextHint();
-            nextState = oldState;
+            nextState = 'hints';
         }else if(hasMoreStatements()){ // Go through all statements.
             nextStatement();
-            nextState = oldState;
+            nextState = 'statements';
         }else{
             if(questions[questionIndex].answer.show){
                 nextState = 'beforeanswer';
@@ -259,7 +261,6 @@ function updateState(){
 }
 
 function hasMoreSlides(){
-    console.log("index: " + slideIndex + ", length: " + questions[questionIndex].slides.length);
     return slideIndex + 1 < questions[questionIndex].slides.length;
 }
 
@@ -286,6 +287,8 @@ function nextStatement(){
 function gotoNextQuestion(){
     questionIndex++;
     slideIndex = 0;
+    hintIndex = -1;
+    statementIndex = -1;
     if(questionIndex >= questions.length){
         return 'end';
     }else{
