@@ -183,6 +183,7 @@ var questionIndex = -1;
 var slideIndex = 0;
 var hintIndex = -1;
 var statementIndex = -1;
+var startedTimer = false;
 //var nextState = 'showImage';
 var currentTimer; // The current timer that was started by setInterval
 
@@ -230,15 +231,20 @@ function updateState(){
     case 'question':
     case 'hints':
     case 'statements':
-        if(hasMoreSlides()){ // Go through all slides.
+        if(hasTimer() && !startedTimer && questions[questionIndex].type == 'normal'){
+            startTimer();
+            nextState = oldState;
+        }else if(hasMoreSlides()){ // Go through all slides.
             nextSlide();
             nextState = oldState;
         }else if(hasMoreHints()){ // Go through all hints.
             nextHint();
             nextState = 'hints';
+            startTimer();
         }else if(hasMoreStatements()){ // Go through all statements.
             nextStatement();
             nextState = 'statements';
+            startTimer();
         }else{
             if(questions[questionIndex].answer.show){
                 nextState = 'beforeanswer';
@@ -265,6 +271,7 @@ function hasMoreSlides(){
 }
 
 function nextSlide(){
+    startedTimer = false;
     slideIndex++;
 }
 
@@ -289,6 +296,8 @@ function gotoNextQuestion(){
     slideIndex = 0;
     hintIndex = -1;
     statementIndex = -1;
+    startedTimer = false;
+    clearInterval(currentTimer);
     if(questionIndex >= questions.length){
         return 'end';
     }else{
@@ -296,12 +305,15 @@ function gotoNextQuestion(){
     }
 }
 
+function hasTimer(){
+    return Math.round(questions[questionIndex].slides[slideIndex].time) > 0;
+}
 
-function startTimer(totalTime){
-    var time = Math.round(totalTime);
+function startTimer(){
+    var time = Math.round(questions[questionIndex].slides[slideIndex].time);
     clearInterval(currentTimer);
-    console.log("Current question: " + currentQuestion);
-    console.log("Time: " + time);
+    startedTimer = true;
+    console.log("Start timer, with total time: " + time);
     currentTimer = setInterval(function(){
         time--;
         io.emit('time', formatTime(time));
@@ -314,6 +326,7 @@ function startTimer(totalTime){
 
 
 function publishTimesUp(){
+    console.log("Time's up!");
     var msg = {'hintIndex': hintIndex};
     io.emit('timesUp', msg);
 }
