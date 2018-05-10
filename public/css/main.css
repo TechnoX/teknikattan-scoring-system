@@ -174,9 +174,6 @@ article > footer > time{
     font-weight: bold;
     width: 4em;
 }
-article > footer > time.hidden{
-    visibility: hidden;
-}
 article > footer > section{
     float: left;
 }
