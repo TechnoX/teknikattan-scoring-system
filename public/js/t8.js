@@ -183,7 +183,8 @@ app.directive("competitor", function() {
         scope: {
             slide: '=',
             question: '=',
-            editable: '='
+            editable: '=',
+            state: '='
         },
         link: function(scope) {
             scope.removeHint = function(index){
@@ -209,7 +210,8 @@ app.directive("projector", function(){
         scope: {
             slide: '=',
             question: '=',
-            editable: '='
+            editable: '=',
+            state: '='
         },
         restrict: "E"
     }
@@ -254,49 +256,22 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
 
 
 app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
-    $http.get('/questions').then(function(resp) {
-        $scope.questions = resp.data;
-        console.log("Got questions: ", $scope.questions);
-        $http.get('/state').then(function(resp) {
-            console.log("Got current state: ",  resp.data);
-            switch(resp.data.state){
-            case 'showImage':
-                $scope.state = "image";
-                break;
-            case 'showQuestion':
-                $scope.state = "question";
-                break;
-            case 'startTimer':
-                break;
-            case 'showHints':
-                break;
-            case 'showTrueFalse':
-                break;
-            case 'showBeforeAnswer':
-                $scope.state = "beforeAnswer";
-                break;
-            case 'showAnswer':
-                $scope.state = "answer";
-                break;
-            case 'end':
-                $scope.state = "end";
-                break;
-            }
-            $scope.currQuestion = $scope.questions[resp.data.questionIndex];
-            $scope.currSlide = $scope.currQuestion.slides[resp.data.slideIndex];
+    var _index = 0;
+    var socket = io();
+    $scope.state = "start";
+    socket.on('stateChange', function(msg){
+        $scope.$applyAsync(function () {
+            $scope.currQuestion = msg.question;
+            $scope.currSlide = msg.question.slides[msg.slideIndex];
+            $scope.state = msg.state;
+            $scope.hintIndex = msg.hintIndex;
+            $scope.statementIndex = msg.statementIndex;
+            _index = msg.questionIndex + 1;
+            console.log(msg.state);
         });
     });
-    $scope.state = "";
-    $scope.questions = [];
-    
-    $scope.index = function(question){
-        var index = -1;
-        $scope.questions.some(function(obj, i) {
-            return obj === question ? index = i : false;
-        });
-        return index+1;
-    }
-    
+
+    $scope.index = function(){return _index;};
 }]);
 
 

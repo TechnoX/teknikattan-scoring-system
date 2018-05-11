@@ -215,6 +215,15 @@ function displayState(){
     console.log("State: " + currentState);
     console.log("question: " + questionIndex + ", slide: " + slideIndex);
     console.log("hintIndex: " + hintIndex + ", statementIndex: " + statementIndex);
+
+    var msg = {'state': currentState,
+               'question': questions[questionIndex],
+               'questionIndex': questionIndex,
+               'slideIndex': slideIndex,
+               'hintIndex': hintIndex,
+               'statementIndex': statementIndex
+              };
+    io.emit('stateChange', msg);
 }
 
 function updateState(){
