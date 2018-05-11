@@ -41,8 +41,8 @@
     <main ng-show="currQuestion.type == 'truefalse'">
       <table id="truefalse">
         <tr>
-          <td id="true" ng-click="answer.hint[statementIndex] = true">Sant</td>
-          <td id="false" ng-click="answer.hint[statementIndex] = false">Falskt</td>
+          <td id="true" ng-click="answer.hint[statementIndex] = true" ng-class="{'marked': answer.hint[statementIndex]}">Sant</td>
+          <td id="false" ng-click="answer.hint[statementIndex] = false" ng-class="{'marked': !answer.hint[statementIndex]}">Falskt</td>
         </tr>
       </table>
     </main>
