@@ -1,6 +1,6 @@
 <article class="competitor">
   <header>
-    <h1 ng-click="editable ? edit='title': null">{{$parent.index(question)}}. <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'"/><span ng-show="edit!='title'">{{question.title}}</span></h1>
+    <h1 ng-show="state != 'end' && state != 'start'" ng-click="editable ? edit='title': null">{{$parent.index(question)}}. <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'"/><span ng-show="edit!='title'">{{question.title}}</span></h1>
     <img src="images/logo.png"/>
   </header>
   <main ng-controller="UploadCtrl">
@@ -8,7 +8,7 @@
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
          ngf-resize-if="$width > 800 || $height > 800"
          ngf-resize="{width: 400}" />
-    <img ng-if="!editable" ng-src="{{question.image}}" />
+    <img ng-show="state != 'end' && state != 'start'" ng-if="!editable" ng-src="{{question.image}}" />
     <div ng-show="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-show="!editable && state == 'question'" ng-bind-html="slide.textLeft"></div>
     <div ng-show="state == 'start'"><h1>Välkomna till teknikåttan</h1></div>
@@ -34,7 +34,7 @@
       <li><a ng-click="addStatement()" href="#">Lägg till påstående</a></li>
     </ol>
   </aside>
-  <footer>
+  <footer ng-show="state != 'end' && state != 'start'">
     <time ng-click="editable ? edit='timer' : null" ng-show="slide.time > 0 && edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
     <time ng-click="editable ? edit='timer' : null" ng-show="editable && slide.time <= 0 && edit!='timer'">Ingen</time>
     <section ng-show="edit=='timer'">
