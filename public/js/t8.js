@@ -280,6 +280,16 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var socket = io();
     $scope.state = "start";
     $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
+    $scope.$watch('answer', function(newValue, oldValue, scope) {
+        
+        $http.post("/text", {"array": $scope.answer}).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när det skulle sparas!");
+            console.log(res);
+        });
+        console.log($scope.answer);
+    }, true);
 
     $http.get('/currentState').then(function(resp) {
         if(!resp.data.question){

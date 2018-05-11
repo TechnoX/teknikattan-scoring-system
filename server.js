@@ -124,9 +124,9 @@ app.post('/truefalse', function(req, res){
 });
 
 app.post('/text', function(req, res){
-    console.log('value: ' + req.body.value + ", index: " + req.body.index);
-    publishJudge(req.body.value, req.body.index);
-    res.send('OK');
+    console.log("Got updated answer: " + JSON.stringify(req.body));
+    //publishJudge(req.body.value, req.body.index);
+    res.status(200).json({'success': true});;
 });
 
 app.post('/drop', function(req, res){
