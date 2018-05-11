@@ -221,6 +221,9 @@ article > footer > section{
     font-size: 3em;
 }
 
+.answer li{
+    margin-bottom: 1em;
+}
 
 #truefalse{
     width: 100%;
