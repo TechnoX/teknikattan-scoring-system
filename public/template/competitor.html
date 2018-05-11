@@ -42,7 +42,7 @@
     </ol>
   </aside>
   <aside ng-show="state == 'statements'">
-    <h2>{{question.statements[statementIndex]}}</h2>
+    <span class="statement">{{question.statements[statementIndex]}}</span>
   </aside>
   <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />
