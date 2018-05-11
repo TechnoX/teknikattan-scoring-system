@@ -34,15 +34,15 @@
     <main ng-show="currQuestion.type == 'hints'">
       <ol>
         <li ng-repeat="hint in currQuestion.hints track by $index">
-          <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer.hints[$index]" style="width: 25em;" /></label>
+          <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer[$index]" style="width: 25em;" /></label>
         </li>
       </ol>
     </main>
     <main ng-show="currQuestion.type == 'truefalse'">
       <table id="truefalse">
         <tr>
-          <td id="true" ng-click="answer.hint[statementIndex] = true" ng-class="{'marked': answer.hint[statementIndex]}">Sant</td>
-          <td id="false" ng-click="answer.hint[statementIndex] = false" ng-class="{'marked': !answer.hint[statementIndex]}">Falskt</td>
+          <td id="true" ng-click="answer[statementIndex] = true" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
+          <td id="false" ng-click="answer[statementIndex] = false" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
         </tr>
       </table>
     </main>
@@ -53,15 +53,15 @@
       <div ng-show="currQuestion.answer.type == 'multi'">
         <ol type='a' ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
           <li ng-if="currQuestion.answer.subQuestion[$index].type == 'text'">
-            <label>Svar: <input type="text" ng-model="answer.subQuestion[$index]"></input></label>
+            <label>Svar: <input type="text" ng-model="answer[$index]"></input></label>
           </li>
           <li ng-if="currQuestion.answer.subQuestion[$index].type == 'number'">
-            <label>Svar: </label><input type="number" ng-model="answer.subQuestion[$index]"></input>
+            <label>Svar: </label><input type="number" ng-model="answer[$index]"></input>
           </li>
           <li ng-if="currQuestion.answer.subQuestion[$index].type == 'select'">
             <label>Välj en av följande: </label>
             <label class="choice" ng-repeat="alt in currQuestion.answer.subQuestion[$index].alternatives">
-              <input type="radio" ng-model="answer.subQuestion[$parent.$index]" name="choice{{$index}}" ng-value="alt">
+              <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt">
               <span class="checkmark">{{alt}}</span>
             </label>
           </li>

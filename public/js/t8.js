@@ -279,7 +279,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
-
+    $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
 
     $http.get('/currentState').then(function(resp) {
         if(!resp.data.question){
@@ -311,6 +311,9 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 _index = msg.questionIndex + 1;
             }
             $scope.state = msg.state;
+            if(msg.state == 'image'){
+                $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
+            }
             console.log(msg.state);
         });
     });
