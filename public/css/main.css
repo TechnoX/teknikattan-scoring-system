@@ -21,7 +21,7 @@ input[type=text]{
     width: 12em;
 }
 input[type=number]{
-    width: 7em;
+    width: 4em;
 }
 #editor{
     width: 100%;
@@ -165,6 +165,9 @@ article > footer{
 }
 article > footer label{
     font-weight: bold;
+}
+article > footer > input[type=checkbox]{
+    float: left;
 }
 article > footer > time{
     float: left;

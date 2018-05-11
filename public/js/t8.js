@@ -141,7 +141,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
                         maxScoringText: "Totalt ? poäng",
                         answer: {type: 'multi', pairs: [[],[]], subQuestions: []},
                         slides: [
-                            {time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"}
+                            {hasTimer: true, time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"}
                         ]
                        };
         $scope.questions.splice(index, 0, question);
@@ -150,7 +150,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
     };
 
     $scope.addSlide = function () {
-        var slide = {time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"};
+        var slide = {hasTimer: true, time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"};
         var index = $scope.currQuestion.slides.indexOf($scope.currSlide) + 1;
         $scope.currQuestion.slides.splice(index, 0, slide);
         $scope.currSlide = $scope.currQuestion.slides[index];

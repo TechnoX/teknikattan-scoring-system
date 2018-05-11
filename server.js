@@ -241,7 +241,7 @@ function updateState(){
     case 'hints':
     case 'statements':
         if(hasTimer() && !startedTimer && questions[questionIndex].type == 'normal'){
-            startTimer(questions[questionIndex].slides[slideIndex].time);
+            startTimer();
             nextState = oldState;
         }else if(hasMoreSlides()){ // Go through all slides.
             nextSlide();
@@ -249,11 +249,11 @@ function updateState(){
         }else if(hasMoreHints()){ // Go through all hints.
             nextHint();
             nextState = 'hints';
-            startTimer(getLastSlideTime());
+            startTimer();
         }else if(hasMoreStatements()){ // Go through all statements.
             nextStatement();
             nextState = 'statements';
-            startTimer(getLastSlideTime());
+            startTimer();
         }else{
             if(questions[questionIndex].answer.show){
                 nextState = 'beforeanswer';
@@ -315,23 +315,12 @@ function gotoNextQuestion(){
 }
 
 
-// Return the time value for the last slide that have a timer set.
-function getLastSlideTime(){
-    for(var i = questions[questionIndex].slides.length - 1; i >= 0; i--){
-        if(Math.round(questions[questionIndex].slides[i].time) > 0){
-            return Math.round(questions[questionIndex].slides[i].time);
-        }
-    }
-    return 20; // Default value for the timer
-}
-
-
 function hasTimer(){
-    return Math.round(questions[questionIndex].slides[slideIndex].time) > 0;
+    return questions[questionIndex].slides[slideIndex].hasTimer;
 }
 
 function startTimer(totalTime){
-    var time = Math.round(totalTime);
+    var time = Math.round(questions[questionIndex].slides[slideIndex].time);
     clearInterval(currentTimer);
     startedTimer = true;
     console.log("Start timer, with total time: " + time);
