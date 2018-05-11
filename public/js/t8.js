@@ -200,7 +200,9 @@ app.directive("competitor", function() {
             slide: '=',
             question: '=',
             editable: '=',
-            state: '='
+            state: '=',
+            hintIndex: '@',
+            statementIndex: '@'
         },
         link: function(scope) {
             scope.removeHint = function(index){
@@ -227,7 +229,9 @@ app.directive("projector", function(){
             slide: '=',
             question: '=',
             editable: '=',
-            state: '='
+            state: '=',
+            hintIndex: '@',
+            statementIndex: '@'
         },
         restrict: "E"
     }

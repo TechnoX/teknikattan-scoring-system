@@ -34,6 +34,16 @@
       <li><a ng-click="addStatement()" href="#">Lägg till påstående</a></li>
     </ol>
   </aside>
+  <aside ng-show="state == 'hints'">
+    <ol>
+      <li ng-repeat="hint in question.hints track by $index">
+        <label ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</label>
+      </li>
+    </ol>
+  </aside>
+  <aside ng-show="state == 'statements'">
+    <h2>{{question.statements[statementIndex]}}</h2>
+  </aside>
   <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />
     <time ng-show="slide.hasTimer && edit!='timer'" ng-click="editable ? edit='timer' : null">{{slide.time*1000 | date:'mm:ss'}}</time>

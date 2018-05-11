@@ -18,6 +18,16 @@
     <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
     <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
     <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
+    <div ng-show="state == 'hints'">
+      <ol>
+        <li ng-repeat="hint in question.hints track by $index">
+          <label ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</label>
+        </li>
+      </ol>
+    </div>
+    <div ng-show="state == 'statements'">
+      <h2>{{question.statements[statementIndex]}}</h2>
+    </div>
   </main>
   <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />
