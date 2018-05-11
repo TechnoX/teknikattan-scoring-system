@@ -282,7 +282,6 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
 
 
     $http.get('/currentState').then(function(resp) {
-        $scope.state = resp.data.state;
         if(!resp.data.question){
             $scope.currQuestion = null;
         }else{
@@ -293,6 +292,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
             $scope.statementIndex = resp.data.statementIndex;
             _index = resp.data.questionIndex + 1;
         }
+        $scope.state = resp.data.state;
         console.log(resp.data.state);
     });
     
@@ -300,7 +300,6 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     
     socket.on('stateChange', function(msg){
         $scope.$applyAsync(function () {
-            $scope.state = msg.state;
             if(!msg.question){
                 $scope.currQuestion = null;
             }else{
@@ -311,6 +310,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 $scope.statementIndex = msg.statementIndex;
                 _index = msg.questionIndex + 1;
             }
+            $scope.state = msg.state;
             console.log(msg.state);
         });
     });
