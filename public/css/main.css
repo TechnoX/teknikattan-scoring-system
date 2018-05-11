@@ -216,9 +216,12 @@ article > footer > section{
 
 
 
-
-
 /** Answer screen **/
+.answer > main{
+    font-size: 3em;
+}
+
+
 #truefalse{
     width: 100%;
     height: 100%;
