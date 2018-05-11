@@ -316,7 +316,6 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     });
     socket.on('time', function(msg){
         $scope.$applyAsync(function () {
-            console.log("Change time");
             $scope.currSlide.time = msg;
         });
     });
