@@ -46,28 +46,30 @@
         </tr>
       </table>
     </main>
-    <main ng-show="currQuestion.answer.type == 'practical'">
-      <p>Här får ni lägga undan paddan och jobba praktiskt.</p>
-    </main>
-    <main ng-show="currQuestion.answer.type == 'multi'">
-      <ol type='a' ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-        <li ng-if="currQuestion.answer.subQuestion[$index].type == 'text'">
-          <label>Svar: <input type="text" ng-model="answer.subQuestion[$index]"></input></label>
-        </li>
-        <li ng-if="currQuestion.answer.subQuestion[$index].type == 'number'">
-          <label>Svar: </label><input type='number' ng-model="answer.subQuestion[$index]"></input>
-        </li>
-        <li ng-if="currQuestion.answer.subQuestion[$index].type == 'select'">
-          <label>Välj en av följande: </label>
-          <label class='choice' ng-repeat="alt in currQuestion.answer.subQuestion[$index].alternatives">
-            <input type='radio' ng-model="answer.subQuestion[$parent.$index]" name="choice{{$index}}" ng-value="alt">
-            <span class='checkmark'>{{alt}}</span>
-          </label>
-        </li>
-      </ol>
-    </main>
-    <main ng-show="currQuestion.answer.type == 'pairing'">
-      <p>Para ihop ord med ord.</p>
+    <main ng-show="currQuestion.type == 'normal'">
+      <div ng-show="currQuestion.answer.type == 'practical'">
+        <p>Här får ni lägga undan paddan och jobba praktiskt.</p>
+      </div>
+      <div ng-show="currQuestion.answer.type == 'multi'">
+        <ol type='a' ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
+          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'text'">
+            <label>Svar: <input type="text" ng-model="answer.subQuestion[$index]"></input></label>
+          </li>
+          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'number'">
+            <label>Svar: </label><input type="number" ng-model="answer.subQuestion[$index]"></input>
+          </li>
+          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'select'">
+            <label>Välj en av följande: </label>
+            <label class="choice" ng-repeat="alt in currQuestion.answer.subQuestion[$index].alternatives">
+              <input type="radio" ng-model="answer.subQuestion[$parent.$index]" name="choice{{$index}}" ng-value="alt">
+              <span class="checkmark">{{alt}}</span>
+            </label>
+          </li>
+        </ol>
+      </div>
+      <div ng-show="currQuestion.answer.type == 'pairing'">
+        <p>Para ihop ord med ord.</p>
+      </div>
     </main>
   </article>
 </body>
