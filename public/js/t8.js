@@ -324,6 +324,47 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
 }]);
 
 
-app.controller('answerCtrl', function($scope) {
-    // TODO: Implement
-});
+app.controller('answerCtrl', ['$scope', '$http', function($scope, $http){
+    var _index = 0;
+    var socket = io();
+    $scope.state = "start";
+
+
+    $http.get('/currentState').then(function(resp) {
+        $scope.state = resp.data.state;
+        if(!resp.data.question){
+            $scope.currQuestion = null;
+        }else{
+            $scope.currQuestion = resp.data.question;
+            $scope.currSlide = resp.data.question.slides[resp.data.slideIndex];
+            
+            $scope.hintIndex = resp.data.hintIndex;
+            $scope.statementIndex = resp.data.statementIndex;
+            _index = resp.data.questionIndex + 1;
+        }
+        console.log(resp.data.state);
+    });
+    
+    
+    socket.on('stateChange', function(msg){
+        $scope.$applyAsync(function () {
+            $scope.state = msg.state;
+            if(!msg.question){
+                $scope.currQuestion = null;
+            }else{
+                $scope.currQuestion = msg.question;
+                $scope.currSlide = msg.question.slides[msg.slideIndex];
+                
+                $scope.hintIndex = msg.hintIndex;
+                $scope.statementIndex = msg.statementIndex;
+                _index = msg.questionIndex + 1;
+            }
+            console.log(msg.state);
+        });
+    });
+
+    socket.on('timesUp', function(msg){
+        // TODO: Lock previous input elements so you can't enter anything more
+    });
+    $scope.index = function(){return _index;};
+}]);
