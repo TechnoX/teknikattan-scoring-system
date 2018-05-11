@@ -11,8 +11,13 @@
     <img ng-if="!editable" ng-src="{{question.image}}" />
   </figure>
   <main>
-    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textProjector"></div>
-    <div ng-if="!editable" ng-bind-html="slide.textProjector"></div>
+    
+    <div ng-show="editable" ui-tinymce="editable" ng-model="slide.textProjector"></div>
+    <div ng-show="!editable && state == 'question'" ng-bind-html="slide.textProjector"></div>
+    <div ng-show="state == 'start'"><h1>Välkomna till teknikåttan</h1></div>
+    <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
+    <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
+    <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
   </main>
   <footer>
     <time ng-click="editable ? edit='timer' : null" ng-show="slide.time > 0 && edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
