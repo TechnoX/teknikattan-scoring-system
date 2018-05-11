@@ -31,14 +31,14 @@
     <main ng-show="state == 'end'">
       <h1>Tack för er medverkan!</h1>
     </main>
-    <main ng-show="state == 'hints'">
+    <main ng-show="currQuestion.type == 'hints'">
       <ol>
         <li ng-repeat="hint in currQuestion.hints track by $index">
           <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer.hints[$index]" style="width: 25em;" /></label>
         </li>
       </ol>
     </main>
-    <main ng-show="state == 'statements'">
+    <main ng-show="currQuestion.type == 'truefalse'">
       <table id="truefalse">
         <tr>
           <td id="true" ng-click="answer.hint[statementIndex] = true">Sant</td>
