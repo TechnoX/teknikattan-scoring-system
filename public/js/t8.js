@@ -69,6 +69,9 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
     });
 
     $scope.save = function(question){
+        if(!$scope.correct()){
+            return false;
+        }
         $http.put('/questions', $scope.questions).then(function(res){
             alert("Allting sparades korrekt!");
             console.log(res);
@@ -76,6 +79,19 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
             alert("Något gick fel när det skulle sparas!");
             console.log(res);
         });
+    }
+
+    $scope.correct = function(){
+        for(var i = 0; i < $scope.questions.length; i++){
+            if($scope.questions[i].type == 'hints' || $scope.questions[i].type == 'truefalse'){
+                if(!$scope.questions[i].slides[$scope.questions[i].slides.length - 1].hasTimer){
+                    alert("Sista sliden för fråga " + (i+1) + " måste ha en timer, eftersom frågan är en ledtråds- eller sant/falskt-fråga.");
+                    console.log("Sista sliden för fråga " + (i+1) + " måste ha en timer, eftersom frågan är en ledtråds- eller sant/falskt-fråga.");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     $scope.index = function(question){
         var index = -1;
