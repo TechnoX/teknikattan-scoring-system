@@ -155,6 +155,10 @@ article > aside{
     width: 50%;
     float: left;
 }
+.hint{
+    font-size: 2em;
+    margin-bottom: 1em;
+}
 article > footer{
     clear: both;
     padding: 1%;

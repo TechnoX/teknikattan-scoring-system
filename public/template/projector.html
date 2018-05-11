@@ -21,7 +21,7 @@
     <div ng-show="state == 'hints'">
       <ol>
         <li ng-repeat="hint in question.hints track by $index">
-          <label ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</label>
+          <span class="hint" ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</span>
         </li>
       </ol>
     </div>
