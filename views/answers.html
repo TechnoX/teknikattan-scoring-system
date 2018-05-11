@@ -51,19 +51,17 @@
         <p>Här får ni lägga undan paddan och jobba praktiskt.</p>
       </div>
       <div ng-show="currQuestion.answer.type == 'multi'">
-        <ol type='a' ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'text'">
-            <label>Svar: <input type="text" ng-model="answer[$index]"></input></label>
-          </li>
-          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'number'">
-            <label>Svar: </label><input type="number" ng-model="answer[$index]"></input>
-          </li>
-          <li ng-if="currQuestion.answer.subQuestion[$index].type == 'select'">
-            <label>Välj en av följande: </label>
-            <label class="choice" ng-repeat="alt in currQuestion.answer.subQuestion[$index].alternatives">
-              <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt">
-              <span class="checkmark">{{alt}}</span>
-            </label>
+        <ol type='a'>
+          <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
+            <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" /></label>
+            <label ng-if="sq.type == 'number'">Svar: <input type="number" ng-model="answer[$index]" /></label>
+            <section ng-if="sq.type == 'select'">
+              <label>Välj en av följande: </label>
+              <label class="choice" ng-repeat="alt in sq.alternatives">
+                <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt">
+                <span class="checkmark">{{alt}}</span>
+              </label>
+            </section>
           </li>
         </ol>
       </div>
