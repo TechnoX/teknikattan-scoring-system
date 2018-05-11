@@ -294,6 +294,12 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
             console.log(msg.state);
         });
     });
+    socket.on('time', function(msg){
+        $scope.$applyAsync(function () {
+            console.log("Change time");
+            $scope.currSlide.time = msg;
+        });
+    });
 
     $scope.index = function(){return _index;};
 }]);

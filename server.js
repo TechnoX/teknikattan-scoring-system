@@ -337,7 +337,7 @@ function startTimer(totalTime){
     console.log("Start timer, with total time: " + time);
     currentTimer = setInterval(function(){
         time--;
-        io.emit('time', formatTime(time));
+        io.emit('time', time);
         if(Math.round(time) == 0){
             clearInterval(currentTimer);
             publishTimesUp();
@@ -350,19 +350,6 @@ function publishTimesUp(){
     console.log("Time's up!");
     var msg = {'hintIndex': hintIndex};
     io.emit('timesUp', msg);
-}
-
-
-function formatTime(seconds){
-    var minutes = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    if(minutes < 10){
-        minutes = '0'+minutes;
-    }
-    if(seconds < 10){
-        seconds = '0' + seconds;
-    }
-    return minutes + ":" + seconds;
 }
 
 
