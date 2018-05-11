@@ -259,6 +259,25 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
+
+
+    $http.get('/currentState').then(function(resp) {
+        $scope.state = resp.data.state;
+        if(!resp.data.question){
+            $scope.currQuestion = null;
+        }else{
+            $scope.currQuestion = resp.data.question;
+            $scope.currSlide = resp.data.question.slides[resp.data.slideIndex];
+            
+            $scope.hintIndex = resp.data.hintIndex;
+            $scope.statementIndex = resp.data.statementIndex;
+            _index = resp.data.questionIndex + 1;
+        }
+        console.log(resp.data.state);
+    });
+    
+
+    
     socket.on('stateChange', function(msg){
         $scope.$applyAsync(function () {
             $scope.state = msg.state;

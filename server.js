@@ -98,8 +98,8 @@ app.get('/questions', function(req, res){
     });
 });
 
-app.get('/state', function(req, res){
-    res.status(200).json({'state': nextState, 'questionIndex': questionIndex, 'slideIndex': slideIndex});
+app.get('/currentState', function(req, res){
+    res.status(200).json(getState());
 });
 
 app.post('/upload', multipartMiddleware, function(req, res) {
@@ -207,10 +207,10 @@ io.on('connection', function(socket){
 
 function nextPressed(){
     updateState();
-    displayState();
+    io.emit('stateChange', getState());
 }
 
-function displayState(){
+function getState(){
     console.log("---------------------");
     console.log("State: " + currentState);
     console.log("question: " + questionIndex + ", slide: " + slideIndex);
@@ -223,7 +223,7 @@ function displayState(){
                'hintIndex': hintIndex,
                'statementIndex': statementIndex
               };
-    io.emit('stateChange', msg);
+    return msg;
 }
 
 function updateState(){
