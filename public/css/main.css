@@ -265,8 +265,6 @@ article > footer > section{
     -ms-user-select: none;
     user-select: none;
     margin-left: 22px;
-    border: 2px solid black;
-    line-height: 1.5em;
 }
 
 /* Hide the browser's default radio button */
@@ -278,6 +276,7 @@ article > footer > section{
 /* Create a custom radio button */
 .checkmark {
     background-color: #eee;
+    padding: 0.5em;
 }
 
 /* On mouse-over, add a grey background color */
