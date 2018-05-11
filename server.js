@@ -116,7 +116,7 @@ app.post('/upload', multipartMiddleware, function(req, res) {
     res.status(200).json({'success': true, 'path': file.path.substr(7)});
 });
 
-app.post('/text', function(req, res){
+app.post('/answer', function(req, res){
     console.log("Got updated answer: " + JSON.stringify(req.body));
     //publishJudge(req.body.value, req.body.index);
     res.status(200).json({'success': true});;

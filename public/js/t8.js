@@ -282,7 +282,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         
-        $http.post("/text", {"array": $scope.answer}).then(function(res) {
+        $http.post("/answer", {"array": $scope.answer}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när det skulle sparas!");
