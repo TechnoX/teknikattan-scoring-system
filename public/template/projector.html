@@ -3,7 +3,7 @@
     <h1 ng-click="editable ? edit='title' : null">{{$parent.index(question)}}. <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'" /><span ng-show="edit!='title'">{{question.title}}</span></h1>
     <img src="images/logo.png"/>
   </header>
-  <figure ng-controller="UploadCtrl">
+  <figure ng-class="{'titleimage': state == 'image'}" ng-controller="UploadCtrl">
     <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
          ngf-resize-if="$width > 800 || $height > 800"

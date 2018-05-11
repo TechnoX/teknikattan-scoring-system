@@ -183,10 +183,23 @@ article > footer > section{
     width: 25%;
     height: 30%;
 }
+.projector figure.titleimage{
+    float: none;
+    width: 100%;
+    height: 60%;
+    position: absolute; /* To place it above the main block after this image */
+}
 .projector figure > img{
     max-height: 100%;
     max-width: 100%;
     float: right;
+}
+.projector figure.titleimage > img{
+    float: none;
+    position: absolute;
+    top: 50%; /* To center in absolute positioned parent */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .projector > main{
     font-size: 2em;
