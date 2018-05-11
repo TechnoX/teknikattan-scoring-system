@@ -116,13 +116,6 @@ app.post('/upload', multipartMiddleware, function(req, res) {
     res.status(200).json({'success': true, 'path': file.path.substr(7)});
 });
 
-
-app.post('/truefalse', function(req, res){
-    console.log('value: ' + req.body.value);
-    publishJudge("<span style='color: "+((req.body.value=='true')?"darkgreen":"darkred")+"'>"+((req.body.value=='true')?"Sant":"Falskt")+"</span>", statementIndex);
-    res.send('OK');
-});
-
 app.post('/text', function(req, res){
     console.log("Got updated answer: " + JSON.stringify(req.body));
     //publishJudge(req.body.value, req.body.index);
