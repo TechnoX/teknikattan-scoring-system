@@ -34,7 +34,7 @@
       <li><a ng-click="addStatement()" href="#">Lägg till påstående</a></li>
     </ol>
   </aside>
-  <footer ng-show="state != 'end' && state != 'start'">
+  <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
     <time ng-click="editable ? edit='timer' : null" ng-show="slide.time > 0 && edit!='timer'">{{slide.time*1000 | date:'mm:ss'}}</time>
     <time ng-click="editable ? edit='timer' : null" ng-show="editable && slide.time <= 0 && edit!='timer'">Ingen</time>
     <section ng-show="edit=='timer'">
