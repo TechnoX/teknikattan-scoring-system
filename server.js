@@ -48,7 +48,7 @@ app.get('/projector', function(req, res){
   res.sendFile(__dirname + '/views/projector.html');
 })
 
-app.get('/answers', function(req, res){
+app.get('/tablet', function(req, res){
   res.sendFile(__dirname + '/views/answers.html');
 })
 
@@ -119,7 +119,20 @@ app.post('/upload', multipartMiddleware, function(req, res) {
 app.post('/answer', function(req, res){
     console.log("Got updated answer: " + JSON.stringify(req.body));
     //publishJudge(req.body.value, req.body.index);
-    res.status(200).json({'success': true});;
+    database.collection('answers').update({team: 3, question: questionIndex}, req.body, {upsert: true}, function(err, result) {
+        if (err) return console.log(err);
+        console.log('saved answer to database');
+        res.status(200).json({'success': true});
+    });
+});
+
+app.get('/answer', function(req, res){
+    database.collection('answers').find({team: 3, question: questionIndex}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log("Got response from answer database: ");
+        console.log(result[0]);
+        res.status(200).json(result[0]);
+    });
 });
 
 app.post('/drop', function(req, res){

@@ -279,10 +279,10 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
-    $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
+    $scope.answer = [];
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         
-        $http.post("/answer", {"array": $scope.answer}).then(function(res) {
+        $http.post("/answer", {'team': 3, 'question': _index, 'answers': $scope.answer}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när det skulle sparas!");
@@ -290,6 +290,15 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
         });
         console.log($scope.answer);
     }, true);
+
+    $http.get('/answer').then(function(resp) {
+        if(resp.data.answers){
+            $scope.answer = resp.data.answers;
+        }else{
+            $scope.answer = [];
+        }
+        console.log("answer",$scope.answer);
+    });
 
     $http.get('/currentState').then(function(resp) {
         if(!resp.data.question){
@@ -300,7 +309,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
             
             $scope.hintIndex = resp.data.hintIndex;
             $scope.statementIndex = resp.data.statementIndex;
-            _index = resp.data.questionIndex + 1;
+            _index = resp.data.questionIndex;
         }
         $scope.state = resp.data.state;
         console.log(resp.data.state);
@@ -318,11 +327,21 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 
                 $scope.hintIndex = msg.hintIndex;
                 $scope.statementIndex = msg.statementIndex;
-                _index = msg.questionIndex + 1;
+                _index = msg.questionIndex;
             }
             $scope.state = msg.state;
+
+            // If new question loaded ... 
             if(msg.state == 'image'){
-                $scope.answer = [];//{hints: [], statements: [], subQuestions: []};
+                // ... get associated answers
+                $http.get('/answer').then(function(resp) {
+                    if(resp.data.answers){
+                        $scope.answer = resp.data.answers;
+                    }else{
+                        $scope.answer = [];
+                    }
+                    console.log("answer",$scope.answer);
+                });
             }
             console.log(msg.state);
         });
@@ -333,7 +352,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
         });
     });
 
-    $scope.index = function(){return _index;};
+    $scope.index = function(){return _index + 1;};
 }]);
 
 
