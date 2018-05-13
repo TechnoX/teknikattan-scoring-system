@@ -23,6 +23,7 @@
             <option value="select">Välj ett av flera alternativ</option>
           </select>
         </label>
+        <label ng-show="answer.subQuestions[$index].type == 'select'">Tillåt flera samtidigt: <input type="checkbox" ng-model="answer.subQuestions[$index].multiple"></label>
         Visas på slide: <ol style="display: inline-block;"><li ng-repeat="slide in question.slides track by $index" style="float: left;"><label>{{$index}}. <input type="checkbox" ng-model="answer.subQuestions[$parent.$index].show[$index]" /></label></li></ol>
         <a ng-click="remove(answer.subQuestions, $index)" href="#">Ta bort</a><br>
         <ol ng-show="answer.subQuestions[$index].type == 'select'">

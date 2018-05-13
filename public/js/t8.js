@@ -259,7 +259,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
 
     $scope.add = function(array, subquestion,length){
         if(subquestion){
-            array.push({type: 'text', alternatives: [], show: Array(length).fill(true)});
+            array.push({type: 'text', alternatives: [], multiple: false, show: Array(length).fill(true)});
         }else{
             array.push('');
         }
@@ -393,6 +393,32 @@ app.directive('setFocus', function($timeout, $parse) {
                         element[0].focus();
                     });
                 }
+            });
+        }
+    };
+});
+
+
+app.directive('multipleChoices', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+            // How view values will be saved in the model
+            ngModel.$parsers.push(function(value) {
+                var text = "";
+                var arr = document.getElementsByName(attrs.name);
+                for (var i = 0; i < arr.length; i++) {
+                    if(arr[i].checked)
+                        text += ";" + arr[i].value;
+                }
+                text = text.substring(1);
+                return text;
+            });
+            // How model values will appear in the view
+            ngModel.$formatters.push(function(value) {
+                if(value === undefined)
+                    return false;
+                return value.split(";").indexOf(attrs.value) != -1;
             });
         }
     };

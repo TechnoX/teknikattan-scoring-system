@@ -57,8 +57,9 @@
             <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp" /></label>
             <section ng-if="sq.type == 'select'">
               <label>Välj en av följande: </label>
-              <label class="choice" ng-repeat="alt in sq.alternatives">
-                <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt" ng-disabled="timesUp" />
+              <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
+                <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp" />
+                <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp" />
                 <span class="checkmark">{{alt}}</span>
               </label>
             </section>
