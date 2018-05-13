@@ -326,7 +326,7 @@ article > footer > section{
     left: 50%;
     top: 50%;
 }
-.hintlock{
+.hintinput:disabled {
     background: url(images/lock-icon.png) no-repeat scroll 3px 3px;
     background-size: 1em;
     padding-left: 60px;

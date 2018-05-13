@@ -23,7 +23,7 @@
       <h1 ng-show="state != 'end' && state != 'start'">{{index()}}. {{currQuestion.title}}</h1>
       <img src="images/logo.png"/>
     </header>
-    <img src="images/lock.png" id="lock" ng-show="timesUp"/>
+    <img src="images/lock.png" id="lock" ng-show="timesUp && state != 'hints'"/>
     <main ng-show="state == 'start'">
       <h1>Välkomna till regionfinal!</h1>
       <h2>Stort lycka till nu!</h2>
@@ -34,7 +34,7 @@
     <main ng-show="currQuestion.type == 'hints'">
       <ol>
         <li ng-repeat="hint in currQuestion.hints track by $index">
-          <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == hintIndex" ng-disabled="$index < hintIndex || (timesUp && $index == hintIndex)" /></label>
+          <label>Ledtråd {{$index + 1}}: <input type="text" class="hintinput" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == hintIndex" ng-disabled="$index < hintIndex || (timesUp && $index == hintIndex)" /></label>
         </li>
       </ol>
     </main>
