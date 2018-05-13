@@ -327,7 +327,7 @@ article > footer > section{
     top: 50%;
 }
 .hintinput:disabled {
-    background: url(images/lock-icon.png) no-repeat scroll 3px 3px;
-    background-size: 1em;
+    background: url(/images/lock-icon.png) no-repeat scroll 3px 3px;
+    background-size: 0.7em;
     padding-left: 60px;
 }
