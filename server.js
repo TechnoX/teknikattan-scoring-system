@@ -117,11 +117,11 @@ app.post('/upload', multipartMiddleware, function(req, res) {
 });
 
 app.post('/answer', function(req, res){
-    console.log("Got updated answer: " + JSON.stringify(req.body));
+    
     //publishJudge(req.body.value, req.body.index);
     database.collection('answers').update({team: 3, question: questionIndex}, req.body, {upsert: true}, function(err, result) {
         if (err) return console.log(err);
-        console.log('saved answer to database');
+        console.log("Saved answer to database: " + JSON.stringify(req.body));
         res.status(200).json({'success': true});
     });
 });
