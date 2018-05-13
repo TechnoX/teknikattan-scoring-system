@@ -41,8 +41,8 @@
     <main ng-show="currQuestion.type == 'truefalse'">
       <table id="truefalse">
         <tr>
-          <td id="true" ng-click="answer[statementIndex] = true" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
-          <td id="false" ng-click="answer[statementIndex] = false" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
+          <td id="true" ng-click="!timesUp ? answer[statementIndex] = true : null" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
+          <td id="false" ng-click="!timesUp ? answer[statementIndex] = false : null" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
         </tr>
       </table>
     </main>

@@ -346,7 +346,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 });
                 $scope.timesUp = false;
             }
-            if(msg.state == 'hints'){
+            if(msg.state == 'hints' || msg.state == 'statements'){
                 $scope.timesUp = false;
             }
             console.log(msg.state);
