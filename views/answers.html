@@ -54,7 +54,7 @@
         <ol type='a'>
           <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
             <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" /></label>
-            <label ng-if="sq.type == 'number'">Svar: <input type="number" ng-model="answer[$index]" /></label>
+            <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" /></label>
             <section ng-if="sq.type == 'select'">
               <label>Välj en av följande: </label>
               <label class="choice" ng-repeat="alt in sq.alternatives">
