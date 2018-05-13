@@ -34,7 +34,7 @@
     <main ng-show="currQuestion.type == 'hints'">
       <ol>
         <li ng-repeat="hint in currQuestion.hints track by $index">
-          <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == hintIndex" /></label>
+          <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == hintIndex" ng-disabled="$index < hintIndex || (timesUp && $index == hintIndex)" /></label>
         </li>
       </ol>
     </main>

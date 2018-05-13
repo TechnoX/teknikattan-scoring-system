@@ -346,6 +346,9 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 });
                 $scope.timesUp = false;
             }
+            if(msg.state == 'hints'){
+                $scope.timesUp = false;
+            }
             console.log(msg.state);
         });
     });
