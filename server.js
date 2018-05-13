@@ -130,7 +130,7 @@ app.get('/answer', function(req, res){
     database.collection('answers').find({team: 3, question: questionIndex}).toArray(function(err, result) {
         if (err) throw err;
         console.log("Got response from answer database: ");
-        console.log(result[0]);
+        console.log(result);
         res.status(200).json(result[0]);
     });
 });
