@@ -52,14 +52,14 @@
       </div>
       <div ng-show="currQuestion.answer.type == 'multi'">
         <ol type='a'>
-          <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-            <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp" /></label>
-            <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp" /></label>
+          <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index" ng-show="sq.show[slideIndex]">
+            <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp && sq.show[slideIndex]" /></label>
+            <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp && sq.show[slideIndex]" /></label>
             <section ng-if="sq.type == 'select'">
               <label>Välj en av följande: </label>
               <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
-                <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp" />
-                <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp" />
+                <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
+                <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
                 <span class="checkmark">{{alt}}</span>
               </label>
             </section>

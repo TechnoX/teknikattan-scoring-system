@@ -280,6 +280,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var socket = io();
     $scope.state = "start";
     $scope.timesUp = false;
+    $scope.slideIndex = 0;
 
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         // If the new value is not updated, just re-assigned, do not save it
@@ -308,7 +309,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
         }else{
             $scope.currQuestion = resp.data.question;
             $scope.currSlide = resp.data.question.slides[resp.data.slideIndex];
-            
+            $scope.slideIndex = resp.data.slideIndex;
             $scope.hintIndex = resp.data.hintIndex;
             $scope.statementIndex = resp.data.statementIndex;
             _index = resp.data.questionIndex;
@@ -326,7 +327,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
             }else{
                 $scope.currQuestion = msg.question;
                 $scope.currSlide = msg.question.slides[msg.slideIndex];
-                
+                $scope.slideIndex = msg.slideIndex;
                 $scope.hintIndex = msg.hintIndex;
                 $scope.statementIndex = msg.statementIndex;
                 _index = msg.questionIndex;
@@ -347,6 +348,9 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                 $scope.timesUp = false;
             }
             if(msg.state == 'hints' || msg.state == 'statements'){
+                $scope.timesUp = false;
+            }
+            if($scope.currSlide.hasTimer){
                 $scope.timesUp = false;
             }
             console.log(msg.state);
