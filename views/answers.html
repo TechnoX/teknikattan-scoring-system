@@ -23,7 +23,7 @@
       <h1 ng-show="state != 'end' && state != 'start'">{{index()}}. {{currQuestion.title}}</h1>
       <img src="images/logo.png"/>
     </header>
-    <img src="images/lock.png" id="lock" />
+    <img src="images/lock.png" id="lock" ng-show="timesUp"/>
     <main ng-show="state == 'start'">
       <h1>Välkomna till regionfinal!</h1>
       <h2>Stort lycka till nu!</h2>
@@ -53,12 +53,12 @@
       <div ng-show="currQuestion.answer.type == 'multi'">
         <ol type='a'>
           <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-            <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" /></label>
-            <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" /></label>
+            <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp" /></label>
+            <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp" /></label>
             <section ng-if="sq.type == 'select'">
               <label>Välj en av följande: </label>
               <label class="choice" ng-repeat="alt in sq.alternatives">
-                <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt">
+                <input type="radio" ng-model="answer[$parent.$index]" name="choice{{$index}}" ng-value="alt" ng-disabled="timesUp" />
                 <span class="checkmark">{{alt}}</span>
               </label>
             </section>

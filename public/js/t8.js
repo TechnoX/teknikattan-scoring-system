@@ -279,6 +279,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
+    $scope.timesUp = false;
 
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         // If the new value is not updated, just re-assigned, do not save it
@@ -343,6 +344,7 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
                     }
                     console.log("answer",$scope.answer);
                 });
+                $scope.timesUp = false;
             }
             console.log(msg.state);
         });
@@ -352,7 +354,13 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
             $scope.currSlide.time = msg;
         });
     });
-
+    
+    socket.on('timesUp', function(msg){
+        console.log("Times up!");
+        // Lås tidigare fält så man inte kan mata in mer
+        $scope.timesUp = true;
+    });
+    
     $scope.index = function(){return _index + 1;};
 }]);
 
