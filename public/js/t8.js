@@ -279,16 +279,17 @@ app.controller('questionCtrl', ['$scope', '$http', function($scope, $http){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
-    $scope.answer = [];
+
     $scope.$watch('answer', function(newValue, oldValue, scope) {
-        
-        $http.post("/answer", {'team': 3, 'question': _index, 'answers': $scope.answer}).then(function(res) {
+        // If the new value is not updated, just re-assigned, do not save it
+        if(newValue === undefined || newValue.length == 0)
+            return;
+        $http.post("/answer", {'team': 3, 'question': _index, 'answers': newValue}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när det skulle sparas!");
             console.log(res);
         });
-        console.log($scope.answer);
     }, true);
 
     $http.get('/answer').then(function(resp) {
