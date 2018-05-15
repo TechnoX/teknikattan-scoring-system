@@ -64,8 +64,10 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
 
     $http.get('/questions').then(function(resp) {
         $scope.questions = resp.data;
-        $scope.currQuestion = $scope.questions[0];
-        $scope.currSlide = $scope.currQuestion.slides[0];
+        if($scope.questions.length > 0){
+            $scope.currQuestion = $scope.questions[0];
+            $scope.currSlide = $scope.currQuestion.slides[0];
+        }
     });
 
     $scope.save = function(question){
