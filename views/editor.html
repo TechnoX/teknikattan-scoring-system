@@ -48,8 +48,8 @@
       <ol>
         <li ng-repeat="s in q.slides">
           <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(q,s)"></i>
-          <projector slide="s" question="q" ng-click="changeSlide(q,s)"></projector>
-          <competitor slide="s" question="q" ng-click="changeSlide(q,s)"></competitor>
+          <projector slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></projector>
+          <competitor slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></competitor>
         </li>
       </ol>
     </li>
