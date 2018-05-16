@@ -177,7 +177,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
     $scope.editOptions = {
         theme: 'inlite',
         plugins: 'image media table paste contextmenu textpattern lists',
-        insert_toolbar: 'quickimage quicktable media',
+        insert_toolbar: 'image quicktable media',
         selection_toolbar: 'bold italic | list bullist',
         inline: true,
         forced_root_block : false,
