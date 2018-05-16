@@ -10,8 +10,8 @@
   <main ng-controller="UploadCtrl">
     <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-         ngf-resize-if="$width > 800 || $height > 800"
-         ngf-resize="{width: 400}" />
+         ngf-resize-if="$width > 1200 || $height > 1200"
+         ngf-resize="{width: 1200}" />
     <img ng-if="!editable" ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
     <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable && state == 'question'" ng-bind-html="slide.textLeft"></div>
