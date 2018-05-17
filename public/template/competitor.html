@@ -21,7 +21,13 @@
     <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
   </main>
   <aside ng-if="editable && question.type == 'normal'"><textarea ng-model="slide.textRight"></textarea></aside>
-  <aside ng-if="!editable && question.type == 'normal' && state == 'question'" ng-bind-html="slide.textRight"></aside>
+  <aside ng-if="!editable && question.type == 'normal' && state == 'question' && slide.textRight != 'video'" ng-bind-html="slide.textRight"></aside>
+  <aside ng-if="!editable && question.type == 'normal' && state == 'question' && slide.textRight == 'video'">
+    <video controls autoplay width="100%">
+      <source src="images/kylskapsfraga.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+  </aside>
   <aside ng-show="editable && question.type != 'normal'">
     <ol ng-show="question.type == 'hints'">
       <li ng-repeat="hint in question.hints track by $index">
