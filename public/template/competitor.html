@@ -13,14 +13,14 @@
          ngf-resize-if="$width > 1200 || $height > 1200"
          ngf-resize="{width: 1200}" />
     <img ng-if="!editable" ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
-    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
+    <textarea ng-if="editable" ng-model="slide.textLeft"></textarea>
     <div ng-if="!editable && state == 'question'" ng-bind-html="slide.textLeft"></div>
     <div ng-show="state == 'start'"><h1>Välkomna till teknikåttan</h1></div>
     <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
     <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
     <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
   </main>
-  <aside ng-if="editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
+  <aside ng-if="editable && question.type == 'normal'"><textarea ng-model="slide.textRight"></textarea></aside>
   <aside ng-if="!editable && question.type == 'normal' && state == 'question'" ng-bind-html="slide.textRight"></aside>
   <aside ng-show="editable && question.type != 'normal'">
     <ol ng-show="question.type == 'hints'">

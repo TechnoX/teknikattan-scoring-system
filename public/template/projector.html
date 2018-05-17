@@ -16,7 +16,7 @@
   </figure>
   <main>
     
-    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textProjector"></div>
+    <textarea ng-if="editable" ng-model="slide.textProjector"></textarea>
     <div ng-if="!editable && state == 'question'" ng-bind-html="slide.textProjector"></div>
     <div ng-show="state == 'start'"><h1>Välkomna till teknikåttan</h1></div>
     <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
