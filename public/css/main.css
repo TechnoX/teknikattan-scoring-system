@@ -125,6 +125,7 @@ article{
 }
 article p{
     margin-bottom: 1em;
+    line-height: 115%;
 }
 article h2{
     font-size: 1.2em;
@@ -135,7 +136,7 @@ article h3{
     font-weight: bold;
 }
 article main li, article aside li{
-    margin-bottom: 0.3em;
+    margin-bottom: 0.8em;
 }
 article > header{
     clear: both;
