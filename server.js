@@ -247,20 +247,26 @@ function updateState(){
     case 'hints':
     case 'statements':
         if(hasTimer() && !startedTimer && questions[questionIndex].type == 'normal'){
+            startTimer(true);
+            nextState = oldState;
+        }else if(hasTimer() && !startedTimer && (oldState == 'hints' || oldState == 'statements')){
             startTimer();
             nextState = oldState;
         }else if(hasMoreSlides()){ // Go through all slides.
             stopTimer();
+            startedTimer = false;
             nextSlide();
             nextState = oldState;
         }else if(hasMoreHints()){ // Go through all hints.
+            stopTimer();
+            startedTimer = false;
             nextHint();
             nextState = 'hints';
-            startTimer();
         }else if(hasMoreStatements()){ // Go through all statements.
+            stopTimer();
+            startedTimer = false;
             nextStatement();
             nextState = 'statements';
-            startTimer();
         }else{
             if(questions[questionIndex].answer.show){
                 nextState = 'beforeanswer';
@@ -287,7 +293,6 @@ function hasMoreSlides(){
 }
 
 function nextSlide(){
-    startedTimer = false;
     slideIndex++;
 }
 
@@ -330,15 +335,23 @@ function stopTimer(){
     clearInterval(currentTimer);
 }
 
-function startTimer(totalTime){
-    questions[questionIndex].slides[slideIndex].time = Math.round(questions[questionIndex].slides[slideIndex].time);
+
+// decreaseSlideTime is not set when publishing hints or statements or similar, because we need to keep the time intact between hints
+function startTimer(decreaseSlideTime){
+    var time = Math.round(questions[questionIndex].slides[slideIndex].time);
+    if(decreaseSlideTime){
+        questions[questionIndex].slides[slideIndex].time = time;
+    }
     clearInterval(currentTimer);
     startedTimer = true;
-    console.log("Start timer, with total time: " + questions[questionIndex].slides[slideIndex].time);
+    console.log("Start timer, with total time: " + time);
     currentTimer = setInterval(function(){
-        questions[questionIndex].slides[slideIndex].time--;
-        io.emit('time', questions[questionIndex].slides[slideIndex].time);
-        if(Math.round(questions[questionIndex].slides[slideIndex].time) == 0){
+        time--;
+        if(decreaseSlideTime){
+            questions[questionIndex].slides[slideIndex].time = time;
+        }
+        io.emit('time', time);
+        if(Math.round(time) == 0){
             clearInterval(currentTimer);
             publishTimesUp();
         }
