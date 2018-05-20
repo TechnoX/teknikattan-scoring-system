@@ -12,7 +12,7 @@
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
          ngf-resize-if="$width > 1200 || $height > 1200"
          ngf-resize="{width: 1200}" />
-    <img ng-if="!editable" ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
+    <img img-preload ng-if="!editable" ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
     <textarea ng-if="editable" ng-model="slide.textLeft"></textarea>
     <div ng-if="!editable && state == 'question'" ng-bind-html="slide.textLeft"></div>
     <div ng-show="state == 'start'"><h1>Välkomna till teknikåttan</h1></div>

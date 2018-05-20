@@ -12,7 +12,7 @@
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
          ngf-resize-if="$width > 1200 || $height > 1200"
          ngf-resize="{width: 1200}" />
-    <img ng-if="!editable" ng-src="{{question.image}}" />
+    <img img-preload ng-if="!editable" ng-src="{{question.image}}" />
   </figure>
   <main>
     
