@@ -132,12 +132,24 @@ article h2{
     font-weight: bold;
     margin-bottom: 1em;
 }
+
 article h3{
     font-weight: bold;
 }
 article main li, article aside li{
     margin-bottom: 0.8em;
 }
+
+article th, article td{
+    text-align: center;
+    padding: 0.5em;
+    border: 2px solid black;
+    vertical-align: middle;
+}
+article table .left{
+    text-align: left;
+}
+
 article > header{
     clear: both;
     padding: 1%;
