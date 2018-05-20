@@ -60,7 +60,7 @@
               <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
                 <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
                 <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
-                <span class="checkmark">{{alt}}</span>
+                <span class="checkmark" ng-bind-html="alt"></span>
               </label>
             </section>
           </li>
