@@ -326,14 +326,14 @@ function hasTimer(){
 }
 
 function startTimer(totalTime){
-    var time = Math.round(questions[questionIndex].slides[slideIndex].time);
+    questions[questionIndex].slides[slideIndex].time = Math.round(questions[questionIndex].slides[slideIndex].time);
     clearInterval(currentTimer);
     startedTimer = true;
-    console.log("Start timer, with total time: " + time);
+    console.log("Start timer, with total time: " + questions[questionIndex].slides[slideIndex].time);
     currentTimer = setInterval(function(){
-        time--;
-        io.emit('time', time);
-        if(Math.round(time) == 0){
+        questions[questionIndex].slides[slideIndex].time--;
+        io.emit('time', questions[questionIndex].slides[slideIndex].time);
+        if(Math.round(questions[questionIndex].slides[slideIndex].time) == 0){
             clearInterval(currentTimer);
             publishTimesUp();
         }
