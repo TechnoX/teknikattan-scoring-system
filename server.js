@@ -250,6 +250,7 @@ function updateState(){
             startTimer();
             nextState = oldState;
         }else if(hasMoreSlides()){ // Go through all slides.
+            stopTimer();
             nextSlide();
             nextState = oldState;
         }else if(hasMoreHints()){ // Go through all hints.
@@ -311,8 +312,8 @@ function gotoNextQuestion(){
     slideIndex = 0;
     hintIndex = -1;
     statementIndex = -1;
+    stopTimer();
     startedTimer = false;
-    clearInterval(currentTimer);
     if(questionIndex >= questions.length){
         return 'end';
     }else{
@@ -323,6 +324,10 @@ function gotoNextQuestion(){
 
 function hasTimer(){
     return questions[questionIndex].slides[slideIndex].hasTimer;
+}
+
+function stopTimer(){
+    clearInterval(currentTimer);
 }
 
 function startTimer(totalTime){
