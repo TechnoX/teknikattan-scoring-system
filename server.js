@@ -192,7 +192,7 @@ app.post('/scores/:team', function(req, res){
 // Database
 // --------------------------------------------------
 
-var teams = [{id: 3, name: "Soltorgsskolan", scores: []}, {id: 4, name: "Berzeliusskolan", scores: []}, {id: 5, name: "Djuråsskolan", scores: []}];
+var teams = [{id: 3, name: "Soltorgsskolan", scores: [0,0,0,0,0,0,0,0]}, {id: 4, name: "Berzeliusskolan", scores: [0,0,0,0,0,0,0,0]}, {id: 5, name: "Djuråsskolan", scores: [0,0,0,0,0,0,0,0]}];
 var questions = [];
 
 // State could be: start, image, question (is active and visible), beforeanswer, answer, end
