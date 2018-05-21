@@ -300,11 +300,11 @@ app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope,
     // On judge view we load several IDs
     $scope.teams = $location.search()['teams'];
 
-    
     $scope.team = {id: 1, name: "Testlag", scores: []};
-
+    
     // If we have specified a team ID in the URL, fetch the team data from the backend
     if($location.search()['team']){
+        $scope.team.id = $location.search()['team'];
         // Get the team matching the ID given in the url bar
         $http.get('/team/'+$location.search()['team']).then(function(resp) {
             if(resp.data){
@@ -492,7 +492,7 @@ app.directive('imgPreload', ['$rootScope', function($rootScope) {
 app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
     var socket = io();
     $scope.answer = [];
-
+    $scope.team = {id: $scope.teamId};
 
     $http.get('/team/'+$scope.teamId).then(function(resp) {
         if(resp.data){
