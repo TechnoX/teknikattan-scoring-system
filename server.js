@@ -116,18 +116,29 @@ app.post('/upload', multipartMiddleware, function(req, res) {
     res.status(200).json({'success': true, 'path': file.path.substr(7)});
 });
 
-app.post('/answer', function(req, res){
-    
-    //publishJudge(req.body.value, req.body.index);
-    database.collection('answers').update({team: 3, question: questionIndex}, req.body, {upsert: true}, function(err, result) {
+app.post('/answer/:team', function(req, res){    
+    var teamId = parseInt(req.params.team)
+    if(!teamId){
+        console.log("Team ID " + req.params.team + " is not an integer");
+        res.status(400).json();
+        return;
+    }
+    publishAnswer(req.body);
+    database.collection('answers').update({team: teamId, question: questionIndex}, req.body, {upsert: true}, function(err, result) {
         if (err) return console.log(err);
         console.log("Saved answer to database: " + JSON.stringify(req.body));
         res.status(200).json({'success': true});
     });
 });
 
-app.get('/answer', function(req, res){
-    database.collection('answers').find({team: 3, question: questionIndex}).toArray(function(err, result) {
+app.get('/answer/:team', function(req, res){
+    var teamId = parseInt(req.params.team)
+    if(!teamId){
+        console.log("Team ID " + req.params.team + " is not an integer");
+        res.status(400).json();
+        return;
+    }
+    database.collection('answers').find({team: teamId, question: questionIndex}).toArray(function(err, result) {
         if (err) throw err;
         console.log("Got response from answer database: ");
         console.log(result);
@@ -366,13 +377,9 @@ function publishTimesUp(){
 }
 
 
-function publishJudge(text, index){
-    console.log("Publish answer for judges");
-    var msg = {};
-    msg.teamIndex = 1;
-    msg.text = text;
-    msg.index = index;
-    io.emit('answerToJudges', msg);
+function publishAnswer(msg){
+    console.log("Publish answer");
+    io.emit('answer', msg);
 }
 
 function publishScoresJudge(teamIndex){
