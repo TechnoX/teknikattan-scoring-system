@@ -124,7 +124,7 @@ app.post('/answer/:team', function(req, res){
         return;
     }
     publishAnswer(req.body);
-    database.collection('answers').update({team: teamId, question: questionIndex}, req.body, {upsert: true}, function(err, result) {
+    database.collection('answers').update({team: teamId, question: questionIndex}, {team: teamId, question: questionIndex, answers: req.body.answers}, {upsert: true}, function(err, result) {
         if (err) return console.log(err);
         console.log("Saved answer to database: " + JSON.stringify(req.body));
         res.status(200).json({'success': true});
