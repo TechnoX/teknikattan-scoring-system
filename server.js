@@ -146,25 +146,6 @@ app.get('/answer/:team', function(req, res){
     });
 });
 
-app.post('/drop', function(req, res){
-    console.log('drag: ' + req.body.dragged + ", drop: " + req.body.dropped);
-    var dragIndex = req.body.dragged.slice(4);
-    var dropIndex = req.body.dropped.slice(4);
-    var question = questions[questionIndex];
-    var part1, part2;
-    if(question.pairs[0].length >= question.pairs[1].length){
-        part1 = question.pairs[0][dragIndex];
-        part2 = question.pairs[1][dropIndex];
-    }else{
-        part1 = question.pairs[0][dropIndex];
-        part2 = question.pairs[1][dragIndex];
-    }
-    console.log(part1, part2);
-    publishJudge(part1+" &hArr; "+part2, dropIndex);
-    
-    res.send('OK');
-});
-
 app.post('/scoring', function(req, res){
     console.log('Update score for team '+req.body.teamIndex+' with: ' + req.body.score);
    
