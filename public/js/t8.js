@@ -478,3 +478,30 @@ app.directive('imgPreload', ['$rootScope', function($rootScope) {
         }
     };
 }]);
+
+
+app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
+    var socket = io();
+    $scope.answer = [];
+
+    $http.get('/answer/'+$scope.team.id).then(function(resp) {
+        if(resp.data.answers){
+            $scope.answer = resp.data.answers;
+        }else{
+            $scope.answer = [];
+        }
+        console.log("answer",$scope.answer);
+    });
+
+    
+    socket.on('answer', function(msg){
+        if(msg.team == $scope.team.id){
+            $scope.$applyAsync(function () {
+                $scope.answer = msg.answers;
+                console.log("answer", msg.answer);
+            });
+        }
+    });
+
+
+}]);

@@ -3,115 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <title>Teknikåttan</title>
-  <style type="text/css">
-body, html{
-  height: 100%;
-}
-body{
-  background-image: url('images/background.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: right bottom; 
-  font-family: "Verdana", sans-serif;
-  font-size: 1.2em;
-  margin: 0px;
-}
-td {border:1px solid black;padding:20px;}
-
-input{
-font-size: 1em;
-width: 4em;
-}
-
-#header h1{
-  float: right;
-  font-size: 4em;
-  margin: 0px;
-}
-#header{
-  clear: both;
-  padding: 1%;
-}
-.mainimage{
-  max-width: 80%;
-  max-height: 15em;
-  margin: auto;
-  display: block;
-  clear: both;
-}
-#main{
-  width: 90%;
-  height: 80%;
-  margin: auto;
-  font-size: 2em;
-}
-
-.team{
-  width: 33%;
-  height: 100%;
-  float: left;
-  border: 2px solid black;
-  position: relative;
-}
-.team h5{
-  text-align: center;
-}
-
-.answer-list{
-  margin-left: 15px;
-}
-.answers{
-  width: 100%;
-}
-.scoring{
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  display: none;
-}
-
-</style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+  <script src="js/ng-file-upload/ng-file-upload-shim.js"></script> <!-- for no html5 browsers support -->
+  <script src="js/ng-file-upload/ng-file-upload.js"></script>
+  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="js/tinymce.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <link href="css/reset.css" rel="stylesheet" type="text/css">
+  <link href="css/main.css" rel="stylesheet" type="text/css">
+  <script src="js/t8.js"></script>
 </head>
-<body>
-<div id="header">
-  <img src="images/logo.png" />
-  <h1 id="title"></h1>
-</div>
+<body ng-app="t8" ng-controller="questionCtrl">
+<article class="answer">
+  <header>
+    <h1 ng-show="state != 'end' && state != 'start'">{{index()}}. {{currQuestion.title}}</h1>
+    <img src="images/logo.png"/>
+  </header>
+  <h2 ng-show="timesUp">Tiden är ute!</h2>
 
-<div id="main">
-  <div id="team0" class="team">
-    <h5>Skola 1</h5>
-    <div class="answers"></div>
-    <div class="scoring">
-      <p>
-        <label>Poäng: <input type="number" max="100" min="0" oninput="sendScore(this, 0)"></label><br>
-        Totalt: <span class="total-score"></span>
-      </p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" ng-repeat="team in teams" ng-controller="judgeCtrl">
+        <h2>{{team.name}}</h2>
+        <main ng-show="currQuestion.type == 'hints'">
+          <ol>
+            <li ng-repeat="hint in currQuestion.hints track by $index">
+              Ledtråd {{$index + 1}}: {{answer[$index]}}
+            </li>
+          </ol>
+        </main>
+        <main ng-show="currQuestion.type == 'truefalse'">
+          <ol>
+            <li ng-repeat="statement in currQuestion.statements track by $index">
+              Påstående {{$index + 1}}:
+              <span id="true" ng-show="answer[$index] === true">Sant!</span>
+              <span id="false" ng-show="answer[$index] === false">Falskt!</span>
+            </li>
+          </ol>
+        </main>
+        <main ng-show="currQuestion.type == 'normal'">
+          <div ng-show="currQuestion.answer.type == 'practical'">
+            <p>Inget digitalt svar.</p>
+          </div>
+          <div ng-show="currQuestion.answer.type == 'multi'">
+            <ol type='a'>
+              <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
+                Delfråga {{$index + 1}}: {{answer[$index]}}
+              </li>
+            </ol>
+          </div>
+          <div ng-show="currQuestion.answer.type == 'pairing'">
+            <p>Parar ihop ord med ord.</p>
+          </div>
+        </main>
+        <section>
+          <p>
+            <label>Poäng: <input type="number" max="100" min="0" ng-model="score"></label><br>
+            Totalt: {{totalScore}}
+          </p>
+        </section>
+      </div>
     </div>
-  </div>
-  <div id="team1" class="team">
-    <h5>Skola 2</h5>
-    <div class="answers"></div>
-    <div class="scoring">
-      <p>
-        <label>Poäng: <input type="number" max="100" min="0" oninput="sendScore(this, 1)"></label><br>
-        Totalt: <span class="total-score"></span>
-      </p>
-    </div>
-  </div>
-  <div id="team2" class="team">
-    <h5>Skola 3</h5>
-    <div class="answers"></div>
-    <div class="scoring">
-      <p>
-        <label>Poäng: <input type="number" max="100" min="0" oninput="sendScore(this, 2)"></label><br>
-        Totalt: <span class="total-score"></span>
-      </p>
-    </div>
-  </div>
-</div>
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="js/judges.js"></script>
+  </div>  
+</article>
+
 </body>
 </html>
