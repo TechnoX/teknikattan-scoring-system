@@ -390,9 +390,11 @@ app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope,
     });
     
     socket.on('timesUp', function(msg){
-        console.log("Times up!");
-        // Lås tidigare fält så man inte kan mata in mer
-        $scope.timesUp = true;
+        $scope.$applyAsync(function () {
+            console.log("Times up!");
+            // Lås tidigare fält så man inte kan mata in mer
+            $scope.timesUp = true;
+        });
     });
     
     $scope.index = function(){return _index + 1;};
