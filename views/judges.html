@@ -24,10 +24,9 @@
     <img src="images/logo.png"/>
   </header>
   <h2 ng-show="timesUp">Tiden är ute!</h2>
-
   <div class="container">
     <div class="row">
-      <div class="col-md-4" ng-repeat="team in teams" ng-controller="judgeCtrl">
+      <div class="col-md-4" ng-repeat="teamId in teams" ng-controller="judgeCtrl">
         <h2>{{team.name}}</h2>
         <main ng-show="currQuestion.type == 'hints'">
           <ol>
@@ -62,8 +61,9 @@
         </main>
         <section>
           <p>
-            <label>Poäng: <input type="number" max="100" min="0" ng-model="score"></label><br>
-            Totalt: {{totalScore}}
+            <label>Poäng: <input type="number" max="100" min="0" ng-model="team.scores[index()-1]"></label><br>
+            Alla poäng: {{team.scores}} <br />
+            Total poäng: {{getTotalScore(team)}}
           </p>
         </section>
       </div>

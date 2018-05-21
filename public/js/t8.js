@@ -295,20 +295,24 @@ app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope,
     $scope.state = "start";
     $scope.timesUp = false;
     $scope.slideIndex = 0;
-    $scope.teams = [{id: 3, name: "Soltorgsskolan"}, {id: 4, name: "Berzeliusskolan"}, {id: 5, name: "Djuråsskolan"}]
-    $scope.team = {id: 1, name: "Testlag"};
-    console.log("Params are: ", $location.search() );
-    console.log("Team ID is: ", $location.search().team);
-    // Search for a team matching the ID given in the url bar
-    for(var t = 0; t < $scope.teams.length; t++){
-        console.log("Search through teams: ", t);
-        if($location.search()['team'] == $scope.teams[t].id){
-            $scope.team = $scope.teams[t];
-            console.log("Set team to ", $scope.team);
-        }
+    
+    console.log("Params are: ", $location.search());
+    // On judge view we load several IDs
+    $scope.teams = $location.search()['teams'];
+
+    
+    $scope.team = {id: 1, name: "Testlag", scores: []};
+
+    // If we have specified a team ID in the URL, fetch the team data from the backend
+    if($location.search()['team']){
+        // Get the team matching the ID given in the url bar
+        $http.get('/team/'+$location.search()['team']).then(function(resp) {
+            if(resp.data){
+                $scope.team = resp.data;
+                console.log("Set team to ", $scope.team);
+            }
+        });
     }
-    
-    
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         // If the new value is not updated, just re-assigned, do not save it
         if(newValue === undefined || newValue.length == 0)
@@ -489,6 +493,36 @@ app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
     var socket = io();
     $scope.answer = [];
 
+
+    $http.get('/team/'+$scope.teamId).then(function(resp) {
+        if(resp.data){
+            $scope.team = resp.data;
+            console.log("Set team to ", $scope.team);
+        }
+    });
+        
+
+    $scope.getTotalScore = function(){
+        var total = 0;
+        for(var t = 0; t < $scope.team.scores.length; t++){
+            total += $scope.team.scores[t];
+        }
+        return total;
+    }
+    
+    $scope.$watch('team.scores', function(newValue, oldValue, scope) {
+        // If the new value is not updated, just re-assigned, do not save it
+        if(newValue === undefined || newValue.length == 0)
+            return;
+        
+        $http.post("/scores/"+$scope.team.id, {'team': $scope.team.id, 'scores': newValue}).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när poängen skulle sparas!");
+            console.log(res);
+        });
+    }, true);
+    
     $http.get('/answer/'+$scope.team.id).then(function(resp) {
         if(resp.data.answers){
             $scope.answer = resp.data.answers;

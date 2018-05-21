@@ -146,22 +146,44 @@ app.get('/answer/:team', function(req, res){
     });
 });
 
-app.post('/scoring', function(req, res){
-    console.log('Update score for team '+req.body.teamIndex+' with: ' + req.body.score);
-   
-    // Ignores the test question
-/*    if(questions[req.body.questionIndex].title == 'Testfråga')
-        return;*/
-    teams[req.body.teamIndex].answers[req.body.questionIndex] = Number(req.body.score);
-    var totalScore = 0;
-    for(var i = 0; i < teams[req.body.teamIndex].answers.length; i++){
-        if(teams[req.body.teamIndex].answers[i]){
-            totalScore += teams[req.body.teamIndex].answers[i];
+app.get('/team/:team', function(req, res){
+    var teamId = parseInt(req.params.team)
+    if(!teamId){
+        console.log("Team ID " + req.params.team + " is not an integer");
+        res.status(400).json();
+        return;
+    }
+    
+    for(var t = 0; t < teams.length; t++){
+        if(teams[t].id == teamId){
+            res.status(200).json(teams[t]);
+            return;
         }
     }
-    teams[req.body.teamIndex].score = totalScore;
-    publishScoresJudge(req.body.teamIndex);
-    res.send('OK');
+    
+    console.log("Couldn't find team with ID: " + teamId);
+    res.status(400).json();
+});
+
+
+app.post('/scores/:team', function(req, res){
+    console.log('Update score for team '+req.body.team+' with: ' + req.body.scores);
+
+    var changed = false;
+    // TODO: Save to database
+    for(var t = 0; t < teams.length; t++){
+        if(teams[t].id == req.body.team){
+            teams[t].scores = req.body.scores;
+            changed = true;
+        }
+    }
+    if(changed){
+        publishScoresJudge(req.body.team);
+        res.status(200).json({'success': true});
+    }else{
+        console.log("Couldn't find a team with ID: " + req.body.team);
+        res.status(400).json({'success': false});
+    }
 });
 
 
@@ -170,9 +192,7 @@ app.post('/scoring', function(req, res){
 // Database
 // --------------------------------------------------
 
-//var teams = [{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []},{name: 'Södervärnsskolan', score: 0, answers: []}];
-//var teams = [{name: 'Sjöängsskolan', score: 0, answers: []},{name: 'Malmlättsskolan', score: 0, answers: []},{name: 'Hultdalskolan', score: 0, answers: []}];
-var teams = [{name: 'Sjöängsskolan', score: 0, answers: []},{name: 'Skolgårda skola', score: 0, answers: []},{name: 'Berzeliusskolan', score: 0, answers: []}];
+var teams = [{id: 3, name: "Soltorgsskolan", scores: []}, {id: 4, name: "Berzeliusskolan", scores: []}, {id: 5, name: "Djuråsskolan", scores: []}];
 var questions = [];
 
 // State could be: start, image, question (is active and visible), beforeanswer, answer, end
