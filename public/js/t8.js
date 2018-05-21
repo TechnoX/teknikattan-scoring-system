@@ -449,8 +449,13 @@ app.directive('multipleChoices', function() {
             });
             // How model values will appear in the view
             ngModel.$formatters.push(function(value) {
-                if(value === undefined)
+                // TODO: Attrs.value is always undefined when page loads since value has not have had time to update before this is ran
+                //console.log("formatter value: '" + value + "'");
+                //console.log("attrs value: '" + attrs.value + "'");
+                if(value === undefined || value === null)
                     return false;
+                //console.log(value.split(";"))
+                //console.log(value.split(";").indexOf(attrs.value));
                 return value.split(";").indexOf(attrs.value) != -1;
             });
         }
