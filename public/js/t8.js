@@ -90,7 +90,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
             alert("Allting sparades korrekt!");
             console.log(res);
         }, function(res){
-            alert("Något gick fel när det skulle sparas!");
+            alert("Något gick fel när frågorna skulle sparas!");
             console.log(res);
         });
     }
@@ -320,7 +320,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope,
         $http.post("/answer/"+$scope.team.id, {'team': $scope.team.id, 'question': _index, 'answers': newValue}).then(function(res) {
             // Do nothing
         }, function(res){
-            alert("Något gick fel när det skulle sparas!");
+            alert("Något gick fel när svaret skulle sparas!");
             console.log(res);
         });
     }, true);
