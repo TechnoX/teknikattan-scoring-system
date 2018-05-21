@@ -208,11 +208,7 @@ var currentTimer; // The current timer that was started by setInterval
 
 io.on('connection', function(socket){
     console.log('a user connected')
-    /*publishScoresJudge(0)
-    publishScoresJudge(1)
-    publishScoresJudge(2)
-    displayState();*/
-    
+      
     socket.on('disconnect', function(){
         console.log('user disconnected')
     })
