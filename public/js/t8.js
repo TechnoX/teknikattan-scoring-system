@@ -381,7 +381,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope,
             if(msg.state == 'hints' || msg.state == 'statements'){
                 $scope.timesUp = false;
             }
-            if($scope.currSlide.hasTimer){
+            if($scope.currSlide.hasTimer && msg.state != 'beforeanswer' && msg.state != 'answer'){
                 $scope.timesUp = false;
             }
             console.log(msg.state);
