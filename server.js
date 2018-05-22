@@ -203,8 +203,10 @@ var currentTimer; // The current timer that was started by setInterval
 
 
 io.on('connection', function(socket){
-    console.log('a user connected')
-      
+    console.log('a user connected, timer: ')
+    if(currentTimer == null && startedTimer){
+        publishTimesUp();
+    }
     socket.on('disconnect', function(){
         console.log('user disconnected')
     })
@@ -337,6 +339,7 @@ function hasTimer(){
 
 function stopTimer(){
     clearInterval(currentTimer);
+    currentTimer = null;
 }
 
 
@@ -357,6 +360,7 @@ function startTimer(decreaseSlideTime){
         io.emit('time', time);
         if(Math.round(time) == 0){
             clearInterval(currentTimer);
+            currentTimer = null;
             publishTimesUp();
         }
     }, 1000);
