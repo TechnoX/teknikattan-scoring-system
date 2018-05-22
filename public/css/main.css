@@ -25,6 +25,10 @@ main textarea{
     font-size: 2.7em;
 }
 
+.result .highlight{
+    background-color: #1E90FF;
+}
+
 input{
     font-size: inherit;
 }

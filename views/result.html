@@ -31,8 +31,8 @@
         <th ng-repeat="team in teams">{{team.name}}</th>
       </tr>
       <tr ng-repeat="q in [0,1,2,3,4,5,6,7]">
-        <td>{{$index + 1}}</td><!-- highlighter="teams[$index].scores[$parent.$index]" -->
-        <td ng-repeat="team in teams track by $index">{{teams[$index].scores[$parent.$index]}}</td>
+        <td>{{$index + 1}}</td>
+        <td ng-repeat="team in teams track by $index" highlighter="teams[$index].scores[$parent.$index]">{{teams[$index].scores[$parent.$index]}}</td>
       </tr>
     </table>
   </main>

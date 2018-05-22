@@ -596,8 +596,6 @@ app.controller('resultCtrl', ['$scope', '$http', '$location', function($scope, $
     
 }]);
 
-/*
-
 app.directive('highlighter', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
@@ -607,16 +605,16 @@ app.directive('highlighter', ['$timeout', function($timeout) {
         link: function(scope, element) {
             scope.$watch('model', function (nv, ov) {
                 if (nv !== ov) {
+                    console.log("Highlight!");
                     // apply class
                     element.addClass('highlight');
 
                     // auto remove after some delay
                     $timeout(function () {
                         element.removeClass('highlight');
-                    }, 1000);
+                    }, 3000);
                 }
             });
         }
     };
 }]);
-*/
