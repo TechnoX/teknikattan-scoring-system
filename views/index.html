@@ -18,7 +18,16 @@
         $('form').submit(function(){
           socket.emit('next', 'no message');
           return false;
-        });
+      });
+
+      var audio = new Audio('/doorbell.wav');
+      socket.on('timesUp', function(msg){
+        console.log("Times up!");
+        audio.play();
+      });
+
+
+      
       });
     </script>
   </body>
