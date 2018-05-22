@@ -61,7 +61,10 @@
         </main>
         <section>
           <p>
-            <label>Poäng: <input type="number" max="100" min="0" ng-model="team.scores[index()-1]"></label><br>
+            <ol>
+              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]"></label></li>
+            </ol>
+            <br />
             Alla poäng: {{team.scores}} <br />
             Total poäng: {{getTotalScore(team)}}
           </p>
