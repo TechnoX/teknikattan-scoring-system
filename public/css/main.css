@@ -21,6 +21,10 @@ main textarea{
     height: 80%;
     font-size: smaller;
 }
+.result table {
+    font-size: 2.7em;
+}
+
 input{
     font-size: inherit;
 }
