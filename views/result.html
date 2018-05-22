@@ -34,6 +34,10 @@
         <td>{{$index + 1}}</td>
         <td ng-repeat="team in teams track by $index" highlighter="teams[$index].scores[$parent.$index]">{{teams[$index].scores[$parent.$index]}}</td>
       </tr>
+      <tr>
+        <th>Summa:</th>
+        <th ng-repeat="team in teams track by $index">{{getTotalScore(team)}}</td>        
+      </tr>
     </table>
   </main>
 </body>

@@ -578,6 +578,13 @@ app.controller('resultCtrl', ['$scope', '$http', '$location', function($scope, $
         });
     }
 
+    $scope.getTotalScore = function(team){
+        var total = 0;
+        for(var t = 0; t < team.scores.length; t++){
+            total += team.scores[t];
+        }
+        return total;
+    }
 
     
     socket.on('scoring', function(msg){
