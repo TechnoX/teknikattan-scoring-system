@@ -541,8 +541,22 @@ app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
             });
         }
     });
-
-
+    socket.on('stateChange', function(msg){
+        $scope.$applyAsync(function () {
+            // If new question loaded ... 
+            if(msg.state == 'image'){
+                // ... get associated answers
+                $http.get('/answer/'+$scope.team.id).then(function(resp) {
+                    if(resp.data.answers){
+                        $scope.answer = resp.data.answers;
+                    }else{
+                        $scope.answer = [];
+                    }
+                    console.log("answer",$scope.answer);
+                });
+            }
+        });
+    });
 }]);
 
 
