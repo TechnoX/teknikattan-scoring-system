@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teknikåttan</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+  <script src="js/ng-file-upload/ng-file-upload-shim.js"></script> <!-- for no html5 browsers support -->
+  <script src="js/ng-file-upload/ng-file-upload.js"></script>
+  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="js/tinymce.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <link href="css/reset.css" rel="stylesheet" type="text/css">
+  <link href="css/main.css" rel="stylesheet" type="text/css">
+  <script src="js/t8.js"></script>
+</head>
+<body ng-app="t8" ng-controller="questionCtrl">
+  <article class="audience" ng-controller="judgeCtrl">
+    
+    <h2>{{team.name}}</h2>
+    <section ng-controller="audienceCtrl">
+      <h2>Poäng fråga {{index()}}: {{team.scores[index() - 1]}}</h2>
+      <h2>Total poäng: {{getTotalScore(team)}}</h2>
+    </section>
+    <main ng-show="currQuestion.type == 'hints'">
+      <ol>
+        <li ng-repeat="hint in currQuestion.hints track by $index">
+          Ledtråd {{$index + 1}}: {{answer[$index]}}
+        </li>
+      </ol>
+    </main>
+    <main ng-show="currQuestion.type == 'truefalse'">
+      <table id="truefalse">
+        <tr>
+          <td id="true" ng-show="answer[statementIndex] === true" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
+          <td id="false" ng-show="answer[statementIndex] === false" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
+        </tr>
+      </table>
+    </main>
+    <main ng-show="currQuestion.type == 'normal'">
+      <div ng-show="currQuestion.answer.type == 'practical'">
+        <p>Inget digitalt svar.</p>
+      </div>
+      <div ng-show="currQuestion.answer.type == 'multi'">
+        <ol type='a'>
+          <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
+            Delfråga {{$index + 1}}: <span ng-bind-html="answer[$index]"></span>
+          </li>
+        </ol>
+      </div>
+      <div ng-show="currQuestion.answer.type == 'pairing'">
+        <p>Parar ihop ord med ord.</p>
+      </div>
+    </main>
+
+</article>
+
+</body>
+</html>

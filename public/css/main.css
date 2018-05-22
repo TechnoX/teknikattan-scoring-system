@@ -28,7 +28,11 @@ main textarea{
 .result .highlight{
     background-color: #1E90FF;
 }
-
+.audience h2{
+    font-size: 2em;
+    padding-left: 1em;
+    padding-top: 1em;
+}
 input{
     font-size: inherit;
 }

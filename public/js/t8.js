@@ -489,18 +489,22 @@ app.directive('imgPreload', ['$rootScope', function($rootScope) {
 }]);
 
 
-app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
+app.controller('judgeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
     var socket = io();
     $scope.answer = [];
-    $scope.team = {id: $scope.teamId};
+    if($location.search()['team']){
+        // If we have specified a team ID in the URL, fetch the team data from the backend
+        $scope.teamId = $location.search()['team'];
+    }
 
+    $scope.team = {id: $scope.teamId, scores: []};
     $http.get('/team/'+$scope.teamId).then(function(resp) {
         if(resp.data){
             $scope.team = resp.data;
             console.log("Set team to ", $scope.team);
         }
     });
-        
+    
 
     $scope.getTotalScore = function(){
         var total = 0;
@@ -559,6 +563,24 @@ app.controller('judgeCtrl', ['$scope', '$http', function($scope, $http){
     });
 }]);
 
+
+
+
+
+
+app.controller('audienceCtrl', ['$scope', '$http', function($scope, $http){
+    var socket = io();
+    
+    socket.on('scoring', function(msg){
+        console.log("Got scoring msg: ", msg);
+        $scope.$apply(function () {
+            if(msg.id == $scope.team.id){
+                $scope.team.scores = msg.scores;
+                console.log("Update score for team ", $scope.team.name);
+            }
+        });
+    });
+}]);
 
 
 app.controller('resultCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){

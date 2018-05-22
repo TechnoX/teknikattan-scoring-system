@@ -72,6 +72,10 @@ app.get('/competitions', function(req, res){
     res.sendFile(__dirname + '/views/competitions.html');
 })
 
+app.get('/audience', function(req, res){
+  res.sendFile(__dirname + '/views/audience.html');
+})
+
 // --------------------------------------------------
 // Post responses
 // --------------------------------------------------
