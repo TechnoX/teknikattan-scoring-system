@@ -541,7 +541,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$location', function($scope, $h
         if(msg.team == $scope.team.id){
             $scope.$applyAsync(function () {
                 $scope.answer = msg.answers;
-                console.log("answer", msg.answer);
+                console.log("answer", msg.answers);
             });
         }
     });
