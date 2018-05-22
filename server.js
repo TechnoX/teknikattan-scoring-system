@@ -169,21 +169,17 @@ app.get('/team/:team', function(req, res){
 app.post('/scores/:team', function(req, res){
     console.log('Update score for team '+req.body.team+' with: ' + req.body.scores);
 
-    var changed = false;
     // TODO: Save to database
     for(var t = 0; t < teams.length; t++){
         if(teams[t].id == req.body.team){
             teams[t].scores = req.body.scores;
-            changed = true;
+            publishScoresJudge(teams[t]);
+            res.status(200).json({'success': true});
+            return;
         }
     }
-    if(changed){
-        publishScoresJudge(req.body.team);
-        res.status(200).json({'success': true});
-    }else{
-        console.log("Couldn't find a team with ID: " + req.body.team);
-        res.status(400).json({'success': false});
-    }
+    console.log("Couldn't find a team with ID: " + req.body.team);
+    res.status(400).json({'success': false});
 });
 
 
@@ -379,10 +375,7 @@ function publishAnswer(msg){
     io.emit('answer', msg);
 }
 
-function publishScoresJudge(teamIndex){
+function publishScoresJudge(team){
     console.log("Publish total score and name etc. for judges");
-    var msg = {};
-    msg.teamIndex = teamIndex;
-    msg.team = teams[teamIndex];
-    io.emit('generalToJudges', msg);
+    io.emit('scoring', team);
 }
