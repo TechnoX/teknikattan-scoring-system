@@ -37,7 +37,7 @@
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />
     <time ng-show="slide.hasTimer && edit!='timer'" ng-click="editable ? edit='timer' : null">{{slide.time*1000 | date:'mm:ss'}}</time>
     <time ng-show="slide.hasTimer && edit=='timer'"><input type="number" ng-model="slide.time" min="0" max="3599" ng-blur="edit='none'"></time>
-    <ul>
+    <ul style="display: none;">
       <li ng-click="editable ? edit='time' : null">
         <label>Tid:</label>
         <input type="text" ng-show="edit=='time'" ng-model="question.timeText" ng-blur="edit='none'" /><span ng-show="edit!='time'">{{question.timeText}}</span>
