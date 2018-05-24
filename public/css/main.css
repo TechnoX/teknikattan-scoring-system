@@ -183,9 +183,12 @@ article > main > div{
     height: 100%;
 }
 .competitor > main{
+    font-size: 1.3em;
     width: 50%;
     float: left;
 }
+
+
 .competitor > main > img{
     max-height: 30%;
     max-width: 25em;
@@ -197,6 +200,7 @@ article > main > div{
 article > aside{
     box-sizing: border-box;
     padding-left: 2em;
+    font-size: 1.3em;
     height: 75%;
     width: 50%;
     float: left;
