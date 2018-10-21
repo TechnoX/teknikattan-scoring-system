@@ -28,7 +28,6 @@
         <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="normal"> Övriga</label><br>
         <button ng-show="currQuestion.type == 'normal'" ng-disabled="!currSlide" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
         <button type="button" class="btn btn-default" ng-click="save()">Spara allt</button>
-        <a href="/competitions" target="_self" class="btn btn-default" ng-click="back()">Tillbaka</a>
       </form>
       <competitor question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></competitor>
     </section>
