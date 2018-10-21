@@ -170,7 +170,7 @@ article > main > div{
     height: 100%;
 }
 .competitor > main{
-    font-size: 1.3em;
+    font-size: 1.2em;
     width: 50%;
     float: left;
 }
@@ -187,7 +187,7 @@ article > main > div{
 article > aside{
     box-sizing: border-box;
     padding-left: 2em;
-    font-size: 1.3em;
+    font-size: 1.2em;
     height: 75%;
     width: 50%;
     float: left;
