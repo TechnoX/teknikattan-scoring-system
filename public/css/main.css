@@ -8,19 +8,6 @@ h1{
     font-weight: bold;
     padding: 0.2em 0em;
 }
-aside textarea{
-    width: 100%;
-    height: 100%;
-}
-main textarea{
-    width: 100%;
-    height: 60%;
-}
-.projector main textarea{
-    width: 70%;
-    height: 80%;
-    font-size: smaller;
-}
 .result table {
     font-size: 2.7em;
 }
