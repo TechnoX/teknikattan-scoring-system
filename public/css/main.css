@@ -108,7 +108,7 @@ article{
 }
 
 #editor article{
-    font-size: 0.5vw;
+    font-size: 0.3vw;
     border: 2px solid black;
     width: 40vw;
     height: 22.5vw;
@@ -116,7 +116,7 @@ article{
     float: left;
 }
 #timeline article{
-    font-size: 0.2vw;
+    font-size: 0.12vw;
     border: 1px solid black;
     width: 16vw;
     height: 9vw;
