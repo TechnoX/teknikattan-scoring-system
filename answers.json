@@ -1,0 +1,16 @@
+{"_id":{"$oid":"5b055160a26100f7ba45adf2"},"team":21,"question":0,"answers":["Sofia","Milo;Amir;Disa;Klas","Ingen"]}
+{"_id":{"$oid":"5b055170a26100f7ba45adf3"},"team":22,"question":0,"answers":["Sofia;Amir","Milo;Amir;Disa;Klas","Ingen"]}
+{"_id":{"$oid":"5b055176a26100f7ba45adf4"},"team":20,"question":0,"answers":["Sofia;Amir","Milo;Amir;Disa","Ingen"]}
+{"_id":{"$oid":"5b05534da26100f7ba45adf5"},"team":22,"question":1,"answers":["Röd kurva visar temperatur \u0026 blå kurva visar koldioxidhalten","2070","4.5","2409 dagar"]}
+{"_id":{"$oid":"5b05534fa26100f7ba45adf6"},"team":20,"question":1,"answers":["Röd kurva visar temperatur \u0026 blå kurva visar koldioxidhalten","2025","5","1 gång på 6 år"]}
+{"_id":{"$oid":"5b055352a26100f7ba45adf7"},"team":21,"question":1,"answers":["Röd kurva visar temperatur \u0026 blå kurva visar koldioxidhalten","2020","3.5","Var sjätte år"]}
+{"_id":{"$oid":"5b0557b2a26100f7ba45adf8"},"team":21,"question":2,"answers":[false,true,true,true,false,true]}
+{"_id":{"$oid":"5b0557b6a26100f7ba45adf9"},"team":22,"question":2,"answers":[true,true,false,false,false,true]}
+{"_id":{"$oid":"5b0557b6a26100f7ba45adfa"},"team":20,"question":2,"answers":[false,true,true,true,false,false]}
+{"_id":{"$oid":"5b055cdda26100f7ba45adfb"},"team":20,"question":4,"answers":["2300"]}
+{"_id":{"$oid":"5b055e65a26100f7ba45adfc"},"team":21,"question":5,"answers":["Kväve och syre","Tillgång till koldioxid","Bofink","Skogsstjärna","Leder ström enbart i en riktning","Merkurius","Varans totala miljöpåverkan","Giga","C\u003csub\u003e6\u003c/sub\u003eH\u003csub\u003e12\u003c/sub\u003eO\u003csub\u003e6\u003c/sub\u003e","Luft","Argon","E-kolv","Skjutmått",null,"Etan","Påskyndar kemiska reaktioner","Multimedia messaging service","Sädesärla","Insekter som sköter pollinering","Elektron \u0026mdash; atom \u0026mdash; virus"]}
+{"_id":{"$oid":"5b055e6aa26100f7ba45adfd"},"team":22,"question":5,"answers":["Kväve och syre","Tillgång till koldioxid","Rödhake","Skogsstjärna","Leder ström enbart i en riktning","Merkurius","Varans hållfasthet","Tera","C\u003csub\u003e6\u003c/sub\u003eH\u003csub\u003e12\u003c/sub\u003eO\u003csub\u003e6\u003c/sub\u003e","Luft","Argon","E-kolv","Mikrometer",null,"Etan","Påskyndar kemiska reaktioner","Multimedia messaging service","Sädesärla","Insekter som sköter pollinering","Elektron \u0026mdash; atom \u0026mdash; virus"]}
+{"_id":{"$oid":"5b055e9fa26100f7ba45adfe"},"team":20,"question":5,"answers":["Kväve och syre",null,"Rödhake","Skogsstjärna","Leder ström enbart i en riktning","Merkurius","Varans totala miljöpåverkan","Giga","C\u003csub\u003e6\u003c/sub\u003eH\u003csub\u003e12\u003c/sub\u003eO\u003csub\u003e6\u003c/sub\u003e","Olja","Argon","E-kolv","Skjutmått",null,"Etan","Påskyndar kemiska reaktioner","Multimedia messaging service","Sädesärla","Insekter som sköter pollinering","Elektron \u0026mdash; atom \u0026mdash; virus"]}
+{"_id":{"$oid":"5b0563c0a26100f7ba45adff"},"team":20,"question":6,"answers":["Temperaturen ändras inte"]}
+{"_id":{"$oid":"5b0563caa26100f7ba45ae00"},"team":22,"question":6,"answers":["Det blir varmare"]}
+{"_id":{"$oid":"5b0563cea26100f7ba45ae01"},"team":21,"question":6,"answers":["Temperaturen ändras inte"]}

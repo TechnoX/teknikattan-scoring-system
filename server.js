@@ -192,7 +192,7 @@ app.post('/scores/:team', function(req, res){
 // Database
 // --------------------------------------------------
 
-var teams = [{id: 20, name: "Edsbergsskolan", scores: [5,3,5,4,3,6,0,2]}, {id: 21, name: "Berzeliusskolan", scores: [5,4,4,6,3,6,0,2]}, {id: 22, name: "Österslättskolan", scores: [6,4,2,6,0,5,2,4]}];
+var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}];
 
 
 
