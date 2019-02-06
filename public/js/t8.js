@@ -262,7 +262,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
     $scope.tinymceOptions = {
         plugins: 'image media paste contextmenu textpattern lists',
         menubar: 'edit insert',
-        toolbar: 'bold italic  image numlist bullist',
+        toolbar: 'bold italic image numlist bullist',
         forced_root_block : false,
         paste_data_images: true
     };
