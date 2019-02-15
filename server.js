@@ -44,6 +44,10 @@ app.get('/users', function(req, res){
   res.sendFile(__dirname + '/views/users.html');
 })
 
+app.get('/control', function(req, res){
+  res.sendFile(__dirname + '/views/control.html');
+})
+
 app.get('/cities', function(req, res){
   res.sendFile(__dirname + '/views/cities.html');
 })
