@@ -40,6 +40,14 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 })
 
+app.get('/users', function(req, res){
+  res.sendFile(__dirname + '/views/users.html');
+})
+
+app.get('/cities', function(req, res){
+  res.sendFile(__dirname + '/views/cities.html');
+})
+
 app.get('/competitors', function(req, res){
   res.sendFile(__dirname + '/views/competitors.html');
 })

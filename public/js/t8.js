@@ -583,6 +583,72 @@ app.controller('audienceCtrl', ['$scope', '$http', function($scope, $http){
 }]);
 
 
+
+
+
+app.controller('mainCtrl', ['$scope', '$http', function($scope, $http){
+    $scope.cities = [{name: "Sverige", id: 0}, {name: "Linköping", id: 1}, {name: "Uppsala", id: 2}, {name: "Borlänge", id: 3}, {name: "Stockholm", id: 4} ];
+    $scope.users = [{id: 0, name: "Fredrik", city: 0, password: "giraff"}, {id: 3, name: "Peter", city: 0, password: "retep"}, {id: 2, name: "Susanne", city: 1, password: "ennasus"}, {id: 7, name: "Röde", city: 3, password: "lego"}];
+    
+    $scope.editPassword = function(user){
+        user.password = prompt("Ange nytt lösenord för " + user.name);
+    }
+    $scope.editUser = function(user){
+        console.log(user);
+    }
+    $scope.removeUser = function(user){
+        if(confirm("Vill du verkligen ta bort " + user.name)){
+            $scope.users = $scope.users.filter(x => x.id !== user.id);
+        }
+    }
+    
+    $scope.addUser = function(){
+        var password = prompt("Ange lösenord för ny användare")
+        var max = {name: "asdf", id:-1};
+        for(var i = 0; i < $scope.users.length; i+=1){
+            if($scope.users[i].name == $scope.newName){
+                alert($scope.newName + " finns redan. Välj ett annat namn.");
+                return;
+            }
+            if($scope.users[i].id > max.id){
+                max = $scope.users[i];
+            }
+        }
+        $scope.users.push({name: $scope.newName, city: $scope.newCity, password: password, id: max.id+1});
+        $scope.newName = "";
+    }
+    
+    $scope.removeCity = function(city){
+        if(confirm("Vill du verkligen ta bort " + city.name)){
+            $scope.cities = $scope.cities.filter(x => x.id !== city.id);
+        }
+    }
+    
+    $scope.editCity = function(city){
+        console.log(city);
+    }
+
+    $scope.addCity = function(){
+        var max = {name: "asdf", id:-1};
+        for(var i = 0; i < $scope.cities.length; i+=1){
+            if($scope.cities[i].name == $scope.newCity){
+                alert($scope.newCity + " finns redan. Välj ett annat namn.");
+                return;
+            }
+            if($scope.cities[i].id > max.id){
+                max = $scope.cities[i];
+            }
+        }
+        $scope.cities.push({name: $scope.newCity, id: max.id+1});
+        $scope.newCity = "";
+    }
+    
+}]);
+
+
+
+
+
 app.controller('resultCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
     var socket = io();
     
