@@ -575,12 +575,12 @@ app.controller('audienceCtrl', ['$scope', '$http', function($scope, $http){
 
 
 
-app.controller('mainCtrl', ['$scope', '$http', function($scope, $http){
+app.controller('mainCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
     $scope.competitions = [
         {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:['Skolgårda skola', 'Berzeliusskolan', 'Södervärnsskolan']},
         {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:['Sjöängsskolan', 'Malmlättsskolan', 'Hultdalskolan']},
         {id: 74, name: "Regionfinal", city: 1, lastEdited: new Date(2018,3,24,11,22), teams:['Sjöängsskolan', 'Skolgårda skola', 'Berzeliusskolan']},
-        {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,08,22), teams:['IFM', 'MAI', 'IDA']}
+        {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,8,22), teams:['IFM', 'MAI', 'IDA']}
     ];
     
     $scope.cities = [{name: "Sverige", id: 0}, {name: "Linköping", id: 1}, {name: "Uppsala", id: 2}, {name: "Borlänge", id: 3}, {name: "Stockholm", id: 4}, {name: "Lund", id: 7} ];
@@ -640,6 +640,10 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http){
         $scope.newCity = "";
     }
 
+    $scope.getCity = function(id){
+        return $scope.cities.find(x => x.id === id).name;
+    }
+    
     $scope.editCompetition = function(comp){
         console.log(comp);
         comp.lastEdited = new Date();
@@ -665,6 +669,10 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http){
         $scope.competitions.push({name: $scope.newName, city: $scope.newCity, lastEdited: new Date(), teams: [], id: max+1});
         $scope.newName = "";
         $scope.newCity = 0;
+    }
+
+    $scope.changeView = function(view){
+        $location.path(view);
     }
 
     
