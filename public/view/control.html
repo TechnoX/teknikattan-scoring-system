@@ -1,34 +1,24 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Control of scoring system</title>
-    <style>
-    </style>
-  </head>
-  <body>
-    <form action="">
-      <button size="400">Next slide</button>
-    </form>
+<form action="">
+  <button size="400">Next slide</button>
+</form>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-      $(function () {
-        var socket = io();
-        $('form').submit(function(){
-          socket.emit('next', 'no message');
-          return false;
-      });
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  $(function () {
+  var socket = io();
+  $('form').submit(function(){
+  socket.emit('next', 'no message');
+  return false;
+  });
 
-      var audio = new Audio('/doorbell.wav');
-      socket.on('timesUp', function(msg){
-        console.log("Times up!");
-        audio.play();
-      });
+  var audio = new Audio('/doorbell.wav');
+  socket.on('timesUp', function(msg){
+  console.log("Times up!");
+  audio.play();
+  });
 
 
-      
-      });
-    </script>
-  </body>
-</html>
+  
+  });
+</script>

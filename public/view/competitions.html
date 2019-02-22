@@ -1,48 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Teknikåttan</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
-  <script src="js/ng-file-upload/ng-file-upload-shim.js"></script> <!-- for no html5 browsers support -->
-  <script src="js/ng-file-upload/ng-file-upload.js"></script>
-  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <script src="js/tinymce.min.js"></script>
-  <link href="css/reset.css" rel="stylesheet" type="text/css">
-  <link href="css/main.css" rel="stylesheet" type="text/css">
-  <script src="js/t8.js"></script>
-</head>
-<body ng-app="t8" ng-controller="mainCtrl">
-<article class="management">
-    <h1>Tävlingar</h1>
-    <table>
-      <tr>
-        <th>Namn</th>
-        <th>Ort</th>
-        <th>Senast ändrad</th>
-        <th>Handling</th>
-      </tr>
-      <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp.id" ng-click="changeView(comp.name)">
-        <td>{{comp.name}}</td>
-        <td>{{getCity(comp.city)}}</td>
-        <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
-        <td><a href="#" ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a href="#" ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
-      </tr>
-      <tr>
-        <td><input type="text" ng-model="newName" ng-required></td>
-        <td>
-          <select ng-model="newCity" ng-required ng-init="newCity = 0">
-            <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
-          </select>
-        </td>
-        <td></td>
-        <td><a href="#" ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
-      </tr>
-    </table>
-    <a href="/">Tillbaka</a>
-</article>
-</body>
-</html>
+<section class="management">
+  <h1>Tävlingar</h1>
+  <table>
+    <tr>
+      <th>Namn</th>
+      <th>Ort</th>
+      <th>Senast ändrad</th>
+      <th>Handling</th>
+    </tr>
+    <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp.id" ng-click="changeView(comp.name)">
+      <td>{{comp.name}}</td>
+      <td>{{getCity(comp.city)}}</td>
+      <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td><a href="#" ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a href="#" ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
+    </tr>
+    <tr>
+      <td><input type="text" ng-model="newName" ng-required></td>
+      <td>
+        <select ng-model="newCity" ng-required ng-init="newCity = 0">
+          <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
+        </select>
+      </td>
+      <td></td>
+      <td><a href="#" ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
+    </tr>
+  </table>
+  <a href="/">Tillbaka</a>
+</section>

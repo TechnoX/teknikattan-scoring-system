@@ -1,43 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Teknikåttan</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
-  <script src="js/ng-file-upload/ng-file-upload-shim.js"></script> <!-- for no html5 browsers support -->
-  <script src="js/ng-file-upload/ng-file-upload.js"></script>
-  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <script src="js/tinymce.min.js"></script>
-  <link href="css/reset.css" rel="stylesheet" type="text/css">
-  <link href="css/main.css" rel="stylesheet" type="text/css">
-  <script src="js/t8.js"></script>
-</head>
-<body ng-app="t8" ng-controller="mainCtrl">
-<article class="management">
-    <h1><input type="text" ng-model="comp.name" ng-required ng-change="editCompetition(comp)"> - <select ng-model="comp.city" ng-required ng-change="editCompetition(comp)">
-            <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
-          </select>
-</h1>
+<section class="management">
+  <h1><input type="text" ng-model="comp.name" ng-required ng-change="editCompetition(comp)"> - <select ng-model="comp.city" ng-required ng-change="editCompetition(comp)">
+      <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
+    </select>
+  </h1>
 
 
-    <ul>
-      <li><a href="/editor">Redigera frågor</a></li>
-      <li>Deltagande lag:
-        <ul>
-          <li ng-repeat="team in comp.teams"><input type="text" ng-model="team"> - <a href="#" ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a href="/tablet">Visa svarsskärm (för tablet)</a></li>
-          <li><a href="#" ng-click="addTeam()"><i class="fas fa-user-plus"></i> Lägg till</a></li>
-        </ul>
-      <li><a href="/judges">Visa vy för domarna</a></li>
-      <li><a href="/result">Visa resultatlista</a></li>
-      <li><a href="/competitors">Visa vy för tävlande (till bås)</a></li>
-      <li><a href="/projector">Visa vy för publiken (till projektor)</a></li>
-      <li><a href="/control">Kontrollpanel som styr tävlingen</a></li>
-      <li><a href="/audience">Visa vy för kamerasystem</a></li>
-    </ul>    
-    <a href="/competitions">Visa alla tävlingar</a>
-</article>
-</body>
-</html>
+  <ul>
+    <li><a href="/editor">Redigera frågor</a></li>
+    <li>Deltagande lag:
+      <ul>
+        <li ng-repeat="team in comp.teams"><input type="text" ng-model="team"> - <a href="#" ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a href="/tablet">Visa svarsskärm (för tablet)</a></li>
+        <li><a href="#" ng-click="addTeam()"><i class="fas fa-user-plus"></i> Lägg till</a></li>
+      </ul>
+    <li><a href="/judges">Visa vy för domarna</a></li>
+    <li><a href="/result">Visa resultatlista</a></li>
+    <li><a href="/competitors">Visa vy för tävlande (till bås)</a></li>
+    <li><a href="/projector">Visa vy för publiken (till projektor)</a></li>
+    <li><a href="/control">Kontrollpanel som styr tävlingen</a></li>
+    <li><a href="/audience">Visa vy för kamerasystem</a></li>
+  </ul>    
+  <a href="/competitions">Visa alla tävlingar</a>
+</section>

@@ -1,49 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Teknikåttan</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
-  <script src="js/ng-file-upload/ng-file-upload-shim.js"></script> <!-- for no html5 browsers support -->
-  <script src="js/ng-file-upload/ng-file-upload.js"></script>
-  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <script src="js/tinymce.min.js"></script>
-  <link href="css/reset.css" rel="stylesheet" type="text/css">
-  <link href="css/main.css" rel="stylesheet" type="text/css">
-  <script src="js/t8.js"></script>
-</head>
-<body ng-app="t8" ng-controller="mainCtrl">
-<article class="management">
-    <h1>Användare</h1>
-    <table>
-      <tr>
-        <th>Namn</th>
-        <th>Ort</th>
-        <th>Handling</th>
-      </tr>
-      <tr ng-repeat="user in users">
-        <td><input type="text" ng-model="user.name" ng-required ng-change="editUser(user)"></td>
-        <td>
-          <select ng-model="user.city" ng-required ng-change="editUser(user)">
-            <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
-          </select>
-        </td>
-        <td><a href="#" ng-click="editPassword(user)"><i class="fas fa-user-edit"></i> Nytt lösenord</a> / <a href="#" ng-click="removeUser(user)"><i class="fas fa-user-minus"></i> Ta bort</a></td>
-      </tr>
-      <tr>
-        <td><input type="text" ng-model="newName" ng-required></td>
-        <td>
-          <select ng-model="newCity" ng-required ng-init="newCity = 0">
-            <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
-          </select>
-        </td>
-        <td><a href="#" ng-click="addUser()"><i class="fas fa-user-plus"></i> Lägg till</a></td>
-      </tr>
-    </table>
-    <a href="/">Tillbaka</a>
-</article>
-</body>
-</html>
+<section class="management">
+  <h1>Användare</h1>
+  <table>
+    <tr>
+      <th>Namn</th>
+      <th>Ort</th>
+      <th>Handling</th>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td><input type="text" ng-model="user.name" ng-required ng-change="editUser(user)"></td>
+      <td>
+        <select ng-model="user.city" ng-required ng-change="editUser(user)">
+          <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
+        </select>
+      </td>
+      <td><a href="#" ng-click="editPassword(user)"><i class="fas fa-user-edit"></i> Nytt lösenord</a> / <a href="#" ng-click="removeUser(user)"><i class="fas fa-user-minus"></i> Ta bort</a></td>
+    </tr>
+    <tr>
+      <td><input type="text" ng-model="newName" ng-required></td>
+      <td>
+        <select ng-model="newCity" ng-required ng-init="newCity = 0">
+          <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
+        </select>
+      </td>
+      <td><a href="#" ng-click="addUser()"><i class="fas fa-user-plus"></i> Lägg till</a></td>
+    </tr>
+  </table>
+  <a href="/">Tillbaka</a>
+</section>
