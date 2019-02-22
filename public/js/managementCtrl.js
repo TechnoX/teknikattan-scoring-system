@@ -4,13 +4,13 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     var id = $routeParams.id;
     
     $scope.competitions = [
-        {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:['Skolgårda skola', 'Berzeliusskolan', 'Södervärnsskolan']},
-        {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:['Sjöängsskolan', 'Malmlättsskolan', 'Hultdalskolan']},
-        {id: 74, name: "Regionfinal", city: 1, lastEdited: new Date(2018,3,24,11,22), teams:['Sjöängsskolan', 'Skolgårda skola', 'Berzeliusskolan']},
-        {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,8,22), teams:['IFM', 'MAI', 'IDA']}
+        {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:[{id: 12, name: 'Skolgårda skola', scores: [0,0,0,0,0,0,0,0]}, {id: 11, name: 'Berzeliusskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 10, name: 'Södervärnsskolan', scores: [0,0,0,0,0,0,0,0]}]},
+        {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:[{id: 20, name: 'Sjöängsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 21, name: 'Malmlättsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 22, name: 'Hultdalskolan', scores: [0,0,0,0,0,0,0,0]}]},
+        {id: 74, name: "Regionfinal", city: 1, lastEdited: new Date(2018,3,24,11,22), teams:[{id: 30, name: 'Sjöängsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: 'Skolgårda skola', scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: 'Berzeliusskolan', scores: [0,0,0,0,0,0,0,0]}]},
+        {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,8,22), teams:[{id: 44, name: 'IFM', scores: [0,0,0,0,0,0,0,0]}, {id: 45, name: 'MAI', scores: [0,0,0,0,0,0,0,0]}, {id: 47, name: 'IDA', scores: [0,0,0,0,0,0,0,0]}]},
+        {id: 24, name: "Interna mästerskapen", city: 3, lastEdited: new Date(2019,1,20,14,55), teams:[{id: 59, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 51, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 58, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}]}
     ];
 
-    console.log(id);
     for(var i = 0; i < $scope.competitions.length; i++){
         if($scope.competitions[i].id == id){
             $scope.comp = $scope.competitions[i];
