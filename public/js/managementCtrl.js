@@ -93,10 +93,5 @@ app.controller('managementCtrl', ['$scope', '$http', '$location', function($scop
         $scope.newName = "";
         $scope.newCity = 0;
     }
-
-    $scope.changeView = function(view){
-        $location.path(view);
-    }
-
     
 }]);
