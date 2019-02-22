@@ -1,7 +1,13 @@
 var db = require('./db');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
+
 
 exports.interface = function (app) {
+    //app.use(multipart({uploadDir: config.tmp }));
 
+
+    
     app.put('/questions', function(req, res){
         console.log(req.body);
         db.replace_questions(req.body, function (err) {
