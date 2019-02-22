@@ -104,24 +104,19 @@ app.get('/audience', function(req, res){
 
 app.put('/questions', function(req, res){
     console.log(req.body);
-    database.collection('questions').remove({}, function(err, result) {
-        if (err) return console.log(err);
-        console.log('removed everything:');
-        
-        database.collection('questions').insertMany(req.body, function(err, result) {
-            if (err) return console.log(err);
-            console.log('saved data to database:');
-            console.log(result);
+    db.replace_questions(req.body, function (err) {
+        if (err) res.sendStatus(500);
+        else {
             res.status(200).json({'success': true});
-        });
+        }
     });
 });
 
 app.get('/questions', function(req, res){
-    database.collection('questions').find().toArray(function(err, result) {
+    db.get_questions(function(err, result){
         if (err) throw err;
         res.status(200).json(result);
-    });
+    }
 });
 
 app.get('/currentState', function(req, res){
@@ -150,11 +145,11 @@ app.post('/answer/:team', function(req, res){
         return;
     }
     publishAnswer(req.body);
-    database.collection('answers').update({team: teamId, question: questionIndex}, {team: teamId, question: questionIndex, answers: req.body.answers}, {upsert: true}, function(err, result) {
+    db.save_answer(teamId, questionIndex, req.body.answers, function(err){
         if (err) return console.log(err);
         console.log("Saved answer to database: " + JSON.stringify(req.body));
         res.status(200).json({'success': true});
-    });
+    })
 });
 
 app.get('/answer/:team', function(req, res){
@@ -164,7 +159,7 @@ app.get('/answer/:team', function(req, res){
         res.status(400).json();
         return;
     }
-    database.collection('answers').find({team: teamId, question: questionIndex}).toArray(function(err, result) {
+    db.get_answer(teamId, questionIndex, function(err, result){
         if (err) throw err;
         console.log("Got response from answer database: ");
         console.log(result);
