@@ -1,36 +1,42 @@
-var express = require('express')
-var app = express()
-var http = require('http').Server(app)
-var io = require('socket.io')(http)
+/*
+  Vinsch entry point.
+*/
+
+var db = require('./db');
+var socket = require('./socket');
+var rest = require('./rest');
+
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
-var MongoClient = require('mongodb').MongoClient
 
-
-var database;
-MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
-    if (err) throw err
-    database = db.db('teknikattan');
-    database.collection('questions').find().toArray(function(err, result) {
-        if (err) throw err;
-        questions = result;
-    });
-    
-    http.listen(3000, function () {
-        console.log('Magic is happening on port 3000!')
-    })
-})
+// Handles static data
+app.use(express.static('public'))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+
+socket.interface(io);
+rest.interface(app);
+
+http.listen(3000, function () {
+    console.log('listening on port 3000');
+});
+
+
+
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
+
+
+
 //app.use(multipart({uploadDir: config.tmp }));
 
-// Handles static data
-app.use(express.static('public'))
 
 
 // --------------------------------------------------
