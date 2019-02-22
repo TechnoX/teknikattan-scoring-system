@@ -57,24 +57,10 @@ var startedTimer = false;
 var currentTimer; // The current timer that was started by setInterval
 
 
-io.on('connection', function(socket){
-    console.log('a user connected, timer: ')
-    if(currentTimer == null && startedTimer){
-        publishTimesUp();
-    }
-    socket.on('disconnect', function(){
-        console.log('user disconnected')
-    })
-    socket.on('next', function(msg){
-        nextPressed();
-    });
-})
-
-
 
 function nextPressed(){
     updateState();
-    io.emit('stateChange', getState());
+    socket.change_state(getState())
 }
 
 function getState(){
@@ -212,7 +198,7 @@ function startTimer(decreaseSlideTime){
         if(decreaseSlideTime){
             questions[questionIndex].slides[slideIndex].time = time;
         }
-        io.emit('time', time);
+        socket.send_time(time);
         if(Math.round(time) == 0){
             clearInterval(currentTimer);
             currentTimer = null;
@@ -225,16 +211,16 @@ function startTimer(decreaseSlideTime){
 function publishTimesUp(){
     console.log("Time's up!");
     var msg = {'hintIndex': hintIndex};
-    io.emit('timesUp', msg);
+    socket.send_times_up(msg);
 }
 
 
 function publishAnswer(msg){
     console.log("Publish answer");
-    io.emit('answer', msg);
+    socket.publish_answer(msg);
 }
 
 function publishScoresJudge(team){
     console.log("Publish total score and name etc. for judges");
-    io.emit('scoring', team);
+    socket.publish_team_info(team);
 }
