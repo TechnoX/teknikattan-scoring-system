@@ -1,10 +1,22 @@
-app.controller('managementCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+
+
+    var id = $routeParams.id;
+    
     $scope.competitions = [
         {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:['Skolgårda skola', 'Berzeliusskolan', 'Södervärnsskolan']},
         {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:['Sjöängsskolan', 'Malmlättsskolan', 'Hultdalskolan']},
         {id: 74, name: "Regionfinal", city: 1, lastEdited: new Date(2018,3,24,11,22), teams:['Sjöängsskolan', 'Skolgårda skola', 'Berzeliusskolan']},
         {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,8,22), teams:['IFM', 'MAI', 'IDA']}
     ];
+
+    console.log(id);
+    for(var i = 0; i < $scope.competitions.length; i++){
+        if($scope.competitions[i].id == id){
+            $scope.comp = $scope.competitions[i];
+            break;
+        }
+    }
     
     $scope.cities = [{name: "Sverige", id: 0}, {name: "Linköping", id: 1}, {name: "Uppsala", id: 2}, {name: "Borlänge", id: 3}, {name: "Stockholm", id: 4}, {name: "Lund", id: 7} ];
     $scope.users = [{id: 0, name: "Fredrik", city: 0, password: "giraff"}, {id: 3, name: "Peter", city: 0, password: "retep"}, {id: 2, name: "Susanne", city: 1, password: "ennasus"}, {id: 7, name: "Röde", city: 3, password: "lego"}];

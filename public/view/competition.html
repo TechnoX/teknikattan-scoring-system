@@ -6,18 +6,18 @@
 
 
   <ul>
-    <li><a href="/editor">Redigera frågor</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/editor">Redigera frågor</a></li>
     <li>Deltagande lag:
       <ul>
         <li ng-repeat="team in comp.teams"><input type="text" ng-model="team" ng-change="editTeam(team)">  <a ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a ng-href="#!/competition/{{comp.id}}/tablet">Visa svarsskärm (för tablet)</a></li>
         <li><a ng-click="addTeam()"><i class="fas fa-user-plus"></i> Lägg till</a></li>
       </ul>
-    <li><a href="/judges">Visa vy för domarna</a></li>
-    <li><a href="/result">Visa resultatlista</a></li>
-    <li><a href="/competitors">Visa vy för tävlande (till bås)</a></li>
-    <li><a href="/projector">Visa vy för publiken (till projektor)</a></li>
-    <li><a href="/control">Kontrollpanel som styr tävlingen</a></li>
-    <li><a href="/audience">Visa vy för kamerasystem</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/judges">Visa vy för domarna</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/result">Visa resultatlista</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/competitors">Visa vy för tävlande (till bås)</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/projector">Visa vy för publiken (till projektor)</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/control">Kontrollpanel som styr tävlingen</a></li>
+    <li><a ng-href="#!/competition/{{comp.id}}/audience">Visa vy för kamerasystem</a></li>
   </ul>    
-  <a href="/competitions">Visa alla tävlingar</a>
+  <a ng-href="#!/competitions">Visa alla tävlingar</a>
 </section>
