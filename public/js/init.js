@@ -8,19 +8,19 @@ app.config(function($routeProvider, $locationProvider) {
   })
   .when('/users', {
     templateUrl: 'view/users.html',
-    controller: 'mainCtrl',
+    controller: 'managementCtrl',
   })
   .when('/competitions', {
     templateUrl: 'view/competitions.html',
-    controller: 'mainCtrl',
+    controller: 'managementCtrl',
   })
   .when('/competition/:id', {
     templateUrl: 'view/competition.html',
-    controller: 'mainCtrl',
+    controller: 'managementCtrl',
   })
   .when('/cities', {
     templateUrl: 'view/cities.html',
-    controller: 'mainCtrl',
+    controller: 'managementCtrl',
   })
   .when('/competition/:id/editor', {
     templateUrl: 'view/editor.html',

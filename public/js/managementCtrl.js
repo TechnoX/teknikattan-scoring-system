@@ -1,4 +1,4 @@
-app.controller('mainCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller('managementCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
     $scope.competitions = [
         {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:['Skolgårda skola', 'Berzeliusskolan', 'Södervärnsskolan']},
         {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:['Sjöängsskolan', 'Malmlättsskolan', 'Hultdalskolan']},
