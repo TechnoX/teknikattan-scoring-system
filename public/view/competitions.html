@@ -11,17 +11,7 @@
       <td>{{comp.name}}</td>
       <td>{{getCity(comp.city)}}</td>
       <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
-      <td><a href="#" ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a href="#" ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
-    </tr>
-    <tr>
-      <td><input type="text" ng-model="newName" ng-required></td>
-      <td>
-        <select ng-model="newCity" ng-required ng-init="newCity = 0">
-          <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
-        </select>
-      </td>
-      <td></td>
-      <td><a href="#" ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
+      <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
     </tr>
   </table>
   <a href="/">Tillbaka</a>

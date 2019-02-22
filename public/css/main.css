@@ -2,7 +2,9 @@ html, body, body > div{
     font-family: "Verdana", sans-serif;
     height: 100%;
 }
-
+a {
+    cursor: pointer;
+}
 h1{
     font-size: 3vw;
     font-weight: bold;

@@ -13,7 +13,7 @@
           <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
         </select>
       </td>
-      <td><a href="#" ng-click="editPassword(user)"><i class="fas fa-user-edit"></i> Nytt lösenord</a> / <a href="#" ng-click="removeUser(user)"><i class="fas fa-user-minus"></i> Ta bort</a></td>
+      <td><a ng-click="editPassword(user)"><i class="fas fa-user-edit"></i> Nytt lösenord</a> / <a ng-click="removeUser(user)"><i class="fas fa-user-minus"></i> Ta bort</a></td>
     </tr>
     <tr>
       <td><input type="text" ng-model="newName" ng-required></td>
@@ -22,7 +22,7 @@
           <option ng-repeat="city in cities" ng-value="city.id">{{city.name}}</option>
         </select>
       </td>
-      <td><a href="#" ng-click="addUser()"><i class="fas fa-user-plus"></i> Lägg till</a></td>
+      <td><a ng-click="addUser()"><i class="fas fa-user-plus"></i> Lägg till</a></td>
     </tr>
   </table>
   <a href="/">Tillbaka</a>

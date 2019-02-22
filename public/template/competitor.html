@@ -32,16 +32,16 @@
     <ol ng-show="question.type == 'hints'">
       <li ng-repeat="hint in question.hints track by $index">
         <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="question.hints[$index]" style="width: 25em;" /></label>
-        <a ng-click="removeHint($index)" href="#">Ta bort</a>
+        <a ng-click="removeHint($index)">Ta bort</a>
       </li>
-      <li><a ng-click="addHint()" href="#">Lägg till ledtråd</a></li>
+      <li><a ng-click="addHint()">Lägg till ledtråd</a></li>
     </ol>
     <ol ng-show="question.type == 'truefalse'">
       <li ng-repeat="statement in question.statements track by $index">
         <label>Påstående {{$index + 1}}: <input type="text" ng-model="question.statements[$index]" style="width: 25em;" /></label>
-        <a ng-click="removeStatement($index)" href="#">Ta bort</a>
+        <a ng-click="removeStatement($index)">Ta bort</a>
       </li>
-      <li><a ng-click="addStatement()" href="#">Lägg till påstående</a></li>
+      <li><a ng-click="addStatement()">Lägg till påstående</a></li>
     </ol>
   </aside>
   <aside ng-show="state == 'hints'">

@@ -25,19 +25,19 @@
         </label>
         <label ng-show="answer.subQuestions[$index].type == 'select'">Tillåt flera samtidigt: <input type="checkbox" ng-model="answer.subQuestions[$index].multiple"></label>
         Visas på slide: <ol style="display: inline-block;"><li ng-repeat="slide in question.slides track by $index" style="float: left;"><label>{{$index}}. <input type="checkbox" ng-model="answer.subQuestions[$parent.$index].show[$index]" /></label></li></ol>
-        <a ng-click="remove(answer.subQuestions, $index)" href="#">Ta bort</a><br>
+        <a ng-click="remove(answer.subQuestions, $index)">Ta bort</a><br>
         <ol ng-show="answer.subQuestions[$index].type == 'select'">
           <li ng-repeat="a in answer.subQuestions[$index].alternatives track by $index">
             <label>
               Alternativ {{$index + 1}}:
               <input type="text" ng-model="answer.subQuestions[$parent.$index].alternatives[$index]"/>
             </label>
-            <a ng-click="remove(answer.subQuestions[$parent.$index].alternatives, $index)" href="#">Ta bort</a>
+            <a ng-click="remove(answer.subQuestions[$parent.$index].alternatives, $index)">Ta bort</a>
           </li>
-          <li><a ng-click="add(answer.subQuestions[$index].alternatives)" href="#">Lägg till alternativ</a></li>
+          <li><a ng-click="add(answer.subQuestions[$index].alternatives)">Lägg till alternativ</a></li>
         </ol>
       </li>
-      <li><a ng-click="add(answer.subQuestions, true, question.slides.length)" href="#">Lägg till delfråga</a></li>
+      <li><a ng-click="add(answer.subQuestions, true, question.slides.length)">Lägg till delfråga</a></li>
     </ol>
   </section>
 
@@ -52,9 +52,9 @@
                 Alternativ {{$index + 1}}:
                 <input type="text" ng-model="answer.pairs[0][$index]"/>
               </label>
-              <a ng-click="remove(answer.pairs[0], $index)" href="#">Ta bort</a>
+              <a ng-click="remove(answer.pairs[0], $index)">Ta bort</a>
             </li>
-            <li><a ng-click="add(answer.pairs[0])" href="#">Lägg till alternativ</a></li>
+            <li><a ng-click="add(answer.pairs[0])">Lägg till alternativ</a></li>
           </ol>
         </td>
         <td>
@@ -64,9 +64,9 @@
                 Alternativ {{$index + 1}}:
                 <input type="text" ng-model="answer.pairs[1][$index]"/>
               </label>
-              <a ng-click="remove(answer.pairs[1], $index)" href="#">Ta bort</a>
+              <a ng-click="remove(answer.pairs[1], $index)">Ta bort</a>
             </li>
-            <li><a ng-click="add(answer.pairs[1])" href="#">Lägg till alternativ</a></li>
+            <li><a ng-click="add(answer.pairs[1])">Lägg till alternativ</a></li>
           </ol>
         </td>
       </tr>
