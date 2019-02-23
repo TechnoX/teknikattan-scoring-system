@@ -1,19 +1,15 @@
-app.controller('resultCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller('resultCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var socket = io();
-    
-    console.log("Params are: ", $location.search());
-    // On judge view we load several IDs
-    $scope.teamIds = $location.search()['teams'];
+    var competition_id = $routeParams.id;
+
     $scope.teams = [];
-    for(var t = 0; t < $scope.teamIds.length; t++){
-        // Get the team matching the ID given in the url bar
-        $http.get('/team/'+$scope.teamIds[t]).then(function(resp) {
-            if(resp.data){
-                $scope.teams.push(resp.data);
-                console.log("Set team to ", resp.data);
-            }
-        });
-    }
+    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+        if(resp.data){
+            $scope.teams = resp.data;
+            console.log("Set teams to ", $scope.teams);
+        }
+    });
+    
 
     $scope.getTotalScore = function(team){
         var total = 0;
