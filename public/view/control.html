@@ -6,19 +6,18 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
   $(function () {
-  var socket = io();
-  $('form').submit(function(){
-  socket.emit('next', 'no message');
-  return false;
-  });
+    var socket = io();
+  
+    $('form').submit(function(){
+      socket.emit('next', 'no message');
+      return false;
+    });
 
-  var audio = new Audio('/doorbell.wav');
-  socket.on('timesUp', function(msg){
-  console.log("Times up!");
-  audio.play();
-  });
-
-
+    var audio = new Audio('/doorbell.wav');
+    socket.on('timesUp', function(msg){
+      console.log("Times up!");
+      audio.play();
+    });
   
   });
 </script>
