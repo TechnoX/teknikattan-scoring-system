@@ -26,7 +26,7 @@ exports.user_connected = function(){
 
 exports.nextPressed = function(){
     updateState();
-    socket.change_state(getState())
+    socket.change_state(exports.getState())
 }
 
 exports.getState = function(){
@@ -45,7 +45,7 @@ exports.getState = function(){
     return msg;
 }
 
-exports.updateState = function(){
+function updateState(){
     var oldState = currentState;
     var nextState = "";
     // State could be: start, image, question (is active and visible), beforeanswer, answer, end
@@ -125,7 +125,7 @@ exports.nextStatement = function(){
     statementIndex++;
 }
 
-exports.gotoNextQuestion = function(){
+function gotoNextQuestion(){
     questionIndex++;
     slideIndex = 0;
     hintIndex = -1;
@@ -144,7 +144,7 @@ exports.hasTimer = function(){
     return questions[questionIndex].slides[slideIndex].hasTimer;
 }
 
-exports.stopTimer = function(){
+function stopTimer(){
     clearInterval(currentTimer);
     currentTimer = null;
 }
