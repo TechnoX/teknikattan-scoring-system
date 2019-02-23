@@ -1,8 +1,20 @@
 var db = require('./db');
 var fsm = require('./fsm');
-
+var socket = require('./socket');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
+
+
+function publishScoresJudge(team){
+    console.log("Publish total score and name etc. for judges");
+    socket.publish_team_info(team);
+}
+
+
+function publishAnswer(msg){
+    console.log("Publish answer");
+    socket.publish_answer(msg);
+}
 
 
 exports.interface = function (app) {
@@ -62,18 +74,15 @@ exports.interface = function (app) {
 
     app.post('/competition/:id/scores/:team', function(req, res){
         console.log('Update score for team '+req.body.team+' with: ' + req.body.scores);
-
-        // TODO: Save to database
-        for(var t = 0; t < teams.length; t++){
-            if(teams[t].id == req.body.team){
-                teams[t].scores = req.body.scores;
-                publishScoresJudge(teams[t]);
-                res.status(200).json({'success': true});
+        db.save_score(req.body.team, req.body.scores, function(err){
+            if(err) {
+                res.status(400).json({'success': false});
+                throw err;
                 return;
             }
-        }
-        console.log("Couldn't find a team with ID: " + req.body.team);
-        res.status(400).json({'success': false});
+            publishScoresJudge(req.body.scores);
+            res.status(200).json({'success': true});
+        });
     });
 
 

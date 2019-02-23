@@ -32,7 +32,7 @@ app.config(function($routeProvider, $locationProvider) {
   })
   .when('/competition/:id/judge', {
     templateUrl: 'view/judge.html',
-    controller: 'judgeCtrl',
+    controller: 'questionCtrl',
   })
   .when('/competition/:id/projector', {
     templateUrl: 'view/projector.html',

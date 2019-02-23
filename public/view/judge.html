@@ -6,7 +6,7 @@
   <h2 ng-show="timesUp">Tiden är ute!</h2>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" ng-repeat="teamId in teams" ng-controller="judgeCtrl">
+      <div class="col-md-4" ng-repeat="team in teams" ng-controller="judgeCtrl">
         <h2>{{team.name}}</h2>
         <main ng-show="currQuestion.type == 'hints'">
           <ol>

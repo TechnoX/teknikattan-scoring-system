@@ -43,11 +43,26 @@ exports.save_answer = function(teamId, questionIndex, answers, callback){
     });
 }
 
+
 exports.get_answer = function(teamId, questionIndex, callback){
     database.collection('answers').find({team: teamId, question: questionIndex}).toArray(function(err, result) {
         callback(err, result);
     });
 };
+
+exports.save_score = function(teamId, scores, callback){
+    // TODO: Save to database
+    for(var t = 0; t < teams.length; t++){
+        if(teams[t].id == teamId){
+            teams[t].scores = scores;
+            callback(false);
+            return;
+        }
+    }
+    console.log("Couldn't find a team with ID: " + req.body.team);
+    callback(true);
+}
+
 
 exports.get_team = function(teamId, callback){
     for(var t = 0; t < teams.length; t++){

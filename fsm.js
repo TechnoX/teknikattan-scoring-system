@@ -1,3 +1,4 @@
+var socket = require('./socket');
 
 var questions = [];
 
@@ -173,19 +174,9 @@ exports.startTimer = function(decreaseSlideTime){
 }
 
 
-exports.publishTimesUp = function(){
+function publishTimesUp(){
     console.log("Time's up!");
     var msg = {'hintIndex': hintIndex};
     socket.send_times_up(msg);
 }
 
-
-exports.publishAnswer = function(msg){
-    console.log("Publish answer");
-    socket.publish_answer(msg);
-}
-
-exports.publishScoresJudge = function(team){
-    console.log("Publish total score and name etc. for judges");
-    socket.publish_team_info(team);
-}

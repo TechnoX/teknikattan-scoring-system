@@ -8,7 +8,16 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
     var competition_id = $routeParams.id;
     
     // On judge view we load several IDs
-    $scope.teams = [];//$location.search()['teams'];
+    $scope.teams = [];
+    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+        if(resp.data){
+            $scope.teams = resp.data;
+            console.log("Set teams to ", $scope.teams);
+        }
+    });
+    
+
+    
 
     $scope.team = {id: 1, name: "Testlag", scores: []};
     
