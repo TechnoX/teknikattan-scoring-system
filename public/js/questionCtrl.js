@@ -1,21 +1,20 @@
-app.controller('questionCtrl', ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var _index = 0;
     var socket = io();
     $scope.state = "start";
     $scope.timesUp = false;
     $scope.slideIndex = 0;
     
-    console.log("Params are: ", $location.search());
     // On judge view we load several IDs
-    $scope.teams = $location.search()['teams'];
+    $scope.teams = [];//$location.search()['teams'];
 
     $scope.team = {id: 1, name: "Testlag", scores: []};
     
     // If we have specified a team ID in the URL, fetch the team data from the backend
-    if($location.search()['team']){
-        $scope.team.id = $location.search()['team'];
+    if($routeParams.team){
+        $scope.team.id = $routeParams.team;
         // Get the team matching the ID given in the url bar
-        $http.get('/team/'+$location.search()['team']).then(function(resp) {
+        $http.get('/team/'+$routeParams.team).then(function(resp) {
             if(resp.data){
                 $scope.team = resp.data;
                 console.log("Set team to ", $scope.team);
