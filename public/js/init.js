@@ -1,5 +1,5 @@
 
-var app = angular.module('t8', ['ngRoute', 'ngSanitize']);
+var app = angular.module('t8', ['ngRoute', 'ngSanitize', 'ngFileUpload']);
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider
