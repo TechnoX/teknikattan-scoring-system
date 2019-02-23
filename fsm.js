@@ -12,7 +12,9 @@ var startedTimer = false;
 //var nextState = 'showImage';
 var currentTimer; // The current timer that was started by setInterval
 
-
+exports.set_questions = function(q){
+    questions = q;
+}
 
 exports.get_question_index = function(){
     return questionIndex;

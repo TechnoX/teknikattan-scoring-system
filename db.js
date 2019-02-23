@@ -1,12 +1,16 @@
+var fsm = require('./fsm');
+
 var MongoClient = require('mongodb').MongoClient
 
 var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
     if (err) throw err
     database = db.db('teknikattan');
+
+    
     database.collection('questions').find().toArray(function(err, result) {
         if (err) throw err;
-        questions = result;
+        fsm.set_questions(result);
     });
 })
 
