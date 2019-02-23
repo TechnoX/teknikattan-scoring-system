@@ -4,6 +4,8 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
     $scope.state = "start";
     $scope.timesUp = false;
     $scope.slideIndex = 0;
+
+    var competition_id = $routeParams.id;
     
     // On judge view we load several IDs
     $scope.teams = [];//$location.search()['teams'];
@@ -25,7 +27,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
         // If the new value is not updated, just re-assigned, do not save it
         if(newValue === undefined || newValue.length == 0)
             return;
-        $http.post("/answer/"+$scope.team.id, {'team': $scope.team.id, 'question': _index, 'answers': newValue}).then(function(res) {
+        $http.post("/competition/"+competition_id+"/answer/"+$scope.team.id, {'team': $scope.team.id, 'question': _index, 'answers': newValue}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när svaret skulle sparas!");
@@ -33,7 +35,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
         });
     }, true);
 
-    $http.get('/answer/'+$scope.team.id).then(function(resp) {
+    $http.get('/competition/'+competition_id+'/answer/'+$scope.team.id).then(function(resp) {
         if(resp.data.answers){
             $scope.answer = resp.data.answers;
         }else{
@@ -42,7 +44,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
         console.log("answer",$scope.answer);
     });
 
-    $http.get('/currentState').then(function(resp) {
+    $http.get('/competition/'+competition_id+'/currentState').then(function(resp) {
         if(!resp.data.question){
             $scope.currQuestion = null;
         }else{
@@ -76,7 +78,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
             // If new question loaded ... 
             if(msg.state == 'image'){
                 // ... get associated answers
-                $http.get('/answer/'+$scope.team.id).then(function(resp) {
+                $http.get('/competition/'+competition_id+'/answer/'+$scope.team.id).then(function(resp) {
                     if(resp.data.answers){
                         $scope.answer = resp.data.answers;
                     }else{

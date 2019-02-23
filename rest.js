@@ -8,9 +8,7 @@ var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
 exports.interface = function (app) {
     //app.use(multipart({uploadDir: config.tmp }));
 
-
-    
-    app.put('/questions', function(req, res){
+    app.put('/competition/:id/questions', function(req, res){
         console.log(req.body);
         db.replace_questions(req.body, function (err) {
             if (err) res.sendStatus(500);
@@ -20,32 +18,18 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/questions', function(req, res){
+    app.get('/competition/:id/questions', function(req, res){
         db.get_questions(function(err, result){
             if (err) throw err;
             res.status(200).json(result);
         });
     });
 
-    app.get('/currentState', function(req, res){
-        res.status(200).json(getState());
+    app.get('/competition/:id/currentState', function(req, res){
+        res.status(200).json(fsm.getState());
     });
 
-    app.post('/upload', multipartMiddleware, function(req, res) {
-        console.log(req.body, req.files);
-        if(req.body.file == 'null'){
-            console.log("Failed to upload image")
-            res.status(500).json({'success': false});
-            return
-        }
-        // don't forget to delete all req.files when done
-        var file = req.files.file;
-        console.log(file.name);
-        console.log(file.type);
-        res.status(200).json({'success': true, 'path': file.path.substr(7)});
-    });
-
-    app.post('/answer/:team', function(req, res){    
+    app.post('/competition/:id/answer/:team', function(req, res){    
         var teamId = parseInt(req.params.team)
         if(!teamId){
             console.log("Team ID " + req.params.team + " is not an integer");
@@ -53,21 +37,21 @@ exports.interface = function (app) {
             return;
         }
         publishAnswer(req.body);
-        db.save_answer(teamId, questionIndex, req.body.answers, function(err){
+        db.save_answer(teamId, fsm.get_question_index(req.params.id), req.body.answers, function(err){
             if (err) return console.log(err);
             console.log("Saved answer to database: " + JSON.stringify(req.body));
             res.status(200).json({'success': true});
         })
     });
 
-    app.get('/answer/:team', function(req, res){
+    app.get('/competition/:id/answer/:team', function(req, res){
         var teamId = parseInt(req.params.team)
         if(!teamId){
             console.log("Team ID " + req.params.team + " is not an integer");
             res.status(400).json();
             return;
         }
-        db.get_answer(teamId, questionIndex, function(err, result){
+        db.get_answer(teamId, fsm.get_question_index(req.params.id), function(err, result){
             if (err) throw err;
             console.log("Got response from answer database: ");
             console.log(result);
@@ -75,27 +59,8 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/team/:team', function(req, res){
-        var teamId = parseInt(req.params.team)
-        if(!teamId){
-            console.log("Team ID " + req.params.team + " is not an integer");
-            res.status(400).json();
-            return;
-        }
-        
-        for(var t = 0; t < teams.length; t++){
-            if(teams[t].id == teamId){
-                res.status(200).json(teams[t]);
-                return;
-            }
-        }
-        
-        console.log("Couldn't find team with ID: " + teamId);
-        res.status(400).json();
-    });
 
-
-    app.post('/scores/:team', function(req, res){
+    app.post('/competition/:id/scores/:team', function(req, res){
         console.log('Update score for team '+req.body.team+' with: ' + req.body.scores);
 
         // TODO: Save to database
@@ -109,6 +74,42 @@ exports.interface = function (app) {
         }
         console.log("Couldn't find a team with ID: " + req.body.team);
         res.status(400).json({'success': false});
+    });
+
+
+
+
+
+    app.get('/team/:team', function(req, res){
+        var teamId = parseInt(req.params.team)
+        if(!teamId){
+            console.log("Team ID " + req.params.team + " is not an integer");
+            res.status(400).json();
+            return;
+        }
+        db.get_team(teamId, function(err, team){
+            if(err){
+                console.log("Couldn't find team with ID: " + teamId);
+                res.status(400).json();
+            }else{
+                res.status(200).json(team);
+            }
+        });
+        
+    });
+    
+    app.post('/upload', multipartMiddleware, function(req, res) {
+        console.log(req.body, req.files);
+        if(req.body.file == 'null'){
+            console.log("Failed to upload image")
+            res.status(500).json({'success': false});
+            return
+        }
+        // don't forget to delete all req.files when done
+        var file = req.files.file;
+        console.log(file.name);
+        console.log(file.type);
+        res.status(200).json({'success': true, 'path': file.path.substr(7)});
     });
 
 };
