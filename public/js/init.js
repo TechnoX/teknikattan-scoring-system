@@ -34,6 +34,9 @@ app.config(function($routeProvider, $locationProvider) {
     templateUrl: 'view/judge.html',
     controller: 'questionCtrl',
   })
+  .when('/competition/:id/control', {
+    templateUrl: 'view/control.html'
+  })
   .when('/competition/:id/projector', {
     templateUrl: 'view/projector.html',
     controller: 'questionCtrl',
