@@ -6,12 +6,12 @@
   <h2 ng-show="timesUp">Tiden är ute!</h2>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" ng-repeat="teamId in teams">
+      <div class="col-md-4" ng-repeat="teamId in teams" ng-controller="judgeCtrl">
         <h2>{{team.name}}</h2>
         <main ng-show="currQuestion.type == 'hints'">
           <ol>
             <li ng-repeat="hint in currQuestion.hints track by $index">
-              Ledtråd {{$index + 1}}: {{team.answer[$index]}}
+              Ledtråd {{$index + 1}}: {{answer[$index]}}
             </li>
           </ol>
         </main>
@@ -19,8 +19,8 @@
           <ol>
             <li ng-repeat="statement in currQuestion.statements track by $index">
               Påstående {{$index + 1}}:
-              <span id="true" ng-show="team.answer[$index] === true">Sant!</span>
-              <span id="false" ng-show="team.answer[$index] === false">Falskt!</span>
+              <span id="true" ng-show="answer[$index] === true">Sant!</span>
+              <span id="false" ng-show="answer[$index] === false">Falskt!</span>
             </li>
           </ol>
         </main>
@@ -31,7 +31,7 @@
           <div ng-show="currQuestion.answer.type == 'multi'">
             <ol type='a'>
               <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-                Delfråga {{$index + 1}}: <span ng-bind-html="team.answer[$index]"></span>
+                Delfråga {{$index + 1}}: <span ng-bind-html="answer[$index]"></span>
               </li>
             </ol>
           </div>
@@ -42,7 +42,7 @@
         <section>
           <p>
             <ol>
-              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]" ng-change="saveScore(team)"></label></li>
+              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]"></label></li>
             </ol>
             <br />
             Alla poäng: {{team.scores}} <br />
