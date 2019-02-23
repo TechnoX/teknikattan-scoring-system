@@ -29,14 +29,6 @@ http.listen(3000, function () {
 });
 
 
-// --------------------------------------------------
-// Database
-// --------------------------------------------------
-
-var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}];
-
-
-
 var questions = [];
 
 // State could be: start, image, question (is active and visible), beforeanswer, answer, end

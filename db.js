@@ -10,6 +10,11 @@ MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
     });
 })
 
+// TODO: Should be a database call instead of here in source code
+var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}];
+
+    
+
 
 exports.replace_questions = function(new_questions, callback) {
     database.collection('questions').remove({}, function(err, result) {
@@ -43,6 +48,17 @@ exports.get_answer = function(teamId, questionIndex, callback){
         callback(err, result);
     });
 };
+
+exports.get_team = function(teamId, callback){
+    for(var t = 0; t < teams.length; t++){
+        if(teams[t].id == teamId){
+            callback(false,teams[t]);
+            return;
+        }
+    }
+    callback(true,{});
+};
+
 
 
 // -----------------------------------------------------------------------------------------
