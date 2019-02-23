@@ -60,6 +60,11 @@ exports.get_team = function(teamId, callback){
 };
 
 
+exports.get_teams = function(competitionId, callback){
+    callback(false, teams);
+};
+
+
 
 // -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------
