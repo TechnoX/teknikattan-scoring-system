@@ -1,5 +1,5 @@
 var db = require('./db');
-
+var fsm = require('./fsm');
 var io_;
 
 exports.interface = function(io) {
@@ -8,14 +8,13 @@ exports.interface = function(io) {
 
     io.on('connection', function(socket) {
         console.log('a user connected, timer: ')
-        if(currentTimer == null && startedTimer){
-            publishTimesUp();
-        }
+        fsm.user_connected();
+        
         socket.on('disconnect', function(){
             console.log('user disconnected')
         });
         socket.on('next', function(msg){
-            nextPressed();
+            fsm.nextPressed();
         });
 
     });

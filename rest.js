@@ -1,4 +1,6 @@
 var db = require('./db');
+var fsm = require('./fsm');
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: './public/uploads' });
 
