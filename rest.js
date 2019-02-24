@@ -61,7 +61,7 @@ exports.interface = function (app) {
                     res.status(200).json(result[index+1]);
                 }else{
                     console.error("Index out of bounds! " + (index+1));
-                    res.status(500);
+                    res.status(500).send("Index out of bounds!");
                 }
             });
         });
@@ -76,7 +76,7 @@ exports.interface = function (app) {
                     res.status(200).json(result[index-1]);
                 }else{
                     console.error("Index out of bounds! " + (index-1));
-                    res.status(500);
+                    res.status(500).send("Index out of bounds!");
                 }
             });
         });
