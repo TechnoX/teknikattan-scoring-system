@@ -1,190 +1,233 @@
-var socket = require('./socket');
-
-var questions = [];
-
-// State could be: start, image, question (is active and visible), beforeanswer, answer, end
-var currentState = "start";
-var questionIndex = -1;
-var slideIndex = 0;
-var hintIndex = -1;
-var statementIndex = -1;
-var startedTimer = false;
-//var nextState = 'showImage';
-var currentTimer; // The current timer that was started by setInterval
 
 
-// Used from db to initialize the questions when database connection is established
-exports.set_questions = function(q){
-    questions = q;
-}
+// Simulate the full competition to create the slideshow (so that we can go forward and backward in it)
+exports.create_slideshow = function(questions){
+    var slideshow = [];
+    console.log("Create slideshow");
 
-// Used from rest when saving and retrieving the answers for a specific team and (current) question. 
-exports.get_question_index = function(){
-    return questionIndex;
-}
+    var currentState = "start";
+    var questionIndex = -1;
+    
+    do {
+        var question = questions[questionIndex];
 
-// Used from socket, to notify the FSM that a new user is connected. Not sure if it is needed anymore... But should not remove it until I'm sure. 
-exports.user_connected = function(){
-    if(currentTimer == null && startedTimer){
-        publishTimesUp();
-    }
-}
-
-// Used from socket to notify FSM when someone pressed the next button
-exports.nextPressed = function(){
-    updateState();
-    socket.change_state(exports.getState())
-}
-
-// Used from rest to send the current state to the browser (when loading page for example). 
-exports.getState = function(){
-    console.log("---------------------");
-    console.log("State: " + currentState);
-    console.log("question: " + questionIndex + ", slide: " + slideIndex);
-    console.log("hintIndex: " + hintIndex + ", statementIndex: " + statementIndex);
-
-    var msg = {'state': currentState,
-               'question': questions[questionIndex],
-               'questionIndex': questionIndex,
-               'slideIndex': slideIndex,
-               'hintIndex': hintIndex,
-               'statementIndex': statementIndex
-              };
-    return msg;
-}
-
-function updateState(){
-    var oldState = currentState;
-    var nextState = "";
-    // State could be: start, image, question (is active and visible), beforeanswer, answer, end
-    switch(oldState){
-    case 'start':
-        nextState = gotoNextQuestion();
-        break;
-    case 'image':
-        nextState = 'question';
-        break;
-    case 'question':
-    case 'hints':
-    case 'statements':
-        if(hasTimer() && !startedTimer && questions[questionIndex].type == 'normal'){
-            startTimer(true);
-            nextState = oldState;
-        }else if(hasTimer() && !startedTimer && (oldState == 'hints' || oldState == 'statements')){
-            startTimer();
-            nextState = oldState;
-        }else if(hasMoreSlides()){ // Go through all slides.
-            stopTimer();
-            startedTimer = false;
-            nextSlide();
-            nextState = oldState;
-        }else if(hasMoreHints()){ // Go through all hints.
-            stopTimer();
-            startedTimer = false;
-            nextHint();
-            nextState = 'hints';
-        }else if(hasMoreStatements()){ // Go through all statements.
-            stopTimer();
-            startedTimer = false;
-            nextStatement();
-            nextState = 'statements';
-        }else{
-            if(questions[questionIndex].answer.show){
-                nextState = 'beforeanswer';
+        switch(currentState){
+        case "start":
+            slideshow.push(createStart());
+            questionIndex = 0;
+            currentState = "image";
+            break;
+        case "image":
+            slideshow.push(createImage(questionIndex, question));
+            if(question.type == "normal"){
+                currentState = "slides";
+            }else if(question.type == "truefalse"){
+                currentState = "statements";
+            }else if(question.type == "hints"){
+                currentState = "hints";
+            }else if(question.type == "quiz"){
+                currentState = "quiz";
             }else{
-                nextState = gotoNextQuestion();
+                console.error("Missing question type in FSM")
             }
+            break;
+        case "slides":
+            for(let i = 0; i < question.slides.length; i++){
+                slideshow.push(createNormalSlide(questionIndex, question, question.slides[i]));
+            }
+            if(question.answer.show){
+                currentState = "before answer";
+            }else{
+                questionIndex++;
+                currentState = afterSlides(questionIndex, questions);
+            }
+            break;
+        case "hints":
+            for(let i = 0; i < question.hints.length; i++){
+                slideshow.push(createHintSlide(questionIndex, question, question.slides[0], question.hints[i]));
+            }
+            if(question.answer.show){
+                currentState = "before answer";
+            }else{
+                questionIndex++;
+                currentState = afterSlides(questionIndex, questions);
+            }
+            break;
+        case "statements":
+            for(let i = 0; i < question.statements.length; i++){
+                slideshow.push(createStatementSlide(questionIndex, question, question.slides[0], question.statements[i]));
+            }
+            if(question.answer.show){
+                currentState = "before answer";
+            }else{
+                questionIndex++;
+                currentState = afterSlides(questionIndex, questions);
+            }
+            break;
+        case "quiz":
+            for(let q = 0; i < question.quiz.length; i++){
+                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz[i]));
+            }
+            if(question.answer.show){
+                currentState = "before answer";
+            }else{
+                questionIndex++;
+                currentState = afterSlides(questionIndex, questions);
+            }
+            break;
+        case "before answer":
+            slideshow.push(createBeforeAnswer(questionIndex, question))
+            currentState = "answer";
+            break;
+        case "answer":
+            slideshow.push(createAnswer(questionIndex, question));
+            questionIndex++;
+            currentState = afterSlides(questionIndex, questions);
+            break;
+        case "end":
+            slideshow.push(createEnd());
+            break;
         }
-        break;
-    case 'beforeanswer':
-        nextState = 'answer';
-        break;
-    case 'answer':
-        nextState = gotoNextQuestion();
-        break;
-    case 'end':
-        nextState = oldState;
-        break;
-    }
-    currentState = nextState;
+    } while (currentState != "end");
+    
+    return slideshow;
 }
 
-function hasMoreSlides(){
-    return slideIndex + 1 < questions[questionIndex].slides.length;
-}
-
-function nextSlide(){
-    slideIndex++;
-}
-
-function hasMoreHints(){
-    return questions[questionIndex].type == 'hints' && hintIndex + 1 < questions[questionIndex].hints.length;
-}
-
-function nextHint(){
-    hintIndex++;
-}
-
-function hasMoreStatements(){
-    return questions[questionIndex].type == 'truefalse' && statementIndex + 1 < questions[questionIndex].statements.length;
-}
-
-function nextStatement(){
-    statementIndex++;
-}
-
-function gotoNextQuestion(){
-    questionIndex++;
-    slideIndex = 0;
-    hintIndex = -1;
-    statementIndex = -1;
-    stopTimer();
-    startedTimer = false;
-    if(questionIndex >= questions.length){
-        return 'end';
+function afterSlides(index, questions){
+    if(index >= questions.length){
+        return "end";
     }else{
-        return 'image';
+        return "image";
     }
 }
 
 
-function hasTimer(){
-    return questions[questionIndex].slides[slideIndex].hasTimer;
-}
 
-function stopTimer(){
-    clearInterval(currentTimer);
-    currentTimer = null;
-}
-
-
-// decreaseSlideTime is not set when publishing hints or statements or similar, because we need to keep the time intact between hints
-function startTimer(decreaseSlideTime){
-    var time = Math.round(questions[questionIndex].slides[slideIndex].time);
-    if(decreaseSlideTime){
-        questions[questionIndex].slides[slideIndex].time = time;
-    }
-    clearInterval(currentTimer);
-    startedTimer = true;
-    console.log("Start timer, with total time: " + time);
-    currentTimer = setInterval(function(){
-        time--;
-        if(decreaseSlideTime){
-            questions[questionIndex].slides[slideIndex].time = time;
-        }
-        socket.send_time(time);
-        if(Math.round(time) == 0){
-            clearInterval(currentTimer);
-            currentTimer = null;
-            publishTimesUp();
-        }
-    }, 1000);
+function createStart(){
+    var slide = {
+        state: 'start'
+    };
+    return slide;
 }
 
 
-function publishTimesUp(){
-    console.log("Time's up!");
-    var msg = {'hintIndex': hintIndex};
-    socket.send_times_up(msg);
+function createImage(index, q){
+    var slide = {
+        state: 'image',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText
+    };
+    return slide;
 }
 
+
+function createNormalSlide(index, q, s){
+    var slide = {
+        state: 'question',
+        type: 'normal',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+        textProjector: s.textProjector,
+        textLeft: s.textLeft,
+        textRight: s.textRight,
+        time: s.time
+    };
+    return slide;
+}
+
+function createHintSlide(index, q, s, hint){
+    var slide = {
+        state: 'question',
+        type: 'hints',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+        textProjector: s.textProjector,
+        textLeft: s.textLeft,
+        time: s.time,
+        hint: hint
+    };
+    return slide;
+}
+
+function createStatementSlide(index, q, s, statement){
+    var slide = {
+        state: 'question',
+        type: 'truefalse',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+        textProjector: s.textProjector,
+        textLeft: s.textLeft,
+        time: s.time,
+        statement: statement
+    };
+    return slide;
+}
+
+function createQuizSlide(index, q, s, quiz){
+    var slide = {
+        state: 'question',
+        type: 'quiz',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+        textProjector: s.textProjector,
+        textLeft: s.textLeft,
+        time: s.time,
+        quiz: quiz
+    };
+    return slide;
+}
+
+
+function createBeforeAnswer(index, q){
+    var slide = {
+        state: 'beforeanswer',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+    };
+    return slide;
+}
+
+function createAnswer(index, q){
+    var slide = {
+        state: 'answer',
+        title: q.title,
+        image: q.image,
+        number: index,
+        timeText: q.timeText,
+        scoringText: q.scoringText,
+        maxScoringText: q.maxScoringText,
+        answer: q.answer.text
+    };
+    return slide;
+}
+
+function createEnd(){
+    var slide = {
+        state: 'end'
+    };
+    return slide;
+}

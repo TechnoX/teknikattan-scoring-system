@@ -7,11 +7,11 @@ MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
     if (err) throw err
     database = db.db('teknikattan');
 
-    
+    /*
     database.collection('questions').find().toArray(function(err, result) {
         if (err) throw err;
         fsm.set_questions(result);
-    });
+    });*/
 })
 
 // TODO: Should be a database call instead of here in source code
@@ -21,6 +21,12 @@ var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, n
 
 
 exports.replace_questions = function(new_questions, callback) {
+
+
+    var slideshow = fsm.create_slideshow(new_questions);
+    
+    console.log(slideshow);
+    
     database.collection('questions').remove({}, function(err, result) {
         if (err) return console.log(err);
         console.log('removed everything:');
@@ -29,7 +35,7 @@ exports.replace_questions = function(new_questions, callback) {
             if (err) callback(err);
             else {
                 console.log('saved data to database:');
-                console.log(result);
+                //console.log(result);
             }
         });
     });

@@ -21,7 +21,7 @@ exports.interface = function (app) {
     //app.use(multipart({uploadDir: config.tmp }));
 
     app.put('/competition/:id/questions', function(req, res){
-        console.log(req.body);
+        
         db.replace_questions(req.body, function (err) {
             if (err) res.sendStatus(500);
             else {
