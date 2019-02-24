@@ -1,48 +1,25 @@
 <article class="competitor">
   <header>
-    <h1 ng-show="state != 'end' && state != 'start'" ng-click="editable ? edit='title' : null">
+    <h1 ng-show="state != 'end' && state != 'start'">
       {{$parent.index(question)}}.
-      <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'" />
-      <span ng-show="edit!='title'">{{question.title}}</span>
+      <span>{{question.title}}</span>
     </h1>
     <img src="images/logo.png"/>
   </header>
   <main ng-controller="UploadCtrl">
-    <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
-         ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-         ngf-resize-if="$width > 1200 || $height > 1200"
-         ngf-resize="{width: 1200}" />
-    <img img-preload ng-if="!editable" ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
-    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
-    <div ng-if="!editable && state == 'question'" ng-bind-html="slide.textLeft"></div>
+    <img img-preload ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
+    <div ng-show="state == 'question'" ng-bind-html="slide.textLeft"></div>
     <div ng-show="state == 'start'"><h1>Välkomna till Teknikåttan</h1></div>
     <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
     <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
     <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
   </main>
-  <aside ng-if="editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
-  <aside ng-if="!editable && question.type == 'normal' && state == 'question' && slide.textRight != 'video'" ng-bind-html="slide.textRight"></aside>
-  <aside ng-if="!editable && question.type == 'normal' && state == 'question' && slide.textRight == 'video'">
+  <aside ng-if="question.type == 'normal' && state == 'question' && slide.textRight != 'video'" ng-bind-html="slide.textRight"></aside>
+  <aside ng-if="question.type == 'normal' && state == 'question' && slide.textRight == 'video'">
     <video controls autoplay width="100%">
       <source src="images/kylskapsfraga.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-  </aside>
-  <aside ng-show="editable && question.type != 'normal'">
-    <ol ng-show="question.type == 'hints'">
-      <li ng-repeat="hint in question.hints track by $index">
-        <label>Ledtråd {{$index + 1}}: <input type="text" ng-model="question.hints[$index]" style="width: 25em;" /></label>
-        <a ng-click="removeHint($index)">Ta bort</a>
-      </li>
-      <li><a ng-click="addHint()">Lägg till ledtråd</a></li>
-    </ol>
-    <ol ng-show="question.type == 'truefalse'">
-      <li ng-repeat="statement in question.statements track by $index">
-        <label>Påstående {{$index + 1}}: <input type="text" ng-model="question.statements[$index]" style="width: 25em;" /></label>
-        <a ng-click="removeStatement($index)">Ta bort</a>
-      </li>
-      <li><a ng-click="addStatement()">Lägg till påstående</a></li>
-    </ol>
   </aside>
   <aside ng-show="state == 'hints'">
     <ol>
@@ -55,21 +32,19 @@
     <span class="statement">{{question.statements[statementIndex]}}</span>
   </aside>
   <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
-    <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />
-    <time ng-show="slide.hasTimer && edit!='timer'" ng-click="editable ? edit='timer' : null">{{slide.time*1000 | date:'mm:ss'}}</time>
-    <time ng-show="slide.hasTimer && edit=='timer'"><input type="number" ng-model="slide.time" min="0" max="3599" ng-blur="edit='none'"></time>
+    <time ng-show="slide.hasTimer">{{slide.time*1000 | date:'mm:ss'}}</time>
     <ul>
-      <li ng-click="editable ? edit='time' : null">
+      <li>
         <label>Tid:</label>
-        <input type="text" ng-show="edit=='time'" ng-model="question.timeText" ng-blur="edit='none'" /><span ng-show="edit!='time'">{{question.timeText}}</span>
+        <span>{{question.timeText}}</span>
       </li>
-      <li ng-click="editable ? edit='scoring' : null">
+      <li>
         <label>Poäng:</label>
-        <input type="text" ng-show="edit=='scoring'" ng-model="question.scoringText" ng-blur="edit='none'" /><span ng-show="edit!='scoring'">{{question.scoringText}}</span>
+        <span>{{question.scoringText}}</span>
       </li>
-      <li ng-click="editable ? edit='maxscoring' : null">
+      <li>
         <label>Maxpoäng:</label>
-        <input type="text" ng-show="edit=='maxscoring'" ng-model="question.maxScoringText" ng-blur="edit='none'" /><span ng-show="edit!='maxscoring'">{{question.maxScoringText}}</span>
+        <span>{{question.maxScoringText}}</span>
       </li>
     </ul>
   </footer>
