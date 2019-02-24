@@ -1,47 +1,30 @@
 <article class="projector">
   <header>
-    <h1 ng-show="state != 'end' && state != 'start'">
-      {{$parent.index(question)}}.
-      <span>{{question.title}}</span>
-    </h1>
+    <h1 ng-show="view.state != 'end' && view.state != 'start'">{{view.number+1}}. {{view.title}}</h1>
     <img src="images/logo.png"/>
   </header>
-  <figure ng-show="state != 'end' && state != 'start'" ng-class="{'titleimage': state == 'image'}" ng-controller="UploadCtrl">
-    <img img-preload ng-src="{{question.image}}" />
+  <figure ng-show="view.state != 'end' && view.state != 'start'" ng-class="{'titleimage': view.state == 'image'}">
+    <img img-preload ng-src="{{view.image}}" />
   </figure>
   <main>
     
-    <div ng-if="state == 'question'" ng-bind-html="slide.textProjector"></div>
-    <div ng-show="state == 'start'"><h1>Välkomna till riksfinal i Teknikåttan</h1></div>
-    <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
-    <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
-    <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
-    <div ng-show="state == 'hints'">
+    <div ng-show="view.state == 'question'" ng-bind-html="view.textProjector"></div>
+    <div ng-show="view.state == 'start'"><h1>Välkomna till riksfinal i Teknikåttan</h1></div>
+    <div ng-show="view.state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
+    <div ng-show="view.state == 'answer'" ng-bind-html="view.answer"></div>
+    <div ng-show="view.state == 'end'"><h1>Tack för er medverkan!</h1></div>
+    <div ng-show="view.state == 'hints'">
       <ol>
-        <li class="hint" ng-repeat="hint in question.hints track by $index">
-          <span ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</span>
+        <li class="hint" ng-repeat="hint in view.hints track by $index">
+          <span>Ledtråd {{$index + 1}}: {{hint}}</span>
         </li>
       </ol>
     </div>
-    <div ng-show="state == 'statements'">
-      <span class="statement">{{question.statements[statementIndex]}}</span>
+    <div ng-show="view.state == 'statements'">
+      <span class="statement">{{view.statement}}</span>
     </div>
   </main>
-  <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
-    <time ng-show="slide.hasTimer">{{slide.time*1000 | date:'mm:ss'}}</time>
-    <ul style="display: none;">
-      <li>
-        <label>Tid:</label>
-        <span>{{question.timeText}}</span>
-      </li>
-      <li>
-        <label>Poäng:</label>
-        <span>{{question.scoringText}}</span>
-      </li>
-      <li>
-        <label>Maxpoäng:</label>
-        <span>{{question.maxScoringText}}</span>
-      </li>
-    </ul>
+  <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">
+    <time ng-show="view.time > 0">{{view.time*1000 | date:'mm:ss'}}</time>
   </footer>
 </article>

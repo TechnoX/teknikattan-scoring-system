@@ -1,50 +1,41 @@
 <article class="competitor">
   <header>
-    <h1 ng-show="state != 'end' && state != 'start'">
-      {{$parent.index(question)}}.
-      <span>{{question.title}}</span>
-    </h1>
+    <h1 ng-show="view.state != 'end' && view.state != 'start'">{{view.number+1}}. {{view.title}}</h1>
     <img src="images/logo.png"/>
   </header>
-  <main ng-controller="UploadCtrl">
-    <img img-preload ng-show="state != 'end' && state != 'start'" ng-src="{{question.image}}" />
-    <div ng-show="state == 'question'" ng-bind-html="slide.textLeft"></div>
-    <div ng-show="state == 'start'"><h1>Välkomna till Teknikåttan</h1></div>
-    <div ng-show="state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
-    <div ng-show="state == 'answer'" ng-bind-html="question.answer.text"></div>
-    <div ng-show="state == 'end'"><h1>Tack för er medverkan!</h1></div>
+  <main>
+    <img img-preload ng-show="view.state != 'end' && view.state != 'start'" ng-src="{{view.image}}" />
+    <div ng-show="view.state == 'question'" ng-bind-html="view.textLeft"></div>
+    <div ng-show="view.state == 'start'"><h1>Välkomna till Teknikåttan</h1></div>
+    <div ng-show="view.state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
+    <div ng-show="view.state == 'answer'" ng-bind-html="view.answer"></div>
+    <div ng-show="view.state == 'end'"><h1>Tack för er medverkan!</h1></div>
   </main>
-  <aside ng-if="question.type == 'normal' && state == 'question' && slide.textRight != 'video'" ng-bind-html="slide.textRight"></aside>
-  <aside ng-if="question.type == 'normal' && state == 'question' && slide.textRight == 'video'">
-    <video controls autoplay width="100%">
-      <source src="images/kylskapsfraga.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-  </aside>
-  <aside ng-show="state == 'hints'">
+  <aside ng-if="view.state == 'question'" ng-bind-html="view.textRight"></aside>
+  <aside ng-show="view.state == 'hints'">
     <ol>
-      <li class="hint" ng-repeat="hint in question.hints track by $index">
-        <span ng-show="$index <= hintIndex">Ledtråd {{$index + 1}}: {{question.hints[$index]}}</span>
+      <li class="hint" ng-repeat="hint in view.hints track by $index">
+        <span>Ledtråd {{$index + 1}}: {{hint}}</span>
       </li>
     </ol>
   </aside>
-  <aside ng-show="state == 'statements'">
-    <span class="statement">{{question.statements[statementIndex]}}</span>
+  <aside ng-show="view.state == 'statements'">
+    <span class="statement">{{view.statement}}</span>
   </aside>
-  <footer ng-show="state != 'end' && state != 'image' && state != 'start'">
-    <time ng-show="slide.hasTimer">{{slide.time*1000 | date:'mm:ss'}}</time>
+  <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">
+    <time ng-show="view.time > 0">{{view.time*1000 | date:'mm:ss'}}</time>
     <ul>
       <li>
         <label>Tid:</label>
-        <span>{{question.timeText}}</span>
+        <span>{{view.timeText}}</span>
       </li>
       <li>
         <label>Poäng:</label>
-        <span>{{question.scoringText}}</span>
+        <span>{{view.scoringText}}</span>
       </li>
       <li>
         <label>Maxpoäng:</label>
-        <span>{{question.maxScoringText}}</span>
+        <span>{{view.maxScoringText}}</span>
       </li>
     </ul>
   </footer>
