@@ -103,27 +103,27 @@ function updateState(){
     currentState = nextState;
 }
 
-exports.hasMoreSlides = function(){
+function hasMoreSlides(){
     return slideIndex + 1 < questions[questionIndex].slides.length;
 }
 
-exports.nextSlide = function(){
+function nextSlide(){
     slideIndex++;
 }
 
-exports.hasMoreHints = function(){
+function hasMoreHints(){
     return questions[questionIndex].type == 'hints' && hintIndex + 1 < questions[questionIndex].hints.length;
 }
 
-exports.nextHint = function(){
+function nextHint(){
     hintIndex++;
 }
 
-exports.hasMoreStatements = function(){
+function hasMoreStatements(){
     return questions[questionIndex].type == 'truefalse' && statementIndex + 1 < questions[questionIndex].statements.length;
 }
 
-exports.nextStatement = function(){
+function nextStatement(){
     statementIndex++;
 }
 
@@ -142,7 +142,7 @@ function gotoNextQuestion(){
 }
 
 
-exports.hasTimer = function(){
+function hasTimer(){
     return questions[questionIndex].slides[slideIndex].hasTimer;
 }
 
@@ -153,7 +153,7 @@ function stopTimer(){
 
 
 // decreaseSlideTime is not set when publishing hints or statements or similar, because we need to keep the time intact between hints
-exports.startTimer = function(decreaseSlideTime){
+function startTimer(decreaseSlideTime){
     var time = Math.round(questions[questionIndex].slides[slideIndex].time);
     if(decreaseSlideTime){
         questions[questionIndex].slides[slideIndex].time = time;
