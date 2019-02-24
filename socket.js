@@ -14,6 +14,11 @@ exports.interface = function(io) {
             console.log('user disconnected')
         });
         socket.on('next', function(msg){
+            db.increase_index(msg.competition);
+            //fsm.nextPressed();
+        });
+        socket.on('prev', function(msg){
+            db.decrease_index(msg.competition);
             //fsm.nextPressed();
         });
 

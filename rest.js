@@ -22,7 +22,7 @@ exports.interface = function (app) {
 
     app.put('/competition/:id/questions', function(req, res){
         
-        db.replace_questions(req.body, function (err) {
+        db.replace_questions(req.params.id, req.body, function (err) {
             if (err) res.sendStatus(500);
             else {
                 res.status(200).json({'success': true});
@@ -31,14 +31,60 @@ exports.interface = function (app) {
     });
 
     app.get('/competition/:id/questions', function(req, res){
-        db.get_questions(function(err, result){
+        db.get_questions(req.params.id, function(err, result){
             if (err) throw err;
             res.status(200).json(result);
         });
     });
 
-    app.get('/competition/:id/currentState', function(req, res){
-        res.status(200).json(fsm.getState());
+    app.get('/competition/:id/currentView', function(req, res){
+        db.get_index(req.params.id, function(err, index){
+            if (err) throw err;
+            db.get_slideshow(req.params.id, function(err, result){
+                if (err) throw err;
+                if(index < result.length && index >= 0){
+                    res.status(200).json(result[index]);
+                }else{
+                    console.error("Index out of bounds! " + index);
+                    res.status(500);
+                }
+            });
+            res.status(200).json(result);
+        });
+        
+    });
+
+    app.get('/competition/:id/nextView', function(req, res){
+        db.get_index(req.params.id, function(err, index){
+            if (err) throw err;
+            db.get_slideshow(req.params.id, function(err, result){
+                if (err) throw err;
+                if(index+1 < result.length){
+                    res.status(200).json(result[index+1]);
+                }else{
+                    console.error("Index out of bounds! " + (index+1));
+                    res.status(500);
+                }
+            });
+        });
+        
+    });
+
+    app.get('/competition/:id/previousView', function(req, res){
+        db.get_index(req.params.id, function(err, index){
+            if (err) throw err;
+            db.get_slideshow(req.params.id, function(err, result){
+                if (err) throw err;
+                if(index-1 >= 0){
+                    res.status(200).json(result[index-1]);
+                }else{
+                    console.error("Index out of bounds! " + (index-1));
+                    res.status(500);
+                }
+            });
+            res.status(200).json(result);
+        });
+        
     });
 
     app.post('/competition/:id/answer/:team', function(req, res){    

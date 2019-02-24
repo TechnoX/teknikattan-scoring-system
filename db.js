@@ -20,28 +20,61 @@ var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, n
     
 
 
-exports.replace_questions = function(new_questions, callback) {
-
-
-    var slideshow = fsm.create_slideshow(new_questions);
-    
-    console.log(slideshow);
-    
+exports.replace_questions = function(competition_id, new_questions, callback) {
     database.collection('questions').remove({}, function(err, result) {
-        if (err) return console.log(err);
-        console.log('removed everything:');
+        if (err) callback(err);
+        console.log('removed all questions');
         
         database.collection('questions').insertMany(new_questions, function(err, result) {
-            if (err) callback(err);
-            else {
-                console.log('saved data to database:');
-                //console.log(result);
+            if (err){
+                callback(err);
+            }else {
+                console.log('saved all questions to database');
+
+
+                var slideshow = fsm.create_slideshow(new_questions);
+
+                database.collection('slideshow').remove({}, function(err, result) {
+                    if (err) callback(err);
+                    console.log('removed all views from slideshow');                    
+                    database.collection('slideshow').insertMany(slideshow, function(err, result) {
+                        if (err){
+                            callback(err);
+                        } else {
+                            console.log('saved all views from slideshow');
+                            callback(true);
+                        }
+                    });
+                });
             }
         });
     });
 };
 
-exports.get_questions = function(callback) {
+
+exports.get_slideshow = function(competition_id, callback) {
+    database.collection('questions').find().toArray(function(err, result) {
+        callback(err, result);
+    });
+}
+
+
+var index = 0; // TODO: Should be retrieved from database
+exports.get_index = function(competition_id, callback){
+    callback(false, index);
+}
+
+exports.increase_index = function(competition_id, callback){
+    index++;
+    callback(false);
+}
+
+exports.decrease_index = function(competition_id, callback){
+    index--;
+    callback(false);
+}
+
+exports.get_questions = function(competition_id, callback) {
     database.collection('questions').find().toArray(function(err, result) {
         callback(err, result);
     });

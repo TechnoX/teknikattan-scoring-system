@@ -14,11 +14,8 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
             $scope.teams = resp.data;
             console.log("Set teams to ", $scope.teams);
         }
-    });
+    });    
     
-
-    
-
     $scope.team = {id: 1, name: "Testlag", scores: []};
     
     // If we have specified a team ID in the URL, fetch the team data from the backend
@@ -53,7 +50,7 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($sco
         console.log("answer",$scope.answer);
     });
 
-    $http.get('/competition/'+competition_id+'/currentState').then(function(resp) {
+    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
         if(!resp.data.question){
             $scope.currQuestion = null;
         }else{
