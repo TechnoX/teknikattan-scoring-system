@@ -126,7 +126,6 @@ function createImage(index, q){
 function createNormalSlide(index, q, s){
     var slide = {
         state: 'question',
-        type: 'normal',
         title: q.title,
         image: q.image,
         number: index,
@@ -143,8 +142,7 @@ function createNormalSlide(index, q, s){
 
 function createHintSlide(index, q, s, all_hints, numberOfHints){
     var slide = {
-        state: 'question',
-        type: 'hints',
+        state: 'hints',
         title: q.title,
         image: q.image,
         number: index,
@@ -161,8 +159,7 @@ function createHintSlide(index, q, s, all_hints, numberOfHints){
 
 function createStatementSlide(index, q, s, statement){
     var slide = {
-        state: 'question',
-        type: 'truefalse',
+        state: 'statements',
         title: q.title,
         image: q.image,
         number: index,
@@ -179,8 +176,7 @@ function createStatementSlide(index, q, s, statement){
 
 function createQuizSlide(index, q, s, quiz){
     var slide = {
-        state: 'question',
-        type: 'quiz',
+        state: 'quiz',
         title: q.title,
         image: q.image,
         number: index,
