@@ -402,3 +402,76 @@ article > footer > section{
 .management table{
     margin-bottom: 2em;
 }
+
+
+
+button#prev, button#next{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+button#prev{
+    position: fixed;
+    left: 2%;
+    top: 50%;
+}
+button#next{
+    position: fixed;
+    right: 2%;
+    top: 50%;
+}
+
+#currProj article, #currComp article{
+    font-size: 0.3vw;    
+}
+#prevProj article, #nextProj article, #prevComp article, #nextComp article{
+    font-size: 0.15vw;
+}
+#currProj, #currComp{
+    position: fixed;
+    left: 50%;
+    width: 40vw;
+    height: 22.5vw;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+}
+
+
+#prevProj, #nextProj, #prevComp, #nextComp{
+    position: fixed;
+    width: 20vw;
+    height: 11.25vw;
+    transform: translate(0%, -50%);
+    border: 1px solid black;
+}
+#currProj{
+    top: 25%;
+}
+#currComp{
+    top: 75%;
+}
+
+#prevProj{
+    left: 5%;
+    top: 25%;
+}
+#nextProj{
+    right: 5%;
+    top: 25%;
+}
+#prevComp{
+    left: 5%;
+    top: 75%;
+}
+#nextComp{
+    right: 5%;
+    top: 75%;
+}
