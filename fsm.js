@@ -44,7 +44,7 @@ exports.create_slideshow = function(questions){
             break;
         case "hints":
             for(let i = 0; i < question.hints.length; i++){
-                slideshow.push(createHintSlide(questionIndex, question, question.slides[0], question.hints[i]));
+                slideshow.push(createHintSlide(questionIndex, question, question.slides[0], question.hints, i+1));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -141,7 +141,7 @@ function createNormalSlide(index, q, s){
     return slide;
 }
 
-function createHintSlide(index, q, s, hint){
+function createHintSlide(index, q, s, all_hints, numberOfHints){
     var slide = {
         state: 'question',
         type: 'hints',
@@ -154,7 +154,7 @@ function createHintSlide(index, q, s, hint){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         time: s.time,
-        hint: hint
+        hints: all_hints.slice(0, numberOfHints)
     };
     return slide;
 }
