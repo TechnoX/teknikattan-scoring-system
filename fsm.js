@@ -12,25 +12,31 @@ var startedTimer = false;
 //var nextState = 'showImage';
 var currentTimer; // The current timer that was started by setInterval
 
+
+// Used from db to initialize the questions when database connection is established
 exports.set_questions = function(q){
     questions = q;
 }
 
+// Used from rest when saving and retrieving the answers for a specific team and (current) question. 
 exports.get_question_index = function(){
     return questionIndex;
 }
 
+// Used from socket, to notify the FSM that a new user is connected. Not sure if it is needed anymore... But should not remove it until I'm sure. 
 exports.user_connected = function(){
     if(currentTimer == null && startedTimer){
         publishTimesUp();
     }
 }
 
+// Used from socket to notify FSM when someone pressed the next button
 exports.nextPressed = function(){
     updateState();
     socket.change_state(exports.getState())
 }
 
+// Used from rest to send the current state to the browser (when loading page for example). 
 exports.getState = function(){
     console.log("---------------------");
     console.log("State: " + currentState);
