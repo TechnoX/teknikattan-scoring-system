@@ -49,9 +49,7 @@ exports.interface = function (app) {
                     res.status(500);
                 }
             });
-            res.status(200).json(result);
         });
-        
     });
 
     app.get('/competition/:id/nextView', function(req, res){
@@ -67,7 +65,6 @@ exports.interface = function (app) {
                 }
             });
         });
-        
     });
 
     app.get('/competition/:id/previousView', function(req, res){
@@ -82,9 +79,7 @@ exports.interface = function (app) {
                     res.status(500);
                 }
             });
-            res.status(200).json(result);
         });
-        
     });
 
     app.post('/competition/:id/answer/:team', function(req, res){    
