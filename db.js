@@ -53,7 +53,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
 
 
 exports.get_slideshow = function(competition_id, callback) {
-    database.collection('questions').find().toArray(function(err, result) {
+    database.collection('slideshow').find().toArray(function(err, result) {
         callback(err, result);
     });
 }
