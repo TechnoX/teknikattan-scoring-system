@@ -1,14 +1,14 @@
 
 
-<projector view="prevView" id="prevProj"></projector>
+<projector view="prevView" id="prevProj" ng-if="currView.state != 'start'"></projector>
 <projector view="currView" id="currProj"></projector>
-<projector view="nextView" id="nextProj"></projector>
+<projector view="nextView" id="nextProj" ng-if="currView.state != 'end'"></projector>
 
 
-<button size="400" ng-click="next()" id="next">Next slide &raquo;</button>
-<button size="400" ng-click="previous()" id="prev">&laquo; Previous slide</button>
+<button size="400" ng-click="next()" id="next" ng-disabled="currView.state == 'end'">Next slide &raquo;</button>
+<button size="400" ng-click="previous()" id="prev" ng-disabled="currView.state == 'start'">&laquo; Previous slide</button>
 
-<competitor view="prevView" id="prevComp"></competitor>
+<competitor view="prevView" id="prevComp" ng-if="currView.state != 'start'"></competitor>
 <competitor view="currView" id="currComp"></competitor>
-<competitor view="nextView" id="nextComp"></competitor>
+<competitor view="nextView" id="nextComp" ng-if="currView.state != 'end'"></competitor>
 

@@ -418,6 +418,13 @@ button#prev, button#next{
     cursor: pointer;
     border-radius: 8px;
 }
+
+button#prev:disabled, button#next:disabled{
+                          background-color: #dddddd;
+                          color: black;
+                          cursor: not-allowed;
+}
+
 button#prev{
     position: fixed;
     left: 2%;
