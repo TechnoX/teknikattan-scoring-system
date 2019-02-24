@@ -1,4 +1,5 @@
-app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, $uibModal, $http) {
+app.controller('editorCtrl', ['$scope', '$uibModal', '$http', '$routeParams', function ($scope, $uibModal, $http, $routeParams) {
+    var competition_id = $routeParams.id;
     
     $scope.open = function () {
         var modalInstance = $uibModal.open({
@@ -25,7 +26,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
     $scope.currQuestion = null;
     $scope.currSlide = null;
 
-    $http.get('/questions').then(function(resp) {
+    $http.get('/competition/'+competition_id+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         if($scope.questions.length > 0){
             $scope.currQuestion = $scope.questions[0];
@@ -37,7 +38,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', function ($scope, 
         if(!$scope.correct()){
             return false;
         }
-        $http.put('/questions', $scope.questions).then(function(res){
+        $http.put('/competition/'+competition_id+'/questions', $scope.questions).then(function(res){
             alert("Allting sparades korrekt!");
             console.log(res);
         }, function(res){
