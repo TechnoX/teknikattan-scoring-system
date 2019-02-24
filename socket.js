@@ -14,12 +14,24 @@ exports.interface = function(io) {
             console.log('user disconnected')
         });
         socket.on('next', function(msg){
-            db.increase_index(msg.competition);
-            //fsm.nextPressed();
+            console.log("Next pressed!");
+            db.increase_index(msg.competition, function(err){
+                if(err){
+                    console.error(err);
+                }else{
+                    socket.emit('view_changed', msg.competition);
+                }
+            });
         });
         socket.on('prev', function(msg){
-            db.decrease_index(msg.competition);
-            //fsm.nextPressed();
+            console.log("Previous pressed!");
+            db.decrease_index(msg.competition, function(err){
+                if(err){
+                    console.error(err);
+                }else{
+                    socket.emit('view_changed', msg.competition);
+                }
+            });
         });
 
     });
