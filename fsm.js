@@ -84,12 +84,10 @@ exports.create_slideshow = function(questions){
             questionIndex++;
             currentState = afterSlides(questionIndex, questions);
             break;
-        case "end":
-            slideshow.push(createEnd());
-            break;
         }
     } while (currentState != "end");
     
+    slideshow.push(createEnd());
     return slideshow;
 }
 
