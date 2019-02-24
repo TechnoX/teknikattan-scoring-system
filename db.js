@@ -42,7 +42,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
                             callback(err);
                         } else {
                             console.log('saved all views from slideshow');
-                            callback(true);
+                            callback(false);
                         }
                     });
                 });
