@@ -19,27 +19,27 @@ exports.create_slideshow = function(questions){
             break;
         case "image":
             slideshow.push(createImage(questionIndex, question));
-            if(question.type == "normal"){
-                currentState = "slides";
-            }else if(question.type == "truefalse"){
-                currentState = "statements";
-            }else if(question.type == "hints"){
-                currentState = "hints";
-            }else if(question.type == "quiz"){
-                currentState = "quiz";
-            }else{
-                console.error("Missing question type in FSM")
-            }
+            currentState = "slides";
             break;
         case "slides":
             for(let i = 0; i < question.slides.length; i++){
                 slideshow.push(createNormalSlide(questionIndex, question, question.slides[i]));
             }
-            if(question.answer.show){
-                currentState = "before answer";
+            if(question.type == "truefalse"){
+                currentState = "statements";
+            }else if(question.type == "hints"){
+                currentState = "hints";
+            }else if(question.type == "quiz"){
+                currentState = "quiz";
+            }else if(question.type == "normal"){
+                if(question.answer.show){
+                    currentState = "before answer";
+                }else{
+                    questionIndex++;
+                    currentState = afterSlides(questionIndex, questions);
+                }
             }else{
-                questionIndex++;
-                currentState = afterSlides(questionIndex, questions);
+                console.error("Missing question type in FSM")
             }
             break;
         case "hints":
