@@ -1,6 +1,6 @@
 <div id="editor">
   <section>
-    <projector question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></projector>
+    <edit_projector question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></edit_projector>
     <form>
       <h3>Frågetyp:</h3>
       <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
@@ -9,7 +9,7 @@
       <button ng-show="currQuestion.type == 'normal'" ng-disabled="!currSlide" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
       <button type="button" class="btn btn-default" ng-click="save()">Spara allt</button>
     </form>
-    <competitor question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></competitor>
+    <edit_competitor question="currQuestion" slide="currSlide" editable="currSlide?editOptions:false"></edit_competitor>
   </section>
   
   <section id="add-slide">
@@ -27,8 +27,8 @@
     <ol>
       <li ng-repeat="s in q.slides">
         <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(q,s)"></i>
-        <projector slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></projector>
-        <competitor slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></competitor>
+        <edit_projector slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_projector>
+        <edit_competitor slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_competitor>
       </li>
     </ol>
   </li>

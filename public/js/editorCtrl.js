@@ -1,3 +1,49 @@
+
+app.directive("editProjector", function(){
+    return {
+        templateUrl: "/template/editor_projector.html",
+        scope: {
+            slide: '=',
+            question: '=',
+            editable: '=',
+            state: '=',
+            hintIndex: '@',
+            statementIndex: '@'
+        },
+        restrict: "E"
+    }
+});
+
+app.directive("editCompetitor", function() {
+    return {
+        templateUrl: "/template/editor_competitor.html",
+        restrict: "E",
+        scope: {
+            slide: '=',
+            question: '=',
+            editable: '=',
+            state: '=',
+            hintIndex: '@',
+            statementIndex: '@'
+        },
+        link: function(scope) {
+            scope.removeHint = function(index){
+                scope.question.hints.splice(index, 1);
+            }
+            scope.removeStatement = function(index){
+                scope.question.statements.splice(index, 1);
+            }
+            scope.addHint = function(){
+                scope.question.hints.push('');
+            }
+            scope.addStatement = function(){
+                scope.question.statements.push('');
+            }
+        }
+    }
+});
+
+
 app.controller('editorCtrl', ['$scope', '$uibModal', '$http', '$routeParams', function ($scope, $uibModal, $http, $routeParams) {
     var competition_id = $routeParams.id;
     
