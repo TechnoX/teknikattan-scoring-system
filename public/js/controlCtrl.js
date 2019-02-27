@@ -25,6 +25,16 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         console.log("Times up!");
         audio.play();
     });
+    socket.on('time', function(msg){
+        console.log("Got new time!",msg);
+        // Not affecting this page
+        if(msg.competition !== competition_id)
+            return;
+        console.log("Pass check");
+        $scope.$applyAsync(function () {
+            $scope.currView.time = msg.time;
+        });
+    });
 
     
     socket.on('view_changed', function(msg){
