@@ -135,6 +135,7 @@ function createNormalSlide(index, q, s){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         textRight: s.textRight,
+        hasTimer: s.hasTimer,
         time: s.time
     };
     return slide;
@@ -152,6 +153,7 @@ function createHintSlide(index, q, s, all_hints, numberOfHints){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         time: s.time,
+        hasTimer: s.hasTimer,
         hints: all_hints.slice(0, numberOfHints)
     };
     return slide;
@@ -169,6 +171,7 @@ function createStatementSlide(index, q, s, statement){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         time: s.time,
+        hasTimer: s.hasTimer,
         statement: statement
     };
     return slide;
@@ -186,6 +189,7 @@ function createQuizSlide(index, q, s, quiz){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         time: s.time,
+        hasTimer: s.hasTimer,
         quiz: quiz
     };
     return slide;

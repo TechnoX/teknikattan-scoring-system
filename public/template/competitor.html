@@ -23,7 +23,7 @@
     <span class="statement">{{view.statement}}</span>
   </aside>
   <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">
-    <time ng-show="view.time > 0">{{view.time*1000 | date:'mm:ss'}}</time>
+    <time ng-show="view.hasTimer">{{view.time*1000 | date:'mm:ss'}}</time>
     <ul>
       <li>
         <label>Tid:</label>
