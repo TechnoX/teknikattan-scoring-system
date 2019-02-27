@@ -59,6 +59,21 @@ exports.get_slideshow = function(competition_id, callback) {
 }
 
 
+exports.get_slide = function(competition_id, offset = 0, callback){ 
+    exports.get_index(competition_id, function(err, index){
+        if (err) throw err;
+        exports.get_slideshow(competition_id, function(err, result){
+            if (err) throw err;
+            if(index+offset < result.length && index+offset >= 0){
+                callback(false, result[index+offset]);
+            }else{
+                callback("Index out of bounds! Index: " + (index+offset));
+            }
+        });
+    });
+}
+
+
 var index = 0; // TODO: Should be retrieved from database
 exports.get_index = function(competition_id, callback){
     callback(false, index);

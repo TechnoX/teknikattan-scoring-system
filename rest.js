@@ -38,47 +38,35 @@ exports.interface = function (app) {
     });
 
     app.get('/competition/:id/currentView', function(req, res){
-        db.get_index(req.params.id, function(err, index){
-            if (err) throw err;
-            db.get_slideshow(req.params.id, function(err, result){
-                if (err) throw err;
-                if(index < result.length && index >= 0){
-                    res.status(200).json(result[index]);
-                }else{
-                    console.error("Index out of bounds! " + index);
-                    res.status(500);
-                }
-            });
+        db.get_slide(req.params.id, 0, function(err, slide){
+            if (err){
+                console.error(err);
+                res.status(500).send(err);
+            }else{
+                res.status(200).json(slide);
+            }
         });
     });
 
     app.get('/competition/:id/nextView', function(req, res){
-        db.get_index(req.params.id, function(err, index){
-            if (err) throw err;
-            db.get_slideshow(req.params.id, function(err, result){
-                if (err) throw err;
-                if(index+1 < result.length){
-                    res.status(200).json(result[index+1]);
-                }else{
-                    console.error("Index out of bounds! " + (index+1));
-                    res.status(500).send("Index out of bounds!");
-                }
-            });
+        db.get_slide(req.params.id, 1, function(err, slide){
+            if (err){
+                console.error(err);
+                res.status(500).send(err);
+            }else{
+                res.status(200).json(slide);
+            }
         });
     });
 
     app.get('/competition/:id/previousView', function(req, res){
-        db.get_index(req.params.id, function(err, index){
-            if (err) throw err;
-            db.get_slideshow(req.params.id, function(err, result){
-                if (err) throw err;
-                if(index-1 >= 0){
-                    res.status(200).json(result[index-1]);
-                }else{
-                    console.error("Index out of bounds! " + (index-1));
-                    res.status(500).send("Index out of bounds!");
-                }
-            });
+        db.get_slide(req.params.id, -1, function(err, slide){
+            if (err){
+                console.error(err);
+                res.status(500).send(err);
+            }else{
+                res.status(200).json(slide);
+            }
         });
     });
 
