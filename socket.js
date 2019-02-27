@@ -82,6 +82,7 @@ function previousPressed(competition_id){
             if(slide.hasTimer && timers[competition_id] && timers[competition_id].started){
                 console.log("Had timer started, reset it");
                 timers[competition_id].stop();
+                timers[competition_id].setDuration(slide.time);
                 timers[competition_id].reset();
             }else{
                 console.log("Goto previous slide");
@@ -111,6 +112,10 @@ function nextPressed(competition_id){
                 console.log("Start timer");
             }else{
                 console.log("Goto new slide");
+                // Stop timer when moving to next slide, if it is started. 
+                if(timers[competition_id] && timers[competition_id].started){
+                    timers[competition_id].stop();
+                }
                 gotoNextSlide(competition_id);
             }
         }
