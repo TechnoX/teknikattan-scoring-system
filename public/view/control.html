@@ -5,8 +5,15 @@
 <projector view="nextView" id="nextProj" ng-if="currView.state != 'end'"></projector>
 
 
-<button size="400" ng-click="next()" id="next" ng-disabled="currView.state == 'end'">Next slide &raquo;</button>
-<button size="400" ng-click="previous()" id="prev" ng-disabled="currView.state == 'start'">&laquo; Previous slide</button>
+<button size="400" ng-click="next()" id="next" ng-disabled="currView.state == 'end'">
+  <span ng-show="!timerStarted && currView.hasTimer">Start timer &#x231B;</span>
+  <span ng-show="timerStarted || !currView.hasTimer">Next slide &raquo;</span>
+</button>
+<button size="400" ng-click="previous()" id="prev" ng-disabled="currView.state == 'start'">
+  <span ng-show="timerStarted">Reset timer &#x1F6D1;</span>
+  <span ng-show="!timerStarted">&laquo; Previous slide</span>
+</button>
+
 
 <competitor view="prevView" id="prevComp" ng-if="currView.state != 'start'"></competitor>
 <competitor view="currView" id="currComp"></competitor>

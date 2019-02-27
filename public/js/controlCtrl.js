@@ -1,6 +1,7 @@
 app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     
     var socket = io();
+    $scope.timerStarted = false;
     
     var competition_id = $routeParams.id;
     $scope.next = function(){
@@ -11,6 +12,8 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
     }
     $scope.previous = function(){
         var msg = {};
+        $scope.timerStarted = false;
+        console.log("TimerStarted = false");
         msg.competition = competition_id;
         socket.emit('prev', msg);
         return false;
@@ -21,17 +24,20 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         // Not affecting this page
         if(msg.competition != competition_id)
             return;
-        
         console.log("Times up!");
         audio.play();
     });
     socket.on('time', function(msg){
-        console.log("Got new time!",msg);
         // Not affecting this page
         if(msg.competition !== competition_id)
             return;
-        console.log("Pass check");
+        console.log(msg.time, $scope.currView.time);
+
         $scope.$applyAsync(function () {
+            if(msg.time != $scope.currView.time){
+                console.log("Timer started");
+                $scope.timerStarted = true;
+            }
             $scope.currView.time = msg.time;
         });
     });
@@ -42,7 +48,7 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         if(msg !== competition_id){
             return;
         }
-        
+        $scope.timerStarted = false;
         $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.currView = resp.data;
         });
