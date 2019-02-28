@@ -135,7 +135,7 @@ function createNormalSlide(index, q, s){
         textProjector: s.textProjector,
         textLeft: s.textLeft,
         textRight: s.textRight,
-        hasTimer: s.hasTimer,
+        hasTimer: s.hasTimer && q.type == 'normal',
         time: s.time
     };
     return slide;
