@@ -26,7 +26,6 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         // Not affecting this page
         if(msg.competition != competition_id)
             return;
-        $scope.timerStarted = false;
         console.log("Times up!");
         audio.play();
     });
