@@ -48,7 +48,7 @@ app.config(function($routeProvider, $locationProvider) {
   })
   .when('/competition/:id/answers/:team', {
     templateUrl: 'view/answers.html',
-    controller: 'questionCtrl',
+    controller: 'answerCtrl',
   })
   .when('/competition/:id/audience', {
     templateUrl: 'view/answers.html',

@@ -1,4 +1,6 @@
-app.controller('questionCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+    var competition_id = $routeParams.id;
+
     // On judge view we load several IDs
     $scope.teams = [];
     $http.get('/competition/'+competition_id+'/teams').then(function(resp) {

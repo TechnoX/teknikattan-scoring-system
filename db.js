@@ -74,6 +74,7 @@ exports.get_slide = function(competition_id, offset = 0, callback){
 }
 
 
+
 var index = 0; // TODO: Should be retrieved from database
 exports.get_index = function(competition_id, callback){
     callback(false, index);
