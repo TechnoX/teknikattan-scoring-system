@@ -35,10 +35,10 @@ class Timer {
         this.reset()
     }
     stop() {
-        clearInterval(this.timer);        
-        this.started = false;
+        clearInterval(this.timer);
     }
     reset() {
+        this.started = false;
         this.end = new Date();
         this.end.setSeconds(this.end.getSeconds() + this.duration);
         var msg = {};
@@ -83,7 +83,6 @@ function previousPressed(competition_id){
                 console.log("Had timer started, reset it");
                 timers[competition_id].stop();
                 timers[competition_id].setDuration(slide.time);
-                timers[competition_id].reset();
             }else{
                 console.log("Goto previous slide");
                 gotoPrevSlide(competition_id);
@@ -115,6 +114,7 @@ function nextPressed(competition_id){
                 // Stop timer when moving to next slide, if it is started. 
                 if(timers[competition_id] && timers[competition_id].started){
                     timers[competition_id].stop();
+                    timers[competition_id].started = false;
                 }
                 gotoNextSlide(competition_id);
             }
