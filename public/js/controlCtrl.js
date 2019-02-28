@@ -9,14 +9,12 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         msg.competition = competition_id;
         socket.emit('next', msg);
         if($scope.currView.hasTimer && !$scope.timerStarted){
-            console.log("timerstarted = true");
             $scope.timerStarted = true;
         }
     }
     $scope.previous = function(){
         var msg = {};
         $scope.timerStarted = false;
-        console.log("TimerStarted = false");
         msg.competition = competition_id;
         socket.emit('prev', msg);
     }
@@ -33,7 +31,6 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         // Not affecting this page
         if(msg.competition !== competition_id)
             return;
-        console.log(msg.time, $scope.currView.time);
 
         $scope.$applyAsync(function () {
             $scope.currView.time = msg.time;

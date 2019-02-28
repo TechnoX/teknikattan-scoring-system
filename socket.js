@@ -6,8 +6,6 @@ var timers = {};
 
 class Timer {
     constructor(competition_id, duration) {
-        console.log("Inside constructor");
-        console.log(competition_id, duration);
         this.competition_id = competition_id;
         this.duration = duration;
         this.end = new Date();
@@ -97,15 +95,10 @@ function nextPressed(competition_id){
             console.error(err);
         }else{
             if(slide.hasTimer && (!timers[competition_id] || !timers[competition_id].started)){
-                console.log("Slide has timer");
                 if(!timers[competition_id]){
-                    console.log("Outside");
-                    console.log(competition_id, slide.time);
                     timers[competition_id] = new Timer(competition_id, slide.time);
-                    console.log("Create new timer");
                 }else{
                     timers[competition_id].setDuration(slide.time);
-                    console.log("Update new duration");
                 }
                 timers[competition_id].start();
                 console.log("Start timer");
