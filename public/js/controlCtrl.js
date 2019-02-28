@@ -8,7 +8,10 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         var msg = {}
         msg.competition = competition_id;
         socket.emit('next', msg);
-        return false;
+        if($scope.currView.hasTimer && !$scope.timerStarted){
+            console.log("timerstarted = true");
+            $scope.timerStarted = true;
+        }
     }
     $scope.previous = function(){
         var msg = {};
@@ -16,7 +19,6 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         console.log("TimerStarted = false");
         msg.competition = competition_id;
         socket.emit('prev', msg);
-        return false;
     }
     
     var audio = new Audio('/doorbell.wav');
@@ -34,10 +36,6 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
         console.log(msg.time, $scope.currView.time);
 
         $scope.$applyAsync(function () {
-            if(msg.time != $scope.currView.time){
-                console.log("Timer started");
-                $scope.timerStarted = true;
-            }
             $scope.currView.time = msg.time;
         });
     });

@@ -404,8 +404,7 @@ article > footer > section{
 }
 
 
-
-button#prev, button#next{
+.change-slide-button{
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -419,10 +418,13 @@ button#prev, button#next{
     border-radius: 8px;
 }
 
-button#prev:disabled, button#next:disabled{
-                          background-color: #dddddd;
-                          color: black;
-                          cursor: not-allowed;
+.change-slide-button:disabled{
+    background-color: #dddddd;
+    color: black;
+    cursor: not-allowed;
+}
+.change-slide-button.timer-color{
+    background-color: #c3c322;
 }
 
 button#prev{
@@ -435,6 +437,7 @@ button#next{
     right: 2%;
     top: 50%;
 }
+
 
 #currProj article, #currComp article{
     font-size: 0.3vw;    
