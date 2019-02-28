@@ -92,11 +92,14 @@ exports.interface = function (app) {
             res.status(400).json();
             return;
         }
-        db.get_answer(teamId, fsm.get_question_index(req.params.id), function(err, result){
+        db.get_slide(req.params.id, 0, function(err, slide){
             if (err) throw err;
-            console.log("Got response from answer database: ");
-            console.log(result);
-            res.status(200).json(result[0]);
+            db.get_answer(teamId, slide.number, function(err, result){
+                if (err) throw err;
+                console.log("Got response from answer database: ");
+                console.log(result);
+                res.status(200).json(result[0]);
+            });
         });
     });
 
