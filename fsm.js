@@ -23,7 +23,7 @@ exports.create_slideshow = function(questions){
             break;
         case "slides":
             for(let i = 0; i < question.slides.length; i++){
-                slideshow.push(createNormalSlide(questionIndex, question, question.slides[i]));
+                slideshow.push(createNormalSlide(questionIndex, question, question.slides[i], i));
             }
             if(question.type == "truefalse"){
                 currentState = "statements";
@@ -55,7 +55,7 @@ exports.create_slideshow = function(questions){
             break;
         case "statements":
             for(let i = 0; i < question.statements.length; i++){
-                slideshow.push(createStatementSlide(questionIndex, question, question.slides[0], question.statements[i]));
+                slideshow.push(createStatementSlide(questionIndex, question, question.slides[0], question.statements[i], i));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -66,7 +66,7 @@ exports.create_slideshow = function(questions){
             break;
         case "quiz":
             for(let q = 0; i < question.quiz.length; i++){
-                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz[i]));
+                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz[i], i));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -123,12 +123,13 @@ function createImage(index, q){
 }
 
 
-function createNormalSlide(index, q, s){
+function createNormalSlide(index, q, s, slideIndex){
     var slide = {
         state: 'question',
         title: q.title,
         image: q.image,
         number: index,
+        slideIndex: slideIndex, // For answer fields that should only be visible on certain slides
         timeText: q.timeText,
         scoringText: q.scoringText,
         maxScoringText: q.maxScoringText,
@@ -154,12 +155,14 @@ function createHintSlide(index, q, s, all_hints, numberOfHints){
         textLeft: s.textLeft,
         time: s.time,
         hasTimer: s.hasTimer,
-        hints: all_hints.slice(0, numberOfHints)
+        hints: all_hints.slice(0, numberOfHints),
+        numberOfHints: all_hints.length,
+        answer: q.answer
     };
     return slide;
 }
 
-function createStatementSlide(index, q, s, statement){
+function createStatementSlide(index, q, s, statement, statementIndex){
     var slide = {
         state: 'statements',
         title: q.title,
@@ -172,12 +175,13 @@ function createStatementSlide(index, q, s, statement){
         textLeft: s.textLeft,
         time: s.time,
         hasTimer: s.hasTimer,
-        statement: statement
+        statement: statement,
+        statementIndex: statementIndex,
     };
     return slide;
 }
 
-function createQuizSlide(index, q, s, quiz){
+function createQuizSlide(index, q, s, quiz, quizIndex){
     var slide = {
         state: 'quiz',
         title: q.title,
@@ -190,7 +194,8 @@ function createQuizSlide(index, q, s, quiz){
         textLeft: s.textLeft,
         time: s.time,
         hasTimer: s.hasTimer,
-        quiz: quiz
+        quiz: quiz,
+        quizIndex: quizIndex,
     };
     return slide;
 }
