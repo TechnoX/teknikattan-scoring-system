@@ -137,7 +137,8 @@ function createNormalSlide(index, q, s, slideIndex){
         textLeft: s.textLeft,
         textRight: s.textRight,
         hasTimer: s.hasTimer && q.type == 'normal',
-        time: s.time
+        time: s.time,
+        answer: q.answer
     };
     return slide;
 }
@@ -177,6 +178,7 @@ function createStatementSlide(index, q, s, statement, statementIndex){
         hasTimer: s.hasTimer,
         statement: statement,
         statementIndex: statementIndex,
+        answer: q.answer
     };
     return slide;
 }
@@ -196,6 +198,7 @@ function createQuizSlide(index, q, s, quiz, quizIndex){
         hasTimer: s.hasTimer,
         quiz: quiz,
         quizIndex: quizIndex,
+        answer: q.answer
     };
     return slide;
 }
@@ -210,6 +213,7 @@ function createBeforeAnswer(index, q){
         timeText: q.timeText,
         scoringText: q.scoringText,
         maxScoringText: q.maxScoringText,
+        answer: q.answer
     };
     return slide;
 }
@@ -223,7 +227,7 @@ function createAnswer(index, q){
         timeText: q.timeText,
         scoringText: q.scoringText,
         maxScoringText: q.maxScoringText,
-        answer: q.answer.text
+        answer: q.answer
     };
     return slide;
 }
