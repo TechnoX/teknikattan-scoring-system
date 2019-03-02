@@ -24,7 +24,7 @@
             </li>
           </ol>
         </main>
-        <main ng-show="view.state == 'quiz'">{{view.quiz}}
+        <main ng-show="view.state == 'quiz'">
           <ol>
             <li ng-repeat="q in view.quiz track by $index">
               Quizfråga {{$index + 1}}: {{team.answer[$index]}}
