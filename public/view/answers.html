@@ -1,52 +1,52 @@
 <article class="answer">
   <header>
-    <h1 ng-show="state != 'end' && state != 'start'">{{index()}}. {{currQuestion.title}}</h1>
+    <h1 ng-show="view.state != 'end' && view.state != 'start'">{{view.number+1}}. {{view.title}}</h1>
     <img src="images/logo.png"/>
   </header>
-  <img src="images/lock.png" id="lock" ng-show="timesUp && state != 'hints'"/>
-  <main ng-show="state == 'start'">
+  <img src="images/lock.png" id="lock" ng-show="timesUp && view.state != 'hints'"/>
+  <main ng-show="view.state == 'start'">
     <h1>Dags för riksfinal i Teknikåttan!</h1>
     <h2>Stort lycka till {{team.name}}!</h2>
   </main>
-  <main ng-show="state == 'end'">
+  <main ng-show="view.state == 'end'">
     <h1>Tack för er medverkan!</h1>
   </main>
-  <main ng-show="currQuestion.type == 'hints'">
+  <main ng-show="view.state == 'hints'">
     <ol>
-      <li ng-repeat="hint in currQuestion.hints track by $index">
-        <label>Ledtråd {{$index + 1}}: <input type="text" class="hintinput" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == hintIndex" ng-disabled="$index < hintIndex || (timesUp && $index == hintIndex)" /></label>
+      <li ng-repeat="x in [].constructor(view.numberOfHints) track by $index">
+        <label>Ledtråd {{$index + 1}}: <input type="text" class="hintinput" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == view.hints.length-1" ng-disabled="$index < view.hints.length-1 || (timesUp && $index == view.hints.length-1)" /></label>
       </li>
     </ol>
   </main>
-  <main ng-show="currQuestion.type == 'truefalse'">
+  <main ng-show="view.state == 'statements'">
     <table id="truefalse">
       <tr>
-        <td id="true" ng-click="!timesUp ? answer[statementIndex] = true : null" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
-        <td id="false" ng-click="!timesUp ? answer[statementIndex] = false : null" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
+        <td id="true" ng-click="!timesUp ? answer[view.statementIndex] = true : null" ng-class="{'marked': answer[view.statementIndex] === true}">Sant</td>
+        <td id="false" ng-click="!timesUp ? answer[view.statementIndex] = false : null" ng-class="{'marked': answer[view.statementIndex] === false}">Falskt</td>
       </tr>
     </table>
   </main>
-  <main ng-show="currQuestion.type == 'normal'">
-    <div ng-show="currQuestion.answer.type == 'practical'">
+  <main ng-show="view.state == 'question'">
+    <div ng-show="view.answer.type == 'practical'">
       <p>Här får ni lägga undan paddan och jobba praktiskt.</p>
     </div>
-    <div ng-show="currQuestion.answer.type == 'multi'">
+    <div ng-show="view.answer.type == 'multi'">
       <ol type='a'>
-        <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index" ng-show="sq.show[slideIndex]">
-          <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp && sq.show[slideIndex]" /></label>
-          <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp && sq.show[slideIndex]" /></label>
+        <li ng-repeat="sq in view.answer.subQuestions track by $index" ng-show="sq.show[view.slideIndex]">
+          <label ng-if="sq.type == 'text'">Svar: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
+          <label ng-if="sq.type == 'number'">Svar: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
           <section ng-if="sq.type == 'select'">
             <label>Välj en <span ng-show="sq.multiple">eller flera</span> av följande: </label><br /><br /><br />
             <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
-              <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
-              <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[slideIndex]" />
+              <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
+              <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
               <span class="checkmark" ng-bind-html="alt"></span>
             </label>
           </section>
         </li>
       </ol>
     </div>
-    <div ng-show="currQuestion.answer.type == 'pairing'">
+    <div ng-show="view.answer.type == 'pairing'">
       <p>Para ihop ord med ord.</p>
     </div>
   </main>

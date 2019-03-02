@@ -64,43 +64,21 @@ app.directive('setFocus', function($timeout, $parse) {
 
 
 app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+    var socket = io();
     var competition_id = $routeParams.id;
-
-    // On judge view we load several IDs
-    $scope.teams = [];
-    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
-        if(resp.data){
-            $scope.teams = resp.data;
-            console.log("Set teams to ", $scope.teams);
-        }
-    });    
+    var team_id = $routeParams.team;
+    $scope.timesUp = false;
     
-    $scope.team = {id: 1, name: "Testlag", scores: []};
-    
-    // If we have specified a team ID in the URL, fetch the team data from the backend
-    if($routeParams.team){
-        $scope.team.id = $routeParams.team;
-        // Get the team matching the ID given in the url bar
-        $http.get('/team/'+$routeParams.team).then(function(resp) {
-            if(resp.data){
-                $scope.team = resp.data;
-                console.log("Set team to ", $scope.team);
-            }
-        });
-    }
-    $scope.$watch('answer', function(newValue, oldValue, scope) {
-        // If the new value is not updated, just re-assigned, do not save it
-        if(newValue === undefined || newValue.length == 0)
-            return;
-        $http.post("/competition/"+competition_id+"/answer/"+$scope.team.id, {'team': $scope.team.id, 'question': _index, 'answers': newValue}).then(function(res) {
-            // Do nothing
-        }, function(res){
-            alert("Något gick fel när svaret skulle sparas!");
-            console.log(res);
-        });
-    }, true);
+    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+        $scope.view = resp.data;
+        console.log(resp.data);
+    });
+    $http.get('/competition/'+competition_id+'/timesup').then(function(resp) {
+        $scope.timesUp = resp.data;
+        console.log(resp.data);
+    });
 
-    $http.get('/competition/'+competition_id+'/answer/'+$scope.team.id).then(function(resp) {
+    $http.get('/competition/'+competition_id+'/answer/'+team_id).then(function(resp) {
         if(resp.data.answers){
             $scope.answer = resp.data.answers;
         }else{
@@ -108,5 +86,64 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         }
         console.log("answer",$scope.answer);
     });
+
+    
+    socket.on('view_changed', function(msg){
+        // Not affecting this page
+        if(msg !== competition_id){
+            return;
+        }
+        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+            $scope.view = resp.data;
+            console.log(resp.data);
+            if($scope.view.state == 'beforeanswer' || $scope.view.state == 'answer'){
+                $scope.timesUp = true;
+            }else{
+                $scope.timesUp = false;
+            }
+            $http.get('/competition/'+competition_id+'/answer/'+team_id).then(function(resp) {
+                if(resp.data.answers){
+                    $scope.answer = resp.data.answers;
+                }else{
+                    $scope.answer = [];
+                }
+                console.log("answer",$scope.answer);
+            });
+        });
+    });
+
+    socket.on('timesUp', function(msg){
+        // Not affecting this page
+        if(msg.competition != competition_id)
+            return;
+        console.log("Times up!");
+        $scope.$applyAsync(function () {
+            $scope.timesUp = true;
+        });
+    });
+    
+    
+    // Get the team matching the ID given in the url bar
+    $http.get('/team/'+team_id).then(function(resp) {
+        if(resp.data){
+            $scope.team = resp.data;
+            console.log("Set team to ", $scope.team);
+        }
+    });
+
+    
+    $scope.$watch('answer', function(newValue, oldValue, scope) {
+        // If the new value is not updated, just re-assigned, do not save it
+        if(!$scope.view || newValue === undefined || newValue.length == 0)
+            return;
+        console.log("Save: ", newValue);
+        $http.post("/competition/"+competition_id+"/answer/"+team_id, {'team': team_id, 'question': $scope.view.number, 'answers': newValue}).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när svaret skulle sparas!");
+            console.log(res);
+        });
+    }, true);
+    
     
 }]);
