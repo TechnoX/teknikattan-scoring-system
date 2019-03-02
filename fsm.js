@@ -44,7 +44,7 @@ exports.create_slideshow = function(questions){
             break;
         case "hints":
             for(let i = 0; i < question.hints.length; i++){
-                slideshow.push(createHintSlide(questionIndex, question, question.slides[0], question.hints, i+1));
+                slideshow.push(createHintSlide(questionIndex, question, question.slides[question.slides.length-1], question.hints, i+1));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -55,7 +55,7 @@ exports.create_slideshow = function(questions){
             break;
         case "statements":
             for(let i = 0; i < question.statements.length; i++){
-                slideshow.push(createStatementSlide(questionIndex, question, question.slides[0], question.statements[i], i));
+                slideshow.push(createStatementSlide(questionIndex, question, question.slides[question.slides.length-1], question.statements[i], i));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -66,7 +66,7 @@ exports.create_slideshow = function(questions){
             break;
         case "quiz":
             for(let i = 0; i < question.quiz.length; i++){
-                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz, i));
+                slideshow.push(createQuizSlide(questionIndex, question, question.slides[question.slides.length-1], question.quiz, i));
             }
             if(question.answer.show){
                 currentState = "before answer";
