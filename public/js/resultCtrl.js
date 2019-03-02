@@ -1,3 +1,26 @@
+app.directive('highlighter', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        scope: {
+            model: '=highlighter'
+        },
+        link: function(scope, element) {
+            scope.$watch('model', function (nv, ov) {
+                if (nv !== ov) {
+                    console.log("Highlight!");
+                    // apply class
+                    element.addClass('highlight');
+
+                    // auto remove after some delay
+                    $timeout(function () {
+                        element.removeClass('highlight');
+                    }, 3000);
+                }
+            });
+        }
+    };
+}]);
+
 app.controller('resultCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var socket = io();
     var competition_id = $routeParams.id;
