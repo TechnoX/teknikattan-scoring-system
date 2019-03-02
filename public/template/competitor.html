@@ -5,7 +5,7 @@
   </header>
   <main>
     <img img-preload ng-show="view.state != 'end' && view.state != 'start'" ng-src="{{view.image}}" />
-    <div ng-show="view.state == 'question' || view.state == 'statements'" ng-bind-html="view.textLeft"></div>
+    <div ng-show="view.state == 'question' || view.state == 'statements' || view.state == 'hints' || view.state == 'quiz'" ng-bind-html="view.textLeft"></div>
     <div ng-show="view.state == 'start'"><h1>Välkomna till Teknikåttan</h1></div>
     <div ng-show="view.state == 'beforeanswer'"><h1>Rätt svar är ...</h1></div>
     <div ng-show="view.state == 'answer'" ng-bind-html="view.answer.text"></div>
