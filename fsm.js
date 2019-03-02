@@ -65,7 +65,7 @@ exports.create_slideshow = function(questions){
             }
             break;
         case "quiz":
-            for(let q = 0; i < question.quiz.length; i++){
+            for(let i = 0; i < question.quiz.length; i++){
                 slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz[i], i));
             }
             if(question.answer.show){
