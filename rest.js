@@ -70,6 +70,10 @@ exports.interface = function (app) {
         });
     });
 
+    app.get('/competition/:id/timesup', function(req, res){
+        res.status(200).json(socket.get_timesup(req.params.id));
+    });
+
     app.post('/competition/:id/answer/:team', function(req, res){    
         var teamId = parseInt(req.params.team)
         if(!teamId){

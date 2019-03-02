@@ -11,6 +11,7 @@ class Timer {
         this.end = new Date();
         this.end.setSeconds(this.end.getSeconds() + duration);
         this.started = false;
+        this.timesup = false;
     }
 
     timeTick(){
@@ -20,6 +21,7 @@ class Timer {
         io_.emit('time', msg);
         if(msg.time <= 0){
             this.stop();
+            this.timesup = true;
             io_.emit('timesUp', msg);
         }
     }
@@ -37,6 +39,7 @@ class Timer {
     }
     reset() {
         this.started = false;
+        this.timesup = false;
         this.end = new Date();
         this.end.setSeconds(this.end.getSeconds() + this.duration);
         var msg = {};
@@ -70,6 +73,10 @@ exports.interface = function(io) {
     });
 
 };
+
+exports.get_timesup = function(competition_id){
+    return timers[competition_id].timesup;
+}
 
 function previousPressed(competition_id){
     db.get_slide(competition_id, 0, function(err, slide){
@@ -107,6 +114,7 @@ function nextPressed(competition_id){
                 if(timers[competition_id] && timers[competition_id].started){
                     timers[competition_id].stop();
                     timers[competition_id].started = false;
+                    timers[competition_id].timesup = false;
                 }
                 gotoNextSlide(competition_id);
             }
