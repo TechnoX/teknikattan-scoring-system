@@ -1,39 +1,39 @@
-<article class="audience" ng-controller="judgeCtrl">
-  
+<article class="audience">
+  <div class="col-md-4" ng-repeat="team in teams">
   <h2>{{team.name}}</h2>
   <section ng-controller="audienceCtrl">
-    <h2>Poäng fråga {{index()}}: {{team.scores[index() - 1]}}</h2>
+    <h2>Poäng fråga {{view.number+1}}: {{team.scores[view.number]}}</h2>
     <h2>Total poäng: {{getTotalScore(team)}}</h2>
   </section>
-  <main ng-show="currQuestion.type == 'hints'">
+  <main ng-show="view.state == 'hints'">
     <ol>
-      <li ng-repeat="hint in currQuestion.hints track by $index">
-        Ledtråd {{$index + 1}}: {{answer[$index]}}
+      <li ng-repeat="x in team.answer track by $index">
+        Ledtråd {{$index + 1}}: {{team.answer[$index]}}
       </li>
     </ol>
   </main>
-  <main ng-show="currQuestion.type == 'truefalse'">
+  <main ng-show="view.state == 'statements'">
     <table id="truefalse">
       <tr>
-        <td id="true" ng-show="answer[statementIndex] === true" ng-class="{'marked': answer[statementIndex] === true}">Sant</td>
-        <td id="false" ng-show="answer[statementIndex] === false" ng-class="{'marked': answer[statementIndex] === false}">Falskt</td>
+        <td id="true" ng-show="team.answer[view.statementIndex] === true" ng-class="{'marked': team.answer[view.statementIndex] === true}">Sant</td>
+        <td id="false" ng-show="team.answer[view.statementIndex] === false" ng-class="{'marked': team.answer[view.statementIndex] === false}">Falskt</td>
       </tr>
     </table>
   </main>
-  <main ng-show="currQuestion.type == 'normal'">
-    <div ng-show="currQuestion.answer.type == 'practical'">
+  <main ng-show="view.state == 'question'">
+    <div ng-show="view.answer.type == 'practical'">
       <p>Inget digitalt svar.</p>
     </div>
-    <div ng-show="currQuestion.answer.type == 'multi'">
+    <div ng-show="view.answer.type == 'multi'">
       <ol type='a'>
-        <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-          Delfråga {{$index + 1}}: <span ng-bind-html="answer[$index]"></span>
+        <li ng-repeat="sq in view.answer.subQuestions track by $index">
+          Delfråga {{$index + 1}}: <span ng-bind-html="team.answer[$index]"></span>
         </li>
       </ol>
     </div>
-    <div ng-show="currQuestion.answer.type == 'pairing'">
+    <div ng-show="view.answer.type == 'pairing'">
       <p>Parar ihop ord med ord.</p>
     </div>
   </main>
-
+</div>
 </article>

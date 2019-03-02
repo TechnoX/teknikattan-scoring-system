@@ -51,8 +51,8 @@ app.config(function($routeProvider, $locationProvider) {
     controller: 'answerCtrl',
   })
   .when('/competition/:id/audience', {
-    templateUrl: 'view/answers.html',
-    controller: 'audienceCtrl',
+    templateUrl: 'view/audience.html',
+    controller: 'judgeCtrl',
   })
 
   // configure html5 to get links working on jsfiddle
