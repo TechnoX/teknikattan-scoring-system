@@ -66,7 +66,7 @@ exports.create_slideshow = function(questions){
             break;
         case "quiz":
             for(let i = 0; i < question.quiz.length; i++){
-                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz[i], i));
+                slideshow.push(createQuizSlide(questionIndex, question, question.slides[0], question.quiz, i));
             }
             if(question.answer.show){
                 currentState = "before answer";

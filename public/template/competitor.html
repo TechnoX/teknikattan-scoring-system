@@ -23,12 +23,12 @@
     <span class="statement">{{view.statement}}</span>
   </aside>
   <aside ng-show="view.state == 'quiz'">
-    <h2>{{view.quizIndex+1}}. {{view.quiz.question}}</h2>
+    <h2>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</h2>
     <ol>
-      <li>A. {{view.quiz.A}}</li>
-      <li>B. {{view.quiz.B}}</li>
-      <li>C. {{view.quiz.C}}</li>
-      <li>D. {{view.quiz.D}}</li>
+      <li>A. {{view.quiz[view.quizIndex].A}}</li>
+      <li>B. {{view.quiz[view.quizIndex].B}}</li>
+      <li>C. {{view.quiz[view.quizIndex].C}}</li>
+      <li>D. {{view.quiz[view.quizIndex].D}}</li>
     </ol>
   </aside>
   <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">

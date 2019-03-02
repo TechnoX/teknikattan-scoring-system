@@ -24,6 +24,15 @@
             </li>
           </ol>
         </main>
+        <main ng-show="view.state == 'quiz'">{{view.quiz}}
+          <ol>
+            <li ng-repeat="q in view.quiz track by $index">
+              Quizfråga {{$index + 1}}: {{team.answer[$index]}}
+              <span id="true" ng-show="team.answer[$index] === q.correct">Rätt!</span>
+              <span id="false" ng-show="team.answer[$index] !== q.correct">Fel!</span>
+            </li>
+          </ol>
+        </main>
         <main ng-show="view.state == 'question'">
           <div ng-show="view.answer.type == 'practical'">
             <p>Inget digitalt svar.</p>

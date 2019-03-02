@@ -26,6 +26,15 @@
       </tr>
     </table>
   </main>
+  <main ng-show="view.state == 'quiz'">
+    <section>
+      <label>Välj en av följande: </label><br /><br /><br />
+      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="A" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].A"></span></label>
+      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="B" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].B"></span></label>
+      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="C" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].C"></span></label>
+      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="D" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].D"></span></label>
+    </section>
+  </main>
   <main ng-show="view.state == 'question'">
     <div ng-show="view.answer.type == 'practical'">
       <p>Här får ni lägga undan paddan och jobba praktiskt.</p>
