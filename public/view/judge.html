@@ -1,37 +1,37 @@
 <article class="judge">
   <header>
-    <h1 ng-show="state != 'end' && state != 'start'">{{index()}}. {{currQuestion.title}}</h1>
+    <h1 ng-show="view.state != 'end' && view.state != 'start'">{{view.number+1}}. {{view.title}}</h1>
     <img src="images/logo.png"/>
   </header>
   <h2 ng-show="timesUp">Tiden är ute!</h2>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" ng-repeat="team in teams" ng-controller="judgeCtrl">
+      <div class="col-md-4" ng-repeat="team in teams">
         <h2>{{team.name}}</h2>
-        <main ng-show="currQuestion.type == 'hints'">
+        <main ng-show="view.state == 'hints'">
           <ol>
-            <li ng-repeat="hint in currQuestion.hints track by $index">
-              Ledtråd {{$index + 1}}: {{answer[$index]}}
+            <li ng-repeat="x in team.answer track by $index">
+              Ledtråd {{$index + 1}}: {{team.answer[$index]}}
             </li>
           </ol>
         </main>
-        <main ng-show="currQuestion.type == 'truefalse'">
+        <main ng-show="view.state == 'statements'">
           <ol>
-            <li ng-repeat="statement in currQuestion.statements track by $index">
+            <li ng-repeat="x in team.answer track by $index">
               Påstående {{$index + 1}}:
-              <span id="true" ng-show="answer[$index] === true">Sant!</span>
-              <span id="false" ng-show="answer[$index] === false">Falskt!</span>
+              <span id="true" ng-show="team.answer[$index] === true">Sant!</span>
+              <span id="false" ng-show="team.answer[$index] === false">Falskt!</span>
             </li>
           </ol>
         </main>
-        <main ng-show="currQuestion.type == 'normal'">
-          <div ng-show="currQuestion.answer.type == 'practical'">
+        <main ng-show="view.state == 'question'">
+          <div ng-show="view.answer.type == 'practical'">
             <p>Inget digitalt svar.</p>
           </div>
-          <div ng-show="currQuestion.answer.type == 'multi'">
+          <div ng-show="view.answer.type == 'multi'">
             <ol type='a'>
-              <li ng-repeat="sq in currQuestion.answer.subQuestions track by $index">
-                Delfråga {{$index + 1}}: <span ng-bind-html="answer[$index]"></span>
+              <li ng-repeat="sq in view.answer.subQuestions track by $index">
+                Delfråga {{$index + 1}}: <span ng-bind-html="team.answer[$index]"></span>
               </li>
             </ol>
           </div>
@@ -42,7 +42,7 @@
         <section>
           <p>
             <ol>
-              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]"></label></li>
+              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]" ng-change="saveScoring(team)"></label></li>
             </ol>
             <br />
             Alla poäng: {{team.scores}} <br />

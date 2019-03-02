@@ -1,62 +1,85 @@
 app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var socket = io();
-    $scope.answer = [];
-
     var competition_id = $routeParams.id;
+
+    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+        $scope.view = resp.data;
+        console.log(resp.data);
+    });
+
     
-    $scope.getTotalScore = function(){
+    // On judge view we load several IDs
+    $scope.teams = [];
+    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+        if(resp.data){
+            $scope.teams = resp.data;
+            console.log("Set teams to ", $scope.teams);
+            console.log($scope.teams);
+            // Loads answers
+            angular.forEach($scope.teams, function(team, index){
+                $http.get('/competition/'+competition_id+'/answer/'+team.id).then(function(resp) {
+                    console.log(team);
+                    if(resp.data.answers){
+                        team.answer = resp.data.answers;
+                    }else{
+                        team.answer = [];
+                    }
+                    console.log("answer", team.answer);
+                });
+            });
+        }
+    });
+    
+    $scope.getTotalScore = function(team){
         var total = 0;
-        for(var t = 0; t < $scope.team.scores.length; t++){
-            total += $scope.team.scores[t];
+        for(var t = 0; t < team.scores.length; t++){
+            total += team.scores[t];
         }
         return total;
     }
     
-    $scope.$watch('team.scores', function(newValue, oldValue, scope) {
-        // If the new value is not updated, just re-assigned, do not save it
-        if(newValue === undefined || newValue.length == 0)
-            return;
-        
-        $http.post("/competition/"+competition_id+"/scores/"+$scope.team.id, {'team': $scope.team.id, 'scores': newValue}).then(function(res) {
+    $scope.saveScoring = function(team){        
+        $http.post("/competition/"+competition_id+"/scores/"+team.id, {'team': team.id, 'scores': team.scores}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när poängen skulle sparas!");
             console.log(res);
         });
-    }, true);
+    }
     
-    $http.get('/competition/'+competition_id+'/answer/'+$scope.team.id).then(function(resp) {
-        if(resp.data.answers){
-            $scope.answer = resp.data.answers;
-        }else{
-            $scope.answer = [];
-        }
-        console.log("answer",$scope.answer);
-    });
 
     
     socket.on('answer', function(msg){
-        if(msg.team == $scope.team.id){
-            $scope.$applyAsync(function () {
-                $scope.answer = msg.answers;
-                console.log("answer", msg.answers);
-            });
-        }
-    });
-    socket.on('stateChange', function(msg){
-        $scope.$applyAsync(function () {
-            // If new question loaded ... 
-            if(msg.state == 'image'){
-                // ... get associated answers
-                $http.get('/competition/'+competition_id+'/answer/'+$scope.team.id).then(function(resp) {
-                    if(resp.data.answers){
-                        $scope.answer = resp.data.answers;
-                    }else{
-                        $scope.answer = [];
-                    }
-                    console.log("answer",$scope.answer);
+        angular.forEach($scope.teams, function(team, index){
+            if(msg.team == team.id){
+                $scope.$applyAsync(function () {
+                    team.answer = msg.answers;
+                    console.log("answer", msg.answers);
                 });
             }
+        });
+    });
+    socket.on('view_changed', function(msg){
+        // Not affecting this page
+        if(msg !== competition_id){
+            return;
+        }
+        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+            // ... get associated answers
+            angular.forEach($scope.teams, function(team, index){
+                $http.get('/competition/'+competition_id+'/answer/'+team.id).then(function(resp) {
+                    if(resp.data.answers){
+                        team.answer = resp.data.answers;
+                    }else{
+                        team.answer = [];
+                    }
+                    console.log("answer", team.answer);
+                });
+            });
+            
+            if(resp.data.state == 'beforeanswer' || resp.data.state == 'answer')
+                return;
+            $scope.view = resp.data;
         });
     });
 }]);
