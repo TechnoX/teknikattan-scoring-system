@@ -33,11 +33,17 @@ app.directive("editCompetitor", function() {
             scope.removeStatement = function(index){
                 scope.question.statements.splice(index, 1);
             }
+            scope.removeQuiz = function(index){
+                scope.question.quiz.splice(index, 1);
+            }
             scope.addHint = function(){
                 scope.question.hints.push('');
             }
             scope.addStatement = function(){
                 scope.question.statements.push('');
+            }
+            scope.addQuiz = function(){
+                scope.question.quiz.push({question: '', A: '', B: '', C: '', D: ''});
             }
         }
     }
@@ -163,6 +169,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', '$routeParams', fu
                         type: "normal",
                         hints: [],
                         statements: [],
+                        quiz: [],
                         image: "/images/dummy.jpg",
                         timeText: "? minuter",
                         scoringText: "? poäng per rätt svar",

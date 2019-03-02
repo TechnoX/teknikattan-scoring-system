@@ -23,6 +23,15 @@
     <div ng-show="view.state == 'statements'">
       <span class="statement">{{view.statement}}</span>
     </div>
+    <div ng-show="view.state == 'quiz'">
+      <h2>{{view.quizIndex+1}}. {{view.quiz.question}}</h2>
+      <ol>
+        <li>A. {{view.quiz.A}}</li>
+        <li>B. {{view.quiz.B}}</li>
+        <li>C. {{view.quiz.C}}</li>
+        <li>D. {{view.quiz.D}}</li>
+      </ol>
+    </div>
   </main>
   <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">
     <time ng-show="view.hasTimer">{{view.time*1000 | date:'mm:ss'}}</time>

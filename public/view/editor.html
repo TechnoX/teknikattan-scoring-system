@@ -5,6 +5,7 @@
       <h3>Frågetyp:</h3>
       <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="hints"> Ledtrådar</label><br>
       <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label><br>
+      <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="quiz"> Quiz</label><br>
       <label><input type="radio" ng-disabled="!currSlide" ng-model="currQuestion.type" value="normal"> Övriga</label><br>
       <button ng-show="currQuestion.type == 'normal'" ng-disabled="!currSlide" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
       <button type="button" class="btn btn-default" ng-click="save()">Spara allt</button>

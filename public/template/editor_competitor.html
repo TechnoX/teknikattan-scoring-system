@@ -43,6 +43,17 @@
       </li>
       <li><a ng-click="addStatement()">Lägg till påstående</a></li>
     </ol>
+    <ol ng-show="question.type == 'quiz'">
+      <li ng-repeat="quiz in question.quiz track by $index">
+        <label>Quizfråga {{$index + 1}}: <input type="text" ng-model="question.quiz[$index].question" style="width: 25em;" /></label>
+        <label>A: <input type="radio" ng-model="question.quiz[$index].correct" value="A"><input type="text" ng-model="question.quiz[$index].A" style="width: 22em;" /></label>
+        <label>B: <input type="radio" ng-model="question.quiz[$index].correct" value="B"><input type="text" ng-model="question.quiz[$index].B" style="width: 22em;" /></label><br>
+        <label>C: <input type="radio" ng-model="question.quiz[$index].correct" value="C"><input type="text" ng-model="question.quiz[$index].C" style="width: 22em;" /></label>
+        <label>D: <input type="radio" ng-model="question.quiz[$index].correct" value="D"><input type="text" ng-model="question.quiz[$index].D" style="width: 22em;" /></label><br>
+        <a ng-click="removeQuiz($index)">Ta bort</a>
+      </li>
+      <li><a ng-click="addQuiz()">Lägg till quizfråga</a></li>
+    </ol>
   </aside>
   <aside ng-show="state == 'hints'">
     <ol>
