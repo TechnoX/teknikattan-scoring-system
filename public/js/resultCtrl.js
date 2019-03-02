@@ -24,12 +24,11 @@ app.controller('resultCtrl', ['$scope', '$http', '$routeParams', function($scope
         console.log("Got scoring msg: ", msg);
         $scope.$apply(function () {
             for(var t = 0; t < $scope.teams.length; t++){
-                if(msg.id == $scope.teams[t].id){
+                if(msg.team == $scope.teams[t].id){
                     $scope.teams[t].scores = msg.scores;
                     console.log("Update score for team ", $scope.teams[t].name);
                 }
             }
-            console.log($scope.teams);
         });
     });
 
