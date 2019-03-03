@@ -33,5 +33,18 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
             $scope.currSlide = $scope.currQuestion.slides[$scope.slideIndex];
         }
     });
+    
+    
+    $scope.editOptions = {
+        theme: 'inlite',
+        plugins: 'image media table paste contextmenu textpattern lists',
+        insert_toolbar: 'image quicktable media',
+        selection_toolbar: 'bold italic | list bullist',
+        inline: true,
+        forced_root_block : false,
+        paste_data_images: true,
+        content_css: []
+    };
 
+    
 }]);
