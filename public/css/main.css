@@ -485,3 +485,90 @@ button#next{
     right: 5%;
     top: 75%;
 }
+
+
+
+#neweditor form h3{
+    display: inline;
+}
+#neweditor form ul{
+    display: inline-block;
+}
+#neweditor form li{
+    float: left;
+}
+#neweditor form{
+    text-align: center;
+}
+#neweditor article{
+    font-size: 0.6vw;
+    border: 2px solid black;
+    width: 80vw;
+    height: 45vw;
+    float: left;
+}
+#neweditor #container{
+    width: 96vw;
+    height: 45vw;
+    margin: 0 auto;
+}
+
+#neweditor #right{
+    text-align: left;
+    padding: 15% 1%;
+    float: left;
+    height: 45vw;
+    width: 8vw;
+}
+#neweditor #left{
+    text-align: right;
+    padding: 15% 1%;
+    height: 45vw;
+    float: left;
+    width: 8vw;
+}
+#neweditor #up{
+    text-align: center;
+    height: 60px;
+    width: 100%;
+}
+#neweditor #down{
+    text-align: center;
+    clear: both;
+    height: 60px;
+    width: 100%;
+}
+
+#neweditor .arrow{
+    font-size: 3em;
+    display: block;
+}
+
+#show-timeline{
+    text-align: right;
+    font-size: 3em;
+}
+#neweditor footer{
+    background-color: white;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+
+}
+#newtimeline{
+    height: 40%;
+}
+#newtimeline > li, #newtimeline > li > ol > li{
+    display: table-cell;
+    position: relative;
+}
+#neweditor #newtimeline article{
+    font-size: 0.12vw;
+    border: 1px solid black;
+    width: 16vw;
+    height: 9vw;
+    margin: 0.1vw 0.4vw;
+}

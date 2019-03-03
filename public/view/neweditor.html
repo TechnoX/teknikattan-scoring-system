@@ -1,0 +1,60 @@
+<div id="neweditor">
+
+  <form>
+    <h3>Frågetyp:</h3>
+    <label><input type="radio" ng-model="currQuestion.type" value="hints"> Ledtrådar</label>
+    <label><input type="radio" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label>
+    <label><input type="radio" ng-model="currQuestion.type" value="quiz"> Quiz</label>
+    <label><input type="radio" ng-model="currQuestion.type" value="normal"> Övriga</label>
+    <button ng-show="currQuestion.type == 'normal'" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
+    <button type="button" class="btn btn-default" ng-click="save()">Spara allt</button>
+  </form>
+
+
+  <nav id="up">
+    <a ng-href="#!/competition/{{competitionId}}/neweditor/{{slideIndex}}/{{nextUp[medium]}}" ng-show="medium != 'projector'" class="arrow">&uarr;</a>
+  </nav>
+  <section id="container">
+    <nav id="left">
+      <a ng-href="#!/competition/{{competitionId}}/neweditor/{{slideIndex-1}}/{{medium}}" ng-show="slideIndex-1 >= 0" class="arrow">&larr;</a>
+      <h2>Lägg till: </h2>
+      <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
+      <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
+    </nav>
+    
+    <article class="projector" ng-show="medium == 'projector'"></article>
+    <article class="competitor" ng-show="medium == 'competitor'"></article>
+    <article class="answer" ng-show="medium == 'answer'"></article>
+    <article class="settings" ng-show="medium == 'settings'"></article>
+
+    <nav id="right">
+      <a ng-href="#!/competition/{{competitionId}}/neweditor/{{slideIndex+1}}/{{medium}}" ng-show="slideIndex+1 < totalLength" class="arrow">&rarr;</a>
+      <h3>Lägg till: </h3>
+      <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
+      <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
+    </nav>
+  </section>
+  <nav id="down">
+    <a ng-href="#!/competition/{{competitionId}}/neweditor/{{slideIndex}}/{{nextDown[medium]}}" ng-show="medium != 'settings'" class="arrow">&darr;</a>
+  </nav>
+
+  
+  <footer>
+    <nav id="show-timeline">
+      <a ng-click="showTimeline = !showTimeline"><i class="fas" ng-class="{'fa-arrow-up': !showTimeline, 'fa-arrow-down': showTimeline}"></i></a>
+    </nav>
+
+    <ol id="newtimeline" ng-show="showTimeline">
+      <li ng-repeat="q in questions">
+        <ol>
+          <li ng-repeat="s in q.slides">
+            <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(q,s)"></i>
+            <edit_projector slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_projector>
+            <edit_competitor slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_competitor>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </footer>
+</div>
+

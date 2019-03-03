@@ -26,6 +26,10 @@ app.config(function($routeProvider, $locationProvider) {
     templateUrl: 'view/editor.html',
     controller: 'editorCtrl',
   })
+  .when('/competition/:id/neweditor/:slide/:medium', {
+    templateUrl: 'view/neweditor.html',
+    controller: 'neweditorCtrl',
+  })
   .when('/competition/:id/result', {
     templateUrl: 'view/result.html',
     controller: 'resultCtrl',
