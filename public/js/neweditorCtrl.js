@@ -1,6 +1,13 @@
 app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
     $scope.competitionId = parseInt($routeParams.id);
-    $scope.slideIndex = parseInt($routeParams.slide);
+    if($routeParams.slide && $routeParams.question){
+        $scope.slideIndex = parseInt($routeParams.slide);
+        $scope.questionIndex = parseInt($routeParams.question);
+    }else{
+        $scope.slideIndex = 0;
+        $scope.questionIndex = 0;
+    }
+    console.log("Question: "+ $scope.questionIndex + ", Slide: " + $scope.slideIndex);
     
     switch($routeParams.medium){
     case 'projector':
@@ -12,22 +19,18 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
     case 'answer':
         $scope.medium = "answer";
         break;
-    case 'settings':
-        $scope.medium = "settings";
-        break;
+    default:
+        $scope.medium = "projector";
     }
     $scope.showTimeline = false;
-    $scope.totalLength = 21; // Current number of slides in total for all questions
-    $scope.nextDown = {'projector': 'competitor', 'competitor': 'answer', 'answer': 'settings'};
-    $scope.nextUp = {'settings': 'answer', 'answer': 'competitor', 'competitor': 'projector'};
-
-
-
+    $scope.nextDown = {'projector': 'competitor', 'competitor': 'answer'};
+    $scope.nextUp = {'answer': 'competitor', 'competitor': 'projector'};
+    
     $http.get('/competition/'+$scope.competitionId+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         if($scope.questions.length > 0){
-            $scope.currQuestion = $scope.questions[0];
-            $scope.currSlide = $scope.currQuestion.slides[0];
+            $scope.currQuestion = $scope.questions[$scope.questionIndex];
+            $scope.currSlide = $scope.currQuestion.slides[$scope.slideIndex];
         }
     });
 
