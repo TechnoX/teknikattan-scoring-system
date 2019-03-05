@@ -12,11 +12,11 @@
 
 
   <nav id="up">
-    <a ng-href="#!/competition/{{competitionId}}/neweditor/question/{{questionIndex}}/slide/{{slideIndex}}/{{nextUp[medium]}}" ng-show="medium != 'projector'" class="arrow">&uarr;</a>
+    <a ng-click="changeSlide(questionIndex, slideIndex, nextUp[medium])" ng-show="medium != 'projector'" class="arrow">&uarr;</a>
   </nav>
   <section id="container">
     <nav id="left">
-      <a ng-href="#!/competition/{{competitionId}}/neweditor/question/{{slideIndex > 0 ? questionIndex : questionIndex-1}}/slide/{{slideIndex > 0 ? slideIndex-1 : questions[questionIndex-1].slides.length-1}}/{{medium}}" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">&larr;</a>
+      <a ng-click="slideIndex > 0 ? changeSlide(questionIndex, slideIndex-1, medium) :  changeSlide(questionIndex-1, questions[questionIndex-1].slides.length-1, medium)" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">&larr;</a>
       <h2>Lägg till: </h2>
       <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
       <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
@@ -106,14 +106,14 @@
     </article>
 
     <nav id="right">
-      <a ng-href="#!/competition/{{competitionId}}/neweditor/question/{{slideIndex < currQuestion.slides.length-1 ? questionIndex : questionIndex+1}}/slide/{{slideIndex < currQuestion.slides.length-1 ? slideIndex+1 : 0}}/{{medium}}" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">&rarr;</a>
+      <a ng-click="slideIndex < currQuestion.slides.length-1 ? changeSlide(questionIndex, slideIndex+1, medium) : changeSlide(questionIndex+1, 0, medium)" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">&rarr;</a>
       <h3>Lägg till: </h3>
       <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
       <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
     </nav>
   </section>
   <nav id="down">
-    <a ng-href="#!/competition/{{competitionId}}/neweditor/question/{{questionIndex}}/slide/{{slideIndex}}/{{nextDown[medium]}}" ng-show="medium != 'answer'" class="arrow">&darr;</a>
+    <a ng-click="changeSlide(questionIndex, slideIndex, nextDown[medium])" ng-show="medium != 'answer'" class="arrow">&darr;</a>
   </nav>
 
   
@@ -123,12 +123,12 @@
     </nav>
 
     <ol id="newtimeline" ng-show="showTimeline">
-      <li ng-repeat="q in questions">
+      <li ng-repeat="q in questions" ng-init="questionIndex = $index">
         <ol>
-          <li ng-repeat="s in q.slides">
-            <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(q,s)"></i>
-            <edit_projector slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_projector>
-            <edit_competitor slide="s" question="q" state="'question'" ng-click="changeSlide(q,s)"></edit_competitor>
+          <li ng-repeat="s in q.slides" ng-init="slideIndex = $index">
+            <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(questionIndex,slideIndex)"></i>
+            <edit_projector slide="s" question="q" state="'question'" ng-click="changeSlide(questionIndex,slideIndex,'projector')"></edit_projector>
+            <edit_competitor slide="s" question="q" state="'question'" ng-click="changeSlide(questionIndex,slideIndex,'competitor')"></edit_competitor>
           </li>
         </ol>
       </li>
