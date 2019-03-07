@@ -37,6 +37,34 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
         $scope.currQuestion = $scope.questions[$scope.questionIndex];
         $scope.currSlide = $scope.currQuestion.slides[$scope.slideIndex];
     }
+    $scope.addQuestion = function () {
+        var index = $scope.index($scope.currQuestion);
+        var question = {title: "TitelPåFråga",
+                        type: "normal",
+                        hints: [],
+                        statements: [],
+                        quiz: [],
+                        image: "/images/dummy.jpg",
+                        timeText: "? minuter",
+                        scoringText: "? poäng per rätt svar",
+                        maxScoringText: "Totalt ? poäng",
+                        answer: {type: 'multi', pairs: [[],[]], subQuestions: []},
+                        slides: [
+                            {hasTimer: true, time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"}
+                        ]
+                       };
+        $scope.questions.splice(index, 0, question);
+        $scope.currQuestion = $scope.questions[index];
+        $scope.currSlide = $scope.currQuestion.slides[0];
+    };
+
+    $scope.addSlide = function () {
+        var slide = {hasTimer: true, time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"};
+        var index = $scope.currQuestion.slides.indexOf($scope.currSlide) + 1;
+        $scope.currQuestion.slides.splice(index, 0, slide);
+        $scope.currSlide = $scope.currQuestion.slides[index];
+    };
+
 
     $scope.index = function(question){
         var index = -1;
