@@ -1,5 +1,5 @@
 app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
-    $scope.competitionId = parseInt($routeParams.id);
+    var competition_id = parseInt($routeParams.id);
     $scope.slideIndex = 0;
     $scope.questionIndex = 0;
     switch($routeParams.medium){
@@ -20,7 +20,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
     $scope.nextUp = {'answer': 'competitor', 'competitor': 'projector'};
     
     // Get all questions
-    $http.get('/competition/'+$scope.competitionId+'/questions').then(function(resp) {
+    $http.get('/competition/'+competition_id+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         if($scope.questions.length > 0){
             $scope.currQuestion = $scope.questions[0];
