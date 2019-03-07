@@ -12,7 +12,7 @@
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
          ngf-resize-if="$width > 1200 || $height > 1200"
          ngf-resize="{width: 1200}" />
-    <img nf-if="!editable" ng-src="{{question.image}}" />
+    <img ng-if="!editable" ng-src="{{question.image}}" />
     <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
