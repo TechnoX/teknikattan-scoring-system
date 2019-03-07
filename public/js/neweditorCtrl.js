@@ -65,7 +65,49 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
         $scope.currSlide = $scope.currQuestion.slides[index];
     };
 
+    $scope.removeSlide = function(questionIndex,slideIndex){
+        var question = $scope.questions[questionIndex];
+        var slide = question.slides[slideIndex];
 
+        if(question.slides.length == 1){
+
+            // Only update current viewed question if it was the deleted one
+            if(question === $scope.currQuestion){
+                // If this was the last question, take the one before, otherwise the one after
+                if(questionIndex == $scope.questions.length - 1){
+                    // Question before
+                    $scope.currQuestion = $scope.questions[questionIndex - 1];
+                    // If we remove the last existing slide?
+                    if(!$scope.currQuestion){
+                        $scope.currSlide = null;
+                    }else{
+                        // Last slide in this new question
+                        $scope.currSlide = $scope.currQuestion.slides[$scope.currQuestion.slides.length - 1];
+                    }
+                }else{
+                    // Question after
+                    $scope.currQuestion = $scope.questions[questionIndex + 1];
+                    // First slide in this new question
+                    $scope.currSlide = $scope.currQuestion.slides[0];
+                }
+            }
+            $scope.questions.splice(questionIndex, 1);
+        }else{
+            // Only update current viewed slide if it was the deleted one
+            if(slide === $scope.currSlide){
+                // If this was the last slide, take the one before, otherwise the one after
+                if(slideIndex == question.slides.length - 1){
+                    $scope.currSlide = question.slides[slideIndex - 1];
+                }else{
+                    $scope.currSlide = question.slides[slideIndex + 1];
+                }
+            }
+            question.slides.splice(slideIndex, 1);
+        }
+    }
+    
+
+    
     $scope.index = function(question){
         var index = -1;
         if($scope.questions){
