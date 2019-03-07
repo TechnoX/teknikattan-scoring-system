@@ -37,6 +37,17 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
         $scope.currQuestion = $scope.questions[$scope.questionIndex];
         $scope.currSlide = $scope.currQuestion.slides[$scope.slideIndex];
     }
+
+    $scope.index = function(question){
+        var index = -1;
+        if($scope.questions){
+            $scope.questions.some(function(obj, i) {
+                return obj === question ? index = i : false;
+            });
+        }
+        return index+1;
+    }
+
     
     $scope.editOptions = {
         theme: 'inlite',

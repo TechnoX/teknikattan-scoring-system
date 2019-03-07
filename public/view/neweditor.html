@@ -22,89 +22,10 @@
       <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
     </nav>
     
-    <article class="projector" ng-show="medium == 'projector'">
-      <header>
-        <h1 ng-click="edit='title'">
-          {{questionIndex+1}}.
-          <input type="text" ng-show="edit=='title'" ng-model="currQuestion.title" ng-blur="edit='none'" />
-          <span ng-show="edit!='title'">{{currQuestion.title}}</span>
-        </h1>
-        <img src="images/logo.png"/>
-      </header>
-      <figure ng-controller="UploadCtrl">
-        <img ng-src="{{currQuestion.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
-             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-             ngf-resize-if="$width > 1200 || $height > 1200"
-             ngf-resize="{width: 1200}" />
-      </figure>
-      <main>
-        <div ui-tinymce="editOptions" ng-model="currSlide.textProjector"></div>
-      </main>
-      <footer>
-        <input type="checkbox" ng-model="currSlide.hasTimer" />
-        <time ng-show="currSlide.hasTimer && edit!='timer'" ng-click="edit='timer'">{{currSlide.time*1000 | date:'mm:ss'}}</time>
-        <time ng-show="currSlide.hasTimer && edit=='timer'"><input type="number" ng-model="currSlide.time" min="0" max="3599" ng-blur="edit='none'"></time>
-      </footer>
-    </article>
-
-    <article class="competitor" ng-show="medium == 'competitor'">
-      <header>
-        <h1 ng-click="edit='title'">
-          {{questionIndex+1}}.
-          <input type="text" ng-show="edit=='title'" ng-model="currQuestion.title" ng-blur="edit='none'" />
-          <span ng-show="edit!='title'">{{currQuestion.title}}</span>
-        </h1>
-        <img src="images/logo.png"/>
-      </header>
-      <main ng-controller="UploadCtrl">
-        <img ng-src="{{currQuestion.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
-             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-             ngf-resize-if="$width > 1200 || $height > 1200"
-             ngf-resize="{width: 1200}" />
-        <div ui-tinymce="editOptions" ng-model="currSlide.textLeft"></div>
-      </main>
-      <aside ng-if="currQuestion.type == 'normal'" ui-tinymce="editOptions" ng-model="currSlide.textRight"></aside>
-      <footer>
-        <input type="checkbox" ng-model="currSlide.hasTimer" />
-        <time ng-show="currSlide.hasTimer && edit!='timer'" ng-click="edit='timer'">{{currSlide.time*1000 | date:'mm:ss'}}</time>
-        <time ng-show="currSlide.hasTimer && edit=='timer'"><input type="number" ng-model="currSlide.time" min="0" max="3599" ng-blur="edit='none'"></time>
-        <ul>
-          <li ng-click="edit='time'">
-            <label>Tid:</label>
-            <input type="text" ng-show="edit=='time'" ng-model="currQuestion.timeText" ng-blur="edit='none'" /><span ng-show="edit!='time'">{{currQuestion.timeText}}</span>
-          </li>
-          <li ng-click="edit='scoring'">
-            <label>Poäng:</label>
-            <input type="text" ng-show="edit=='scoring'" ng-model="currQuestion.scoringText" ng-blur="edit='none'" /><span ng-show="edit!='scoring'">{{currQuestion.scoringText}}</span>
-          </li>
-          <li ng-click="edit='maxscoring'">
-            <label>Maxpoäng:</label>
-            <input type="text" ng-show="edit=='maxscoring'" ng-model="currQuestion.maxScoringText" ng-blur="edit='none'" /><span ng-show="edit!='maxscoring'">{{currQuestion.maxScoringText}}</span>
-          </li>
-        </ul>
-      </footer>
-    </article>
+    <edit_projector slide="currSlide" question="currQuestion" editable="editOptions" ng-show="medium == 'projector'"></edit_projector>
+    <edit_competitor slide="currSlide" question="currQuestion" editable="editOptions" ng-show="medium == 'competitor'"></edit_competitor>
+    <edit_projector slide="'answer'" question="currQuestion" editable="editOptions" ng-show="medium == 'answer'"></edit_projector>
     
-    <article class="projector" ng-show="medium == 'answer'">
-      <header>
-        <h1 ng-click="edit='title'">
-          {{questionIndex+1}}.
-          <input type="text" ng-show="edit=='title'" ng-model="currQuestion.title" ng-blur="edit='none'" />
-          <span ng-show="edit!='title'">{{currQuestion.title}}</span>
-        </h1>
-        <img src="images/logo.png"/>
-      </header>
-      <figure ng-controller="UploadCtrl">
-        <img ng-src="{{currQuestion.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
-             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-             ngf-resize-if="$width > 1200 || $height > 1200"
-             ngf-resize="{width: 1200}" />
-      </figure>
-      <main>
-        <div ui-tinymce="editOptions" ng-model="currQuestion.answer.text"></div>
-      </main>
-    </article>
-
     <nav id="right">
       <a ng-click="slideIndex < currQuestion.slides.length-1 ? changeSlide(questionIndex, slideIndex+1, medium) : changeSlide(questionIndex+1, 0, medium)" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">&rarr;</a>
       <h3>Lägg till: </h3>
@@ -127,8 +48,8 @@
         <ol>
           <li ng-repeat="s in q.slides" ng-init="slideIndex = $index">
             <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(questionIndex,slideIndex)"></i>
-            <edit_projector slide="s" question="q" state="'question'" ng-click="changeSlide(questionIndex,slideIndex,'projector')"></edit_projector>
-            <edit_competitor slide="s" question="q" state="'question'" ng-click="changeSlide(questionIndex,slideIndex,'competitor')"></edit_competitor>
+            <edit_projector slide="s" question="q" editable="false" ng-click="changeSlide(questionIndex,slideIndex,'projector')"></edit_projector>
+            <edit_competitor slide="s" question="q" editable="false" ng-click="changeSlide(questionIndex,slideIndex,'competitor')"></edit_competitor>
           </li>
         </ol>
       </li>
