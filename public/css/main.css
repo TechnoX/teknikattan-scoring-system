@@ -575,3 +575,9 @@ button#next{
     height: 9vw;
     margin: 0.1vw 0.4vw;
 }
+
+#up label{
+    font-size: 2em;
+    position: fixed;
+    left: 2em;
+}

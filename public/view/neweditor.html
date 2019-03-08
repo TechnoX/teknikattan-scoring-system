@@ -12,6 +12,9 @@
 
 
   <nav id="up">
+    <label ng-show="medium == 'projector'">Vy på projektorn: </label>
+    <label ng-show="medium == 'competitor'">Vy i tävlandes bås: </label>
+    <label ng-show="medium == 'answer'">Svarsslide: </label>
     <a ng-click="changeSlide(questionIndex, slideIndex, nextUp[medium])" ng-show="medium != 'projector'" class="arrow">&uarr;</a>
   </nav>
   <section id="container">
