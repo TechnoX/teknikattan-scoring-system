@@ -20,9 +20,11 @@
   <section id="container">
     <nav id="left">
       <a ng-click="slideIndex > 0 ? changeSlide(questionIndex, slideIndex-1, medium) :  changeSlide(questionIndex-1, questions[questionIndex-1].slides.length-1, medium)" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">&larr;</a>
+      <!--
       <h2>Lägg till: </h2>
       <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
       <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
+      -->
     </nav>
     
     <edit_projector slide="currSlide" question="currQuestion" editable="editOptions" ng-show="medium == 'projector'"></edit_projector>
