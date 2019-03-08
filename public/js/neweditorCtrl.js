@@ -1,4 +1,4 @@
-app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal', function ($scope, $http, $routeParams, $uibModal) {
     var competition_id = parseInt($routeParams.id);
     $scope.slideIndex = 0;
     $scope.questionIndex = 0;
@@ -55,6 +55,25 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', function ($s
     }
 
 
+    $scope.open = function () {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/template/answer_modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: 'lg',
+            resolve: {
+                question: function () {
+                    return $scope.currQuestion;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (answer) {
+            console.info('Modal okayed at: ' + new Date());
+        }, function () {
+            console.info('Modal dismissed at: ' + new Date());
+        });
+    };
 
     
     
