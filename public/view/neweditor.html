@@ -6,7 +6,7 @@
     <label><input type="radio" ng-model="currQuestion.type" value="truefalse"> Sant / Falskt</label>
     <label><input type="radio" ng-model="currQuestion.type" value="quiz"> Quiz</label>
     <label><input type="radio" ng-model="currQuestion.type" value="normal"> Övriga</label>
-    <button ng-show="currQuestion.type == 'normal'" type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
+    <button type="button" class="btn btn-default" ng-click="open()">Konfigurera svar</button>
     <button type="button" class="btn btn-default" ng-click="save()">Spara allt</button>
   </form>
 
