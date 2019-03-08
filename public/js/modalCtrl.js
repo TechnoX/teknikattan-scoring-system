@@ -11,6 +11,29 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
         forced_root_block : false,
         paste_data_images: true
     };
+
+
+
+    $scope.removeHint = function(index){
+        $scope.question.hints.splice(index, 1);
+    }
+    $scope.removeStatement = function(index){
+        $scope.question.statements.splice(index, 1);
+    }
+    $scope.removeQuiz = function(index){
+        $scope.question.quiz.splice(index, 1);
+    }
+    $scope.addHint = function(){
+        $scope.question.hints.push('');
+    }
+    $scope.addStatement = function(){
+        $scope.question.statements.push('');
+    }
+    $scope.addQuiz = function(){
+        $scope.question.quiz.push({question: '', A: '', B: '', C: '', D: ''});
+    }
+
+
     
     $scope.remove = function(array, index){
         array.splice(index, 1);
