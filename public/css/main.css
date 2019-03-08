@@ -578,6 +578,6 @@ button#next{
 
 #up label{
     font-size: 2em;
-    position: fixed;
+    position: absolute;
     left: 2em;
 }
