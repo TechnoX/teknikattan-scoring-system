@@ -103,6 +103,8 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
         $scope.questions.splice(index, 0, question);
         $scope.currQuestion = $scope.questions[index];
         $scope.currSlide = $scope.currQuestion.slides[0];
+        $scope.questionIndex = index;
+        $scope.slideIndex = 0;
     };
 
     $scope.addSlide = function () {
@@ -110,6 +112,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
         var index = $scope.currQuestion.slides.indexOf($scope.currSlide) + 1;
         $scope.currQuestion.slides.splice(index, 0, slide);
         $scope.currSlide = $scope.currQuestion.slides[index];
+        $scope.slideIndex = index;
     };
 
     $scope.removeSlide = function(questionIndex,slideIndex){
