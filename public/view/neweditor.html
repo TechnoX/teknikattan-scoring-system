@@ -37,7 +37,8 @@
     </nav>
   </section>
   <nav id="down">
-    <a ng-click="changeSlide(questionIndex, slideIndex, nextDown[medium])" ng-show="medium != 'answer'" class="arrow">&darr;</a>
+    <label ng-show="medium =='competitor'">Visa svarsslide: <input type="checkbox" ng-model="currQuestion.answer.show" /></label><br>
+    <a ng-click="changeSlide(questionIndex, slideIndex, nextDown[medium])" ng-show="!(medium == 'answer' || (medium == 'competitor' && !currQuestion.answer.show))" class="arrow">&darr;</a>
   </nav>
 
   
