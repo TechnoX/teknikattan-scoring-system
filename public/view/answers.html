@@ -57,6 +57,14 @@
     </div>
     <div ng-show="view.answer.type == 'pairing'">
       <p>Para ihop ord med ord.</p>
+      
+      <table>
+        <tr>
+          <td width="30%"><div class="alternativ" ng-repeat="alt in view.answer.pairs[0]">{{alt}}</div></td>
+          <td width="40%"></td>
+          <td width="30%"><div class="alternativ" ng-repeat="alt in view.answer.pairs[1]">{{alt}}</div></td>
+        </tr>
+      </table>
     </div>
   </main>
 </article>
