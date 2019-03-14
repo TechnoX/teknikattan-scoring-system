@@ -21,7 +21,7 @@ var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, n
 
 
 exports.replace_questions = function(competition_id, new_questions, callback) {
-    database.collection('questions').remove({}, function(err, result) {
+    database.collection('questions').remove({competition: parseInt(competition_id)}, function(err, result) {
         if (err) callback(err);
         console.log('removed all questions');
         
@@ -34,7 +34,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
 
                 var slideshow = fsm.create_slideshow(new_questions);
 
-                database.collection('slideshow').remove({}, function(err, result) {
+                database.collection('slideshow').remove({competition: parseInt(competition_id)}, function(err, result) {
                     if (err) callback(err);
                     console.log('removed all views from slideshow');                    
                     database.collection('slideshow').insertMany(slideshow, function(err, result) {
@@ -53,7 +53,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
 
 
 exports.get_slideshow = function(competition_id, callback) {
-    database.collection('slideshow').find().toArray(function(err, result) {
+    database.collection('slideshow').find({competition: parseInt(competition_id)}).toArray(function(err, result) {
         callback(err, result);
     });
 }
@@ -91,7 +91,7 @@ exports.decrease_index = function(competition_id, callback){
 }
 
 exports.get_questions = function(competition_id, callback) {
-    database.collection('questions').find().toArray(function(err, result) {
+    database.collection('questions').find({competition: parseInt(competition_id)}).toArray(function(err, result) {
         callback(err, result);
     });
 };
