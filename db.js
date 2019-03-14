@@ -32,7 +32,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
                 console.log('saved all questions to database');
 
 
-                var slideshow = fsm.create_slideshow(new_questions);
+                var slideshow = fsm.create_slideshow(parseInt(competition_id), new_questions);
 
                 database.collection('slideshow').remove({competition: parseInt(competition_id)}, function(err, result) {
                     if (err) callback(err);

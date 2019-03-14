@@ -1,7 +1,7 @@
 
 
 // Simulate the full competition to create the slideshow (so that we can go forward and backward in it)
-exports.create_slideshow = function(questions){
+exports.create_slideshow = function(competition_id, questions){
     var slideshow = [];
     console.log("Create slideshow");
 
@@ -13,17 +13,17 @@ exports.create_slideshow = function(questions){
 
         switch(currentState){
         case "start":
-            slideshow.push(createStart(question.competition));
+            slideshow.push(createStart(competition_id));
             questionIndex = 0;
             currentState = "image";
             break;
         case "image":
-            slideshow.push(createImage(question.competition, questionIndex, question));
+            slideshow.push(createImage(competition_id, questionIndex, question));
             currentState = "slides";
             break;
         case "slides":
             for(let i = 0; i < question.slides.length; i++){
-                slideshow.push(createNormalSlide(question.competition, questionIndex, question, question.slides[i], i));
+                slideshow.push(createNormalSlide(competition_id, questionIndex, question, question.slides[i], i));
             }
             if(question.type == "truefalse"){
                 currentState = "statements";
@@ -44,7 +44,7 @@ exports.create_slideshow = function(questions){
             break;
         case "hints":
             for(let i = 0; i < question.hints.length; i++){
-                slideshow.push(createHintSlide(question.competition, questionIndex, question, question.slides[question.slides.length-1], question.hints, i+1));
+                slideshow.push(createHintSlide(competition_id, questionIndex, question, question.slides[question.slides.length-1], question.hints, i+1));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -55,7 +55,7 @@ exports.create_slideshow = function(questions){
             break;
         case "statements":
             for(let i = 0; i < question.statements.length; i++){
-                slideshow.push(createStatementSlide(question.competition, questionIndex, question, question.slides[question.slides.length-1], question.statements[i], i));
+                slideshow.push(createStatementSlide(competition_id, questionIndex, question, question.slides[question.slides.length-1], question.statements[i], i));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -66,7 +66,7 @@ exports.create_slideshow = function(questions){
             break;
         case "quiz":
             for(let i = 0; i < question.quiz.length; i++){
-                slideshow.push(createQuizSlide(question.competition, questionIndex, question, question.slides[question.slides.length-1], question.quiz, i));
+                slideshow.push(createQuizSlide(competition_id, questionIndex, question, question.slides[question.slides.length-1], question.quiz, i));
             }
             if(question.answer.show){
                 currentState = "before answer";
@@ -76,18 +76,18 @@ exports.create_slideshow = function(questions){
             }
             break;
         case "before answer":
-            slideshow.push(createBeforeAnswer(question.competition, questionIndex, question))
+            slideshow.push(createBeforeAnswer(competition_id, questionIndex, question))
             currentState = "answer";
             break;
         case "answer":
-            slideshow.push(createAnswer(question.competition, questionIndex, question));
+            slideshow.push(createAnswer(competition_id, questionIndex, question));
             questionIndex++;
             currentState = afterSlides(questionIndex, questions);
             break;
         }
     } while (currentState != "end");
     
-    slideshow.push(createEnd(question.competition));
+    slideshow.push(createEnd(competition_id));
     return slideshow;
 }
 
