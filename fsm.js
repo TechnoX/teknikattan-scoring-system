@@ -125,7 +125,7 @@ function createImage(competition_id, index, q){
 }
 
 
-function createNormalSlide(competition, index, q, s, slideIndex){
+function createNormalSlide(competition_id, index, q, s, slideIndex){
     var slide = {
         competition: competition_id,
         state: 'question',
