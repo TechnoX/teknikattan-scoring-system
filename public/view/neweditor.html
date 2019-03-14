@@ -50,12 +50,12 @@
     </nav>
 
     <ol id="newtimeline" ng-show="showTimeline">
-      <li ng-repeat="q in questions" ng-init="questionIndex = $index">
+      <li ng-repeat="q in questions" ng-init="qIndex = $index">
         <ol>
-          <li ng-repeat="s in q.slides" ng-init="slideIndex = $index">
-            <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(questionIndex,slideIndex)"></i>
-            <edit_projector slide="s" question="q" editable="false" ng-click="changeSlide(questionIndex,slideIndex,'projector')"></edit_projector>
-            <edit_competitor slide="s" question="q" editable="false" ng-click="changeSlide(questionIndex,slideIndex,'competitor')"></edit_competitor>
+          <li ng-repeat="s in q.slides" ng-init="sIndex = $index">
+            <i class="fas fa-trash-alt remove-slide" ng-click="removeSlide(qIndex,sIndex)"></i>
+            <edit_projector slide="s" question="q" editable="false" ng-click="changeSlide(qIndex,sIndex,'projector')"></edit_projector>
+            <edit_competitor slide="s" question="q" editable="false" ng-click="changeSlide(qIndex,sIndex,'competitor')"></edit_competitor>
           </li>
         </ol>
       </li>
