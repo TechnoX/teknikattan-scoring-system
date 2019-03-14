@@ -25,6 +25,8 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
         if($scope.questions.length > 0){
             $scope.currQuestion = $scope.questions[0];
             $scope.currSlide = $scope.currQuestion.slides[0];
+        }else{
+            $scope.addQuestion();
         }
     });
     
