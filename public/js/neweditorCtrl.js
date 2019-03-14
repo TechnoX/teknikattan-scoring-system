@@ -86,7 +86,8 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
     }
     $scope.addQuestion = function () {
         var index = $scope.index($scope.currQuestion);
-        var question = {title: "TitelPåFråga",
+        var question = {competition: parseInt(competition_id),
+                        title: "TitelPåFråga",
                         type: "normal",
                         hints: [],
                         statements: [],
