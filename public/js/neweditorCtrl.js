@@ -119,44 +119,70 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
     };
 
     $scope.removeSlide = function(questionIndex,slideIndex){
+        console.log("Try to remove question ", questionIndex, ", slide ", slideIndex);
         var question = $scope.questions[questionIndex];
         var slide = question.slides[slideIndex];
 
-        if(question.slides.length == 1){
 
-            // Only update current viewed question if it was the deleted one
-            if(question === $scope.currQuestion){
-                // If this was the last question, take the one before, otherwise the one after
-                if(questionIndex == $scope.questions.length - 1){
-                    // Question before
-                    $scope.currQuestion = $scope.questions[questionIndex - 1];
-                    // If we remove the last existing slide?
-                    if(!$scope.currQuestion){
-                        $scope.currSlide = null;
-                    }else{
-                        // Last slide in this new question
-                        $scope.currSlide = $scope.currQuestion.slides[$scope.currQuestion.slides.length - 1];
-                    }
-                }else{
-                    // Question after
-                    $scope.currQuestion = $scope.questions[questionIndex + 1];
-                    // First slide in this new question
-                    $scope.currSlide = $scope.currQuestion.slides[0];
-                }
-            }
+        // If question only have one slide, remove the question
+        if(question.slides.length == 1){
+            console.log("Question have only one slide, remove the full question");
             $scope.questions.splice(questionIndex, 1);
-        }else{
-            // Only update current viewed slide if it was the deleted one
-            if(slide === $scope.currSlide){
-                // If this was the last slide, take the one before, otherwise the one after
-                if(slideIndex == question.slides.length - 1){
-                    $scope.currSlide = question.slides[slideIndex - 1];
-                }else{
-                    $scope.currSlide = question.slides[slideIndex + 1];
+            // If we remove the current displayed question
+            if(questionIndex == $scope.questionIndex){
+                console.log("The question removed were the same as we are currently viewing")
+                // If we removed the last question
+                if(questionIndex == $scope.questions.length){
+                    console.log("We removed the last question")
+                    // If this is the last and only question, alert error message
+                    if(questionIndex == 0) {
+                        alert("Du kan inte ta bort den sista frågesliden, en frågesport måste bestå av minst en fråga.");
+                        return false;
+                    }
+                    // Display the question before (i.e the new last question)
+                    $scope.questionIndex -= 1;
+                    // The last slide on the new question
+                    $scope.slideIndex = $scope.questions[$scope.questionIndex].slides.length - 1;
+                }else{// Otherwise display the question at the same index as the removed question (i.e. the one after the removed one).
+                    // Do nothing, keep the questionIndex as before.
+                    console.log("The question was not the very last one")
+                    $scope.slideIndex = 0;
                 }
+            }else if(questionIndex < $scope.questionIndex){// If we removed a question before the current displayed question
+                // Decrease the index of the current displayed question.
+                console.log("The removed question were located before the currently vieweed question");
+                $scope.questionIndex -= 1;
             }
+
+        }else{// If the question has more than one slide, remove the slide
             question.slides.splice(slideIndex, 1);
+            console.log("The question have more slides, remove sthe slide but keep question intact");
+            // If we remove the current displayed slide
+            if(slideIndex == $scope.slideIndex){
+                console.log("The removed slide is the currently viewed slide");
+                // If we removed the last slide of the last question
+                if(slideIndex == question.slides.length && questionIndex == $scope.questions.length-1){
+                    console.log("This is the very last side of the very last question");
+                    // Display the slide just before the newly removed slide.
+                    $scope.slideIndex -= 1;
+                }else if(slideIndex == question.slides.length){ // If we removed the last slide of a question in the middle somewhere
+                    console.log("This is the last slide of a question in the middle")
+                    // Display the first slide of the next question
+                    $scope.questionIndex += 1;
+                    $scope.slideIndex = 0;
+                }else{// Otherwise display the slide at the same index as the removed slide (i.e. the one after the removed one).
+                    console.log("Do nothing");
+                    // Do nothing, keep the slideIndex as before.
+                }
+            }else if(questionIndex == $scope.questionIndex && slideIndex < $scope.slideIndex){// If we removed a slide before the current displayed slide, at the current viewed question
+                console.log("Removed a slide before the current slide, of the current question")
+                // Decrease the index of the current displayed slide.
+                $scope.slideIndex -= 1;
+            }
         }
+        
+        $scope.currQuestion = $scope.questions[$scope.questionIndex];
+        $scope.currSlide = $scope.currQuestion.slides[$scope.slideIndex];
     }
     
 
