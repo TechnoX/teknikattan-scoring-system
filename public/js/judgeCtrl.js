@@ -39,7 +39,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     }
     
     $scope.saveScoring = function(team){        
-        $http.post("/competition/"+competition_id+"/scores/"+team._id, {'team': team._id, 'scores': team.scores}).then(function(res) {
+        $http.put("/team", team).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när poängen skulle sparas!");
