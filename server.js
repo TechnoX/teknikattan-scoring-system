@@ -1,7 +1,3 @@
-/*
-  Vinsch entry point.
-*/
-
 var db = require('./db');
 var socket = require('./socket');
 var rest = require('./rest');
