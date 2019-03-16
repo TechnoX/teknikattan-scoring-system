@@ -71,6 +71,7 @@ exports.interface = function (app) {
     });
 
     app.get('/competition/:id/timesup', function(req, res){
+        // To lock the answers view when refreshing page.
         res.status(200).json(socket.get_timesup(req.params.id));
     });
 
