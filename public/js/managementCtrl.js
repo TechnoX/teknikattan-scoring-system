@@ -1,109 +1,267 @@
 app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
 
-
-    var id = $routeParams.id;
+    var compId = $routeParams.id;
     
-    $scope.competitions = [
-        {id: 23, name: "Regionsemifinal 1", city: 0, lastEdited: new Date(2018,3,24,10,22), teams:[{id: 12, name: 'Skolgårda skola', scores: [0,0,0,0,0,0,0,0]}, {id: 11, name: 'Berzeliusskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 10, name: 'Södervärnsskolan', scores: [0,0,0,0,0,0,0,0]}]},
-        {id: 36, name: "Regionsemifinal 2", city: 0, lastEdited: new Date(2018,3,24,10,28), teams:[{id: 20, name: 'Sjöängsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 21, name: 'Malmlättsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 22, name: 'Hultdalskolan', scores: [0,0,0,0,0,0,0,0]}]},
-        {id: 74, name: "Regionfinal", city: 1, lastEdited: new Date(2018,3,24,11,22), teams:[{id: 30, name: 'Sjöängsskolan', scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: 'Skolgårda skola', scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: 'Berzeliusskolan', scores: [0,0,0,0,0,0,0,0]}]},
-        {id: 92, name: "Riksfinal", city: 1, lastEdited: new Date(2018,4,22,8,22), teams:[{id: 44, name: 'IFM', scores: [0,0,0,0,0,0,0,0]}, {id: 45, name: 'MAI', scores: [0,0,0,0,0,0,0,0]}, {id: 47, name: 'IDA', scores: [0,0,0,0,0,0,0,0]}]},
-        {id: 24, name: "Interna mästerskapen", city: 3, lastEdited: new Date(2019,1,20,14,55), teams:[{id: 59, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 51, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 58, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}]}
-    ];
+    $scope.competitions = [];
+    $scope.teams = [];
+    $http.get('/competitions').then(function(resp) {
+        $scope.competitions = resp.data;
 
-    for(var i = 0; i < $scope.competitions.length; i++){
-        if($scope.competitions[i].id == id){
-            $scope.comp = $scope.competitions[i];
-            break;
+        // If we should get a specific competition
+        if(compId){
+            for(var i = 0; i < $scope.competitions.length; i++){
+                if($scope.competitions[i]._id == compId){
+                    $scope.comp = $scope.competitions[i];
+                    $http.get('/competition/'+compId+'/teams').then(function(resp) {
+                        $scope.teams = resp.data;
+                    });
+                    break;
+                }
+            }
         }
-    }
-    
-    $scope.cities = [{name: "Sverige", id: 0}, {name: "Linköping", id: 1}, {name: "Uppsala", id: 2}, {name: "Borlänge", id: 3}, {name: "Stockholm", id: 4}, {name: "Lund", id: 7} ];
-    $scope.users = [{id: 0, name: "Fredrik", city: 0, password: "giraff"}, {id: 3, name: "Peter", city: 0, password: "retep"}, {id: 2, name: "Susanne", city: 1, password: "ennasus"}, {id: 7, name: "Röde", city: 3, password: "lego"}];
+    });
+
+    $scope.users = [];
+    $http.get('/users').then(function(resp) {
+        $scope.users = resp.data;
+    });
+
+    $scope.cities = [];
+    $http.get('/cities').then(function(resp) {
+        $scope.cities = resp.data;
+    });
     
     $scope.editPassword = function(user){
         user.password = prompt("Ange nytt lösenord för " + user.name);
+        updateUser(user);
     }
     $scope.editUser = function(user){
         console.log(user);
+        updateUser(user);
     }
     $scope.removeUser = function(user){
         if(confirm("Vill du verkligen ta bort " + user.name)){
-            $scope.users = $scope.users.filter(x => x.id !== user.id);
+            removeUser(user);
+            $scope.users = $scope.users.filter(x => x._id !== user._id);
         }
     }
     
     $scope.addUser = function(){
-        var password = prompt("Ange lösenord för ny användare")
-        var max = {name: "asdf", id:-1};
         for(var i = 0; i < $scope.users.length; i+=1){
             if($scope.users[i].name == $scope.newName){
                 alert($scope.newName + " finns redan. Välj ett annat namn.");
                 return;
             }
-            if($scope.users[i].id > max.id){
-                max = $scope.users[i];
-            }
         }
-        $scope.users.push({name: $scope.newName, city: $scope.newCity, password: password, id: max.id+1});
-        $scope.newName = "";
-        $scope.newCity = 0;
+        var password = prompt("Ange lösenord för ny användare")
+        var newUser = {name: $scope.newName, city: $scope.newCity, password: password};
+        addUser(newUser, function(err, id){
+            if(err)return;
+            newUser._id = id;
+            $scope.users.push(newUser);
+            $scope.newName = "";
+            $scope.newCity = "5c8d4b84ad225235d0178b95";
+        });
+        
     }
     
     $scope.removeCity = function(city){
         if(confirm("Vill du verkligen ta bort " + city.name)){
-            $scope.cities = $scope.cities.filter(x => x.id !== city.id);
+            removeCity(city);
+            $scope.cities = $scope.cities.filter(x => x._id !== city._id);
         }
     }
     
     $scope.editCity = function(city){
         console.log(city);
+        updateCity(city);
     }
 
     $scope.addCity = function(){
-        var max = {name: "asdf", id:-1};
         for(var i = 0; i < $scope.cities.length; i+=1){
             if($scope.cities[i].name == $scope.newCity){
                 alert($scope.newCity + " finns redan. Välj ett annat namn.");
                 return;
             }
-            if($scope.cities[i].id > max.id){
-                max = $scope.cities[i];
-            }
         }
-        $scope.cities.push({name: $scope.newCity, id: max.id+1});
-        $scope.newCity = "";
+        var newCity = {name: $scope.newCity};
+        addCity(newCity, function(err, id){
+            if(err)return;
+            newCity._id = id;
+            $scope.cities.push(newCity);
+            $scope.newCity = "";
+        });
     }
 
     $scope.getCity = function(id){
-        return $scope.cities.find(x => x.id === id).name;
+        var city = $scope.cities.find(x => x._id === id);
+        if(city){
+            return city.name;
+        }else{
+            return "Okänd stad, rapportera fel till Fredrik Löfgren";
+        }
     }
     
     $scope.editCompetition = function(comp){
         console.log(comp);
-        comp.lastEdited = new Date();
+        comp.lastEdited = (new Date()).toISOString();
+        updateCompetition(comp);
     }
     
     $scope.removeCompetition = function(comp){
         if(confirm("Vill du verkligen ta bort " + comp.name)){
-            $scope.competitions = $scope.competitions.filter(x => x.id !== comp.id);
+            removeCompetition(comp);
+            $scope.competitions = $scope.competitions.filter(x => x._id !== comp._id);
         }
     }
     
     $scope.cloneCompetition = function(comp){
         var newComp;
         newComp = angular.copy(comp);
-        newComp.lastEdited = new Date();
-        newComp.id = 1 + Math.max.apply(Math, $scope.competitions.map(function(o) { return o.id; }));
-        $scope.competitions.push(newComp);
+        newComp.lastEdited = (new Date()).toISOString();
+        newComp._id = undefined; // Need to generate a new database entry!
+        addCompetition(newComp, function(err, id){
+            if(err)return;
+            newComp._id = id;
+            $scope.competitions.push(newComp);
+        });
     }
     
     $scope.addCompetition = function(){
-        var max = Math.max.apply(Math, $scope.competitions.map(function(o) { return o.id; }));
-        console.log(max)
-        $scope.competitions.push({name: $scope.newName, city: $scope.newCity, lastEdited: new Date(), teams: [], id: max+1});
-        $scope.newName = "";
-        $scope.newCity = 0;
+        var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString()};
+        addCompetition(newComp, function(err, id){
+            if(err)return;
+            newComp._id = id;
+            $scope.competitions.push(newComp);
+            $scope.newName = "";
+            $scope.newCity = "5c8d4b84ad225235d0178b95";
+        });        
     }
+
+
+    $scope.removeTeam = function(team){
+        if(confirm("Vill du verkligen ta bort " + team.name)){
+            removeTeam(team);
+            $scope.teams = $scope.teamss.filter(x => x._id !== team._id);
+        }
+    }
+    $scope.editTeam = function(team){
+        console.log(team);
+        updateTeam(team);
+    }
+    $scope.addTeam = function(){
+        var newTeam = {competition: compId, name: "", scores: []}
+        addTeam(newTeam, function(err, id){
+            if(err)return;
+            newTeam._id = id;
+            $scope.teams.push(newTeam);
+        });
+    }
+
+
+    
+    function updateUser(user){
+        console.log("User ", user, " updated");
+        $http.put('/user', user).then(function(res){
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när användaren skulle uppdateras!");
+        });
+    }
+    function removeUser(user){
+        console.log("User ", user, " removed");
+        $http.delete("/user/"+user._id).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när användaren skulle tas bort!");
+            console.log(res);
+        });
+    }
+    function addUser(user,callback){
+        console.log("User ", user, " added");
+        $http.post("/user", user).then(function(res) {
+            callback(false, res.data);
+        }, function(res){
+            alert("Något gick fel när användaren skulle läggas till!");
+            console.log(res);
+            callback(true);
+        });
+    }
+
+    function updateCity(city){
+        $http.put('/city', city).then(function(res){
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när staden skulle uppdateras!");
+        });
+    }
+    function removeCity(city){
+        $http.delete("/city/"+city._id).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när staden skulle tas bort!");
+            console.log(res);
+        });
+    }
+    function addCity(city, callback){
+        $http.post("/city", city).then(function(res) {
+            callback(false, res.data);
+        }, function(res){
+            alert("Något gick fel när staden skulle läggas till!");
+            console.log(res);
+            callback(true);
+        });
+    }
+
+    function updateCompetition(comp){
+        $http.put('/competition', comp).then(function(res){
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när tävlingen skulle uppdateras!");
+        });
+    }
+    function removeCompetition(comp){
+        $http.delete("/competition/"+comp._id).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när tävlingen skulle tas bort!");
+            console.log(res);
+        });
+    }
+    function addCompetition(comp, callback){
+        $http.post("/competition", comp).then(function(res) {
+            callback(false, res.data);
+        }, function(res){
+            alert("Något gick fel när tävlingen skulle läggas till!");
+            console.log(res);
+            callback(true);
+        });
+    }
+
+    function updateTeam(team){
+        $http.put('/team', team).then(function(res){
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när laget skulle uppdateras!");
+        });
+    }
+    function removeTeam(team){
+        $http.delete("/team/"+team._id).then(function(res) {
+            // Do nothing
+        }, function(res){
+            alert("Något gick fel när laget skulle tas bort!");
+            console.log(res);
+        });
+    }
+    function addTeam(team, callback){
+        $http.post("/team", team).then(function(res) {
+            callback(false, res.data);
+        }, function(res){
+            alert("Något gick fel när laget skulle läggas till!");
+            console.log(res);
+            callback(true);
+        });
+    }
+    
     
 }]);
