@@ -1,6 +1,7 @@
 var fsm = require('./fsm');
 
 var MongoClient = require('mongodb').MongoClient
+var ObjectID = require('mongodb').ObjectID
 
 var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
@@ -14,10 +15,6 @@ MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
     });*/
 })
 
-// TODO: Should be a database call instead of here in source code
-var teams = [{id: 30, name: "Röde 2047", scores: [0,0,0,0,0,0,0,0]}, {id: 31, name: "Sami UU", scores: [0,0,0,0,0,0,0,0]}, {id: 32, name: "Peter LiU", scores: [0,0,0,0,0,0,0,0]}];
-
-    
 
 
 exports.replace_questions = function(competition_id, new_questions, callback) {
@@ -109,101 +106,102 @@ exports.get_answer = function(teamId, questionIndex, callback){
     });
 };
 
-exports.save_score = function(teamId, scores, callback){
-    // TODO: Save to database
-    for(var t = 0; t < teams.length; t++){
-        if(teams[t].id == teamId){
-            teams[t].scores = scores;
-            callback(false);
-            return;
-        }
-    }
-    console.log("Couldn't find a team with ID: " + req.body.team);
-    callback(true);
-}
 
 
-exports.get_team = function(teamId, callback){
-    for(var t = 0; t < teams.length; t++){
-        if(teams[t].id == teamId){
-            callback(false,teams[t]);
-            return;
-        }
-    }
-    callback(true,{});
+// -----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
+
+exports.get_users = function(callback) {
+    database.collection('users').find({}).toArray(function(err, result) {
+        callback(err, result);
+    });
 };
-
-
+exports.get_cities = function(callback) {
+    database.collection('cities').find({}).toArray(function(err, result) {
+        callback(err, result);
+    });
+};
+exports.get_competitions = function(callback) {
+    database.collection('competitions').find({}).toArray(function(err, result) {
+        callback(err, result);
+    });
+};
 exports.get_teams = function(competitionId, callback){
-    callback(false, teams);
+    database.collection('teams').find({competition: competitionId}).toArray(function(err, result) {
+        callback(err, result);
+    });
+};
+exports.get_team = function(teamId, callback){
+    database.collection('teams').find({_id: ObjectID(teamId)}).toArray(function(err, result) {
+        callback(err, result);
+    });
+};
+
+exports.update_user = function(user, callback) {
+    user._id =  ObjectID(user._id);
+    database.collection('users').update({_id: user._id}, user, function(err, result) {
+        callback(err);
+    });
+};
+exports.update_city = function(city, callback) {
+    city._id = ObjectID(city._id);
+    database.collection('cities').update({_id: city._id}, city, function(err, result) {
+        callback(err);
+    });
+};
+exports.update_competition = function(competition, callback) {
+    competition._id = ObjectID(competition._id);
+    database.collection('competitions').update({_id: competition._id}, competition, function(err, result) {
+        callback(err);
+    });
+};
+exports.update_team = function(team, callback){
+    team._id = ObjectID(team._id);
+    database.collection('teams').update({_id: team._id}, team, function(err, result) {
+        callback(err);
+    });
+};
+
+exports.add_user = function(user, callback) {
+    database.collection('users').insert(user, function(err, result) {
+        callback(err, result.insertedIds['0']);
+    });
+};
+exports.add_city = function(city, callback) {
+    database.collection('cities').insert(city, function(err, result) {
+        callback(err, result.insertedIds['0']);
+    });
+};
+exports.add_competition = function(competition, callback) {
+    database.collection('competitions').insert(competition, function(err, result) {
+        callback(err, result.insertedIds['0']);
+    });
+};
+exports.add_team = function(team, callback){
+    database.collection('teams').insert(team, function(err, result) {
+        callback(err, result.insertedIds['0']);
+    });
 };
 
 
-
-// -----------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------
-
-exports.create_user = function (name, callback) {
-  showsdb.insert({
-    name: name,
-    default: false,
-    created: new Date(),
-    keyframes: []
-  }, function (err) {
-    if (err) callback(err);
-    else exports.get_shows(callback);
-  });
+exports.delete_user = function(userId, callback) {
+    database.collection('users').remove({_id: ObjectID(userId)}, function(err, result) {
+        callback(err);
+    });
 };
-
-exports.delete_user = function (id, callback) {
-  showsdb.remove({ _id: id }, {}, function (err) {
-    if (err) callback(err);
-    else exports.get_shows(callback);
-  });
+exports.delete_city = function(cityId, callback) {
+    database.collection('cities').remove({_id: ObjectID(cityId)}, function(err, result) {
+        callback(err);
+    });
 };
-
-exports.get_users = function (callback) {
-  showsdb.find({}).sort({ created: -1 }).exec(function (err, shows) {
-    callback(err, shows.map(function (show) { return {
-      _id: show._id,
-      name: show.name,
-      default: show.default,
-      created: show.created
-    }}));
-  })
+exports.delete_competition = function(compId, callback) {
+    database.collection('competitions').remove({_id: ObjectID(compId)}, function(err, result) {
+        callback(err);
+    });
 };
-
-exports.copy_user = function (id, name, callback) {
-  showsdb.findOne({ _id: id }, function (err, show) {
-    if (err) callback(err);
-    else {
-      delete show["_id"];
-      show.default = false;
-      show.created = new Date();
-      show.name = name;
-      showsdb.insert(show, function (err) {
-        if (err) callback(err);
-        else exports.get_shows(callback);
-      });
-    }
-  });
-};
-
-exports.rename_user = function (id, name, callback) {
-  showsdb.update({ _id: id}, { $set: { name: name } }, {}, function (err) {
-    if (err) callback(err);
-    else exports.get_shows(callback);
-  });
-};
-
-exports.get_user = function (id, callback) {
-  showsdb.findOne({ _id: id }, callback);
-};
-
-exports.set_user = function (show, callback) {
-  showsdb.update({ _id: show._id }, show, {}, function (err) {
-    if (err) callback(err);
-    else exports.get_show(show._id, callback);
-  });
+exports.delete_team = function(teamId, callback){
+    database.collection('teams').remove({_id: ObjectID(teamId)}, function(err, result) {
+        callback(err);
+    });
 };
 

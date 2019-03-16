@@ -110,21 +110,42 @@ exports.interface = function (app) {
         });
     });
 
-
-    app.post('/competition/:id/scores/:team', function(req, res){
-        console.log('Update score for team '+req.body.team+' with: ' + req.body.scores);
-        db.save_score(req.body.team, req.body.scores, function(err){
-            if(err) {
-                res.status(400).json({'success': false});
-                throw err;
-                return;
-            }
-            publishScoresJudge(req.body);
-            res.status(200).json({'success': true});
-        });
+    app.post('/upload', multipartMiddleware, function(req, res) {
+        console.log(req.body, req.files);
+        if(req.body.file == 'null'){
+            console.log("Failed to upload image")
+            res.status(500).json({'success': false});
+            return
+        }
+        // don't forget to delete all req.files when done
+        var file = req.files.file;
+        console.log(file.name);
+        console.log(file.type);
+        res.status(200).json({'success': true, 'path': file.path.substr(7)});
     });
 
 
+
+
+
+    app.get('/users', function(req, res){
+        db.get_users(function(err, users){
+            if(err) throw err;
+            res.status(200).json(users);
+        });
+    });
+    app.get('/competitions', function(req, res){
+        db.get_competitions(function(err, competitions){
+            if(err) throw err;
+            res.status(200).json(competitions);
+        });
+    });
+    app.get('/cities', function(req, res){
+        db.get_cities(function(err, cities){
+            if(err) throw err;
+            res.status(200).json(cities);
+        });
+    });
     app.get('/competition/:id/teams', function(req, res){
         db.get_teams(req.params.id, function(err, teams){
             if (err) throw err;
@@ -133,9 +154,6 @@ exports.interface = function (app) {
             res.status(200).json(teams);
         });
     });
-
-
-
     app.get('/team/:team', function(req, res){
         var teamId = parseInt(req.params.team)
         if(!teamId){
@@ -151,21 +169,88 @@ exports.interface = function (app) {
                 res.status(200).json(team);
             }
         });
-        
-    });
-    
-    app.post('/upload', multipartMiddleware, function(req, res) {
-        console.log(req.body, req.files);
-        if(req.body.file == 'null'){
-            console.log("Failed to upload image")
-            res.status(500).json({'success': false});
-            return
-        }
-        // don't forget to delete all req.files when done
-        var file = req.files.file;
-        console.log(file.name);
-        console.log(file.type);
-        res.status(200).json({'success': true, 'path': file.path.substr(7)});
     });
 
+    
+    app.put('/user', function(req, res){
+        db.update_user(req.body, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.put('/competition', function(req, res){
+        db.update_competition(req.body, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.put('/city', function(req, res){
+        db.update_city(req.body, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.put('/team', function(req, res){
+        console.log('Update team '+req.body);
+        db.update_team(req.body, function(err){
+            if(err) throw err;
+            publishScoresJudge(req.body); // TODO: Flag for when sending this info!?
+            res.status(200).json({'success': true});
+        });
+    });   
+    
+    app.delete('/user/:id', function(req, res){
+        console.log(req.params.id);
+        db.delete_user(req.params.id, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.delete('/competition/:id', function(req, res){
+        db.delete_competition(req.params.id, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.delete('/city/:id', function(req, res){
+        db.delete_city(req.params.id, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+    app.delete('/team/:id', function(req, res){
+        db.delete_team(req.params.id, function(err){
+            if(err) throw err;
+            res.status(200).json({'success': true});
+        });
+    });
+
+    
+    app.post('/user', function(req, res){
+        db.add_user(req.body, function(err,id){
+            if(err) throw err;
+            res.status(200).json(id);
+        });
+    });
+    app.post('/competition', function(req, res){
+        db.add_competition(req.body, function(err,id){
+            if(err) throw err;
+            res.status(200).json(id);
+        });
+    });
+    app.post('/city', function(req, res){
+        db.add_city(req.body, function(err,id){
+            if(err) throw err;
+            res.status(200).json(id);
+        });
+    });
+    app.post('/team', function(req, res){
+        console.log("save team: ", req.body);
+        db.add_team(req.body, function(err, id){
+            if(err) throw err;
+            res.status(200).json(id);
+        });
+    });
+    
 };
+
