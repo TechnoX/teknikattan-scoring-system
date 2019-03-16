@@ -86,18 +86,6 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/answer/:team', function(req, res){
-        db.get_slide(req.params.id, 0, function(err, slide){
-            if (err) throw err;
-            db.get_answer(teamId, slide.number, function(err, result){
-                if (err) throw err;
-                console.log("Got response from answer database: ");
-                console.log(result);
-                res.status(200).json(result[0]);
-            });
-        });
-    });
-
     app.post('/upload', multipartMiddleware, function(req, res) {
         console.log(req.body, req.files);
         if(req.body.file == 'null'){

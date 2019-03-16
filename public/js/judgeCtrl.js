@@ -14,19 +14,6 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         if(resp.data){
             $scope.teams = resp.data;
             console.log("Set teams to ", $scope.teams);
-            console.log($scope.teams);
-            // Loads answers
-            angular.forEach($scope.teams, function(team, index){
-                $http.get('/competition/'+competition_id+'/answer/'+team._id).then(function(resp) {
-                    console.log(team);
-                    if(resp.data.answers){
-                        team.answer = resp.data.answers;
-                    }else{
-                        team.answer = [];
-                    }
-                    console.log("answer", team.answer);
-                });
-            });
         }
     });
     
@@ -64,19 +51,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         if(msg !== competition_id){
             return;
         }
-        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
-            // ... get associated answers
-            angular.forEach($scope.teams, function(team, index){
-                $http.get('/competition/'+competition_id+'/answer/'+team._id).then(function(resp) {
-                    if(resp.data.answers){
-                        team.answer = resp.data.answers;
-                    }else{
-                        team.answer = [];
-                    }
-                    console.log("answer", team.answer);
-                });
-            });
-            
+        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {            
             if(resp.data.state == 'beforeanswer' || resp.data.state == 'answer')
                 return;
             $scope.view = resp.data;

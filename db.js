@@ -102,14 +102,6 @@ exports.save_answer = function(teamId, questionIndex, answers, callback){
 }
 
 
-exports.get_answer = function(teamId, questionIndex, callback){
-    database.collection('teams').findOne({_id: ObjectID(teamId)}, function(err, result) {
-        callback(err, result.answers[questionIndex]);
-    });
-};
-
-
-
 // -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------
 

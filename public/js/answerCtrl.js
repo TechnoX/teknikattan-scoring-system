@@ -78,15 +78,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         console.log(resp.data);
     });
 
-    $http.get('/competition/'+competition_id+'/answer/'+team_id).then(function(resp) {
-        if(resp.data.answers){
-            $scope.answer = resp.data.answers;
-        }else{
-            $scope.answer = [];
-        }
-        console.log("answer",$scope.answer);
-    });
-
     
     socket.on('view_changed', function(msg){
         // Not affecting this page
@@ -101,14 +92,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             }else{
                 $scope.timesUp = false;
             }
-            $http.get('/competition/'+competition_id+'/answer/'+team_id).then(function(resp) {
-                if(resp.data.answers){
-                    $scope.answer = resp.data.answers;
-                }else{
-                    $scope.answer = [];
-                }
-                console.log("answer",$scope.answer);
-            });
         });
     });
 
