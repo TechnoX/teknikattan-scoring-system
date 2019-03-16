@@ -75,7 +75,7 @@ exports.interface = function(io) {
 };
 
 exports.get_timesup = function(competition_id){
-    return timers[competition_id].timesup;
+    return timers[competition_id] && timers[competition_id].timesup;
 }
 
 function previousPressed(competition_id){
