@@ -20,8 +20,7 @@ function publishAnswer(msg){
 exports.interface = function (app) {
     //app.use(multipart({uploadDir: config.tmp }));
 
-    app.put('/competition/:id/questions', function(req, res){
-        
+    app.put('/competition/:id/questions', function(req, res){        
         db.replace_questions(req.params.id, req.body, function (err) {
             if (err) res.sendStatus(500);
             else {
@@ -246,10 +245,9 @@ exports.interface = function (app) {
         });
     });
     app.post('/team', function(req, res){
-        console.log("save team: ", req.body);
-        db.add_team(req.body, function(err, id){
+        db.add_team(req.body, function(err, team){
             if(err) throw err;
-            res.status(200).json(id);
+            res.status(200).json(team);
         });
     });
     

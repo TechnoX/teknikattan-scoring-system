@@ -150,11 +150,10 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         updateTeam(team);
     }
     $scope.addTeam = function(){
-        var newTeam = {competition: compId, name: "", scores: []}
-        addTeam(newTeam, function(err, id){
+        var newTeam = {competition: compId, name: "", scores: [], answers: []}
+        addTeam(newTeam, function(err, team){
             if(err)return;
-            newTeam._id = id;
-            $scope.teams.push(newTeam);
+            $scope.teams.push(team);
         });
     }
 

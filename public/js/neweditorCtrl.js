@@ -31,6 +31,9 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
     });
     
     $scope.save = function(question){
+        if(!confirm("Om någon har svarat på frågorna så försvinner deras svar när du uppdaterar frågorna. Vill du verkligen göra uppdateringar av frågorna?" )){
+            return false;
+        }
         if(!$scope.correct()){
             return false;
         }

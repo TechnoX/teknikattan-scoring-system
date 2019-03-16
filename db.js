@@ -28,6 +28,12 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
             }else {
                 console.log('saved all questions to database');
 
+                // Set length of scores and answers arrays in the teams belonging to this competition
+                var scores = Array(new_questions.length).fill(0);
+                var answers = Array(new_questions.length).fill([]);
+                database.collection('teams').update({competition: competition_id}, {$set: {answers: answers, scores: scores}}, {multi: true}, function(err, result){
+                    if(err) throw err;
+                });
 
                 var slideshow = fsm.create_slideshow(competition_id, new_questions);
 
@@ -94,15 +100,17 @@ exports.get_questions = function(competition_id, callback) {
 };
 
 exports.save_answer = function(teamId, questionIndex, answers, callback){
-    database.collection('answers').update({team: teamId, question: questionIndex}, {team: teamId, question: questionIndex, answers: answers}, {upsert: true}, function(err, result) {
+    var values= {}
+    values["answers."+questionIndex] = answers;
+    database.collection('teams').update({_id: ObjectID(teamId)}, {$set: values}, function(err, result) {
         callback(err);
     });
 }
 
 
 exports.get_answer = function(teamId, questionIndex, callback){
-    database.collection('answers').find({team: teamId, question: questionIndex}).toArray(function(err, result) {
-        callback(err, result);
+    database.collection('teams').findOne({_id: ObjectID(teamId)}, function(err, result) {
+        callback(err, result.answers[questionIndex]);
     });
 };
 
