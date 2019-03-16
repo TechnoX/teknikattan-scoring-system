@@ -75,12 +75,6 @@ exports.interface = function (app) {
     });
 
     app.post('/competition/:id/answer/:team', function(req, res){    
-        var teamId = parseInt(req.params.team)
-        if(!teamId){
-            console.log("Team ID " + req.params.team + " is not an integer");
-            res.status(400).json();
-            return;
-        }
         publishAnswer(req.body);
         db.get_slide(req.params.id, 0, function(err, slide){
             if (err) throw err;
@@ -93,12 +87,6 @@ exports.interface = function (app) {
     });
 
     app.get('/competition/:id/answer/:team', function(req, res){
-        var teamId = parseInt(req.params.team)
-        if(!teamId){
-            console.log("Team ID " + req.params.team + " is not an integer");
-            res.status(400).json();
-            return;
-        }
         db.get_slide(req.params.id, 0, function(err, slide){
             if (err) throw err;
             db.get_answer(teamId, slide.number, function(err, result){
@@ -155,15 +143,8 @@ exports.interface = function (app) {
         });
     });
     app.get('/team/:team', function(req, res){
-        var teamId = parseInt(req.params.team)
-        if(!teamId){
-            console.log("Team ID " + req.params.team + " is not an integer");
-            res.status(400).json();
-            return;
-        }
-        db.get_team(teamId, function(err, team){
+        db.get_team(req.params.team, function(err, team){
             if(err){
-                console.log("Couldn't find team with ID: " + teamId);
                 res.status(400).json();
             }else{
                 res.status(200).json(team);
