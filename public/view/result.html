@@ -9,7 +9,7 @@
         <th>Fråga</th>
         <th ng-repeat="team in teams">{{team.name}}</th>
       </tr>
-      <tr ng-repeat="q in [0,1,2,3,4,5,6,7]">
+      <tr ng-repeat="q in teams[0].scores track by $index">
         <td>{{$index + 1}}</td>
         <td ng-repeat="team in teams track by $index" highlighter="teams[$index].scores[$parent.$index]">{{teams[$index].scores[$parent.$index]}}</td>
       </tr>
