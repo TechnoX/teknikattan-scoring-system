@@ -64,7 +64,7 @@ exports.get_slide = function(competition_id, offset = 0, callback){
             if(index+offset < result.length && index+offset >= 0){
                 callback(false, result[index+offset]);
             }else{
-                callback("Index out of bounds! Index: " + (index+offset));
+                callback(true,"Index out of bounds! Index: " + (index+offset));
             }
         });
     });
