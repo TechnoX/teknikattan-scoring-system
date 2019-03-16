@@ -180,9 +180,19 @@ exports.add_competition = function(competition, callback) {
     });
 };
 exports.add_team = function(team, callback){
-    database.collection('teams').insert(team, function(err, result) {
-        callback(err, result.insertedIds['0']);
+    
+    database.collection('questions').count({competition: team.competition}, function(err, result){
+        if(err) throw err;
+        console.log("Antal frågor: " + result);
+        team.scores = Array(result).fill(0);
+        team.answers = Array(result).fill([]);
+
+        database.collection('teams').insert(team, function(err, result) {
+            callback(err, result.ops[0]);
+        });
+        
     });
+    
 };
 
 
