@@ -142,7 +142,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     $scope.removeTeam = function(team){
         if(confirm("Vill du verkligen ta bort " + team.name)){
             removeTeam(team);
-            $scope.teams = $scope.teamss.filter(x => x._id !== team._id);
+            $scope.teams = $scope.teams.filter(x => x._id !== team._id);
         }
     }
     $scope.editTeam = function(team){
