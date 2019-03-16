@@ -4,7 +4,7 @@ app.controller('audienceCtrl', ['$scope', '$http', function($scope, $http){
     socket.on('scoring', function(msg){
         console.log("Got scoring msg: ", msg);
         $scope.$apply(function () {
-            if(msg.id == $scope.team.id){
+            if(msg.id == $scope.team._id){
                 $scope.team.scores = msg.scores;
                 console.log("Update score for team ", $scope.team.name);
             }

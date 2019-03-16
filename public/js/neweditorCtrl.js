@@ -1,5 +1,5 @@
 app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal', function ($scope, $http, $routeParams, $uibModal) {
-    var competition_id = parseInt($routeParams.id);
+    var competition_id = $routeParams.id;
     $scope.slideIndex = 0;
     $scope.questionIndex = 0;
     switch($routeParams.medium){
@@ -88,7 +88,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
     }
     $scope.addQuestion = function () {
         var index = $scope.index($scope.currQuestion);
-        var question = {competition: parseInt(competition_id),
+        var question = {competition: competition_id,
                         title: "TitelPåFråga",
                         type: "normal",
                         hints: [],

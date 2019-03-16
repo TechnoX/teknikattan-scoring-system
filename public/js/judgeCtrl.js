@@ -17,7 +17,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
             console.log($scope.teams);
             // Loads answers
             angular.forEach($scope.teams, function(team, index){
-                $http.get('/competition/'+competition_id+'/answer/'+team.id).then(function(resp) {
+                $http.get('/competition/'+competition_id+'/answer/'+team._id).then(function(resp) {
                     console.log(team);
                     if(resp.data.answers){
                         team.answer = resp.data.answers;
@@ -39,7 +39,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     }
     
     $scope.saveScoring = function(team){        
-        $http.post("/competition/"+competition_id+"/scores/"+team.id, {'team': team.id, 'scores': team.scores}).then(function(res) {
+        $http.post("/competition/"+competition_id+"/scores/"+team._id, {'team': team._id, 'scores': team.scores}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när poängen skulle sparas!");
@@ -51,7 +51,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     
     socket.on('answer', function(msg){
         angular.forEach($scope.teams, function(team, index){
-            if(msg.team == team.id){
+            if(msg.team == team._id){
                 $scope.$applyAsync(function () {
                     team.answer = msg.answers;
                     console.log("answer", msg.answers);
@@ -67,7 +67,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
             // ... get associated answers
             angular.forEach($scope.teams, function(team, index){
-                $http.get('/competition/'+competition_id+'/answer/'+team.id).then(function(resp) {
+                $http.get('/competition/'+competition_id+'/answer/'+team._id).then(function(resp) {
                     if(resp.data.answers){
                         team.answer = resp.data.answers;
                     }else{
