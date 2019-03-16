@@ -125,8 +125,6 @@ exports.interface = function (app) {
     app.get('/competition/:id/teams', function(req, res){
         db.get_teams(req.params.id, function(err, teams){
             if (err) throw err;
-            console.log("Got response from teams database: ");
-            console.log(teams);
             res.status(200).json(teams);
         });
     });
