@@ -7,12 +7,6 @@ var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
     if (err) throw err
     database = db.db('teknikattan');
-
-    /*
-    database.collection('questions').find().toArray(function(err, result) {
-        if (err) throw err;
-        fsm.set_questions(result);
-    });*/
 })
 
 
