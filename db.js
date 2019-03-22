@@ -83,7 +83,8 @@ exports.increase_index = function(competition_id, callback){
 }
 
 exports.decrease_index = function(competition_id, callback){
-    index--;
+    if(index>0)
+        index--;
     callback(false);
 }
 
