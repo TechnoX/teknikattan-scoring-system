@@ -139,6 +139,10 @@ article h3{
 }
 article main li, article aside li{
     margin-bottom: 0.8em;
+    list-style: disc inside;
+}
+article.answer li{
+    list-style: none;
 }
 
 article th, article td{
@@ -197,6 +201,7 @@ article > aside{
 .hint{
     font-size: 2em;
     margin-bottom: 1em;
+    list-style: none;
 }
 .statement{
     font-size: 2em;
