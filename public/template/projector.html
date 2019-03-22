@@ -21,7 +21,7 @@
       </ol>
     </div>
     <div ng-show="view.state == 'statements'">
-      <span class="statement">{{view.statement}}</span>
+      <span class="statement" ng-bind-html="view.statement"></span>
     </div>
     <div ng-show="view.state == 'quiz'">
       <h2>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</h2>
