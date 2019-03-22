@@ -33,7 +33,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
 
                 database.collection('slideshow').remove({competition: competition_id}, function(err, result) {
                     if (err) callback(err);
-                    console.log('removed all views from slideshow');                    
+                    console.log('removed all views from slideshow');
                     database.collection('slideshow').insertMany(slideshow, function(err, result) {
                         if (err){
                             callback(err);
