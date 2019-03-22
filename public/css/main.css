@@ -199,12 +199,10 @@ article > aside{
     float: left;
 }
 .hint{
-    font-size: 2em;
     margin-bottom: 1em;
     list-style: none;
 }
 .statement{
-    font-size: 2em;
     text-align: center;
     display: block;
     padding-top: 10%;
