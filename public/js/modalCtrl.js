@@ -39,9 +39,9 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questio
         array.splice(index, 1);
     }
 
-    $scope.add = function(array, subquestion,length){
+    $scope.add = function(array, subquestion, length){
         if(subquestion){
-            array.push({type: 'text', alternatives: [], multiple: false, show: Array(length).fill(true)});
+            array.push({type: 'text', label: "Delfråga "+(array.length+1), alternatives: [], multiple: false, show: Array(length).fill(true)});
         }else{
             array.push('');
         }
