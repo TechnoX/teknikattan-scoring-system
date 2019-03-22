@@ -200,7 +200,7 @@ exports.interface = function (app) {
         });
     });
     app.post('/competition', function(req, res){
-        db.add_competition(req.body, function(err,id){
+        db.add_competition(req.body.info, req.body.cloned_from, function(err,id){
             if(err) throw err;
             res.status(200).json(id);
         });

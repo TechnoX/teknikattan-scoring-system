@@ -167,9 +167,25 @@ exports.add_city = function(city, callback) {
         callback(err, result.insertedIds['0']);
     });
 };
-exports.add_competition = function(competition, callback) {
+exports.add_competition = function(competition, cloned_from_compId, callback) {
     database.collection('competitions').insert(competition, function(err, result) {
-        callback(err, result.insertedIds['0']);
+        var new_compId = result.insertedIds['0'];
+        
+        if(cloned_from_compId){
+            database.collection('questions').find({competition: cloned_from_compId}).toArray(function(err, questions) {
+                if(err) throw err;
+                
+                for(var i = 0; i < questions.length; i++){
+                    questions[i].competition = new_compId;
+                }
+                exports.replace_questions(new_compId, questions, function(err, result){
+                    if(err) throw err;
+                    callback(err, new_compId);
+                });
+            });
+        }else{
+            callback(err, new_compId);
+        }
     });
 };
 exports.add_team = function(team, callback){

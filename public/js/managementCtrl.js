@@ -119,8 +119,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         var newComp;
         newComp = angular.copy(comp);
         newComp.lastEdited = (new Date()).toISOString();
-        newComp._id = undefined; // Need to generate a new database entry!
-        addCompetition(newComp, function(err, id){
+        addCompetition(newComp, comp._id, function(err, id){
             if(err)return;
             newComp._id = id;
             $scope.competitions.push(newComp);
@@ -129,7 +128,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     
     $scope.addCompetition = function(){
         var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString()};
-        addCompetition(newComp, function(err, id){
+        addCompetition(newComp, undefined, function(err, id){
             if(err)return;
             newComp._id = id;
             $scope.competitions.push(newComp);
@@ -227,8 +226,12 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
             console.log(res);
         });
     }
-    function addCompetition(comp, callback){
-        $http.post("/competition", comp).then(function(res) {
+    function addCompetition(comp, from, callback){
+        var data = {info: comp};
+        if(from){
+            data.cloned_from = from;
+        }
+        $http.post("/competition", data).then(function(res) {
             callback(false, res.data);
         }, function(res){
             alert("Något gick fel när tävlingen skulle läggas till!");
