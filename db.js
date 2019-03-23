@@ -5,7 +5,7 @@ var ObjectID = require('mongodb').ObjectID
 
 var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
-    if (err) throw err
+    if (err) callback(err);
     database = db.db('teknikattan');
 })
 
@@ -26,7 +26,7 @@ exports.replace_questions = function(competition_id, new_questions, callback) {
                 var scores = Array(new_questions.length).fill(0);
                 var answers = Array(new_questions.length).fill([]);
                 database.collection('teams').update({competition: competition_id}, {$set: {answers: answers, scores: scores}}, {multi: true}, function(err, result){
-                    if(err) throw err;
+                    if(err) callback(err);
                 });
 
                 var slideshow = fsm.create_slideshow(competition_id, new_questions);
@@ -58,9 +58,9 @@ exports.get_slideshow = function(competition_id, callback) {
 
 exports.get_slide = function(competition_id, offset = 0, callback){ 
     exports.get_index(competition_id, function(err, index){
-        if (err) throw err;
+        if (err) callback(err);
         exports.get_slideshow(competition_id, function(err, result){
-            if (err) throw err;
+            if (err) callback(err);
             if(index+offset < result.length && index+offset >= 0){
                 callback(false, result[index+offset]);
             }else{
@@ -173,13 +173,13 @@ exports.add_competition = function(competition, cloned_from_compId, callback) {
         
         if(cloned_from_compId){
             database.collection('questions').find({competition: cloned_from_compId}).toArray(function(err, questions) {
-                if(err) throw err;
+                if(err) callback(err);
                 
                 for(var i = 0; i < questions.length; i++){
                     questions[i].competition = new_compId;
                 }
                 exports.replace_questions(new_compId, questions, function(err, result){
-                    if(err) throw err;
+                    if(err) callback(err);
                     callback(err, new_compId);
                 });
             });
@@ -191,7 +191,7 @@ exports.add_competition = function(competition, cloned_from_compId, callback) {
 exports.add_team = function(team, callback){
     
     database.collection('questions').count({competition: team.competition}, function(err, result){
-        if(err) throw err;
+        if(err) callback(err);
         console.log("Antal frågor: " + result);
         team.scores = Array(result).fill(0);
         team.answers = Array(result).fill([]);
