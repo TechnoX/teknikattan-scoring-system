@@ -8,6 +8,18 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+
+
+app.post('/login', function(req, res){
+    console.log(req.body)
+    auth.login(req, res);
+});
+
 app.get('/login', function(req, res){
     res.sendFile(__dirname + '/public/login.html');
 });
@@ -16,11 +28,6 @@ app.use(auth.checkToken);
 
 // Handles static data
 app.use(express.static(__dirname + '/public'));
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
 
 
 socket.interface(io);
