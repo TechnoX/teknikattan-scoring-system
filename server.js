@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// Handles static data
+app.use(express.static(__dirname + '/public'));
 
 
 // Place login endpoint before the auth check token middleware
@@ -20,8 +22,6 @@ app.post('/login', function(req, res){
     auth.login(req, res);
 });
 
-// Handles static data
-app.use(express.static(__dirname + '/public'));
 
 
 app.use(auth.checkToken);
