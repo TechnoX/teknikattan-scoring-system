@@ -29,6 +29,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     $scope.cities = [];
     $http.get('/cities').then(function(resp) {
         $scope.cities = resp.data;
+        $scope.newCity = $scope.cities[0]._id;
     });
     
     $scope.editPassword = function(user){
@@ -60,7 +61,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
             newUser._id = id;
             $scope.users.push(newUser);
             $scope.newName = "";
-            $scope.newCity = "5c8d4b84ad225235d0178b95";
+            $scope.newCity = $scope.cities[0]._id;
         });
         
     }
@@ -79,17 +80,17 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
 
     $scope.addCity = function(){
         for(var i = 0; i < $scope.cities.length; i+=1){
-            if($scope.cities[i].name == $scope.newCity){
-                alert($scope.newCity + " finns redan. Välj ett annat namn.");
+            if($scope.cities[i].name == $scope.newName){
+                alert($scope.newName + " finns redan. Välj ett annat namn.");
                 return;
             }
         }
-        var newCity = {name: $scope.newCity};
+        var newCity = {name: $scope.newName};
         addCity(newCity, function(err, id){
             if(err)return;
             newCity._id = id;
             $scope.cities.push(newCity);
-            $scope.newCity = "";
+            $scope.newName = "";
         });
     }
 
@@ -134,7 +135,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
             newComp._id = id;
             $scope.competitions.push(newComp);
             $scope.newName = "";
-            $scope.newCity = "5c8d4b84ad225235d0178b95";
+            $scope.newCity = $scope.cities[0]._id;
         });        
     }
 

@@ -18,7 +18,7 @@
     <tr>
       <td><input type="text" ng-model="newName" ng-required></td>
       <td>
-        <select ng-model="newCity" ng-required ng-init="newCity = 0">
+        <select ng-model="newCity" ng-required>
           <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
         </select>
       </td>
