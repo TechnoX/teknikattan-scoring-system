@@ -128,7 +128,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
     
     $scope.addCompetition = function(){
-        var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString()};
+        var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString(), index: 0};
         addCompetition(newComp, undefined, function(err, id){
             if(err)return;
             newComp._id = id;
