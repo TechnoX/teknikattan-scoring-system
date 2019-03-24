@@ -111,7 +111,7 @@ exports.interface = function (app) {
 
 
     app.get('/users', function(req, res){
-        db.get_users(function(err, users){
+        db.get_users(req.decoded.city, function(err, users){
             if(err){
                 console.error(err);
                 return res.status(500).send(err);
@@ -120,7 +120,7 @@ exports.interface = function (app) {
         });
     });
     app.get('/competitions', function(req, res){
-        db.get_competitions(function(err, competitions){
+        db.get_competitions(req.decoded.city, function(err, competitions){
             if(err){
                 console.error(err);
                 return res.status(500).send(err);
@@ -129,7 +129,7 @@ exports.interface = function (app) {
         });
     });
     app.get('/cities', function(req, res){
-        db.get_cities(function(err, cities){
+        db.get_cities(req.decoded.city, function(err, cities){
             if(err){
                 console.error(err);
                 return res.status(500).send(err);

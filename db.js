@@ -112,20 +112,38 @@ exports.check_user = function(name, password, callback) {
         return callback(err, result);
     });
 };
-exports.get_users = function(callback) {
-    database.collection('users').find({}).toArray(function(err, result) {
-        return callback(err, result);
-    });
+exports.get_users = function(city, callback) {
+    if(city == "5c8d4b84ad225235d0178b95"){
+        database.collection('users').find({}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }else{
+        database.collection('users').find({city: city}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }
 };
-exports.get_cities = function(callback) {
-    database.collection('cities').find({}).toArray(function(err, result) {
-        return callback(err, result);
-    });
+exports.get_cities = function(city, callback) {
+    if(city == "5c8d4b84ad225235d0178b95"){
+        database.collection('cities').find({}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }else{
+        database.collection('cities').find({_id: ObjectID(city)}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }
 };
-exports.get_competitions = function(callback) {
-    database.collection('competitions').find({}).toArray(function(err, result) {
-        return callback(err, result);
-    });
+exports.get_competitions = function(city, callback) {
+    if(city == "5c8d4b84ad225235d0178b95"){
+        database.collection('competitions').find({}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }else{
+        database.collection('competitions').find({city: city}).toArray(function(err, result) {
+            return callback(err, result);
+        });
+    }
 };
 exports.get_teams = function(competitionId, callback){
     database.collection('teams').find({competition: competitionId}).toArray(function(err, result) {
