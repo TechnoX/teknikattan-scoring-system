@@ -12,15 +12,14 @@ app.controller('loginCtrl', ['$scope', '$http', function($scope, $http){
     }
  
     $scope.login = function(){
-        console.log("Send data: ", $scope.data);
         $http.post("/login", $scope.data).then(function(res) {
             if(res.data.success){
                 localStorage.setItem("t8_token", res.data.token);
                 $scope.isAuthenticated = true;
-                console.log("response", res.data);
+                console.log("Logged in", res.data);
             }
         }, function(res){
-            console.log(res.data);
+            console.log("Failed", res.data);
             alert("Fel inloggningsuppgifter!");
         });
     }

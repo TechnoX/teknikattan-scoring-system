@@ -29,7 +29,6 @@ let checkToken = (req, res, next) => {
 };
 
 let login = (req, res) => {
-    console.log(req.body);
     let username = req.body.username;
     let password = req.body.password;
     // For the given username fetch user from DB

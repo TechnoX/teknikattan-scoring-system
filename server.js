@@ -15,14 +15,10 @@ app.use(bodyParser.json())
 
 
 
+// Place login endpoint before the auth check token middleware
 app.post('/login', function(req, res){
-    console.log(req.body)
     auth.login(req, res);
 });
-/*
-app.get('/login', function(req, res){
-    res.sendFile(__dirname + '/public/login.html');
-});*/
 
 // Handles static data
 app.use(express.static(__dirname + '/public'));
