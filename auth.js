@@ -11,7 +11,7 @@ let checkToken = (req, res, next) => {
 
         jwt.verify(token, config.secret, (err, decoded) => {
             if (err) {
-                return res.redirect("/login");/*status(401).json({
+                return res.redirect("/login.html");/*status(401).json({
                     success: false,
                     message: 'Token is not valid'
                 });*/
@@ -21,7 +21,7 @@ let checkToken = (req, res, next) => {
             }
         });
     } else {
-        return res.redirect("/login");/*status(401).json({
+        return res.redirect("/login.html");/*status(401).json({
             success: false,
             message: 'Auth token is not supplied'
         });*/

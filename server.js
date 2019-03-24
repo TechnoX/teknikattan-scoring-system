@@ -19,16 +19,16 @@ app.post('/login', function(req, res){
     console.log(req.body)
     auth.login(req, res);
 });
-
+/*
 app.get('/login', function(req, res){
     res.sendFile(__dirname + '/public/login.html');
-});
-
-app.use(auth.checkToken);
+});*/
 
 // Handles static data
 app.use(express.static(__dirname + '/public'));
 
+
+app.use(auth.checkToken);
 
 socket.interface(io);
 rest.interface(app);
