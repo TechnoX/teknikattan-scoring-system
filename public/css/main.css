@@ -405,8 +405,13 @@ article > footer > section{
 .management table{
     margin-bottom: 2em;
 }
-
-
+.management ul{
+    list-style: disc;
+    padding-left: 40px;
+}
+.management li{
+    margin-bottom: 0.5em;
+}
 .change-slide-button{
     background-color: #4CAF50; /* Green */
     border: none;
