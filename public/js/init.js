@@ -77,6 +77,5 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
 
 app.run(function(authManager) {
     authManager.checkAuthOnRefresh();
-
-    //authManager.redirectWhenUnauthenticated();
+    authManager.redirectWhenUnauthenticated();
 });
