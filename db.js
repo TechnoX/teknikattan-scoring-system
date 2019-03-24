@@ -169,7 +169,7 @@ exports.add_city = function(city, callback) {
 };
 exports.add_competition = function(competition, cloned_from_compId, callback) {
     database.collection('competitions').insert(competition, function(err, result) {
-        var new_compId = result.insertedIds['0'];
+        var new_compId = result.insertedIds['0'] + "";
         
         if(cloned_from_compId){
             database.collection('questions').find({competition: cloned_from_compId}).toArray(function(err, questions) {
