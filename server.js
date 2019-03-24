@@ -1,12 +1,18 @@
 var db = require('./db');
 var socket = require('./socket');
 var rest = require('./rest');
-
+var auth = require('./auth');
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
+
+app.get('/login', function(req, res){
+    res.sendFile(__dirname + '/public/login.html');
+});
+
+app.use(auth.checkToken);
 
 // Handles static data
 app.use(express.static(__dirname + '/public'));
