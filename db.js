@@ -174,9 +174,9 @@ exports.add_competition = function(competition, cloned_from_compId, callback) {
         if(cloned_from_compId){
             database.collection('questions').find({competition: cloned_from_compId}).toArray(function(err, questions) {
                 if(err) return callback(err);
-                
                 for(var i = 0; i < questions.length; i++){
                     questions[i].competition = new_compId;
+                    delete questions[i]._id;
                 }
                 exports.replace_questions(new_compId, questions, function(err, result){
                     if(err) return callback(err);
