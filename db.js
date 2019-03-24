@@ -107,7 +107,11 @@ exports.save_answer = function(teamId, questionIndex, answers, callback){
 
 // -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------
-
+exports.check_user = function(name, password, callback) {
+    database.collection('users').findOne({name: name, password: password}, function(err, result) {
+        return callback(err, result);
+    });
+};
 exports.get_users = function(callback) {
     database.collection('users').find({}).toArray(function(err, result) {
         return callback(err, result);
