@@ -5,7 +5,7 @@ var ObjectID = require('mongodb').ObjectID
 
 var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
-    if (err) callback(err);
+    if (err) throw err;
     database = db.db('teknikattan');
 })
 
