@@ -1,10 +1,11 @@
 
-var app = angular.module('t8', ['ngRoute', 'ngSanitize', 'ngFileUpload','ui.bootstrap', 'ui.tinymce']);
+var app = angular.module('t8', ['ngRoute', 'ngSanitize', 'ngFileUpload','ui.bootstrap', 'ui.tinymce', 'angular-jwt']);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptionsProvider) {
   $routeProvider
   .when('/', {
-    templateUrl: 'view/home.html'
+      templateUrl: 'view/home.html',
+      controller: 'loginCtrl'
   })
   .when('/users', {
     templateUrl: 'view/users.html',
@@ -61,4 +62,21 @@ app.config(function($routeProvider, $locationProvider) {
 
   // configure html5 to get links working on jsfiddle
   //$locationProvider.html5Mode(true);
+
+    jwtOptionsProvider.config({
+        tokenGetter: [function() {
+            //myService.doSomething();
+            return localStorage.getItem('t8_token');
+        }],
+        unauthenticatedRedirectPath: '/'
+    });
+
+  $httpProvider.interceptors.push('jwtInterceptor');
+});
+
+
+app.run(function(authManager) {
+    authManager.checkAuthOnRefresh();
+
+    //authManager.redirectWhenUnauthenticated();
 });
