@@ -119,6 +119,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         var newComp;
         newComp = angular.copy(comp);
         newComp.lastEdited = (new Date()).toISOString();
+        newComp._id = undefined;
         addCompetition(newComp, comp._id, function(err, id){
             if(err)return;
             newComp._id = id;
