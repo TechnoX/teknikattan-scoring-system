@@ -68,7 +68,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
     var competition_id = $routeParams.id;
     var team_id = $routeParams.team;
     $scope.timesUp = false;
-    
+    console.log("Beginning");;
     $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
         console.log(resp.data);
@@ -114,7 +114,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         }
     });
 
-    
+        
     $scope.$watch('answer', function(newValue, oldValue, scope) {
         // If the new value is not updated, just re-assigned, do not save it
         if(!$scope.view || newValue === undefined || newValue.length == 0)
@@ -127,6 +127,16 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             console.log(res);
         });
     }, true);
-    
+
+    var endpointOptions = { isSource:true, isTarget:true }; 
+    var window3Endpoint = jsPlumb.addEndpoint('Symaskin', { anchor:"Top" }, endpointOptions);
+    var window4Endpoint = jsPlumb.addEndpoint('Kedjespännare', { anchor:"BottomCenter" }, endpointOptions);
+    console.log("Körs detta?");
+    jsPlumb.connect({ 
+        source:window3Endpoint,
+        target:window4Endpoint,
+        connector: [ "Bezier", { curviness:175 } ],
+        paintStyle:{ strokeWidth:25, stroke:'yellow' }
+    });  
     
 }]);
