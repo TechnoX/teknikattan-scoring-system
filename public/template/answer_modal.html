@@ -46,10 +46,12 @@
   <section ng-show="answer.type == 'multi'">
     <ol>
       <li ng-repeat="sq in answer.subQuestions track by $index">
-        <label>
-          Svarstyp på delfråga {{$index + 1}})
+        Delfråga {{$index + 1}}: <br>
+        <label>Text: <input type="text" ng-model="answer.subQuestions[$index].label"></label>
+        <label>Typ:
           <select ng-model="answer.subQuestions[$index].type">
             <option value="text" selected="selected">Text</option>
+            <option value="textarea">Stort textfält</option>
             <option value="number">Numeriskt</option>
             <option value="select">Välj ett av flera alternativ</option>
           </select>

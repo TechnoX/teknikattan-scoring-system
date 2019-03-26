@@ -7,10 +7,10 @@
     </tr>
     <tr ng-repeat="city in cities">
       <td><input type="text" ng-model="city.name" ng-required ng-change="editCity(city)"></td>
-      <td><a ng-click="removeCity(city)" ng-show="city._id != '5c8d4b84ad225235d0178b95'"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
+      <td><a ng-click="removeCity(city)" ng-show="city._id != cities[0]._id"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
     </tr>
-    <tr>
-      <td><input type="text" ng-model="newCity" ng-required></td>
+    <tr ng-show="cities[0] == '5c8d4b84ad225235d0178b95'">
+      <td><input type="text" ng-model="newName" ng-required></td>
       <td><a ng-click="addCity()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
     </tr>
   </table>

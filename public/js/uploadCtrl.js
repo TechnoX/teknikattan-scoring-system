@@ -8,11 +8,9 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
             url: '/upload',
             data: {file: file}
         }).then(function (resp) {
-            if(resp.data.success){
-                var path = resp.data.path;
-                $scope.$parent.$parent.currQuestion.image = path;
-                console.log('Success uploaded. Response: ', path);
-            }
+            var path = resp.data.path;
+            $scope.$parent.$parent.currQuestion.image = path;
+            console.log('Success uploaded. Response: ', path);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {

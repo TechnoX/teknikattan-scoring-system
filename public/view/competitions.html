@@ -17,7 +17,7 @@
       <tr>
         <td><input type="text" ng-model="newName" ng-required></td>
         <td>
-          <select ng-model="newCity" ng-required ng-init="newCity = '5c8d4b84ad225235d0178b95'">
+          <select ng-model="newCity" ng-required>
             <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
           </select>
         </td>
