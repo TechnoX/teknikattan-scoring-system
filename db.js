@@ -151,7 +151,7 @@ exports.get_teams = function(competitionId, callback){
     });
 };
 exports.get_team = function(teamId, callback){
-    database.collection('teams').find({_id: ObjectID(teamId)}).toArray(function(err, result) {
+    database.collection('teams').findOne({_id: ObjectID(teamId)}, function(err, result) {
         return callback(err, result);
     });
 };
