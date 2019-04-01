@@ -40,7 +40,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         angular.forEach($scope.teams, function(team, index){
             if(msg.team == team._id){
                 $scope.$applyAsync(function () {
-                    team.answer = msg.answers;
+                    team.answers = msg.answers;
                     console.log("answer", msg.answers);
                 });
             }
