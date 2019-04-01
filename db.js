@@ -98,7 +98,7 @@ exports.get_questions = function(competition_id, callback) {
 
 exports.save_answer = function(teamId, questionIndex, answers, callback){
     var values= {}
-    values["answers."+questionIndex] = answers;
+    values["answers"] = answers;
     database.collection('teams').update({_id: ObjectID(teamId)}, {$set: values}, function(err, result) {
         return callback(err);
     });
