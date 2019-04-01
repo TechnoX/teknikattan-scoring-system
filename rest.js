@@ -82,7 +82,7 @@ exports.interface = function (app) {
                 console.error(err);
                 return res.status(500).send(err);
             }
-            db.save_answer(teamId, slide.number, req.body.answers, function(err){
+            db.save_answer(req.params.team, slide.number, req.body.answers, function(err){
                 if (err){
                     console.error(err);
                     return res.status(500).send(err);
