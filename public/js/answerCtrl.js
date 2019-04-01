@@ -115,7 +115,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
     });
 
         
-    $scope.$watch('answer', function(newValue, oldValue, scope) {
+    $scope.$watch('team.answers', function(newValue, oldValue, scope) {
         // If the new value is not updated, just re-assigned, do not save it
         if(!$scope.view || newValue === undefined || newValue.length == 0)
             return;

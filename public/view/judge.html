@@ -10,26 +10,26 @@
         <h2>{{team.name}}</h2>
         <main ng-show="view.state == 'hints'">
           <ol>
-            <li ng-repeat="x in team.answer track by $index">
-              Ledtråd {{$index + 1}}: {{team.answer[$index]}}
+            <li ng-repeat="x in team.answers[view.number] track by $index">
+              Ledtråd {{$index + 1}}: {{x}}
             </li>
           </ol>
         </main>
         <main ng-show="view.state == 'statements'">
           <ol>
-            <li ng-repeat="x in team.answer track by $index">
+            <li ng-repeat="x in team.answers[view.number] track by $index">
               Påstående {{$index + 1}}:
-              <span id="true" ng-show="team.answer[$index] === true">Sant!</span>
-              <span id="false" ng-show="team.answer[$index] === false">Falskt!</span>
+              <span id="true" ng-show="team.answers[view.number][$index] === true">Sant!</span>
+              <span id="false" ng-show="team.answers[view.number][$index] === false">Falskt!</span>
             </li>
           </ol>
         </main>
         <main ng-show="view.state == 'quiz'">
           <ol>
             <li ng-repeat="q in view.quiz track by $index">
-              Quizfråga {{$index + 1}}: {{team.answer[$index]}}
-              <span id="true" ng-show="team.answer[$index] === q.correct">Rätt!</span>
-              <span id="false" ng-show="team.answer[$index] !== q.correct">Fel!</span>
+              Quizfråga {{$index + 1}}: {{team.answers[view.number][$index]}}
+              <span id="true" ng-show="team.answers[view.number][$index] === q.correct">Rätt!</span>
+              <span id="false" ng-show="team.answers[view.number][$index] !== q.correct">Fel!</span>
             </li>
           </ol>
         </main>
@@ -40,7 +40,7 @@
           <div ng-show="view.answer.type == 'multi'">
             <ol type='a'>
               <li ng-repeat="sq in view.answer.subQuestions track by $index">
-                Delfråga {{$index + 1}}: <span ng-bind-html="team.answer[$index]"></span>
+                Delfråga {{$index + 1}}: <span ng-bind-html="team.answers[view.number][$index]"></span>
               </li>
             </ol>
           </div>

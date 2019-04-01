@@ -14,25 +14,25 @@
   <main ng-show="view.state == 'hints'">
     <ol>
       <li ng-repeat="x in [].constructor(view.numberOfHints) track by $index">
-        <label>Ledtråd {{$index + 1}}: <input type="text" class="hintinput" ng-model="answer[$index]" style="width: 25em;" set-focus="$index == view.hints.length-1" ng-disabled="$index < view.hints.length-1 || (timesUp && $index == view.hints.length-1)" /></label>
+        <label>Ledtråd {{$index + 1}}: <input type="text" class="hintinput" ng-model="team.answers[view.number][$index]" style="width: 25em;" set-focus="$index == view.hints.length-1" ng-disabled="$index < view.hints.length-1 || (timesUp && $index == view.hints.length-1)" /></label>
       </li>
     </ol>
   </main>
   <main ng-show="view.state == 'statements'">
     <table id="truefalse">
       <tr>
-        <td id="true" ng-click="!timesUp ? answer[view.statementIndex] = true : null" ng-class="{'marked': answer[view.statementIndex] === true}">Sant</td>
-        <td id="false" ng-click="!timesUp ? answer[view.statementIndex] = false : null" ng-class="{'marked': answer[view.statementIndex] === false}">Falskt</td>
+        <td id="true" ng-click="!timesUp ? team.answers[view.number][view.statementIndex] = true : null" ng-class="{'marked': team.answers[view.number][view.statementIndex] === true}">Sant</td>
+        <td id="false" ng-click="!timesUp ? team.answers[view.number][view.statementIndex] = false : null" ng-class="{'marked': team.answers[view.number][view.statementIndex] === false}">Falskt</td>
       </tr>
     </table>
   </main>
   <main ng-show="view.state == 'quiz'">
     <section>
-      <label>Välj en av följande: </label><br /><br /><br />
-      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="A" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].A"></span></label>
-      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="B" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].B"></span></label>
-      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="C" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].C"></span></label>
-      <label class="choice"><input type="radio" ng-model="answer[view.quizIndex]" value="D" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].D"></span></label>
+      <label>Välj en av följande {{team.answers}}: </label><br /><br /><br />
+      <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="A" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].A"></span></label>
+      <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="B" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].B"></span></label>
+      <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="C" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].C"></span></label>
+      <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="D" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].D"></span></label>
     </section>
   </main>
   <main ng-show="view.state == 'question'">
@@ -42,14 +42,14 @@
     <div ng-show="view.answer.type == 'multi'">
       <ol type='a'>
         <li ng-repeat="sq in view.answer.subQuestions track by $index" ng-show="sq.show[view.slideIndex]">
-          <label ng-if="sq.type == 'text'">{{sq.label}}: <input type="text" ng-model="answer[$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
-          <label ng-if="sq.type == 'textarea'">{{sq.label}}: <br><textarea ng-model="answer[$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="height: 7em; width: 15em;"></textarea></label>
-          <label ng-if="sq.type == 'number'">{{sq.label}}: <input type="number" string-to-number ng-model="answer[$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="width: 10em;" /></label>
+          <label ng-if="sq.type == 'text'">{{sq.label}}: <input type="text" ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
+          <label ng-if="sq.type == 'textarea'">{{sq.label}}: <br><textarea ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="height: 7em; width: 15em;"></textarea></label>
+          <label ng-if="sq.type == 'number'">{{sq.label}}: <input type="number" string-to-number ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="width: 10em;" /></label>
           <section ng-if="sq.type == 'select'">
             <label>{{sq.label}}: </label><br /><br /><br />
             <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
-              <input ng-if="!sq.multiple" type="radio" ng-model="answer[$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
-              <input ng-if="sq.multiple" type="checkbox" ng-model="answer[$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
+              <input ng-if="!sq.multiple" type="radio" ng-model="team.answers[view.number][$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
+              <input ng-if="sq.multiple" type="checkbox" ng-model="team.answers[view.number][$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
               <span class="checkmark" ng-bind-html="alt"></span>
             </label>
           </section>
