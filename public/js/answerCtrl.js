@@ -127,16 +127,20 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             console.log(res);
         });
     }, true);
-
-    var endpointOptions = { isSource:true, isTarget:true }; 
-    var window3Endpoint = jsPlumb.addEndpoint('Symaskin', { anchor:"Top" }, endpointOptions);
-    var window4Endpoint = jsPlumb.addEndpoint('Kedjespännare', { anchor:"BottomCenter" }, endpointOptions);
-    console.log("Körs detta?");
-    jsPlumb.connect({ 
-        source:window3Endpoint,
-        target:window4Endpoint,
-        connector: [ "Bezier", { curviness:175 } ],
-        paintStyle:{ strokeWidth:25, stroke:'yellow' }
-    });  
+/*
+    jsPlumb.ready(function() {
+        
+        var endpointOptions = { isSource:true, isTarget:true }; 
+        var window3Endpoint = jsPlumb.addEndpoint('window3', { anchor:"Top" }, endpointOptions);
+        var window4Endpoint = jsPlumb.addEndpoint('window4', { anchor:"BottomCenter" }, endpointOptions);
+        console.log("Körs detta?");
+        jsPlumb.connect({ 
+            source:window3Endpoint,
+            target:window4Endpoint,
+            connector: [ "Bezier", { curviness:175 } ],
+            paintStyle:{ strokeWidth:25, stroke:'yellow' }
+        });  
     
+    });
+  */  
 }]);
