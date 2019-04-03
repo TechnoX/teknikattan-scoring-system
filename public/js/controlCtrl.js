@@ -1,25 +1,25 @@
-app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', function($scope, $http, $routeParams, $document){
     
     var socket = io();
     $scope.timerStarted = false;
 
-    document.onkeydown = function (e) {
-        e = e || window.event;
-        switch (e.which || e.keyCode) {
-        case 13:
-        case 32:
-        case 39:
+    $document.bind('keydown', function (e) {
+        console.log(e.key);
+        switch (e.key) {
+        case " ":
+        case "ArrowRight":
+        case "PageDown":
+        case "Enter":
             $scope.next();
             return false;
             break;
-        case 37:
-        case 8:
+        case "ArrowLeft":
+        case "PageUp":
             $scope.previous();
             return false;
             break;
         }
-    }
-
+    });
     
     var competition_id = $routeParams.id;
     $scope.next = function(){
