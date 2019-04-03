@@ -61,11 +61,12 @@ exports.get_slide = function(competition_id, offset = 0, callback){
         if (err) return callback(err);
         exports.get_slideshow(competition_id, function(err, result){
             if (err) return callback(err);
-            if(index+offset < result.length && index+offset >= 0){
-                return callback(false, result[index+offset]);
+            if(index+offset >= result.length){
+                return callback(false, result[result.length-1]);
+            }else if(index+offset < 0){
+                return callback(false, result[0]);
             }else{
-                console.error(competition_id, "Index out of bounds! Index: " + (index+offset));
-                return callback(true);
+                return callback(false, result[index+offset]);
             }
         });
     });
@@ -79,8 +80,10 @@ exports.get_index = function(competition_id, callback){
 }
 
 exports.increase_index = function(competition_id, callback){
-    database.collection('competitions').update({_id: ObjectID(competition_id)}, {$inc: { index: 1}}, function(err, result) {
-        return callback(err);
+    database.collection('slideshow').count({competition: competition_id}, function(err, count) {
+        database.collection('competitions').update({_id: ObjectID(competition_id), index: {$lt: count-1}}, {$inc: { index: 1}}, function(err, result) {
+            return callback(err);
+        });
     });
 }
 
