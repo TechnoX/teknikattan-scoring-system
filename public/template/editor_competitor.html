@@ -13,10 +13,12 @@
          ngf-resize-if="$width > 1200 || $height > 1200"
          ngf-resize="{width: 1200}" />
     <img ng-if="!editable" ng-src="{{question.image}}" />
-    <div ng-if="editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
+    <div ng-if="$parent.$parent.showHTML && editable"><textarea ng-model="slide.textLeft" style="width: 100%; height: 100%;"></textarea></div>
+    <div ng-if="!$parent.$parent.showHTML && editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
-  <aside ng-if="editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
+  <aside ng-if="$parent.showHTML && editable && question.type == 'normal'"><textarea ng-model="slide.textRight" style="width: 100%; height: 100%;"></textarea></aside>
+  <aside ng-if="!$parent.showHTML && editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
   <aside ng-if="!editable && question.type == 'normal'" ng-bind-html="slide.textRight"></aside>
   <footer>
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />

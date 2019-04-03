@@ -15,9 +15,11 @@
     <img ng-if="!editable" ng-src="{{question.image}}" />
   </figure>
   <main>
-    <div ng-if="editable && slide == 'answer'" ui-tinymce="editable" ng-model="question.answer.text"></div>
+    <div ng-if="$parent.showHTML && editable && slide == 'answer'"><textarea ng-model="question.answer.text" style="width: 75%; height: 100%;"></textarea></div>
+    <div ng-if="!$parent.showHTML && editable && slide == 'answer'" ui-tinymce="editable" ng-model="question.answer.text"></div>
     <div ng-if="!editable && slide == 'answer'" ng-bind-html="question.answer.text"></div>
-    <div ng-if="editable && slide != 'answer'" ui-tinymce="editable" ng-model="slide.textProjector"></div>
+    <div ng-if="$parent.showHTML && editable && slide != 'answer'"><textarea ng-model="slide.textProjector" style="width: 75%; height: 100%;"></textarea></div>
+    <div ng-if="!$parent.showHTML && editable && slide != 'answer'" ui-tinymce="editable" ng-model="slide.textProjector"></div>
     <div ng-if="!editable && slide != 'answer'" ng-bind-html="slide.textProjector"></div>
   </main>
   <footer ng-show="slide != 'answer'">
