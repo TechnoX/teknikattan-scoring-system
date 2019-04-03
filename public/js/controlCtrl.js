@@ -2,6 +2,24 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', function($scop
     
     var socket = io();
     $scope.timerStarted = false;
+
+    document.onkeydown = function (e) {
+        e = e || window.event;
+        switch (e.which || e.keyCode) {
+        case 13:
+        case 32:
+        case 39:
+            $scope.next();
+            return false;
+            break;
+        case 37:
+        case 8:
+            $scope.previous();
+            return false;
+            break;
+        }
+    }
+
     
     var competition_id = $routeParams.id;
     $scope.next = function(){
