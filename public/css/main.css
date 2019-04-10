@@ -343,7 +343,7 @@ article > footer > section{
     width: 5em;
 }
 
-.judge main img{
+.judge main img, .audience main img{
     width: 5em;
 }
 
