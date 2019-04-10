@@ -61,12 +61,12 @@ exports.interface = function(io) {
             console.log('user disconnected')
         });
         socket.on('next', function(msg){
-            console.log("Next pressed!");
+            console.log("Next pressed! ", msg);
             nextPressed(msg.competition);
 
         });
         socket.on('prev', function(msg){
-            console.log("Previous pressed!");
+            console.log("Previous pressed!", msg);
             previousPressed(msg.competition);
         });
 
