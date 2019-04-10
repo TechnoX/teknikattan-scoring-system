@@ -185,7 +185,7 @@ exports.interface = function (app) {
         });
     });
     app.put('/team', function(req, res){
-        console.log('Update team '+req.body);
+        console.log('Update team ',req.body);
         db.update_team(req.body, function(err){
             if(err){
                 console.error(err);
