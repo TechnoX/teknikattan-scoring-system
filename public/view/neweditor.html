@@ -20,7 +20,6 @@
   <section id="container">
     <nav id="left">
       <a ng-click="slideIndex > 0 ? changeSlide(questionIndex, slideIndex-1, medium) :  changeSlide(questionIndex-1, questions[questionIndex-1].slides.length-1, medium)" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">&larr;</a>
-      <label>HTML: <input type="checkbox" ng-model="showHTML"></label>
       <!--
       <h2>Lägg till: </h2>
       <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
@@ -33,10 +32,13 @@
     <edit_projector slide="'answer'" question="currQuestion" editable="editOptions" ng-show="medium == 'answer'"></edit_projector>
     
     <nav id="right">
+      <aside>
+        <label>HTML: <input type="checkbox" ng-model="showHTML"></label>
+        <h3>Lägg till: </h3>
+        <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
+        <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
+      </aside>
       <a ng-click="slideIndex < currQuestion.slides.length-1 ? changeSlide(questionIndex, slideIndex+1, medium) : changeSlide(questionIndex+1, 0, medium)" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">&rarr;</a>
-      <h3>Lägg till: </h3>
-      <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
-      <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
     </nav>
   </section>
   <nav id="down">

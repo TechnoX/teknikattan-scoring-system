@@ -530,7 +530,13 @@ button#next{
     margin: 0 auto;
 }
 
+#neweditor #right aside{
+    position: absolute;
+    top: 0px;
+}
+
 #neweditor #right{
+    position: relative;
     text-align: left;
     padding: 15% 1%;
     float: left;
