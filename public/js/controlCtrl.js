@@ -3,7 +3,7 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', f
     var socket = io();
     $scope.timerStarted = false;
 
-    $document.bind('keydown', function (e) {
+    $document.bind('keyup', function (e) {
         console.log(e.key);
         switch (e.key) {
         case " ":
