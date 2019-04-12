@@ -51,7 +51,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         if(msg !== competition_id){
             return;
         }
-        $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {            
+        $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             if(resp.data.state == 'beforeanswer' || resp.data.state == 'answer')
                 return;
             $scope.view = resp.data;

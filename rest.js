@@ -20,7 +20,7 @@ function publishAnswer(msg){
 exports.interface = function (app) {
     //app.use(multipart({uploadDir: config.tmp }));
 
-    app.put('/api/competition/:id/questions', function(req, res){        
+    app.put('/api/competition/:id/questions', function(req, res){
         db.replace_questions(req.params.id, req.body, function (err) {
             if (err){
                 console.error(err);
@@ -75,7 +75,7 @@ exports.interface = function (app) {
         return res.status(200).json(socket.get_timesup(req.params.id));
     });
 
-    app.post('/api/competition/:id/answer/:team', function(req, res){    
+    app.post('/api/competition/:id/answer/:team', function(req, res){
         publishAnswer(req.body);
         db.get_slide(req.params.id, 0, function(err, slide){
             if (err){
