@@ -1,0 +1,20 @@
+<article class="result">
+  <header>
+    <h1>Resultat</h1>
+    <img src="images/logo.png"/>
+  </header>
+  <main>
+    <table>
+      <tr ng-repeat="team in teams">
+        <td>{{team.name}}</td>
+        <td ng-repeat="a in team.answers track by $index">
+          <answer answer="a" view="view"></answer>
+          <h2>Poäng: {{team.scores[$index]}}</h2>
+        </td>
+        <td>
+          <h2>Summa: {{getTotalScore(team)}}</h2>
+        </td>
+      </tr>
+    </table>
+  </main>
+</article>
