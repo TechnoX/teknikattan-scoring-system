@@ -1,17 +1,20 @@
 <section class="management">
   <h1>Tävlingar</h1>
+  <form action="competitions/analytics" method="get">
   <table>
     <tr>
       <th>Namn</th>
       <th>Ort</th>
       <th>Senast ändrad</th>
       <th>Handling</th>
+      <th><input type="submit" value="Analysera valda"></th>
     </tr>
     <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp._id">
       <td><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></td>
       <td>{{getCity(comp.city)}}</td>
       <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
       <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
+      <td><label>Välj: <input type="checkbox" value="{{comp._id}}" name="ids"></label></td>
     </tr>
     <tfoot>
       <tr>
@@ -23,8 +26,10 @@
         </td>
         <td></td>
         <td><a ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
+        <td></td>
       </tr>
     </tfoot>
   </table>
+  </form>
   <a href="/">Tillbaka</a>
 </section>
