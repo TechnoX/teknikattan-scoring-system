@@ -243,8 +243,17 @@ exports.delete_city = function(cityId, callback) {
     });
 };
 exports.delete_competition = function(compId, callback) {
-    database.collection('competitions').remove({_id: ObjectID(compId)}, function(err, result) {
-        return callback(err);
+    database.collection('questions').remove({competition: compId}, function(err, result) {
+        if(err) return callback(err);
+        database.collection('slideshow').remove({competition: compId}, function(err, result) {
+            if(err) return callback(err);
+            database.collection('teams').remove({competition: compId}, function(err, result) {
+                if(err) return callback(err);
+                database.collection('competitions').remove({_id: ObjectID(compId)}, function(err, result) {
+                    return callback(err);
+                });
+            });
+        });
     });
 };
 exports.delete_team = function(teamId, callback){
