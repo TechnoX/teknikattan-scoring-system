@@ -1,0 +1,54 @@
+<main ng-show="view.state == 'hints'">
+  <ol>
+    <li ng-repeat="x in answer track by $index">
+      Ledtråd {{$index + 1}}: {{x}}
+    </li>
+  </ol>
+</main>
+
+<main ng-show="view.state == 'statements'">
+  <ol ng-show="!currentOnly">
+    <li ng-repeat="x in answer track by $index">
+      Påstående {{$index + 1}}:
+      <span id="true" ng-show="x === true">Sant!</span>
+      <span id="false" ng-show="x === false">Falskt!</span>
+    </li>
+  </ol>
+  <table id="truefalse" ng-show="currentOnly">
+    <tr>
+      <td id="true" ng-show="answer[view.statementIndex] === true" ng-class="{'marked': answer[view.statementIndex] === true}">Sant</td>
+      <td id="false" ng-show="answer[view.statementIndex] === false" ng-class="{'marked': answer[view.statementIndex] === false}">Falskt</td>
+    </tr>
+  </table>
+</main>
+
+<main ng-show="view.state == 'quiz'">
+  <ol ng-show="!currentOnly">
+    <li ng-repeat="q in view.quiz track by $index">
+      Quizfråga {{$index + 1}}: {{answer[$index]}}
+      <span id="true" ng-show="answer[$index] === q.correct">Rätt!</span>
+      <span id="false" ng-show="answer[$index] !== q.correct">Fel!</span>
+    </li>
+  </ol>
+  <div ng-show="currentOnly">
+    Quizfråga {{$index + 1}}: {{answer[view.quizIndex]}}
+    <span id="true" ng-show="answer[view.quizIndex] === q.correct">Rätt!</span>
+    <span id="false" ng-show="answer[view.quizIndex] !== q.correct">Fel!</span>
+  </div>
+</main>
+
+<main ng-show="view.state == 'question'">
+  <div ng-show="view.answer.type == 'practical'">
+    <p>Inget digitalt svar.</p>
+  </div>
+  <div ng-show="view.answer.type == 'multi'">
+    <ol type='a'>
+      <li ng-repeat="sq in view.answer.subQuestions track by $index">
+        {{sq.label}}: <span ng-bind-html="answer[$index]"></span>
+      </li>
+    </ol>
+  </div>
+  <div ng-show="view.answer.type == 'pairing'">
+    <p>Parar ihop ord med ord.</p>
+  </div>
+</main>

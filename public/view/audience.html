@@ -5,40 +5,6 @@
     <h2>Poäng fråga {{view.number+1}}: {{team.scores[view.number]}}</h2>
     <h2>Total poäng: {{getTotalScore(team)}}</h2>
   </section>
-  <main ng-show="view.state == 'hints'">
-    <ol>
-      <li ng-repeat="x in team.answers[view.number] track by $index">
-        Ledtråd {{$index + 1}}: {{team.answers[view.number][$index]}}
-      </li>
-    </ol>
-  </main>
-  <main ng-show="view.state == 'statements'">
-    <table id="truefalse">
-      <tr>
-        <td id="true" ng-show="team.answers[view.number][view.statementIndex] === true" ng-class="{'marked': team.answers[view.number][view.statementIndex] === true}">Sant</td>
-        <td id="false" ng-show="team.answers[view.number][view.statementIndex] === false" ng-class="{'marked': team.answers[view.number][view.statementIndex] === false}">Falskt</td>
-      </tr>
-    </table>
-  </main>
-  <main ng-show="view.state == 'quiz'">
-    Quizfråga {{$index + 1}}: {{team.answers[view.number][view.quizIndex]}}
-    <span id="true" ng-show="team.answers[view.number][view.quizIndex] === q.correct">Rätt!</span>
-    <span id="false" ng-show="team.answers[view.number][view.quizIndex] !== q.correct">Fel!</span>
-  </main>
-  <main ng-show="view.state == 'question'">
-    <div ng-show="view.answer.type == 'practical'">
-      <p>Inget digitalt svar.</p>
-    </div>
-    <div ng-show="view.answer.type == 'multi'">
-      <ol type='a'>
-        <li ng-repeat="sq in view.answer.subQuestions track by $index">
-          Delfråga {{$index + 1}}: <span ng-bind-html="team.answers[view.number][$index]"></span>
-        </li>
-      </ol>
-    </div>
-    <div ng-show="view.answer.type == 'pairing'">
-      <p>Parar ihop ord med ord.</p>
-    </div>
-  </main>
+  <answer answer="team.answers[view.number]" view="view" current-only="true"></answer>
 </div>
 </article>
