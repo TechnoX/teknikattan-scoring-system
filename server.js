@@ -22,7 +22,6 @@ app.post('/api/login', function(req, res){
     auth.login(req, res);
 });
 app.get('*', function(req, res, next) {
-    console.log(req.url);
     if(req.url.includes('/api')) return next();
     // call all routes and return the index.html file here
     res.sendFile(__dirname + '/public/index.html');
