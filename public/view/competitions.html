@@ -8,7 +8,7 @@
       <th>Handling</th>
     </tr>
     <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp._id">
-      <td><a ng-href="#!/competition/{{comp._id}}">{{comp.name}}</a></td>
+      <td><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></td>
       <td>{{getCity(comp.city)}}</td>
       <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
       <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>

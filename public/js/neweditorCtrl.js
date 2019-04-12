@@ -20,7 +20,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
     $scope.nextUp = {'answer': 'competitor', 'competitor': 'projector'};
     
     // Get all questions
-    $http.get('/competition/'+competition_id+'/questions').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         if($scope.questions.length > 0){
             $scope.currQuestion = $scope.questions[0];
@@ -37,7 +37,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
         if(!$scope.correct()){
             return false;
         }
-        $http.put('/competition/'+competition_id+'/questions', $scope.questions).then(function(res){
+        $http.put('/api/competition/'+competition_id+'/questions', $scope.questions).then(function(res){
             alert("Allting sparades korrekt!");
             console.log(res);
         }, function(res){

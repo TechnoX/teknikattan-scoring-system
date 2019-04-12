@@ -69,11 +69,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
     var team_id = $routeParams.team;
     $scope.timesUp = false;
     console.log("Beginning");;
-    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
         console.log(resp.data);
     });
-    $http.get('/competition/'+competition_id+'/timesup').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/timesup').then(function(resp) {
         $scope.timesUp = resp.data;
         console.log(resp.data);
     });
@@ -84,7 +84,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         if(msg !== competition_id){
             return;
         }
-        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+        $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.view = resp.data;
             console.log(resp.data);
             if($scope.view.state == 'beforeanswer' || $scope.view.state == 'answer'){
@@ -107,7 +107,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
     
     
     // Get the team matching the ID given in the url bar
-    $http.get('/team/'+team_id).then(function(resp) {
+    $http.get('/api/team/'+team_id).then(function(resp) {
         if(resp.data){
             $scope.team = resp.data;
             console.log("Set team to ", $scope.team);
@@ -120,7 +120,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         if(!$scope.view || newValue === undefined || newValue.length == 0)
             return;
         console.log("Save: ", newValue);
-        $http.post("/competition/"+competition_id+"/answer/"+team_id, {'team': team_id, 'question': $scope.view.number, 'answers': newValue}).then(function(res) {
+        $http.post("/api/competition/"+competition_id+"/answer/"+team_id, {'team': team_id, 'question': $scope.view.number, 'answers': newValue}).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när svaret skulle sparas!");

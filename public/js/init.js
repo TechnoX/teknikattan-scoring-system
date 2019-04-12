@@ -65,7 +65,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
   })
 
   // configure html5 to get links working on jsfiddle
-  //$locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(true);
 
     jwtOptionsProvider.config({
         tokenGetter: [function() {

@@ -78,7 +78,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', '$routeParams', fu
     $scope.currQuestion = null;
     $scope.currSlide = null;
 
-    $http.get('/competition/'+competition_id+'/questions').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         if($scope.questions.length > 0){
             $scope.currQuestion = $scope.questions[0];
@@ -90,7 +90,7 @@ app.controller('editorCtrl', ['$scope', '$uibModal', '$http', '$routeParams', fu
         if(!$scope.correct()){
             return false;
         }
-        $http.put('/competition/'+competition_id+'/questions', $scope.questions).then(function(res){
+        $http.put('/api/competition/'+competition_id+'/questions', $scope.questions).then(function(res){
             alert("Allting sparades korrekt!");
             console.log(res);
         }, function(res){

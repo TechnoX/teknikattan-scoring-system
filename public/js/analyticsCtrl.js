@@ -3,14 +3,14 @@ app.controller('analyticsCtrl', ['$scope', '$http', '$routeParams', function($sc
     var competition_id = $routeParams.id;
     
     $scope.teams = [];
-    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/teams').then(function(resp) {
         if(resp.data){
             $scope.teams = resp.data;
             console.log("Set teams to ", $scope.teams);
         }
     });
     
-    $http.get('/competition/'+competition_id+'/questions').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/questions').then(function(resp) {
         $scope.questions = resp.data;
         for(var i = 0; i < $scope.questions.length; i++){
             if($scope.questions[i].type == "normal"){

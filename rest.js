@@ -20,7 +20,7 @@ function publishAnswer(msg){
 exports.interface = function (app) {
     //app.use(multipart({uploadDir: config.tmp }));
 
-    app.put('/competition/:id/questions', function(req, res){        
+    app.put('/api/competition/:id/questions', function(req, res){        
         db.replace_questions(req.params.id, req.body, function (err) {
             if (err){
                 console.error(err);
@@ -30,7 +30,7 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/questions', function(req, res){
+    app.get('/api/competition/:id/questions', function(req, res){
         db.get_questions(req.params.id, function(err, result){
             if (err) {
                 console.error(err);
@@ -40,7 +40,7 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/currentView', function(req, res){
+    app.get('/api/competition/:id/currentView', function(req, res){
         db.get_slide(req.params.id, 0, function(err, slide){
             if (err){
                 console.error(err);
@@ -50,7 +50,7 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/nextView', function(req, res){
+    app.get('/api/competition/:id/nextView', function(req, res){
         db.get_slide(req.params.id, 1, function(err, slide){
             if (err){
                 console.error(err);
@@ -60,7 +60,7 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/previousView', function(req, res){
+    app.get('/api/competition/:id/previousView', function(req, res){
         db.get_slide(req.params.id, -1, function(err, slide){
             if (err){
                 console.error(err);
@@ -70,12 +70,12 @@ exports.interface = function (app) {
         });
     });
 
-    app.get('/competition/:id/timesup', function(req, res){
+    app.get('/api/competition/:id/timesup', function(req, res){
         // To lock the answers view when refreshing page.
         return res.status(200).json(socket.get_timesup(req.params.id));
     });
 
-    app.post('/competition/:id/answer/:team', function(req, res){    
+    app.post('/api/competition/:id/answer/:team', function(req, res){    
         publishAnswer(req.body);
         db.get_slide(req.params.id, 0, function(err, slide){
             if (err){
@@ -93,7 +93,7 @@ exports.interface = function (app) {
         });
     });
 
-    app.post('/upload', multipartMiddleware, function(req, res) {
+    app.post('/api/upload', multipartMiddleware, function(req, res) {
         console.log(req.body, req.files);
         if(req.body.file == 'null'){
             console.log("Failed to upload image")
@@ -110,7 +110,7 @@ exports.interface = function (app) {
 
 
 
-    app.get('/users', function(req, res){
+    app.get('/api/users', function(req, res){
         db.get_users(req.decoded.city, function(err, users){
             if(err){
                 console.error(err);
@@ -119,7 +119,7 @@ exports.interface = function (app) {
             return res.status(200).json(users);
         });
     });
-    app.get('/competitions', function(req, res){
+    app.get('/api/competitions', function(req, res){
         db.get_competitions(req.decoded.city, function(err, competitions){
             if(err){
                 console.error(err);
@@ -128,7 +128,7 @@ exports.interface = function (app) {
             return res.status(200).json(competitions);
         });
     });
-    app.get('/cities', function(req, res){
+    app.get('/api/cities', function(req, res){
         db.get_cities(req.decoded.city, function(err, cities){
             if(err){
                 console.error(err);
@@ -137,7 +137,7 @@ exports.interface = function (app) {
             return res.status(200).json(cities);
         });
     });
-    app.get('/competition/:id/teams', function(req, res){
+    app.get('/api/competition/:id/teams', function(req, res){
         db.get_teams(req.params.id, function(err, teams){
             if (err){
                 console.error(err);
@@ -146,7 +146,7 @@ exports.interface = function (app) {
             return res.status(200).json(teams);
         });
     });
-    app.get('/team/:team', function(req, res){
+    app.get('/api/team/:team', function(req, res){
         db.get_team(req.params.team, function(err, team){
             if(err){
                 console.error(err);
@@ -157,7 +157,7 @@ exports.interface = function (app) {
     });
 
     
-    app.put('/user', function(req, res){
+    app.put('/api/user', function(req, res){
         db.update_user(req.body, function(err){
             if(err){
                 console.error(err);
@@ -166,7 +166,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.put('/competition', function(req, res){
+    app.put('/api/competition', function(req, res){
         db.update_competition(req.body, function(err){
             if(err){
                 console.error(err);
@@ -175,7 +175,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.put('/city', function(req, res){
+    app.put('/api/city', function(req, res){
         db.update_city(req.body, function(err){
             if(err){
                 console.error(err);
@@ -184,7 +184,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.put('/team', function(req, res){
+    app.put('/api/team', function(req, res){
         console.log('Update team ',req.body);
         db.update_team(req.body, function(err){
             if(err){
@@ -196,7 +196,7 @@ exports.interface = function (app) {
         });
     });   
     
-    app.delete('/user/:id', function(req, res){
+    app.delete('/api/user/:id', function(req, res){
         console.log(req.params.id);
         db.delete_user(req.params.id, function(err){
             if(err){
@@ -206,7 +206,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.delete('/competition/:id', function(req, res){
+    app.delete('/api/competition/:id', function(req, res){
         db.delete_competition(req.params.id, function(err){
             if(err){
                 console.error(err);
@@ -215,7 +215,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.delete('/city/:id', function(req, res){
+    app.delete('/api/city/:id', function(req, res){
         db.delete_city(req.params.id, function(err){
             if(err){
                 console.error(err);
@@ -224,7 +224,7 @@ exports.interface = function (app) {
             return res.status(200).json();
         });
     });
-    app.delete('/team/:id', function(req, res){
+    app.delete('/api/team/:id', function(req, res){
         db.delete_team(req.params.id, function(err){
             if(err){
                 console.error(err);
@@ -235,7 +235,7 @@ exports.interface = function (app) {
     });
 
     
-    app.post('/user', function(req, res){
+    app.post('/api/user', function(req, res){
         db.add_user(req.body, function(err,id){
             if(err){
                 console.error(err);
@@ -244,7 +244,7 @@ exports.interface = function (app) {
             return res.status(200).json(id);
         });
     });
-    app.post('/competition', function(req, res){
+    app.post('/api/competition', function(req, res){
         db.add_competition(req.body.info, req.body.cloned_from, function(err,id){
             if(err){
                 console.error(err);
@@ -253,7 +253,7 @@ exports.interface = function (app) {
             return res.status(200).json(id);
         });
     });
-    app.post('/city', function(req, res){
+    app.post('/api/city', function(req, res){
         db.add_city(req.body, function(err,id){
             if(err){
                 console.error(err);
@@ -262,7 +262,7 @@ exports.interface = function (app) {
             return res.status(200).json(id);
         });
     });
-    app.post('/team', function(req, res){
+    app.post('/api/team', function(req, res){
         db.add_team(req.body, function(err, team){
             if(err){
                 console.error(err);

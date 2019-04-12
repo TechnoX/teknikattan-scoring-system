@@ -62,29 +62,29 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', f
             return;
         }
         $scope.timerStarted = false;
-        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+        $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.currView = resp.data;
         });
         
-        $http.get('/competition/'+competition_id+'/previousView').then(function(resp) {
+        $http.get('/api/competition/'+competition_id+'/previousView').then(function(resp) {
             $scope.prevView = resp.data;
         });
         
-        $http.get('/competition/'+competition_id+'/nextView').then(function(resp) {
+        $http.get('/api/competition/'+competition_id+'/nextView').then(function(resp) {
             $scope.nextView = resp.data;
         }); 
         
     });
 
-    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.currView = resp.data;
     });
     
-    $http.get('/competition/'+competition_id+'/previousView').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/previousView').then(function(resp) {
         $scope.prevView = resp.data;
     });
     
-    $http.get('/competition/'+competition_id+'/nextView').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/nextView').then(function(resp) {
         $scope.nextView = resp.data;
     });
     

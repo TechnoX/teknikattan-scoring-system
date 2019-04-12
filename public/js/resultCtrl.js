@@ -26,7 +26,7 @@ app.controller('resultCtrl', ['$scope', '$http', '$routeParams', function($scope
     var competition_id = $routeParams.id;
 
     $scope.teams = [];
-    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/teams').then(function(resp) {
         if(resp.data){
             $scope.teams = resp.data;
             console.log("Set teams to ", $scope.teams);

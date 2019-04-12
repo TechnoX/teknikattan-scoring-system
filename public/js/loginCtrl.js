@@ -12,7 +12,7 @@ app.controller('loginCtrl', ['$scope', '$http', function($scope, $http){
     }
  
     $scope.login = function(){
-        $http.post("/login", $scope.data).then(function(res) {
+        $http.post("/api/login", $scope.data).then(function(res) {
             if(res.data.success){
                 localStorage.setItem("t8_token", res.data.token);
                 $scope.isAuthenticated = true;

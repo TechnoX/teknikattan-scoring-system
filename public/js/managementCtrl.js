@@ -4,7 +4,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     
     $scope.competitions = [];
     $scope.teams = [];
-    $http.get('/competitions').then(function(resp) {
+    $http.get('/api/competitions').then(function(resp) {
         $scope.competitions = resp.data;
 
         // If we should get a specific competition
@@ -12,7 +12,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
             for(var i = 0; i < $scope.competitions.length; i++){
                 if($scope.competitions[i]._id == compId){
                     $scope.comp = $scope.competitions[i];
-                    $http.get('/competition/'+compId+'/teams').then(function(resp) {
+                    $http.get('/api/competition/'+compId+'/teams').then(function(resp) {
                         $scope.teams = resp.data;
                     });
                     break;
@@ -22,12 +22,12 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     });
 
     $scope.users = [];
-    $http.get('/users').then(function(resp) {
+    $http.get('/api/users').then(function(resp) {
         $scope.users = resp.data;
     });
 
     $scope.cities = [];
-    $http.get('/cities').then(function(resp) {
+    $http.get('/api/cities').then(function(resp) {
         $scope.cities = resp.data;
         $scope.newCity = $scope.cities[0]._id;
     });
@@ -162,7 +162,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     
     function updateUser(user){
         console.log("User ", user, " updated");
-        $http.put('/user', user).then(function(res){
+        $http.put('/api/user', user).then(function(res){
             // Do nothing
         }, function(res){
             alert("Något gick fel när användaren skulle uppdateras!");
@@ -170,7 +170,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
     function removeUser(user){
         console.log("User ", user, " removed");
-        $http.delete("/user/"+user._id).then(function(res) {
+        $http.delete("/api/user/"+user._id).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när användaren skulle tas bort!");
@@ -179,7 +179,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
     function addUser(user,callback){
         console.log("User ", user, " added");
-        $http.post("/user", user).then(function(res) {
+        $http.post("/api/user", user).then(function(res) {
             callback(false, res.data);
         }, function(res){
             alert("Något gick fel när användaren skulle läggas till!");
@@ -189,14 +189,14 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
 
     function updateCity(city){
-        $http.put('/city', city).then(function(res){
+        $http.put('/api/city', city).then(function(res){
             // Do nothing
         }, function(res){
             alert("Något gick fel när staden skulle uppdateras!");
         });
     }
     function removeCity(city){
-        $http.delete("/city/"+city._id).then(function(res) {
+        $http.delete("/api/city/"+city._id).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när staden skulle tas bort!");
@@ -204,7 +204,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         });
     }
     function addCity(city, callback){
-        $http.post("/city", city).then(function(res) {
+        $http.post("/api/city", city).then(function(res) {
             callback(false, res.data);
         }, function(res){
             alert("Något gick fel när staden skulle läggas till!");
@@ -214,14 +214,14 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
 
     function updateCompetition(comp){
-        $http.put('/competition', comp).then(function(res){
+        $http.put('/api/competition', comp).then(function(res){
             // Do nothing
         }, function(res){
             alert("Något gick fel när tävlingen skulle uppdateras!");
         });
     }
     function removeCompetition(comp){
-        $http.delete("/competition/"+comp._id).then(function(res) {
+        $http.delete("/api/competition/"+comp._id).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när tävlingen skulle tas bort!");
@@ -233,7 +233,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         if(from){
             data.cloned_from = from;
         }
-        $http.post("/competition", data).then(function(res) {
+        $http.post("/api/competition", data).then(function(res) {
             callback(false, res.data);
         }, function(res){
             alert("Något gick fel när tävlingen skulle läggas till!");
@@ -243,14 +243,14 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
     }
 
     function updateTeam(team){
-        $http.put('/team', team).then(function(res){
+        $http.put('/api/team', team).then(function(res){
             // Do nothing
         }, function(res){
             alert("Något gick fel när laget skulle uppdateras!");
         });
     }
     function removeTeam(team){
-        $http.delete("/team/"+team._id).then(function(res) {
+        $http.delete("/api/team/"+team._id).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när laget skulle tas bort!");
@@ -258,7 +258,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         });
     }
     function addTeam(team, callback){
-        $http.post("/team", team).then(function(res) {
+        $http.post("/api/team", team).then(function(res) {
             callback(false, res.data);
         }, function(res){
             alert("Något gick fel när laget skulle läggas till!");

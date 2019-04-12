@@ -8,18 +8,18 @@
   <ul>
     <li>Deltagande lag:
       <ul>
-        <li ng-repeat="team in teams"><input type="text" ng-model="team.name" ng-change="editTeam(team)">  <a ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a ng-href="#!/competition/{{comp._id}}/answers/{{team._id}}">Visa svarsskärm (för tablet)</a></li>
+        <li ng-repeat="team in teams"><input type="text" ng-model="team.name" ng-change="editTeam(team)">  <a ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a ng-href="competition/{{comp._id}}/answers/{{team._id}}">Visa svarsskärm (för tablet)</a></li>
         <li><a ng-click="addTeam()"><i class="fas fa-user-plus"></i> Lägg till</a></li>
       </ul>
-    <li><a ng-href="#!/competition/{{comp._id}}/neweditor">Redigera frågor</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/judge">Visa vy för domarna</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/result">Visa resultatlista</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/competitors">Visa vy för tävlande (till bås)</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/projector">Visa vy för publiken (till projektor)</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/control">Kontrollpanel som styr tävlingen</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/audience">Visa vy för kamerasystem</a></li>
-    <li><a ng-href="#!/competition/{{comp._id}}/analytics">Visa översikt av alla svar <ins style="text-decoration: none; background-color: yellow; font-weight: bold;">Nytt!</ins></a></li>
+    <li><a ng-href="competition/{{comp._id}}/neweditor">Redigera frågor</a></li>
+    <li><a ng-href="competition/{{comp._id}}/judge">Visa vy för domarna</a></li>
+    <li><a ng-href="competition/{{comp._id}}/result">Visa resultatlista</a></li>
+    <li><a ng-href="competition/{{comp._id}}/competitors">Visa vy för tävlande (till bås)</a></li>
+    <li><a ng-href="competition/{{comp._id}}/projector">Visa vy för publiken (till projektor)</a></li>
+    <li><a ng-href="competition/{{comp._id}}/control">Kontrollpanel som styr tävlingen</a></li>
+    <li><a ng-href="competition/{{comp._id}}/audience">Visa vy för kamerasystem</a></li>
+    <li><a ng-href="competition/{{comp._id}}/analytics">Visa översikt av alla svar <ins style="text-decoration: none; background-color: yellow; font-weight: bold;">Nytt!</ins></a></li>
   </ul>
   <br><br>
-  <a ng-href="#!/competitions">Visa alla tävlingar</a>
+  <a ng-href="competitions">Visa alla tävlingar</a>
 </section>

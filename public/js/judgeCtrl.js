@@ -2,7 +2,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     var socket = io();
     var competition_id = $routeParams.id;
 
-    $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
         console.log(resp.data);
     });
@@ -10,7 +10,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     
     // On judge view we load several IDs
     $scope.teams = [];
-    $http.get('/competition/'+competition_id+'/teams').then(function(resp) {
+    $http.get('/api/competition/'+competition_id+'/teams').then(function(resp) {
         if(resp.data){
             $scope.teams = resp.data;
             console.log("Set teams to ", $scope.teams);
@@ -26,7 +26,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
     }
     
     $scope.saveScoring = function(team){        
-        $http.put("/team", team).then(function(res) {
+        $http.put("/api/team", team).then(function(res) {
             // Do nothing
         }, function(res){
             alert("Något gick fel när poängen skulle sparas!");
@@ -51,7 +51,7 @@ app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope,
         if(msg !== competition_id){
             return;
         }
-        $http.get('/competition/'+competition_id+'/currentView').then(function(resp) {            
+        $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {            
             if(resp.data.state == 'beforeanswer' || resp.data.state == 'answer')
                 return;
             $scope.view = resp.data;
