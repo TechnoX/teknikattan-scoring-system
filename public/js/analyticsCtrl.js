@@ -1,6 +1,7 @@
 app.controller('analyticsCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var socket = io();
     var competition_id = $routeParams.id;
+    $scope.IDs = $routeParams.ids;
     
     $scope.teams = [];
     $http.get('/api/competition/'+competition_id+'/teams').then(function(resp) {

@@ -15,6 +15,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
     templateUrl: 'view/competitions.html',
     controller: 'managementCtrl',
   })
+  .when('/competitions/analytics', {
+    templateUrl: 'view/analytics.html',
+    controller: 'analyticsCtrl',
+  })
   .when('/competition/:id', {
     templateUrl: 'view/competition.html',
     controller: 'managementCtrl',
