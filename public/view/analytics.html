@@ -13,7 +13,7 @@
         <th ng-repeat="q in questions track by $index" ng-show="showAnswers || showScores">{{q.title}}</th>
         <th></th>
       </tr>
-      <tr ng-repeat="team in teams">
+      <tr ng-repeat="team in teams | orderBy: getTotalScore : true">
         <td><h2>{{team.name}}</h2></td>
         <td ng-repeat="q in questions track by $index" ng-show="showAnswers || showScores">
           <answer answer="team.answers[$index]" view="q" ng-show="showAnswers"></answer>
