@@ -4,6 +4,9 @@
     <img src="images/logo.png"/>
   </header>
   <main>
+    <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showAnswers]" ng-click="showAnswers = !showAnswers">{{showAnswers ? 'Dölj svar' : 'Visa svar'}}</a>
+    <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showScores]" ng-click="showScores = !showScores">{{showScores ? 'Dölj poäng' : 'Visa poäng'}}</a>
+    <br>
     <table>
       <tr>
         <th>Lagnamn</th>
@@ -13,8 +16,8 @@
       <tr ng-repeat="team in teams">
         <td><h2>{{team.name}}</h2></td>
         <td ng-repeat="q in questions track by $index">
-          <answer answer="team.answers[$index]" view="q"></answer>
-          <strong>Poäng: {{team.scores[$index]}}</strong>
+          <answer answer="team.answers[$index]" view="q" ng-show="showAnswers"></answer>
+          <strong ng-show="showScores">Poäng: {{team.scores[$index]}}</strong>
         </td>
         <td>
           <strong>Summa: {{getTotalScore(team)}}</strong>

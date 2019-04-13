@@ -5,6 +5,8 @@ app.controller('analyticsCtrl', ['$scope', '$http', '$routeParams', function($sc
         competition_ids = [competition_ids];
     }
 
+    $scope.showAnswers = false;
+    $scope.showScores = true;
     $scope.teams = [];
     
     for(var i = 0; i < competition_ids.length; i++){
@@ -29,7 +31,7 @@ app.controller('analyticsCtrl', ['$scope', '$http', '$routeParams', function($sc
             }
         });
     }
-
+    
     
     $scope.getTotalScore = function(team){
         var total = 0;
