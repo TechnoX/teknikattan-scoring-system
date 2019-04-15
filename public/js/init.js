@@ -55,6 +55,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
     templateUrl: 'view/competitors.html',
     controller: 'questionCtrl',
   })
+  .when('/competition/:id/counter', {
+    templateUrl: 'view/counter.html',
+    controller: 'questionCtrl',
+  })
   .when('/competition/:id/answers/:team', {
     templateUrl: 'view/answers.html',
     controller: 'answerCtrl',
