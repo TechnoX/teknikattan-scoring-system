@@ -207,6 +207,17 @@ article > aside{
     display: block;
     padding-top: 10%;
 }
+time#counter{
+    background-color: black;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 100vh;
+    font-size: 25vw;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
 .competitor .statement, .competitor .hint{
     font-size: 2em;
 }
