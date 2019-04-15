@@ -9,11 +9,17 @@
       <li><a ng-href="users">Hantera användare</a></li>
       <li><a ng-click="logout()">Logga ut</a></li>
     </ul>
-  </section>
 
+    <details style="width: 50%;">
+      <summary>Secret token för inloggning:</summary>
+      <pre>{{token}}</pre>
+    </details> 
+    
+  </section>
+  
   <section ng-if="!isAuthenticated">
     <h1>Logga in</h1>
-
+    
     <p>För att använda systemet måste du logga in nedan.</p>
 
     <form method="post" ng-submit="login()">

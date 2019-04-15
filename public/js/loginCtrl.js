@@ -3,7 +3,7 @@ app.controller('loginCtrl', ['$scope', '$http', function($scope, $http){
     $scope.data = {};
     $scope.data.username = "";
     $scope.data.password = "";
-    
+    $scope.token = localStorage.getItem('t8_token');
     
     $scope.logout = function(){
         localStorage.removeItem('t8_token');
