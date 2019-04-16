@@ -630,10 +630,10 @@ button#next{
     float: left;
     clear: both;
 }
-#foo{
+#pairing-container{
     position:relative;
     width: 80%;
 }
-#foo td{
+#pairing-container td{
     border-width: 0px;
 }

@@ -74,7 +74,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         console.log(resp.data);
         if($scope.view.answer.type == "pairing"){
             $timeout(function() {
-                loadDragDrop($scope.view.answer.pairs);
+                loadPairing($scope.view.answer.pairs);
             });
         }
     });
@@ -99,7 +99,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             }
             if($scope.view.answer.type == "pairing"){
                 $timeout(function() {
-                    loadDragDrop($scope.view.answer.pairs);
+                    loadPairing($scope.view.answer.pairs);
                 });
             }   
         });
@@ -138,8 +138,8 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         });
     }, true);
 
-    function loadDragDrop(pairs) {
-        jsPlumb.setContainer(document.getElementById("foo"));
+    function loadPairing(pairs) {
+        jsPlumb.setContainer(document.getElementById("pairing-container"));
 
 
         for(var i = 0; i < pairs[0].alternatives.length; i++){
