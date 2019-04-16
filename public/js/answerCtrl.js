@@ -159,4 +159,13 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         }
     }
 
+    jsPlumb.bind("beforeDrop", function (info) {
+        // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
+        if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
+            return true;
+        }else{
+            return false;
+        }
+    });
+    
 }]);
