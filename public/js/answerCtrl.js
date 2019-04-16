@@ -157,21 +157,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
                 maxConnections: pairs[1].multiple ? -1 : 1
             });
         }
-
-        return;
-        var endpointOptions = { isSource:true, isTarget:true }; 
-        var window3Endpoint = jsPlumb.addEndpoint('Bil', { anchor:"Right" }, endpointOptions);
-        var window4Endpoint = jsPlumb.addEndpoint('Vatten', { anchor:"Left" }, endpointOptions);
-        console.log("Körs detta?");
-        //jsPlumb.connect({ source: document.getElementById("Bil"), target: document.getElementById("Vatten") });
-
-        jsPlumb.connect({ 
-            source:window3Endpoint,
-            target:window4Endpoint,
-            connector: [ "Bezier", { curviness: 75} ],
-            paintStyle:{ strokeWidth:25, stroke:'yellow' }
-        });
-    
     }
 
 }]);
