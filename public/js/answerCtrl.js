@@ -158,7 +158,22 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             });
         }
     }
+    
+    jsPlumb.bind("connection", updateBackend);
+    jsPlumb.bind("connectionDetached", updateBackend);
 
+    function updateBackend(info) {
+        $scope.$applyAsync(function () {
+            var connections = jsPlumb.getAllConnections();
+            var answer = [];
+            for(var i = 0; i < connections.length; i++){
+                answer.push(connections[i].sourceId + "&rarr;" + connections[i].targetId);
+            }
+            console.log(answer);
+            $scope.team.answers[$scope.view.number] = answer;
+        });
+    }
+    
     jsPlumb.bind("beforeDrop", function (info) {
         // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
         if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
