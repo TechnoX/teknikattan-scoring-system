@@ -62,10 +62,10 @@
       <table id="foo">
         <tr>
           <td>
-            <div class="alternativ left" ng-repeat="alt in view.answer.pairs[0]" ng-attr-id="{{alt}}">{{alt}}</div>
+            <div class="alternativ left" ng-repeat="alt in view.answer.pairs[0].alternatives" ng-attr-id="{{alt}}">{{alt}}</div>
           </td>
           <td>
-            <div class="alternativ right" ng-repeat="alt in view.answer.pairs[1]" ng-attr-id="{{alt}}">{{alt}}</div>
+            <div class="alternativ right" ng-repeat="alt in view.answer.pairs[1].alternatives" ng-attr-id="{{alt}}">{{alt}}</div>
           </td>
         </tr>
       </table>

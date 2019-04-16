@@ -142,22 +142,19 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         jsPlumb.setContainer(document.getElementById("foo"));
 
 
-        for(var i = 0; i < pairs[0].length; i++){
-            console.log(pairs[0][i]);
-            jsPlumb.makeSource(pairs[0][i], {
+        for(var i = 0; i < pairs[0].alternatives.length; i++){
+            jsPlumb.makeSource(pairs[0].alternatives[i], {
                 anchor:"Continuous",
                 endpoint:["Rectangle", { width:40, height:20 }],
-                maxConnections:3
+                maxConnections: pairs[0].multiple ? -1 : 1
             });
         }
 
-        for(var i = 0; i < pairs[1].length; i++){
-            console.log(pairs[1][i]);
-            jsPlumb.makeTarget(pairs[1][i], {
-                isTarget: true, 
+        for(var i = 0; i < pairs[1].alternatives.length; i++){
+            jsPlumb.makeTarget(pairs[1].alternatives[i], {
                 anchor:"Continuous",
                 endpoint:["Rectangle", { width:40, height:20 }],
-                maxConnections:3
+                maxConnections: pairs[1].multiple ? -1 : 1
             });
         }
 
