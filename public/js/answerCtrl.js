@@ -63,7 +63,7 @@ app.directive('setFocus', function($timeout, $parse) {
 
 
 
-app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', function($scope, $http, $routeParams, $timeout){
     var socket = io();
     var competition_id = $routeParams.id;
     var team_id = $routeParams.team;
@@ -72,6 +72,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
     $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
         console.log(resp.data);
+        if($scope.view.answer.type == "pairing"){
+            $timeout(function() {
+                loadDragDrop($scope.view.answer.pairs);
+            });
+        }
     });
     $http.get('/api/competition/'+competition_id+'/timesup').then(function(resp) {
         $scope.timesUp = resp.data;
@@ -92,6 +97,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             }else{
                 $scope.timesUp = false;
             }
+            if($scope.view.answer.type == "pairing"){
+                $timeout(function() {
+                    loadDragDrop($scope.view.answer.pairs);
+                });
+            }   
         });
     });
 
@@ -127,20 +137,44 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             console.log(res);
         });
     }, true);
-/*
-    jsPlumb.ready(function() {
-        
+
+    function loadDragDrop(pairs) {
+        jsPlumb.setContainer(document.getElementById("foo"));
+
+
+        for(var i = 0; i < pairs[0].length; i++){
+            console.log(pairs[0][i]);
+            jsPlumb.makeSource(pairs[0][i], {
+                anchor:"Continuous",
+                endpoint:["Rectangle", { width:40, height:20 }],
+                maxConnections:3
+            });
+        }
+
+        for(var i = 0; i < pairs[1].length; i++){
+            console.log(pairs[1][i]);
+            jsPlumb.makeTarget(pairs[1][i], {
+                isTarget: true, 
+                anchor:"Continuous",
+                endpoint:["Rectangle", { width:40, height:20 }],
+                maxConnections:3
+            });
+        }
+
+        return;
         var endpointOptions = { isSource:true, isTarget:true }; 
-        var window3Endpoint = jsPlumb.addEndpoint('window3', { anchor:"Top" }, endpointOptions);
-        var window4Endpoint = jsPlumb.addEndpoint('window4', { anchor:"BottomCenter" }, endpointOptions);
+        var window3Endpoint = jsPlumb.addEndpoint('Bil', { anchor:"Right" }, endpointOptions);
+        var window4Endpoint = jsPlumb.addEndpoint('Vatten', { anchor:"Left" }, endpointOptions);
         console.log("Körs detta?");
+        //jsPlumb.connect({ source: document.getElementById("Bil"), target: document.getElementById("Vatten") });
+
         jsPlumb.connect({ 
             source:window3Endpoint,
             target:window4Endpoint,
-            connector: [ "Bezier", { curviness:175 } ],
+            connector: [ "Bezier", { curviness: 75} ],
             paintStyle:{ strokeWidth:25, stroke:'yellow' }
-        });  
+        });
     
-    });
-  */  
+    }
+
 }]);

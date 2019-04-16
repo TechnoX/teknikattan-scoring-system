@@ -622,3 +622,18 @@ button#next{
     border: 2px solid #0066bb;
     background: #aaccff;
 }
+.alternativ.right{
+    float: right;
+    clear: both;
+}
+.alternativ.left{
+    float: left;
+    clear: both;
+}
+#foo{
+    position:relative;
+    width: 80%;
+}
+#foo td{
+    border-width: 0px;
+}
