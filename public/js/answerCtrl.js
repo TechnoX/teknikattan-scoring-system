@@ -138,6 +138,21 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         });
     }, true);
 
+
+    jsPlumb.ready(function() {
+        jsPlumb.bind("beforeDrop", function (info) {
+            // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
+            if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
+                return true;
+            }else{
+                return false;
+            }
+        });
+
+        jsPlumb.bind("connection", updateBackend);
+        jsPlumb.bind("connectionDetached", updateBackend);
+    });
+    
     function loadPairing(pairs) {
         jsPlumb.setContainer(document.getElementById("pairing-container"));
 
@@ -159,8 +174,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         }
     }
     
-    jsPlumb.bind("connection", updateBackend);
-    jsPlumb.bind("connectionDetached", updateBackend);
 
     function updateBackend(info) {
         $scope.$applyAsync(function () {
@@ -173,14 +186,5 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             $scope.team.answers[$scope.view.number] = answer;
         });
     }
-    
-    jsPlumb.bind("beforeDrop", function (info) {
-        // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
-        if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
-            return true;
-        }else{
-            return false;
-        }
-    });
     
 }]);
