@@ -139,7 +139,20 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 
 
     jsPlumb.ready(function() {
+        jsPlumb.bind("beforeDetach", function(info) {
+            // If no more time is left
+            if($scope.timesUp){
+                return false;
+            }
+        });
+        
         jsPlumb.bind("beforeDrop", function (info) {
+
+            // If no more time is left
+            if($scope.timesUp){
+                return false;
+            }
+            
             // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
             if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
                 return true;
