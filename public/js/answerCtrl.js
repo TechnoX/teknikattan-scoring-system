@@ -167,7 +167,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     
     function loadPairing(pairs) {
         jsPlumb.setContainer(document.getElementById("pairing-container"));
-
+        jsPlumb.deleteEveryEndpoint();
 
         for(var i = 0; i < pairs[0].alternatives.length; i++){
             jsPlumb.makeSource(pairs[0].alternatives[i], {
