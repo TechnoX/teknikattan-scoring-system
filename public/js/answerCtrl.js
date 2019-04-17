@@ -68,10 +68,10 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     var competition_id = $routeParams.id;
     var team_id = $routeParams.team;
     $scope.timesUp = false;
-    console.log("Beginning");;
+
     $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
-        console.log(resp.data);
+        console.log("Current view", resp.data);
         if($scope.view.answer.type == "pairing"){
             $timeout(function() {
                 loadPairing($scope.view.answer.pairs);
@@ -80,7 +80,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     });
     $http.get('/api/competition/'+competition_id+'/timesup').then(function(resp) {
         $scope.timesUp = resp.data;
-        console.log(resp.data);
     });
 
     
@@ -91,7 +90,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         }
         $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.view = resp.data;
-            console.log(resp.data);
+            console.log("Current view", resp.data);
             if($scope.view.state == 'beforeanswer' || $scope.view.state == 'answer'){
                 $scope.timesUp = true;
             }else{
@@ -182,7 +181,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             for(var i = 0; i < connections.length; i++){
                 answer.push(connections[i].sourceId + "&rarr;" + connections[i].targetId);
             }
-            console.log(answer);
             $scope.team.answers[$scope.view.number] = answer;
         });
     }
