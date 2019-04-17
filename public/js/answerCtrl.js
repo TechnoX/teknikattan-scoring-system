@@ -96,7 +96,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             }else{
                 $scope.timesUp = false;
             }
-            if($scope.view.answer.type == "pairing"){
+            if($scope.view.answer && $scope.view.answer.type == "pairing"){
                 $timeout(function() {
                     loadPairing($scope.view.answer.pairs);
                 });
