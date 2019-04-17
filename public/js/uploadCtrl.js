@@ -5,7 +5,7 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
         if(!file)// If the file is not valid (null), don't upload
             return
         Upload.upload({
-            url: '/upload',
+            url: '/api/upload',
             data: {file: file}
         }).then(function (resp) {
             var path = resp.data.path;
