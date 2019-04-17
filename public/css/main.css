@@ -617,8 +617,8 @@ button#next{
 }
 
 .alternativ{
-    padding: 1em;
-    margin: 0.5em;
+    padding: 0.5em 1em;
+    margin: 0.1em 0.5em;
     border: 2px solid #0066bb;
     background: #aaccff;
 }
