@@ -171,6 +171,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
                 maxConnections: pairs[1].multiple ? -1 : 1
             });
         }
+
+        for(var i = 0; i < $scope.team.answers[$scope.view.number].length; i++){
+            var pair = $scope.team.answers[$scope.view.number][i].split("&rarr;");
+            jsPlumb.connect({source: pair[0], target: pair[1]});
+        }
     }
     
 
