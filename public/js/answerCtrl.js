@@ -144,6 +144,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             if($scope.timesUp){
                 return false;
             }
+            return true;
         });
         
         jsPlumb.bind("beforeDrop", function (info) {
