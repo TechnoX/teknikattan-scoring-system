@@ -637,3 +637,8 @@ button#next{
 #pairing-container td{
     border-width: 0px;
 }
+
+svg path {
+    stroke-width: 4;
+    stroke: #0066bb;
+}
