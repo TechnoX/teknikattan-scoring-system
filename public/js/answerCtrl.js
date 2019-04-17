@@ -63,19 +63,23 @@ app.directive('setFocus', function($timeout, $parse) {
 
 
 
-app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', function($scope, $http, $routeParams, $timeout){
     var socket = io();
     var competition_id = $routeParams.id;
     var team_id = $routeParams.team;
     $scope.timesUp = false;
-    console.log("Beginning");;
+
     $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
-        console.log(resp.data);
+        console.log("Current view", resp.data);
+        if($scope.view.answer.type == "pairing"){
+            $timeout(function() {
+                loadPairing($scope.view.answer.pairs);
+            });
+        }
     });
     $http.get('/api/competition/'+competition_id+'/timesup').then(function(resp) {
         $scope.timesUp = resp.data;
-        console.log(resp.data);
     });
 
     
@@ -86,12 +90,17 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
         }
         $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.view = resp.data;
-            console.log(resp.data);
+            console.log("Current view", resp.data);
             if($scope.view.state == 'beforeanswer' || $scope.view.state == 'answer'){
                 $scope.timesUp = true;
             }else{
                 $scope.timesUp = false;
             }
+            if($scope.view.answer && $scope.view.answer.type == "pairing"){
+                $timeout(function() {
+                    loadPairing($scope.view.answer.pairs);
+                });
+            }   
         });
     });
 
@@ -127,20 +136,72 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', function($scope
             console.log(res);
         });
     }, true);
-/*
+
+
     jsPlumb.ready(function() {
+        jsPlumb.bind("beforeDetach", function(info) {
+            // If no more time is left
+            if($scope.timesUp){
+                return false;
+            }
+            return true;
+        });
         
-        var endpointOptions = { isSource:true, isTarget:true }; 
-        var window3Endpoint = jsPlumb.addEndpoint('window3', { anchor:"Top" }, endpointOptions);
-        var window4Endpoint = jsPlumb.addEndpoint('window4', { anchor:"BottomCenter" }, endpointOptions);
-        console.log("Körs detta?");
-        jsPlumb.connect({ 
-            source:window3Endpoint,
-            target:window4Endpoint,
-            connector: [ "Bezier", { curviness:175 } ],
-            paintStyle:{ strokeWidth:25, stroke:'yellow' }
-        });  
-    
+        jsPlumb.bind("beforeDrop", function (info) {
+
+            // If no more time is left
+            if($scope.timesUp){
+                return false;
+            }
+            
+            // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
+            if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
+                return true;
+            }else{
+                return false;
+            }
+        });
+
+        jsPlumb.bind("connection", updateBackend);
+        jsPlumb.bind("connectionDetached", updateBackend);
     });
-  */  
+    
+    function loadPairing(pairs) {
+        jsPlumb.setContainer(document.getElementById("pairing-container"));
+        jsPlumb.deleteEveryEndpoint();
+
+        for(var i = 0; i < pairs[0].alternatives.length; i++){
+            jsPlumb.makeSource(pairs[0].alternatives[i], {
+                anchor:"Continuous",
+                endpoint:["Rectangle", { width:40, height:20 }],
+                maxConnections: pairs[0].multiple ? -1 : 1
+            });
+        }
+
+        for(var i = 0; i < pairs[1].alternatives.length; i++){
+            jsPlumb.makeTarget(pairs[1].alternatives[i], {
+                anchor:"Continuous",
+                endpoint:["Rectangle", { width:40, height:20 }],
+                maxConnections: pairs[1].multiple ? -1 : 1
+            });
+        }
+
+        for(var i = 0; i < $scope.team.answers[$scope.view.number].length; i++){
+            var pair = $scope.team.answers[$scope.view.number][i].split("&rarr;");
+            jsPlumb.connect({source: pair[0], target: pair[1]});
+        }
+    }
+    
+
+    function updateBackend(info) {
+        $scope.$applyAsync(function () {
+            var connections = jsPlumb.getAllConnections();
+            var answer = [];
+            for(var i = 0; i < connections.length; i++){
+                answer.push(connections[i].sourceId + "&rarr;" + connections[i].targetId);
+            }
+            $scope.team.answers[$scope.view.number] = answer;
+        });
+    }
+    
 }]);

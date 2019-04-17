@@ -617,8 +617,28 @@ button#next{
 }
 
 .alternativ{
-    padding: 1em;
-    margin: 0.5em;
+    padding: 0.5em 1em;
+    margin: 0.1em 0.5em;
     border: 2px solid #0066bb;
     background: #aaccff;
+}
+.alternativ.right{
+    float: right;
+    clear: both;
+}
+.alternativ.left{
+    float: left;
+    clear: both;
+}
+#pairing-container{
+    position:relative;
+    width: 80%;
+}
+#pairing-container td{
+    border-width: 0px;
+}
+
+svg path {
+    stroke-width: 4;
+    stroke: #0066bb;
 }

@@ -49,6 +49,6 @@
     </ol>
   </div>
   <div ng-show="view.answer.type == 'pairing'">
-    <p>Parar ihop ord med ord.</p>
+    <li ng-repeat="x in answer track by $index" ng-bind-html="x"></li>
   </div>
 </main>

@@ -101,7 +101,7 @@ app.controller('neweditorCtrl', ['$scope', '$http', '$routeParams', '$uibModal',
                         timeText: "? minuter",
                         scoringText: "? poäng per rätt svar",
                         maxScoringText: "Totalt ? poäng",
-                        answer: {type: 'multi', pairs: [[],[]], subQuestions: []},
+                        answer: {type: 'multi', pairs: [{alternatives: [], multiple: false}, {alternatives: [], multiple: false}], subQuestions: []},
                         slides: [
                             {hasTimer: true, time: 2*60, textLeft: "<p></p>", textRight: "<p></p>", textProjector: "<p></p>"}
                         ]

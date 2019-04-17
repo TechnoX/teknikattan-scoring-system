@@ -80,26 +80,28 @@
       <tr>
         <td>
           <ol>
-            <li ng-repeat="p in answer.pairs[0] track by $index">
+            <li ng-repeat="p in answer.pairs[0].alternatives track by $index">
               <label>
                 Alternativ {{$index + 1}}:
-                <input type="text" ng-model="answer.pairs[0][$index]"/>
+                <input type="text" ng-model="answer.pairs[0].alternatives[$index]"/>
               </label>
-              <a ng-click="remove(answer.pairs[0], $index)">Ta bort</a>
+              <a ng-click="remove(answer.pairs[0].alternatives, $index)">Ta bort</a>
             </li>
-            <li><a ng-click="add(answer.pairs[0])">Lägg till alternativ</a></li>
+            <li><a ng-click="add(answer.pairs[0].alternatives)">Lägg till alternativ</a></li>
+            <li><label><input type="checkbox" ng-model="answer.pairs[0].multiple">Tillåt flera linjer från varje</label></li>
           </ol>
         </td>
         <td>
           <ol>
-            <li ng-repeat="p in answer.pairs[1] track by $index">
+            <li ng-repeat="p in answer.pairs[1].alternatives track by $index">
               <label>
                 Alternativ {{$index + 1}}:
-                <input type="text" ng-model="answer.pairs[1][$index]"/>
+                <input type="text" ng-model="answer.pairs[1].alternatives[$index]"/>
               </label>
-              <a ng-click="remove(answer.pairs[1], $index)">Ta bort</a>
+              <a ng-click="remove(answer.pairs[1].alternatives, $index)">Ta bort</a>
             </li>
-            <li><a ng-click="add(answer.pairs[1])">Lägg till alternativ</a></li>
+            <li><a ng-click="add(answer.pairs[1].alternatives)">Lägg till alternativ</a></li>
+            <li><label><input type="checkbox" ng-model="answer.pairs[1].multiple">Tillåt flera linjer till varje</label></li>
           </ol>
         </td>
       </tr>
