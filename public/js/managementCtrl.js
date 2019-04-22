@@ -1,6 +1,28 @@
-app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal', function($scope, $http, $routeParams, $uibModal){
 
     var compId = $routeParams.id;
+
+    $scope.images = [
+        {src: 'KbYsDPGLMA72HK8N3JXxDfKE.jpg', competitions: [{_id: '5ca4ad6f03fd813219ceecd5', name: 'Regionfinal 2019 Fredrik testar'}]},
+        {src: '2X_Z-j_5_4Od70x8CMs5mvCP.png', competitions: [{_id: '5cae088e1b107e4e097a9445', name: 'Regionsemifinal 2 2019'}]},
+        {src: 'kHizxChltMc0CTl8gQaF8QXT.png', competitions: [{_id: '5caddfdb1b107e4e097a9289', name: 'Regionsemifinal 1 2019'}]},
+        {src: '2ZLjZ6-O58GMc6gxDQrweIXA.png', competitions: [{_id: '5c9ddcef956edd1d96a61f38', name: 'Test Regionsemifinal 2019'}]},
+        {src: 'khNKsLM8KxE8m77-x6VBCV4u.png', competitions: [{_id: '5c8d5f39d8ce053e949543e9', name: 'Regionfinal'}]},
+        {src: '33WCrhPUQV0yAlKaSz8Ei-TG.jpg', competitions: [{_id: '5c8d5ad3d8ce053e949543e5', name: 'Regionfinal'}]},
+        {src: 'KrAPfbapc9LbLEh9GImtKgsD.png', competitions: [{_id: '5c8d5577d8ce053e949543cd', name: 'Regionfinal'}]},
+        {src: '3h7wMBYhT1cJdNehWMcGHEM9.png', competitions: []},
+        {src: 'kUr1XhkpIn_9lg-tg-uUOyNZ.png', competitions: [{_id: '5c9ddcef956edd1d96a61f38', name: 'Test Regionsemifinal 2019'}]},
+        {src: '3mPfFl-BuFb1ZtFSWArAPLWD.jpg', competitions: [{_id: '5caddfdb1b107e4e097a9289', name: 'Regionsemifinal 1 2019'},{_id: '5cae088e1b107e4e097a9445', name: 'Regionsemifinal 2 2019'},{_id: '5c9ddcef956edd1d96a61f38', name: 'Test Regionsemifinal 2019'},{_id: '5c8d5ad3d8ce053e949543e5', name: 'Regionfinal'}]},
+        {src: 'landskapsforandringar.jpg', competitions: [{_id: '5c9ddcef956edd1d96a61f38', name: 'Test Regionsemifinal 2019'}]},
+        {src: '3UxhqxyEuM1u02NY7UYwVECM.jpg', competitions: [{_id: '5cae088e1b107e4e097a9445', name: 'Regionsemifinal 2 2019'}]},
+        {src: 'LCvWff59PPOlBXzzAb76oy6t.png', competitions: []},
+        {src: '40H5bV7Ay3Pg4ye9Z6UINPUt.jpg', competitions: [{_id: '5caddfdb1b107e4e097a9289', name: 'Regionsemifinal 1 2019'},{_id: '5c8d5ad3d8ce053e949543e5', name: 'Regionfinal'}]},
+        {src: 'ldQJYU83LYwZ0YhiwSrqviDM.png', competitions: []},
+        {src: '49P0WOPauV_LFFy7Cyklf0fM.jpg', competitions: [{_id: '5caddfdb1b107e4e097a9289', name: 'Regionsemifinal 1 2019'},{_id: '5cae088e1b107e4e097a9445', name: 'Regionsemifinal 2 2019'},{_id: '5c8d5ad3d8ce053e949543e5', name: 'Regionfinal'}]},
+        {src: 'LGrZ0ZYimkQUSmJpJLPoBNt9.jpg', competitions: [{_id: '5c9ddcef956edd1d96a61f38', name: 'Test Regionsemifinal 2019'}]},
+        {src: '4CaCmVCklWsWzd-6wWpNORmL.jpg', competitions: []},
+        {src: 'LID6vr0xYY3pDXnXhh0k1-C5.png', competitions: [{_id: '5caddfdb1b107e4e097a9289', name: 'Regionsemifinal 1 2019'},{_id: '5c8d5ad3d8ce053e949543e5', name: 'Regionfinal'}]}
+    ];
     
     $scope.competitions = [];
     $scope.teams = [];
@@ -31,6 +53,25 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', function($s
         $scope.cities = resp.data;
         $scope.newCity = $scope.cities[0]._id;
     });
+
+    
+    $scope.editImage = function (img) {
+        console.log(img);
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/template/image_modal.html',
+            controller: 'ImageModalCtrl',
+            size: 'lg',
+            resolve: {
+                image: function () {
+                    return img;
+                },
+                images: function () {
+                    return $scope.images;
+                },
+            }
+        });
+    };
     
     $scope.editPassword = function(user){
         user.password = prompt("Ange nytt lösenord för " + user.name);

@@ -432,6 +432,14 @@ article > footer > section{
 .management li{
     margin-bottom: 0.5em;
 }
+.management figure{
+    float: left;
+}
+.management img{
+    height: 200px;
+    margin: 10px;
+}
+
 .change-slide-button{
     background-color: #4CAF50; /* Green */
     border: none;
