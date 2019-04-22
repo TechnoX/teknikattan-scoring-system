@@ -6,7 +6,7 @@ app.controller('UploadCtrl', ['$scope', 'Upload', function ($scope, Upload) {
             return
         Upload.upload({
             url: '/api/upload',
-            data: {file: file}
+            data: {file: file, 'competition': $scope.$parent.$parent.currQuestion.competition}
         }).then(function (resp) {
             var path = resp.data.path;
             $scope.$parent.$parent.currQuestion.image = path;

@@ -194,6 +194,11 @@ exports.add_city = function(city, callback) {
         return callback(err, result.insertedIds['0']);
     });
 };
+exports.add_media = function(media, callback) {
+    database.collection('media').insert(media, function(err, result) {
+        return callback(err);
+    });
+};
 exports.add_competition = function(competition, cloned_from_compId, callback) {
     database.collection('competitions').insert(competition, function(err, result) {
         var new_compId = result.insertedIds['0'] + "";

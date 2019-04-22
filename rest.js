@@ -103,7 +103,15 @@ exports.interface = function (app) {
         var file = req.files.file;
         console.log(file.name);
         console.log(file.type);
-        return res.status(200).json({'path': file.path.substr(7)});
+        
+        var data = {src: file.path.substr(15), competitions: [req.body.competition]}
+        db.add_media(data, function(err){
+            if(err){
+                console.error(err);
+                return res.status(500).send(err);
+            }
+            return res.status(200).json({'path': file.path.substr(15)});
+        });
     });
 
 
