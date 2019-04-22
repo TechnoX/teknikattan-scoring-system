@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Konfigurera bild</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <img ng-src="http://188.166.12.234:3000/uploads/{{image.src}}" alt="" style="max-width: 700px;"><br><br>
+  <a class="btn btn-danger" ng-click="remove(image)">Radera bild</a><br>
+  
+  <h2 ng-show="!image.competitions.length">Används inte av någon tävling!</h2>
+  <h2 ng-show="image.competitions.length">Används av följande tävlingar:</h2>
+  <ul>
+    <li ng-repeat="comp in image.competitions"><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="ok()">Stäng</button>
+</div>
