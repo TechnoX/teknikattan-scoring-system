@@ -8,7 +8,7 @@
   <h2 ng-show="!image.competitions.length">Används inte av någon tävling!</h2>
   <h2 ng-show="image.competitions.length">Används av följande tävlingar:</h2>
   <ul>
-    <li ng-repeat="comp in image.competitions"><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></li>
+    <li ng-repeat="comp in image.competitions"><a ng-href="competition/{{comp}}">{{comp}}</a></li>
   </ul>
 </div>
 <div class="modal-footer">

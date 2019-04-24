@@ -145,6 +145,15 @@ exports.interface = function (app) {
             return res.status(200).json(cities);
         });
     });
+    app.get('/api/media', function(req, res){
+        db.get_media(function(err, media){
+            if(err){
+                console.error(err);
+                return res.status(500).send(err);
+            }
+            return res.status(200).json(media);
+        });
+    });
     app.get('/api/competition/:id/teams', function(req, res){
         db.get_teams(req.params.id, function(err, teams){
             if (err){

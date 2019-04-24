@@ -137,6 +137,11 @@ exports.get_cities = function(city, callback) {
         });
     }
 };
+exports.get_media = function(callback) {
+    database.collection('media').find({}).toArray(function(err, result) {
+        return callback(err, result);
+    });
+};
 exports.get_competitions = function(city, callback) {
     if(city == "5c8d4b84ad225235d0178b95"){
         database.collection('competitions').find({}).toArray(function(err, result) {
