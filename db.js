@@ -154,10 +154,20 @@ exports.get_competitions = function(city, callback) {
     }
 };
 exports.get_competitions_media = function(file, callback) {
-    database.collection('questions').find({image: {$regex: file}}).project({_id: 0, competition: 1}).toArray(function(err, competitions) {
+    database.collection('questions').find({
+        $or: [
+            {"image": {$regex: file}},
+            {"answer.text": {$regex: file}},
+            {"slides": {$elemMatch: {
+                $or: [
+                    {"textLeft": {$regex: file}},
+                    {"textRight": {$regex: file}},
+                    {"textProjector": {$regex: file}}
+                ]
+            }}}
+        ]}).project({_id: 0, competition: 1}).toArray(function(err, competitions) {
         var ids = competitions.map(e => ObjectID(e.competition));
         database.collection('competitions').find({_id: {$in: ids}}).toArray(function(err, result) {
-            console.log(file, " is referenced from ", result);
             return callback(err, result);
         });
     });
