@@ -1,4 +1,4 @@
-app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', function($scope, $http, $routeParams, $document){
+app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', '$sce', function($scope, $http, $routeParams, $document, $sce){
     
     var socket = io();
     $scope.timerStarted = false;
@@ -64,6 +64,10 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', f
         $scope.timerStarted = false;
         $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
             $scope.currView = resp.data;
+            $scope.currView.textProjector = $sce.trustAsHtml($scope.currView.textProjector);
+            $scope.currView.answer.text = $sce.trustAsHtml($scope.currView.answer.text);
+            $scope.currView.textLeft = $sce.trustAsHtml($scope.currView.textLeft);
+            $scope.currView.textRight = $sce.trustAsHtml($scope.currView.textRight);
         });
         
         $http.get('/api/competition/'+competition_id+'/previousView').then(function(resp) {
@@ -78,6 +82,10 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', f
 
     $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.currView = resp.data;
+        $scope.currView.textProjector = $sce.trustAsHtml($scope.currView.textProjector);
+        $scope.currView.answer.text = $sce.trustAsHtml($scope.currView.answer.text);
+        $scope.currView.textLeft = $sce.trustAsHtml($scope.currView.textLeft);
+        $scope.currView.textRight = $sce.trustAsHtml($scope.currView.textRight);
     });
     
     $http.get('/api/competition/'+competition_id+'/previousView').then(function(resp) {
