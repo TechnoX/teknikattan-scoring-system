@@ -1,19 +1,6 @@
 <section class="management">
   <h1>Media</h1>
   <a href="/">Tillbaka</a><br>
-<!--
-<div class="buttons">
-  <button id="add">Add images</button>
-  <button id="reset">Reset</button>
-</div>
-<div id="status">
-  <progress max="7" value="0"></progress>
-</div>
-<div id="image-container">
-  <li ng-repeat="img in images"><img ng-src="http://188.166.12.234:3000/uploads/{{img.src}}"></li>
-</div>
--->
-  
 <figure ng-repeat="img in images">
   <img ng-src="http://188.166.12.234:3000/uploads/{{img.src}}" alt="" ng-click="editImage(img)"><br>
 </figure>
