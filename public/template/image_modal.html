@@ -2,7 +2,14 @@
   <h3 class="modal-title" id="modal-title">Konfigurera bild</h3>
 </div>
 <div class="modal-body" id="modal-body">
-  <img ng-src="http://188.166.12.234:3000/uploads/{{image.src}}" alt="" style="max-width: 700px;"><br><br>
+
+  <video controls ng-if="image.type == 'video'" style="max-width: 700px;">
+    <source src="uploads/{{image.src}}" type="video/mp4"></source>
+    Din webbläsare stödjer tyvärr inte videoklipp.
+  </video>
+  <img ng-if="image.type == 'image'" ng-src="uploads/{{image.src}}" alt="" style="max-width: 700px;">
+
+  <br>
   <a class="btn btn-danger" ng-click="remove(image)">Radera bild</a><br>
   
   <h2 ng-show="!competitions.length">Används inte av någon tävling!</h2>

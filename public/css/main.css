@@ -440,6 +440,10 @@ article > footer > section{
     height: 200px;
     margin: 10px;
 }
+.management video{
+    height: 200px;
+    margin: 10px;
+}
 
 .change-slide-button{
     background-color: #4CAF50; /* Green */

@@ -1,8 +1,12 @@
 <section class="management">
   <h1>Media</h1>
   <a href="/">Tillbaka</a><br>
-<figure ng-repeat="img in images">
-  <img ng-src="http://188.166.12.234:3000/uploads/{{img.src}}" alt="" ng-click="editImage(img)"><br>
+  <figure ng-repeat="img in images">
+    <video ng-if="img.type == 'video'" ng-click="editImage(img)">
+      <source src="uploads/{{img.src}}" type="video/mp4"></source>
+      Din webbläsare stödjer tyvärr inte videoklipp.
+    </video>
+    <img ng-if="img.type == 'image'" ng-src="uploads/{{img.src}}" alt="" ng-click="editImage(img)"><br>
 </figure>
 
 
