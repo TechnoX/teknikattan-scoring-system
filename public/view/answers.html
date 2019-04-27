@@ -28,7 +28,7 @@
   </main>
   <main ng-show="view.state == 'quiz'">
     <section>
-      <label>Välj en av följande {{team.answers}}: </label><br /><br /><br />
+      <label>Välj en av följande: </label><br /><br /><br />
       <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="A" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].A"></span></label>
       <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="B" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].B"></span></label>
       <label class="choice"><input type="radio" ng-model="team.answers[view.number][view.quizIndex]" value="C" ng-disabled="timesUp" /><span class="checkmark" ng-bind-html="view.quiz[view.quizIndex].C"></span></label>
