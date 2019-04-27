@@ -153,6 +153,11 @@ exports.get_competitions = function(city, callback) {
         });
     }
 };
+exports.get_competitions_media = function(file, callback) {
+    database.collection('competitions').find({city: city}).toArray(function(err, result) {
+        return callback(err, result);
+    });
+};
 exports.get_teams = function(competitionId, callback){
     database.collection('teams').find({competition: competitionId}).toArray(function(err, result) {
         return callback(err, result);
