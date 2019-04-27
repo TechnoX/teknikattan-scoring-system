@@ -26,10 +26,10 @@
     <div ng-show="view.state == 'quiz'">
       <h2>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</h2>
       <ol>
-        <li>A. {{view.quiz[view.quizIndex].A}}</li>
-        <li>B. {{view.quiz[view.quizIndex].B}}</li>
-        <li>C. {{view.quiz[view.quizIndex].C}}</li>
-        <li>D. {{view.quiz[view.quizIndex].D}}</li>
+        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].A}}</li>
+        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].B}}</li>
+        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].C}}</li>
+        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].D}}</li>
       </ol>
     </div>
   </main>
