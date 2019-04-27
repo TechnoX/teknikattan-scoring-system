@@ -1,4 +1,4 @@
-app.controller('ImageModalCtrl', function ($scope, $uibModalInstance, image, images) {
+app.controller('ImageModalCtrl', function ($scope, $http, $uibModalInstance, image, images) {
     console.log(image);
     $scope.image = image;
 

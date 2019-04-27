@@ -154,8 +154,12 @@ exports.get_competitions = function(city, callback) {
     }
 };
 exports.get_competitions_media = function(file, callback) {
-    database.collection('competitions').find({city: city}).toArray(function(err, result) {
-        return callback(err, result);
+    database.collection('questions').find({image: {$regex: file}}).project({_id: 0, competition: 1}).toArray(function(err, competitions) {
+        var ids = competitions.map(e => ObjectID(e.competition));
+        database.collection('competitions').find({_id: {$in: ids}}).toArray(function(err, result) {
+            console.log(file, " is referenced from ", result);
+            return callback(err, result);
+        });
     });
 };
 exports.get_teams = function(competitionId, callback){
