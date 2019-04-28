@@ -2,6 +2,11 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
 
     var compId = $routeParams.id;
 
+    
+    $scope.showImages = true;
+    $scope.showVideos = true;
+    $scope.showLoose = false;
+    
     $scope.competitions = [];
     $scope.teams = [];
     $http.get('/api/competitions').then(function(resp) {

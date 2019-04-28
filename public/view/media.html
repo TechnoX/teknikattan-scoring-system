@@ -1,13 +1,17 @@
 <section class="management">
   <h1>Media</h1>
   <a href="/">Tillbaka</a><br>
-  <figure ng-repeat="img in images">
-    <video ng-if="img.type == 'video'" ng-click="editImage(img)">
+  <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showLoose]" ng-click="showLoose = !showLoose">Visar bara media som {{showLoose ? 'inte' : ''}} används</a> 
+  <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showImages]" ng-click="showImages = !showImages">{{showImages ? 'Visar' : 'Visar inte'}} bilder</a> 
+  <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showVideos]" ng-click="showVideos = !showVideos">{{showVideos ? 'Visar' : 'Visar inte'}} videoklipp</a> 
+  <br>
+    
+  <figure ng-repeat="img in images" ng-show="(showLoose && img.competitions.length == 0) || (!showLoose && img.competitions.length > 0)">
+    <video ng-if="img.type == 'video' && showVideos" ng-click="editImage(img)">
       <source src="uploads/{{img.src}}" type="video/mp4"></source>
       Din webbläsare stödjer tyvärr inte videoklipp.
     </video>
-    <img ng-if="img.type == 'image'" ng-src="uploads/{{img.src}}" alt="" ng-click="editImage(img)"><br>
-</figure>
-
+    <img ng-if="img.type == 'image' && showImages" ng-src="uploads/{{img.src}}" alt="" ng-click="editImage(img)"><br>
+  </figure>
 
 </section>
