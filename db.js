@@ -138,10 +138,49 @@ exports.get_cities = function(city, callback) {
     }
 };
 exports.get_media = function(callback) {
-    database.collection('media').find({}).toArray(function(err, result) {
-        return callback(err, result);
+    database.collection('media').find({}).toArray(function(err, files) {
+        var promises = [];
+        for(var i = 0; i < files.length; i++){
+            promises.push(get_competitions_from_media(files[i].src));
+        }
+        Promise.all(promises).then(function(competitions) {
+            for(var i = 0; i < files.length; i++){
+                console.log("Add " + competitions[i].length + " to file " + files[i].src);
+                files[i].competitions = competitions[i];
+            }
+            return callback(false, files);
+        }).catch(function(err){
+            return callback(err);
+        });
     });
 };
+
+function get_competitions_from_media(file) {
+    return new Promise(function(resolve, reject) {
+        database.collection('questions').find({
+            $or: [
+                {"image": {$regex: file}},
+                {"answer.text": {$regex: file}},
+                {"slides": {$elemMatch: {
+                    $or: [
+                        {"textLeft": {$regex: file}},
+                        {"textRight": {$regex: file}},
+                        {"textProjector": {$regex: file}}
+                    ]
+                }}}
+            ]
+        }).project({_id: 0, competition: 1}).toArray(function(err, competitions) {
+            if(err) return reject(Error(err));
+            var ids = competitions.map(e => ObjectID(e.competition));
+            database.collection('competitions').find({_id: {$in: ids}}).toArray(function(err, result) {
+                if(err) return reject(Error(err));
+                resolve(result);
+            });
+        });
+    });
+}
+
+
 exports.get_competitions = function(city, callback) {
     if(city == "5c8d4b84ad225235d0178b95"){
         database.collection('competitions').find({}).toArray(function(err, result) {
@@ -153,25 +192,7 @@ exports.get_competitions = function(city, callback) {
         });
     }
 };
-exports.get_competitions_media = function(file, callback) {
-    database.collection('questions').find({
-        $or: [
-            {"image": {$regex: file}},
-            {"answer.text": {$regex: file}},
-            {"slides": {$elemMatch: {
-                $or: [
-                    {"textLeft": {$regex: file}},
-                    {"textRight": {$regex: file}},
-                    {"textProjector": {$regex: file}}
-                ]
-            }}}
-        ]}).project({_id: 0, competition: 1}).toArray(function(err, competitions) {
-        var ids = competitions.map(e => ObjectID(e.competition));
-        database.collection('competitions').find({_id: {$in: ids}}).toArray(function(err, result) {
-            return callback(err, result);
-        });
-    });
-};
+
 exports.get_teams = function(competitionId, callback){
     database.collection('teams').find({competition: competitionId}).toArray(function(err, result) {
         return callback(err, result);
