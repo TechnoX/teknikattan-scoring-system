@@ -1,7 +1,6 @@
 <section class="management">
   <h1>Media</h1>
-  <a href="/">Tillbaka</a><br>
-  <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showLoose]" ng-click="showLoose = !showLoose">Visar bara media som {{showLoose ? 'inte' : ''}} används</a> 
+  <a ng-show="!comp" class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showLoose]" ng-click="showLoose = !showLoose">Visar bara media som {{showLoose ? 'inte' : ''}} används</a> 
   <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showImages]" ng-click="showImages = !showImages">{{showImages ? 'Visar' : 'Visar inte'}} bilder</a> 
   <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showVideos]" ng-click="showVideos = !showVideos">{{showVideos ? 'Visar' : 'Visar inte'}} videoklipp</a> 
   <br>
