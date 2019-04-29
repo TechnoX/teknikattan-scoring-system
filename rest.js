@@ -118,7 +118,7 @@ exports.interface = function (app) {
                 console.error(err);
                 return res.status(500).send(err);
             }
-            return res.status(200).json({'path': file.path.substr(7)});
+            return res.status(200).json(data);
         });
     });
 

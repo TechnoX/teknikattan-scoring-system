@@ -3,6 +3,13 @@
   <a ng-show="!comp" class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[!showLoose]" ng-click="showLoose = !showLoose">Visar bara media som {{showLoose ? 'inte' : ''}} används</a> 
   <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showImages]" ng-click="showImages = !showImages">{{showImages ? 'Visar' : 'Visar inte'}} bilder</a> 
   <a class="btn" ng-class="{true: 'btn-primary', false: 'btn-danger'}[showVideos]" ng-click="showVideos = !showVideos">{{showVideos ? 'Visar' : 'Visar inte'}} videoklipp</a> 
+  <span ng-controller="UploadCtrl">
+    <a class="btn btn-success" ngf-select="upload($file)" ngf-pattern="'image/*'"
+       ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
+       ngf-resize-if="$width > 1200 || $height > 1200"
+       ngf-resize="{width: 1200}">Ladda upp bild</a>
+    <a class="btn btn-success" ngf-select="upload($file)" ngf-pattern="'video/*'" ngf-accept="'video/*'" ngf-max-size="200MB">Ladda upp video</a>
+  </span>
   <br>
     
   <figure ng-repeat="img in images" ng-show="(showLoose && img.competitions.length == 0) || (!showLoose && img.competitions.length > 0)">
