@@ -1,7 +1,9 @@
 var fsm = require('./fsm');
+const fs = require('fs')
 
 var MongoClient = require('mongodb').MongoClient
 var ObjectID = require('mongodb').ObjectID
+
 
 var database;
 MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
@@ -309,6 +311,18 @@ exports.delete_competition = function(compId, callback) {
 exports.delete_team = function(teamId, callback){
     database.collection('teams').remove({_id: ObjectID(teamId)}, function(err, result) {
         return callback(err);
+    });
+};
+
+exports.delete_media = function(mediaId, callback){
+    database.collection('media').findOne({_id: ObjectID(mediaId)}, function(err, media) {
+        fs.unlink('./public/uploads/'+media.src, function(err) {
+            if (err) return callback(err);
+            
+            database.collection('media').remove({_id: ObjectID(mediaId)}, function(err, result) {
+                return callback(err);
+            });
+        });
     });
 };
 

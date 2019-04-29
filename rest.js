@@ -260,6 +260,16 @@ exports.interface = function (app) {
         });
     });
 
+    app.delete('/api/media/:id', function(req, res){
+        db.delete_media(req.params.id, function(err){
+            if(err){
+                console.error(err);
+                return res.status(500).send(err);
+            }            
+            return res.status(200).json();
+        });
+    });
+
     
     app.post('/api/user', function(req, res){
         db.add_user(req.body, function(err,id){
