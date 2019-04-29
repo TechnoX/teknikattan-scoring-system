@@ -94,17 +94,25 @@ exports.interface = function (app) {
     });
 
     app.post('/api/upload', multipartMiddleware, function(req, res) {
-        console.log(req.body, req.files);
+        //console.log(req.body, req.files);
         if(req.body.file == 'null'){
             console.log("Failed to upload image")
             return res.status(500).send(err);
         }
         // don't forget to delete all req.files when done
         var file = req.files.file;
-        console.log(file.name);
+        //console.log(file);
+        //console.log(file.name);
         console.log(file.type);
+
         
-        var data = {src: file.path.substr(15), competitions: [req.body.competition]}
+        var data = {src: file.path.substr(15), type: "unknown"};
+        if(file.type.includes("image")){
+            data.type = "image";
+        }else if(file.type.includes("video")){
+            data.type = "video";
+        }
+        
         db.add_media(data, function(err){
             if(err){
                 console.error(err);
