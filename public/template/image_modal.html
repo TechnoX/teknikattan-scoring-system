@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title" id="modal-title">Konfigurera bild</h3>
+  <h3 class="modal-title" id="modal-title">Konfigurera {{image.type=='image'?'bild':'video'}}</h3>
 </div>
 <div class="modal-body" id="modal-body">
 
@@ -10,7 +10,7 @@
   <img ng-if="image.type == 'image'" ng-src="uploads/{{image.src}}" alt="" style="max-width: 700px;">
 
   <br>
-  <a class="btn btn-danger" ng-click="remove(image)">Radera bild</a><br>
+  <a class="btn btn-danger" ng-click="remove(image)">Radera {{image.type=='image'?'bild':'video'}}</a><br>
   
   <h2 ng-show="!image.competitions.length">Används inte av någon tävling!</h2>
   <h2 ng-show="image.competitions.length">Används av följande tävlingar:</h2>
