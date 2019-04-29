@@ -144,15 +144,6 @@ exports.interface = function (app) {
             return res.status(200).json(competitions);
         });
     });
-    app.get('/api/competitions/media/:file', function(req, res){
-        db.get_competitions_media(req.params.file, function(err, competitions){
-            if(err){
-                console.error(err);
-                return res.status(500).send(err);
-            }
-            return res.status(200).json(competitions);
-        });
-    });
     app.get('/api/cities', function(req, res){
         db.get_cities(req.decoded.city, function(err, cities){
             if(err){

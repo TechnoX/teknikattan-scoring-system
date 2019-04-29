@@ -2,6 +2,11 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
 
     var compId = $routeParams.id;
 
+    
+    $scope.showImages = true;
+    $scope.showVideos = true;
+    $scope.showLoose = false;
+    
     $scope.competitions = [];
     $scope.teams = [];
     $http.get('/api/competitions').then(function(resp) {
@@ -34,7 +39,15 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
 
     $scope.images = [];
     $http.get('/api/media').then(function(resp) {
-        $scope.images = resp.data;
+        if(compId){
+            for(var i = 0; i < resp.data.length; i++){
+                if(resp.data[i].competitions.some(e => e._id === compId)){
+                    $scope.images.push(resp.data[i]);
+                }
+            }
+        }else{
+            $scope.images = resp.data;
+        }
     });
 
     
