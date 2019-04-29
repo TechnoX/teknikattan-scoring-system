@@ -241,7 +241,7 @@ exports.add_city = function(city, callback) {
 };
 exports.add_media = function(media, callback) {
     database.collection('media').insert(media, function(err, result) {
-        return callback(err);
+        return callback(err, result.insertedIds['0']);
     });
 };
 exports.add_competition = function(competition, cloned_from_compId, callback) {

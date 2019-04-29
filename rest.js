@@ -113,11 +113,12 @@ exports.interface = function (app) {
             data.type = "video";
         }
         
-        db.add_media(data, function(err){
+        db.add_media(data, function(err, id){
             if(err){
                 console.error(err);
                 return res.status(500).send(err);
             }
+            data._id = id;
             return res.status(200).json(data);
         });
     });
