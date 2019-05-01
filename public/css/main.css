@@ -327,6 +327,7 @@ article > footer > section{
     user-select: none;
     margin-left: 22px;
     margin-top: 2px;
+    font-weight: normal;
 }
 
 /* Hide the browser's default radio button */
