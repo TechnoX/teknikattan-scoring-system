@@ -23,7 +23,7 @@
     <span class="statement" ng-bind-html="view.statement"></span>
   </aside>
   <aside ng-show="view.state == 'quiz'">
-    <h2>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</h2>
+    <p>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</p>
     <ol>
       <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].A}}</li>
       <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].B}}</li>
