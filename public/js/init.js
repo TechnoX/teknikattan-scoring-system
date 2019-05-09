@@ -79,6 +79,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
     templateUrl: 'view/audience.html',
     controller: 'judgeCtrl',
   })
+  .when('/competition/:id/truefalse', {
+    templateUrl: 'view/truefalse.html',
+    controller: 'judgeCtrl',
+  })
 
   // configure html5 to get links working on jsfiddle
   $locationProvider.html5Mode(true);

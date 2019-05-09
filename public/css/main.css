@@ -656,3 +656,20 @@ svg path {
     stroke-width: 4;
     stroke: #0066bb;
 }
+
+
+.lundtruefalse div{
+    width: 50%;
+    background-color: white;
+    border: 2px solid;
+    float: left;
+    height: 50%;
+    text-align: center;
+    font-size: 2em;
+}
+.lundtruefalse main{
+    height: 80%;
+}
+.lundtruefalse td{
+    border: 0px;
+}

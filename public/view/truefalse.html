@@ -1,0 +1,6 @@
+<article class="lundtruefalse">
+  <div ng-repeat="team in teams">
+    <h2>{{team.name}}</h2>
+    <answer answer="team.answers[view.number]" view="view" current-only="true"></answer>
+  </div>
+</article>
