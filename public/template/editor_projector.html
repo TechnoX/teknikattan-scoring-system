@@ -1,12 +1,4 @@
 <article class="projector">
-  <header>
-    <h1 ng-click="editable ? edit='title' : null">
-      {{$parent.index(question)}}.
-      <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'" />
-      <span ng-show="edit!='title'">{{question.title}}</span>
-    </h1>
-    <img src="images/logo.png"/>
-  </header>
   <figure ng-controller="UploadCtrl">
     <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
@@ -14,6 +6,13 @@
          ngf-resize="{width: 1200}" />
     <img ng-if="!editable" ng-src="{{question.image}}" />
   </figure>
+  <header>
+    <h1 ng-click="editable ? edit='title' : null">
+      FRÅGA {{$parent.index(question)}}:<br>
+      <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'" />
+      <span ng-show="edit!='title'">{{question.title}}</span>
+    </h1>
+  </header>
   <main>
     <div ng-if="$parent.showHTML && editable && slide == 'answer'"><textarea ng-model="question.answer.text" style="width: 75%; height: 100%;"></textarea></div>
     <div ng-if="!$parent.showHTML && editable && slide == 'answer'" ui-tinymce="editable" ng-model="question.answer.text"></div>

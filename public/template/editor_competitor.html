@@ -1,24 +1,23 @@
-<article class="competitor">
+<article class="competitor" ng-controller="UploadCtrl">
+  <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
+       ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
+       ngf-resize-if="$width > 1200 || $height > 1200"
+       ngf-resize="{width: 1200}" />
+  <img ng-if="!editable" ng-src="{{question.image}}" />
   <header>
     <h1 ng-click="editable ? edit='title' : null">
-      {{$parent.index(question)}}.
+      FRÅGA {{$parent.$parent.index(question)}}:<br>
       <input type="text" ng-show="edit=='title'" ng-model="question.title" ng-blur="edit='none'" />
       <span ng-show="edit!='title'">{{question.title}}</span>
     </h1>
-    <img src="images/logo.png"/>
   </header>
-  <main ng-controller="UploadCtrl">
-    <img ng-if="editable" ng-src="{{question.image}}" ngf-select="upload($file)" ngf-pattern="'image/*'"
-         ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-width="400"
-         ngf-resize-if="$width > 1200 || $height > 1200"
-         ngf-resize="{width: 1200}" />
-    <img ng-if="!editable" ng-src="{{question.image}}" />
+  <main>
     <div ng-if="$parent.$parent.showHTML && editable"><textarea ng-model="slide.textLeft" style="width: 100%; height: 100%;"></textarea></div>
     <div ng-if="!$parent.$parent.showHTML && editable" ui-tinymce="editable" ng-model="slide.textLeft"></div>
     <div ng-if="!editable" ng-bind-html="slide.textLeft"></div>
   </main>
-  <aside ng-if="$parent.showHTML && editable && question.type == 'normal'"><textarea ng-model="slide.textRight" style="width: 100%; height: 100%;"></textarea></aside>
-  <aside ng-if="!$parent.showHTML && editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
+  <aside ng-if="$parent.$parent.showHTML && editable && question.type == 'normal'"><textarea ng-model="slide.textRight" style="width: 100%; height: 100%;"></textarea></aside>
+  <aside ng-if="!$parent.$parent.showHTML && editable && question.type == 'normal'" ui-tinymce="editable" ng-model="slide.textRight"></aside>
   <aside ng-if="!editable && question.type == 'normal'" ng-bind-html="slide.textRight"></aside>
   <footer>
     <input ng-show="editable" type="checkbox" ng-model="slide.hasTimer" />

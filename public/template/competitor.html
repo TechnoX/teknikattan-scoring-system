@@ -1,15 +1,14 @@
-<article class="competitor">
-  <header>
-    <h1 ng-show="view.state != 'end' && view.state != 'start'">{{view.number+1}}. {{view.title}}</h1>
-    <img src="images/logo.png"/>
+<article class="competitor" ng-style="view.state == 'image' && {'background-image': 'url('+view.image+')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}">
+  <img img-preload ng-show="view.state != 'end' && view.state != 'start' && view.state != 'image'" ng-src="{{view.image}}" />
+  <header ng-class="{'titleimage': view.state == 'image'}">
+    <h1 ng-show="view.state != 'end' && view.state != 'start'">FRÅGA {{view.number+1}}:<br> {{view.title}}</h1>
   </header>
   <main>
-    <img img-preload ng-show="view.state != 'end' && view.state != 'start'" ng-src="{{view.image}}" />
     <div ng-if="view.state == 'question' || view.state == 'statements' || view.state == 'hints' || view.state == 'quiz'" ng-bind-html="view.textLeft"></div>
-    <div ng-show="view.state == 'start'"><h1>Välkomna till Teknikåttan</h1></div>
+    <div ng-show="view.state == 'start'" class="startend"><h1>Välkomna till Teknikåttan</h1><br><img src="images/logo.png"></div>
     <div ng-show="view.state == 'beforeanswer'">Rätt svar är ...</div>
     <div ng-if="view.state == 'answer'" ng-bind-html="view.answer.text"></div>
-    <div ng-show="view.state == 'end'"><h1>Tack för er medverkan!</h1></div>
+    <div ng-show="view.state == 'end'" class="startend"><h1>Tack för er medverkan!</h1><br><img src="images/logo.png"></div>
   </main>
   <aside ng-if="view.state == 'question'" ng-bind-html="view.textRight"></aside>
   <aside ng-show="view.state == 'hints'">

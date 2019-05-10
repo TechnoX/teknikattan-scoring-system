@@ -181,8 +181,8 @@ article > main > div{
     float: left;
 }
 
-
-.competitor > main > img{
+.competitor > img{
+    float: right;
     max-height: 30%;
     max-width: 25em;
     padding-bottom: 2%;
@@ -244,35 +244,66 @@ article > footer > section{
     float: left;
 }
 
+article > header.titleimage{
+    background-color: white;
+    background-image: url('/images/logo.png');
+    background-repeat: no-repeat;
+    background-position: 95% 15%;
+    background-size: 10em;
+    padding-right: 10em;
+    position: absolute;
+    top: 15%;
+    left: 0px;
+    border-radius: 0em 2em 2em 0em;
+    width: 40%;
+}
+article > header{
+    clear: initial;
+}
+article > header > h1{
+    float: initial;
+}
+
 .projector figure {
     float: right;
-    padding: 0px 1%;
     width: 25%;
     height: 30%;
-    margin-top: -3%;
-}
-.projector figure.titleimage{
-    float: none;
-    width: 100%;
-    height: 60%;
-    margin-top: 0px;
-    position: absolute; /* To place it above the main block after this image */
 }
 .projector figure > img{
     max-height: 100%;
     max-width: 100%;
     float: right;
 }
-.projector figure.titleimage > img{
-    float: none;
-    position: absolute;
-    top: 50%; /* To center in absolute positioned parent */
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+
 .projector > main{
     font-size: 2.5em;
     width: 95%;
+}
+
+.startend > img{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    width: 30%;
+}
+.startend > h1{
+    position: absolute;
+    background-color: #bf1b2c;
+    box-shadow: 0.1em 0.1em 0.2em #888888;
+    width: 100%;
+    color: white;
+    height: 20%;
+    padding-top: 3%;
+    margin-top: 10%;
+    text-align: center;
+    margin-left: -1em;
+}
+.competitor .startend > h1{
+    margin-left: -0.5em;
+    font-size: 4em;
 }
 
 
