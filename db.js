@@ -119,11 +119,11 @@ exports.check_user = function(name, password, callback) {
 };
 exports.get_users = function(city, callback) {
     if(city == "5c8d4b84ad225235d0178b95"){
-        database.collection('users').find({}).toArray(function(err, result) {
+        database.collection('users').find({}).project({password: 0}).toArray(function(err, result) {
             return callback(err, result);
         });
     }else{
-        database.collection('users').find({city: city}).toArray(function(err, result) {
+        database.collection('users').find({city: city}).project({password: 0}).toArray(function(err, result) {
             return callback(err, result);
         });
     }
