@@ -243,16 +243,10 @@ article > footer > section{
 
 article > header.titleimage{
     background-color: white;
-    background-image: url('/images/logo.png');
-    background-repeat: no-repeat;
-    background-position: 95% 15%;
-    background-size: 10em;
-    padding-right: 10em;
     position: absolute;
+    padding-right: 4em;
     top: 15%;
     left: 0px;
-    border-radius: 0em 2em 2em 0em;
-    width: 40%;
 }
 article > header{
     clear: initial;
