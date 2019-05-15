@@ -217,9 +217,6 @@ time#counter{
     display: block;
 }
 
-.competitor .statement, .competitor .hint{
-    font-size: 2em;
-}
 article > footer{
     clear: both;
     padding: 1%;
