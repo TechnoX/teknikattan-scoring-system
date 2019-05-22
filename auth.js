@@ -44,7 +44,7 @@ let login = (req, res) => {
             user._id += "";// Get rid of ObjectID from json object
             let token = jwt.sign(user,
                                  config.secret,
-                                 { expiresIn: '24h' // expires in 24 hours
+                                 { expiresIn: '48h' // expires in 48 hours
                                  }
                                 );
             // return the JWT token for the future API calls
