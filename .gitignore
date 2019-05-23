@@ -4,3 +4,4 @@ public/uploads
 \#*\#
 npm-debug.log*
 config.js
+users.json
