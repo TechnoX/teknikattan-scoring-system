@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5c8d526a36273d3ce69f0130"},"name":"Fredrik","city":"5c8d4b84ad225235d0178b95","password":"ASDF"}
+{"_id":{"$oid":"5c8d529536273d3ce69f0133"},"name":"Sami","city":"5c8d4b84ad225235d0178b95","password":"XXXX"}
+{"_id":{"$oid":"5c8d52d536273d3ce69f0134"},"name":"Peter","city":"5c8d4b84ad225235d0178b95","password":"QWERTY"}
