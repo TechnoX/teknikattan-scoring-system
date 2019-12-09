@@ -49,7 +49,7 @@
   
   <footer>
     <nav id="show-timeline">
-      <a ng-click="showTimeline = !showTimeline"><i class="fas" ng-class="{'fa-arrow-up': !showTimeline, 'fa-arrow-down': showTimeline}"></i></a>
+      <a ng-click="showTimeline = !showTimeline"><i class="fas" ng-class="{'fa-arrow-up': !showTimeline, 'fa-arrow-down': showTimeline}"></i> {{showTimeline?"Dölj överblick":"Visa överblick"}}</a>
     </nav>
 
     <ol id="newtimeline" ng-show="showTimeline">
