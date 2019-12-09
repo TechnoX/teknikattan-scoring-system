@@ -443,6 +443,7 @@ article > header > h1{
 .management input, .management select {
     background-color: transparent;
     border: 0px solid;
+    font-size: inherit;
 /*    height: 20px;
     width: 160px;*/
 }
