@@ -166,6 +166,11 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
     }
     
     $scope.addCompetition = function(){
+        if (!$scope.newName){
+            alert("Du måste ange ett namn på tävlingen.");
+            return;
+        }
+        
         var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString(), index: 0};
         addCompetition(newComp, undefined, function(err, id){
             if(err)return;
