@@ -164,6 +164,12 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
             $scope.competitions.push(newComp);
         });
     }
+
+    $scope.newYear = (new Date()).getUTCFullYear();
+    $scope.years = [];
+    for(let y = 2015; y <= $scope.newYear + 1; y+=1){
+        $scope.years.push(y);
+    }
     
     $scope.addCompetition = function(){
         if (!$scope.newName){
@@ -171,12 +177,13 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
             return;
         }
         
-        var newComp = {name: $scope.newName, city: $scope.newCity, lastEdited: (new Date()).toISOString(), index: 0};
+        var newComp = {name: $scope.newName, city: $scope.newCity, year: $scope.newYear, lastEdited: (new Date()).toISOString(), index: 0};
         addCompetition(newComp, undefined, function(err, id){
             if(err)return;
             newComp._id = id;
             $scope.competitions.push(newComp);
             $scope.newName = "";
+            $scope.newYear = (new Date()).getUTCFullYear();
             $scope.newCity = $scope.cities[0]._id;
         });        
     }

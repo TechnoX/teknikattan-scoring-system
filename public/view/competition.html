@@ -1,6 +1,10 @@
 <section class="management">
-  <h1><input type="text" ng-model="comp.name" ng-required ng-change="editCompetition(comp)"> - <select ng-model="comp.city" ng-required ng-change="editCompetition(comp)">
+  <h1><input type="text" ng-model="comp.name" ng-required ng-change="editCompetition(comp)"> -
+    <select ng-model="comp.city" ng-required ng-change="editCompetition(comp)">
       <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
+    </select> - 
+    <select ng-model="comp.year" ng-required ng-change="editCompetition(comp)">
+      <option ng-repeat="year in years" ng-value="year">{{year}}</option>
     </select>
   </h1>
 

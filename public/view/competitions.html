@@ -5,6 +5,7 @@
     <tr>
       <th>Namn</th>
       <th>Ort</th>
+      <th>Tillhör tävlingsår</th>
       <th>Senast ändrad</th>
       <th>Handling</th>
       <th><input type="submit" value="Analysera valda"></th>
@@ -12,6 +13,7 @@
     <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp._id">
       <td><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></td>
       <td>{{getCity(comp.city)}}</td>
+      <td>{{comp.year}}</td>
       <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
       <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
       <td><label>Välj: <input type="checkbox" value="{{comp._id}}" name="ids"></label></td>
@@ -22,6 +24,11 @@
         <td>
           <select ng-model="newCity" ng-required>
             <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
+          </select>
+        </td>
+        <td>
+          <select ng-model="newYear" ng-required>
+            <option ng-repeat="year in years" ng-value="year">{{year}}</option>
           </select>
         </td>
         <td></td>
