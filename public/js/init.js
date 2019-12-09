@@ -83,6 +83,9 @@ app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptions
     templateUrl: 'view/truefalse.html',
     controller: 'judgeCtrl',
   })
+  .otherwise({
+      templateUrl: 'view/nonexisting.html',
+  })
 
   // configure html5 to get links working on jsfiddle
   $locationProvider.html5Mode(true);
