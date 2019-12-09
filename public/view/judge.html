@@ -12,7 +12,7 @@
         <section>
           <p>
             <ol>
-              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" max="20" min="0" ng-model="team.scores[$index]" ng-change="saveScoring(team)"></label></li>
+              <li ng-repeat="score in team.scores track by $index"><label>Poäng fråga {{$index+1}}: <input type="number" tabindex="{{$index+1}}" max="20" min="0" ng-model="team.scores[$index]" ng-change="saveScoring(team)"></label></li>
             </ol>
             <br />
             Alla poäng: {{team.scores}} <br />
