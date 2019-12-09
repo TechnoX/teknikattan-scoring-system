@@ -15,11 +15,11 @@
     <label ng-show="medium == 'projector'">Vy på projektorn: </label>
     <label ng-show="medium == 'competitor'">Vy i tävlandes bås: </label>
     <label ng-show="medium == 'answer'">Svarsslide: </label>
-    <a ng-click="changeSlide(questionIndex, slideIndex, nextUp[medium])" ng-show="medium != 'projector'" class="arrow">&uarr;</a>
+    <a ng-click="changeSlide(questionIndex, slideIndex, nextUp[medium])" ng-show="medium != 'projector'" class="arrow">Visa vy för {{nextUp[medium]}} &uarr;</a>
   </nav>
   <section id="container">
     <nav id="left">
-      <a ng-click="slideIndex > 0 ? changeSlide(questionIndex, slideIndex-1, medium) :  changeSlide(questionIndex-1, questions[questionIndex-1].slides.length-1, medium)" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">&larr;</a>
+      <a ng-click="slideIndex > 0 ? changeSlide(questionIndex, slideIndex-1, medium) :  changeSlide(questionIndex-1, questions[questionIndex-1].slides.length-1, medium)" ng-show="slideIndex > 0 || questionIndex > 0" class="arrow">Tidigare slide &larr;</a>
       <!--
       <h2>Lägg till: </h2>
       <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
@@ -38,12 +38,12 @@
         <button type="button" class="btn btn-default" ng-click="addQuestion()">Ny fråga</button><br>
         <button type="button" class="btn btn-default" ng-click="addSlide()">Extra slide</button>
       </aside>
-      <a ng-click="slideIndex < currQuestion.slides.length-1 ? changeSlide(questionIndex, slideIndex+1, medium) : changeSlide(questionIndex+1, 0, medium)" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">&rarr;</a>
+      <a ng-click="slideIndex < currQuestion.slides.length-1 ? changeSlide(questionIndex, slideIndex+1, medium) : changeSlide(questionIndex+1, 0, medium)" ng-show="slideIndex < currQuestion.slides.length-1 || questionIndex < questions.length-1" class="arrow">Nästa slide &rarr;</a>
     </nav>
   </section>
   <nav id="down">
     <label ng-show="medium =='competitor'">Visa svarsslide: <input type="checkbox" ng-model="currQuestion.answer.show" /></label><br>
-    <a ng-click="changeSlide(questionIndex, slideIndex, nextDown[medium])" ng-show="!(medium == 'answer' || (medium == 'competitor' && !currQuestion.answer.show))" class="arrow">&darr;</a>
+    <a ng-click="changeSlide(questionIndex, slideIndex, nextDown[medium])" ng-show="!(medium == 'answer' || (medium == 'competitor' && !currQuestion.answer.show))" class="arrow">Visa vy för {{nextDown[medium]}} &darr;</a>
   </nav>
 
   
