@@ -622,7 +622,8 @@ button#next{
     font-size: 3em;
     z-index: 100;
 }
-#neweditor footer{
+
+#neweditor > footer{
     background-color: white;
     position: absolute;
     bottom: 0px;
