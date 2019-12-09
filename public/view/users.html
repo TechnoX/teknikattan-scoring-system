@@ -7,7 +7,7 @@
       <th>Handling</th>
     </tr>
     <tr ng-repeat="user in users">
-      <td><input type="text" ng-model="user.name" ng-required ng-change="editUser(user)"></td>
+      <td><input type="text" ng-model="user.name" placeholder="Välj ett användarnamn!!" ng-required ng-change="editUser(user)"></td>
       <td>
         <select ng-model="user.city" ng-required ng-change="editUser(user)">
           <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
@@ -16,7 +16,7 @@
       <td><a ng-click="editPassword(user)"><i class="fas fa-user-edit"></i> Nytt lösenord</a> / <a ng-click="removeUser(user)"><i class="fas fa-user-minus"></i> Ta bort</a></td>
     </tr>
     <tr>
-      <td><input type="text" ng-model="newName" ng-required></td>
+      <td><input type="text" ng-model="newName" placeholder="Användarnamn" ng-required></td>
       <td>
         <select ng-model="newCity" ng-required>
           <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>

@@ -12,7 +12,7 @@
   <ul>
     <li>Deltagande lag:
       <ul>
-        <li ng-repeat="team in teams"><input type="text" ng-model="team.name" ng-change="editTeam(team)">  <a ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a ng-href="competition/{{comp._id}}/answers/{{team._id}}">Visa svarsskärm (för tablet)</a></li>
+        <li ng-repeat="team in teams"><input type="text" ng-model="team.name" ng-change="editTeam(team)" placeholder="Namn på lag">  <a ng-click="removeTeam(team)"><i class="fas fa-trash-alt"></i> Ta bort</a> / <a ng-href="competition/{{comp._id}}/answers/{{team._id}}">Visa svarsskärm (för tablet)</a></li>
         <li><a ng-click="addTeam()"><i class="fas fa-user-plus"></i> Lägg till</a></li>
       </ul>
     <li><a ng-href="competition/{{comp._id}}/neweditor">Redigera frågor</a></li>
