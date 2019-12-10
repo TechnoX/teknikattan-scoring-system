@@ -147,7 +147,7 @@ exports.get_media = function(callback) {
         }
         Promise.all(promises).then(function(competitions) {
             for(var i = 0; i < files.length; i++){
-                console.log("Add " + competitions[i].length + " to file " + files[i].src);
+                //console.log("Add " + competitions[i].length + " to file " + files[i].src);
                 files[i].competitions = competitions[i];
             }
             return callback(false, files);

@@ -55,10 +55,10 @@ exports.interface = function(io) {
     io_ = io;
 
     io.on('connection', function(socket) {
-        console.log('a user connected');
+        //console.log('a user connected');
         
         socket.on('disconnect', function(){
-            console.log('user disconnected')
+            //console.log('user disconnected')
         });
         socket.on('next', function(msg){
             console.log("Next pressed! ", msg);
