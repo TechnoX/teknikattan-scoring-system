@@ -1,5 +1,5 @@
 
-var app = angular.module('t8', ['ngRoute', 'ngSanitize', 'ngFileUpload','ui.bootstrap', 'ui.tinymce', 'angular-jwt']);
+var app = angular.module('t8', ['ngRoute', 'ngSanitize', 'ngFileUpload','ui.bootstrap', 'ui.tinymce', 'angular-jwt', 'angular.filter']);
 
 app.config(function($routeProvider, $locationProvider, $httpProvider, jwtOptionsProvider) {
   $routeProvider

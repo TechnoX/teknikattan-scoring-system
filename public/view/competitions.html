@@ -1,42 +1,46 @@
 <section class="management">
   <h1>Tävlingar</h1>
   <form action="competitions/analytics" method="get">
-  <table>
+    <table>
     <tr>
+      <th></th>
       <th>Namn</th>
       <th>Ort</th>
-      <th>Tillhör tävlingsår</th>
       <th>Senast ändrad</th>
       <th>Handling</th>
       <th><input type="submit" value="Analysera valda"></th>
     </tr>
-    <tr ng-repeat="comp in competitions | orderBy : 'lastEdited' : true  track by comp._id">
-      <td><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></td>
-      <td>{{getCity(comp.city)}}</td>
-      <td>{{comp.year}}</td>
-      <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
-      <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
-      <td><label>Välj: <input type="checkbox" value="{{comp._id}}" name="ids"></label></td>
-    </tr>
-    <tfoot>
+    <tbody ng-repeat="(year, comps) in competitions | groupBy: '-year'">
       <tr>
-        <td><input type="text" ng-model="newName" placeholder="Namn på tävlingen" ng-required></td>
-        <td>
-          <select ng-model="newCity" ng-required>
-            <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
-          </select>
-        </td>
-        <td>
-          <select ng-model="newYear" ng-required>
-            <option ng-repeat="year in years" ng-value="year">{{year}}</option>
-          </select>
-        </td>
-        <td></td>
-        <td><a ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a></td>
-        <td></td>
+        <td colspan="6" ng-click="display[year] = !display[year]">{{ year | ltrim: '-' }} <i class="fas" ng-class="{'fa-plus-circle': !display[year], 'fa-minus-circle': display[year]}"></i></td>
       </tr>
-    </tfoot>
+      <tr ng-repeat="comp in comps | orderBy : 'lastEdited' : true  track by comp._id" ng-show="display[year]">
+        <td></td>
+        <td><a ng-href="competition/{{comp._id}}">{{comp.name}}</a></td>
+        <td>{{getCity(comp.city)}}</td>
+        <td>{{comp.lastEdited | date:'yyyy-MM-dd HH:mm'}}</td>
+        <td><a ng-click="cloneCompetition(comp)"><i class="far fa-copy"></i> Klona tävling</a> / <a ng-click="removeCompetition(comp)"><i class="fas fa-trash-alt"></i> Ta bort</a></td>
+        <td><label>Välj: <input type="checkbox" value="{{comp._id}}" name="ids"></label></td>
+      </tr>
+    </tbody>
   </table>
   </form>
+
+  <h2>Lägg till tävling:</h2>
+  <label>Namn: </label><input type="text" ng-model="newName" placeholder="Namn på tävlingen" ng-required><br>
+  <label>Ort:</label>
+  <select ng-model="newCity" ng-required>
+    <option ng-repeat="city in cities" ng-value="city._id">{{city.name}}</option>
+  </select><br>
+  <label>Tävlingsår:</label>
+  <select ng-model="newYear" ng-required>
+    <option ng-repeat="year in years" ng-value="year">{{year}}</option>
+  </select><br>
+  <a ng-click="addCompetition()"><i class="fas fa-plus-circle"></i> Lägg till</a><br>
+  
+
+
+  
+
   <a href="/">Tillbaka</a>
 </section>

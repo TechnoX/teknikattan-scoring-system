@@ -423,7 +423,21 @@ article > header > h1{
     background-size: 0.7em;
     padding-left: 60px;
 }
+.management {
+    line-height: 1.4;
+}
+.management label {
+    width: 8em;
+}
+.management h2{
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-bottom: 0.6em;
+}
+.management td, th{
+    padding: 0em 1em;
 
+}
 .management th {
     border-bottom: 1px solid black;
 }
