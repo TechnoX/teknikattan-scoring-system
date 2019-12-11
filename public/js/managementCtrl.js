@@ -168,7 +168,7 @@ app.controller('managementCtrl', ['$scope', '$http', '$routeParams', '$uibModal'
     $scope.newYear = (new Date()).getUTCFullYear();
     $scope.years = [];
     for(let y = 2015; y <= $scope.newYear + 1; y+=1){
-        $scope.years.push(y);
+        $scope.years.push(y.toString());
     }
     
     $scope.addCompetition = function(){
