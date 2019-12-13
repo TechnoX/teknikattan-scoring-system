@@ -24,8 +24,8 @@
     <p>För att använda systemet måste du logga in nedan.</p>
 
     <form method="post" ng-submit="login()">
-      <label>Användarnamn: <input type="text" ng-model="data.username"></label><br>
-      <label>Lösenord: <input type="password" ng-model="data.password"></label><br>
+      <label for="username">Användarnamn:</label><input type="text" id="username" ng-model="data.username"><br>
+      <label for="password">Lösenord: </label><input type="password" id="password" ng-model="data.password"><br>
       <input type="submit" value="Logga in!">
     </form>
   </section>
