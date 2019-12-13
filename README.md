@@ -44,7 +44,7 @@ Backenden är uppdelad i ett antal filer:
 
 
 
-För att starta systemet brukar jag använda pm2 som installeras med ´´npm install pm2´´: 
+För att starta systemet brukar jag använda pm2 som installeras med `npm install pm2`: 
 
     pm2 start server
 
@@ -66,17 +66,52 @@ Systemet använder angular-routing för navigering mellan sidorna. Alla endpoint
 
 I public finns 6 mappar: 
  * css
+
    Innehåller två filer, dels reset.css som nollställer alla elements formatering för att få lika start i alla webbläsare, och dels main.css som innehåller all formatering för teknikåttan. Kanske borde göras om med sass eller nått... 
  * images
+
    Innehåller statiska bilder som tävlingen nyttjar. Innehåller inte så mycket då de flesta ikoner är tagna från font-awesome och läggs in med css-klasser istället. 
  * uploads
+
    User-content, saker som användare laddat upp. Observera att denna mapp inte ligger på git, utan den måste skapas manuellt. Viktigt att den skapas för att man ska kunna ladda upp media!
  * js
+
    All javascript, återkommer till det
  * templates
+
    Angular-templates, för till exempel olika modals som öppnas, men också för tag-specifika direktiv, som tävlingsvyn eller projektorvyn. De används bland annat av kontrolldatorn som ser både föregående, nuvarande och nästa vy. 
  * view
+
    Angular-views, saker som ska laddas in av angular-routingen
+
+
+Olika javascriptfiler: 
+ Till varje view hör en controller. De syns listade i public/js/init.js, några exempel: 
+
+ * managementCtrl.js
+   Styr alla tråkiga html-formulär och tabeller, mycket slussa data fram och tillbaka. Till exempel användare, tävlingsorter och lista över alla tävlingar. 
+ * neweditorCtrl.js
+   Frågeeditorn, ganska komplex. Detta är den nya versionen, fanns en tidigare som hette editorCtrl.js förut, största skillnden var att i gamla editorn kunde man se både projektorvyn och deltagarvyn bredvid varandra samtidigt, medan man i den nya editorn bläddrar mellan de olika vyerna. 
+ * loginCtrl.js
+   Hanterar inloggning och utloggning.
+ * resultCtrl.js
+   Innehåller dels result controllern, men också ett highlighter direktiv som lyser upp cellen som ändras i resultatlistan. Result controllern lyssnar på "scoring" event som kommer med socket.io och uppdaterar poäng, kontrollern räknar också ut totalsumman för varje lag. 
+ * judgeCtrl.js
+   Används för att visa vad lagen svarar, samt fylla i poäng för lagen. Borde kanske separeras i två olika kontrollers. Svaren kommer via socket.io eventet "answer" och de formateras enligt nuvarande fråga, dvs om det är en sant-eller falskt, ledtråd eller fritext så presenteras lagets svar på olika sätt. Vilken fråga som är aktuell just nu kommer via socket.io eventet "view_changed". Poängställningen uppdateras på servern med ett post-anrop till /api/team. Poängen summeras med en likadan funktion som användes i resultCtrl.js.
+ * controlCtrl.js
+   Bläddrar mellan olika slides, både framåt och bakåt. Antingen genom knappar eller genom att använda tangentbordet. Minns inte riktigt varför jag använder socket.io emit för att skicka knapptryckningar till servern, borde gå med vanliga post anrop också. Det emittas "next" för att gå framåt och "prev" för att gå bakåt. 
+Den här vyn har också koll på tiden och när tiden tar slut så spelas ett ljud upp på den här vyn. Aktuell tid kommer med socket.io eventet "time" så alla vyer delar en och samma klocka som ligger på backenden. När tiden tar slut kommer eventet "timesUp". 
+Lyssnar också på socket.io eventet "view_changed" och uppdaterar vyn i så fall, så ska gå att ha flera webbläsarfönster uppe med controllern samtidigt och de är ändå synkade mellan varandra. 
+ * questionCtrl.js
+   Laddar in nuvarande fråga och uppdaterar vyn när det kommer ett event på "view_changed". Lyssnar också på "time" för att kunna uppdatera tiden kontinuerligt. Denna kontroller används av projektorvyn, deltagarvyn och nedräkningsvyn. 
+ * answerCtrl.js
+   Innhåller all login för svarsskärmen, både answercontrollern, men också ett gäng direktiv: 
+   * multipleChoices: Används för att flervalsfrågor ska kunna göras om till en semikolonseparerad lista som den sparas i databasen som, vore bättre med en annan struktur där. Men alla svar på delfrågor är idag strängar. Så måste packas ihop och packas upp med detta direktiv. 
+   * stringTonumber: Gör om sträng till tal, och vice versa för de frågor där ett tal efterfrågas. 
+   * setFocus: Sätter fokus på den ledtrådsrad som är aktuell just nu. Hoppar automatiskt ned en rad med markören när tiden tar slut och föregående rad låses. 
+   I övrigt så innehåller answer controllern socket.io eventet "view_changed" som uppdaterar hur sidan ska se ut, vilken sorts svar som efterfrågas, samt om laget redan svarat tidigare så laddas även det svaret in. Socket.io eventet "timesUp" används för att låsa svarsskärmen så inte laget kan fylla i något mer. Så fort laget ändrar något så ska det postas till servern, det görs med en angular $watch eftersom datastrukturen för answers är olika beroende på fråga. Filen innehåller också en del för logiken när man drar streck mellan alternativ (med hjälp av biblioteket jsPlumb). 
+ * analyticsCtrl.js
+   Visar svar från många olika tävlingar samtidigt. Använder inte någon socket.io idag, utan måste laddas om manuellt om svaren uppdateras. Sidan är tänkt att användas i efterhand för att analysera svaren. 
 
 
 
