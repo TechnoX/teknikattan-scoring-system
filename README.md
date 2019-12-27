@@ -4,6 +4,91 @@
 Fredrik Löfgren har varit involverad i teknikåttan flera år som moderator och irriterade sig på att det var så mycket papper som skickades runt hela tiden. Vi lever på 2000-talet och det här är en tekniktävling. Det måste gå att digitalisera!! Alltifrån resultathantering (som tidigare faktiskt skedde i excel), till presentationen av frågorna till deltagande lag (som tidigare fick frågorna på papper). Men framförallt hantering av alla svaren som deltagarna producerar, de borde kunna fyllas i digitalt och skickas trådlöst till domarna istället för att springa runt med lösblad i lokalen. 
 
 
+# Installation:
+
+## Förutsättningar
+ * git
+ * npm
+
+
+## Steg-för-steg
+
+ * Börja med att dra ned repot:
+
+         git clone https://github.com/TechnoX/teknikattan-scoring-system.git
+
+ * Ställ dig i mappen som du nyss laddade ned:
+
+         cd teknikattan-scoring-system
+         
+ * Skapa en lokal kopia av config filen:
+
+         cp config_git.js config.js
+
+ * Öppna filen `config.js` och ändra frasen passwd till något längre och hemligare.
+
+ * Dra ned alla backend-dependencies:
+
+         npm install
+
+ * Starta mongodb
+
+         sudo systemctl start mongod
+
+ * Skapa någon default användare som du sen kan använda för att logga in i systemet
+
+         mongoimport --db teknikattan --collection users --file example_users.json
+
+ * Slutligen kan vi starta systemet med
+
+         pm2 start server.js
+
+ * Öppna webbläsaren och besök http://localhost:3000/ om allt gått rätt ska du nu kunna logga in på systmet med användarnamn Fredrik och lösenord ASDF
+ 
+ * Glöm inte att byta lösenord det första du gör på exempelanvändaren. Alternativt skapa en ny användare och ta bort den första.
+ 
+ * För att starta om vid någon ändringar använder jag
+
+         pm2 restart server.js
+
+ * För att se loggar live använder jag
+
+         pm2 monit
+
+
+Läs mer i pm2's dokumentation: https://pm2.keymetrics.io/ 
+
+
+
+
+# Beskrivning av hur man använder systemet
+
+
+Eftersom det är rätt svårt att beskriva hur man använder systemet i text har jag gjort ett antal videoklipp där jag visar och berättar. Tror det är enklare att förstå då. 
+
+
+## Administration
+
+För de som administrerar tävlingen / tävlingar. Hur man skapar användare. Hur man skapar tävlingar. Lägger in lag. Tar bort lag. Även analys av svaren i efterhand, ta reda på vilka frågor som var svåra eller enkla etc. 
+
+## Lägga in frågor
+
+För de som lägger in frågorna. Det behövs oftast bara göras nationellt och sen kan alla frågor kopieras ut till alla tävlingsorter. Men om lokala arrangörer vill ändra något i sina frågor kan det vara värt att titta på den här videon ändå.
+
+## Under tävlingsdagen, för den som bläddrar fram presentationen
+
+Att bläddra fram rätt fråga, starta tidtagaruret, bläddra bakåt i presentationen om något gått fel. Ha koll på de olika frågetyperna. Starta betänketidsmusik separat. 
+
+## Under tävlingsdagen, för den som instruerar lagen
+
+Hur man svarar på de olika typerna av frågor. Vara beredd på att frågor låses när tiden tar slut och då kan man inte svara något mer. Allt måste svaras inom betänketiden
+
+## Under tävlingsdagen, för den som instruerar domarna
+
+Vad som man ska fylla i och hur man ser lagens svar.
+
+
+
 # Teknisk specifikation och detaljer: 
 
 
