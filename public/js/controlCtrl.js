@@ -4,7 +4,6 @@ app.controller('controlCtrl', ['$scope', '$http', '$routeParams', '$document', '
     $scope.timerStarted = false;
 
     $document.bind('keyup', function (e) {
-        console.log(e.key);
         switch (e.key) {
         case " ":
         case "ArrowRight":
