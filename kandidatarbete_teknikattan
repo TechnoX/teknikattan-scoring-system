@@ -93,6 +93,10 @@ Se readme filen för mer info!
 
 # Förslag på förbättringar: 
 
+Jag tänker att systemet ska skrivas om från grunden med nya tekniker och uppdatera det allmänt. Just nu används till exempel inte något system för pakethantering på front-enden. Något liknande bower vore trevligt. Vissa bibliotek är direktlänkade till nån CDN och vissa ligger versionshanterade här under git. Det är inte hållbart eller bra.
+
+Förutom nuvarande funktionalitet vore ny-utveckling av följande intressant: 
+
 1. Visa live på projektorn vad lagen svarar samtidigt som de är aktiva. För att få mer spänning och mer interaktivitet med publiken. Det vore kul att kunna hänga med mer vad som händer. 
 
 2. Automaträttning i de fall det inte är fritextsvar. Alla dra-streck-frågor, sant-eller-falskt, flervalsalternativfrågor etc. borde gå att automatiskt rätta eftersom svaret är entydigt. 
