@@ -4,6 +4,65 @@
 Fredrik Löfgren har varit involverad i teknikåttan flera år som moderator och irriterade sig på att det var så mycket papper som skickades runt hela tiden. Vi lever på 2000-talet och det här är en tekniktävling. Det måste gå att digitalisera!! Alltifrån resultathantering (som tidigare faktiskt skedde i excel), till presentationen av frågorna till deltagande lag (som tidigare fick frågorna på papper). Men framförallt hantering av alla svaren som deltagarna producerar, de borde kunna fyllas i digitalt och skickas trådlöst till domarna istället för att springa runt med lösblad i lokalen. 
 
 
+# Teknisk utrustning för att köra tävlingen
+
+Man kan välja hur många delar man vill använda sig av. Till exempel kan man låta lagen fortfarande svara på papper, men låta frågorna presenteras i båsen på ipads eller datorskärmar, och då bläddras lagens frågetexter fram samtidigt som projektorbilden ändras. Annars kan man välja att lagen svarar på ipads men frågorna kommer på papper, eller så svarar lagen på papper men resultatlistan hanteras via systemet. Möjligheterna är många!
+
+
+Här nedan beskrivs hur vi brukar använda systemet i Linköping och vilken utrustning som krävs:
+
+
+## Till lagen (upprepa nedanstående för varje lag)
+
+ * En ipad / tablet / padda där de fyller i sina svar. Vi köpte den billigaste 10 tums skärmen vi kunde hitta. 
+ * En större skärm (ungefär i storlek som 2st A4 papper) där frågetexterna presenteras.
+ * Ett bord
+ * Tre stolar
+ * Kladdpapper
+
+
+
+## Till domarna
+
+ * En laptop till varje domare. Bra för att både se svaren som lagen skriver och fylla i rätt poäng. Är smidigt att ha en domare som sköter kontakten med speaker och resterande domare fokuserar på poängen
+ * Bord
+ * En stol till varje domare
+ * Kladdpapper
+
+
+
+## Till personen som styr projektorn (och hela tävlingen egentligen)
+
+ * En laptop
+
+
+
+## Ljud
+
+ * Mikrofoner till lagen
+ * Mikrofon till speaker
+ * Mikrofon till domarna
+ * Mikrofon som speaker kan använda för att intervjua publiken
+ * Ljudutrustning (högtalare, mikrofonmottagare etc.)
+ * En laptop för bakgrundsmusik / musik under betänketiden.
+
+
+
+## Bild
+
+ * En stationär kamera i varje tävlingsbås, en stationär kamera som filmar domarna, en rörlig kamera, en eller två som tar upp hela scenen, nån som filmar ut mot publiken (om GDPR tillåter). 
+ * En dator som bildmixrar, för att kunna klippa in bilder från bås mellan frågorna, även kunna klippa in specialgrafik som prisutdelning och annan information. Körs utan ljudstream
+ * En annan dator som styr youtube streamen, för att kunna streama tävlingen till parallellklasserna. Tar in samma bildkällor som ovanstående dator. Ska också ta in ljudstreamen. Kan streama ut vad de säger i båsen till youtube, men det ljudet får inte gå ut i lokalen eftersom då kan de andra lagen höra vad konkurrenterna säger. 
+
+
+
+## Övrigt
+ * För att slippa ha en dator till varje bås kör vi med en enda dator för alla bås och en HDMI splitter som skickar ut samma bild till alla skärmarna i båsen. Det blir billigare och säkerställer att alla båsen ser exakt samma bild hela tiden. Men har man flera laptops eller stationära dator kan man såklart använda dem i båsen också. Bara man inte exponerar tangentbord och mus för deltagarna, de ska inte kunna använda datorn, det är bara själva skärmen som behövs för att presentera frågorna.
+ * Systemet som kör tävlingen ligger på en linux-dator. Förslagsvis på en server som teknikåttan tillhandahåller. Men vill man köra lokalt går det med vilken linux-dator som helst, även en raspberry pi bör fungera. Den sätter upp en lokal webbserver som man ansluter till via datorns IP-address på port 3000. Mer information om hur systemet installeras finns nedan. 
+
+
+
+
 # Installation:
 
 ## Förutsättningar
