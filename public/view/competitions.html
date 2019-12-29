@@ -10,7 +10,7 @@
       <th>Handling</th>
       <th><input type="submit" value="Analysera valda"></th>
     </tr>
-    <tbody ng-repeat="(year, comps) in competitions | groupBy: '-year'">
+    <tbody ng-repeat="(year, comps) in competitions | orderBy: '-year' | groupBy: '-year' ">
       <tr>
         <td colspan="6" ng-click="display[year] = !display[year]">{{ year | ltrim: '-' }} <i class="fas" ng-class="{'fa-plus-circle': !display[year], 'fa-minus-circle': display[year]}"></i></td>
       </tr>
