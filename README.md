@@ -130,21 +130,27 @@ Eftersom det är rätt svårt att beskriva hur man använder systemet i text har
 
 För de som administrerar tävlingen / tävlingar. Hur man skapar användare. Hur man skapar tävlingar. Lägger in lag. Tar bort lag. Även analys av svaren i efterhand, ta reda på vilka frågor som var svåra eller enkla etc. 
 
+[![Videotutorial om administration](http://img.youtube.com/vi/B6QhVMz9uAc/0.jpg)](http://www.youtube.com/watch?v=B6QhVMz9uAc "Hur man administrerar systemet")
+
 ## Lägga in frågor
 
 För de som lägger in frågorna. Det behövs oftast bara göras nationellt och sen kan alla frågor kopieras ut till alla tävlingsorter. Men om lokala arrangörer vill ändra något i sina frågor kan det vara värt att titta på den här videon ändå.
+
+[![Videotutorial om frågehantering](http://img.youtube.com/vi/B6QhVMz9uAc/0.jpg)](http://www.youtube.com/watch?v=B6QhVMz9uAc "Redigera, ta bort och lägg till frågor")
+
 
 ## Under tävlingsdagen, för den som bläddrar fram presentationen
 
 Att bläddra fram rätt fråga, starta tidtagaruret, bläddra bakåt i presentationen om något gått fel. Ha koll på de olika frågetyperna. Starta betänketidsmusik separat. 
 
-## Under tävlingsdagen, för den som instruerar lagen
+[![Videotutorial för hur man styr tävlingen](http://img.youtube.com/vi/nUAvKJ7yEUM/0.jpg)](http://www.youtube.com/watch?v=nUAvKJ7yEUM "Att styra tävlingen, bläddrar mellan frågor och starta nedräkning")
 
-Hur man svarar på de olika typerna av frågor. Vara beredd på att frågor låses när tiden tar slut och då kan man inte svara något mer. Allt måste svaras inom betänketiden
 
-## Under tävlingsdagen, för den som instruerar domarna
+## Under tävlingsdagen, för lagen att svara på frågor och domarna att bedöma svar
 
-Vad som man ska fylla i och hur man ser lagens svar.
+Hur deltagarna svarar på de olika typerna av frågor. Vara beredd på att frågor låses när tiden tar slut och då kan man inte svara något mer, allt måste svaras inom betänketiden. Vad domarna ska fylla i och hur de ser lagens svar.
+
+[![Videotutorial för deltagarna att svara och domarna att bedömma svar](http://img.youtube.com/vi/B6QhVMz9uAc/0.jpg)](http://www.youtube.com/watch?v=B6QhVMz9uAc "Vyn för deltagare där de svarar, och för domarna där de poängsätter")
 
 
 
