@@ -77,21 +77,20 @@ För de som administrerar tävlingen / tävlingar. Hur man skapar användare. Hu
 
 För de som lägger in frågorna. Det behövs oftast bara göras nationellt och sen kan alla frågor kopieras ut till alla tävlingsorter. Men om lokala arrangörer vill ändra något i sina frågor kan det vara värt att titta på den här videon ändå.
 
-[![Videotutorial om frågehantering](http://img.youtube.com/vi/B6QhVMz9uAc/0.jpg)](http://www.youtube.com/watch?v=B6QhVMz9uAc "Redigera, ta bort och lägg till frågor")
+[![Videotutorial om frågehantering](http://img.youtube.com/vi/s_s_JCi80Ag/0.jpg)](https://www.youtube.com/watch?v=s_s_JCi80Ag "Redigera, ta bort och lägg till frågor")
 
 
 ## Under tävlingsdagen, för den som bläddrar fram presentationen
 
 Att bläddra fram rätt fråga, starta tidtagaruret, bläddra bakåt i presentationen om något gått fel. Ha koll på de olika frågetyperna. Starta betänketidsmusik separat. 
 
-[![Videotutorial för hur man styr tävlingen](http://img.youtube.com/vi/nUAvKJ7yEUM/0.jpg)](http://www.youtube.com/watch?v=nUAvKJ7yEUM "Att styra tävlingen, bläddrar mellan frågor och starta nedräkning")
-
+[![Videotutorial för hur man styr tävlingen](http://img.youtube.com/vi/E9FPklAl4Fk/0.jpg)](http://www.youtube.com/watch?v=E9FPklAl4Fk "Att styra tävlingen, bläddrar mellan frågor och starta nedräkning")
 
 ## Under tävlingsdagen, för lagen att svara på frågor och domarna att bedöma svar
 
 Hur deltagarna svarar på de olika typerna av frågor. Vara beredd på att frågor låses när tiden tar slut och då kan man inte svara något mer, allt måste svaras inom betänketiden. Vad domarna ska fylla i och hur de ser lagens svar.
 
-[![Videotutorial för deltagarna att svara och domarna att bedömma svar](http://img.youtube.com/vi/B6QhVMz9uAc/0.jpg)](http://www.youtube.com/watch?v=B6QhVMz9uAc "Vyn för deltagare där de svarar, och för domarna där de poängsätter")
+[![Videotutorial för deltagarna att svara och domarna att bedömma svar](http://img.youtube.com/vi/nUAvKJ7yEUM/0.jpg)](http://www.youtube.com/watch?v=nUAvKJ7yEUM "Vyn för deltagare där de svarar, och för domarna där de poängsätter")
 
 
 
