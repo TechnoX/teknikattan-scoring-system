@@ -9,7 +9,7 @@ Fredrik Löfgren har varit involverad i teknikåttan flera år som moderator och
 Man kan välja hur många delar man vill använda sig av. Till exempel kan man låta lagen fortfarande svara på papper, men låta frågorna presenteras i båsen på ipads eller datorskärmar, och då bläddras lagens frågetexter fram samtidigt som projektorbilden ändras. Annars kan man välja att lagen svarar på ipads men frågorna kommer på papper, eller så svarar lagen på papper men resultatlistan hanteras via systemet. Möjligheterna är många!
 
 
-Här nedan beskrivs hur vi brukar använda systemet i Linköping och vilken utrustning som krävs:
+Här nedan beskrivs hur vi brukar använda systemet i Linköping och vilken utrustning som vi använder:
 
 
 ## Till lagen (upprepa nedanstående för varje lag)
@@ -86,7 +86,7 @@ Att bläddra fram rätt fråga, starta tidtagaruret, bläddra bakåt i presentat
 
 [![Videotutorial för hur man styr tävlingen](http://img.youtube.com/vi/E9FPklAl4Fk/0.jpg)](http://www.youtube.com/watch?v=E9FPklAl4Fk "Att styra tävlingen, bläddrar mellan frågor och starta nedräkning")
 
-## Under tävlingsdagen, för lagen att svara på frågor och domarna att bedöma svar
+## Under tävlingsdagen, för lagen att svara på frågor och domarna att bedöma
 
 Hur deltagarna svarar på de olika typerna av frågor. Vara beredd på att frågor låses när tiden tar slut och då kan man inte svara något mer, allt måste svaras inom betänketiden. Vad domarna ska fylla i och hur de ser lagens svar.
 
