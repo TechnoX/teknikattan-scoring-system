@@ -3,6 +3,11 @@ let jwt = require('jsonwebtoken');
 const config = require('./config.js');
 
 let checkToken = (req, res, next) => {
+
+    // Dessa sidor ska inte vara lösenordsskyddade och kommer igenom oavsett!!
+    if(req.get('Referrer').endsWith("/projector") || req.get('Referrer').endsWith("/competitors") || req.get('Referrer').endsWith("/counter") || req.get('Referrer').includes("/answers/")){
+        return next();
+    }
     let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
     if (token) {
         if (token.startsWith('Bearer ')) {
