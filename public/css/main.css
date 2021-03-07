@@ -200,10 +200,13 @@ article > aside{
 }
 .hint{
     margin-bottom: 1em;
+    margin-right: 0.5em;
+    font-size: 1.4em;
     list-style: none;
 }
 .statement{
     display: block;
+    font-size: 1.4em;
     padding-top: 10%;
 }
 time#counter{
