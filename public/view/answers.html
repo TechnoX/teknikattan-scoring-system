@@ -46,7 +46,7 @@
           <label ng-if="sq.type == 'textarea'">{{sq.label}}: <br><textarea ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="height: 7em; width: 15em;"></textarea></label>
           <label ng-if="sq.type == 'number'">{{sq.label}}: <input type="number" string-to-number ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="width: 10em;" /></label>
           <section ng-if="sq.type == 'select'">
-            <label>{{sq.label}}: </label><br /><br /><br />
+            <label>{{sq.label}} </label><br /><br /><br />
             <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
               <input ng-if="!sq.multiple" type="radio" ng-model="team.answers[view.number][$parent.$parent.$index]" name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
               <input ng-if="sq.multiple" type="checkbox" ng-model="team.answers[view.number][$parent.$parent.$index]" multiple-choices name="choice{{$parent.$parent.$index}}" ng-value="alt" ng-disabled="timesUp && sq.show[view.slideIndex]" />
