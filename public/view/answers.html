@@ -42,9 +42,9 @@
     <div ng-show="view.answer.type == 'multi'">
       <ol type='a'>
         <li ng-repeat="sq in view.answer.subQuestions track by $index" ng-show="sq.show[view.slideIndex]">
-          <label ng-if="sq.type == 'text'">{{sq.label}}: <input type="text" ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
-          <label ng-if="sq.type == 'textarea'">{{sq.label}}: <br><textarea ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="height: 7em; width: 15em;"></textarea></label>
-          <label ng-if="sq.type == 'number'">{{sq.label}}: <input type="number" string-to-number ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="width: 10em;" /></label>
+          <label ng-if="sq.type == 'text'">{{sq.label}} <input type="text" ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" /></label>
+          <label ng-if="sq.type == 'textarea'">{{sq.label}} <br><textarea ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="height: 7em; width: 15em;"></textarea></label>
+          <label ng-if="sq.type == 'number'">{{sq.label}} <input type="number" string-to-number ng-model="team.answers[view.number][$index]" ng-disabled="timesUp && sq.show[view.slideIndex]" style="width: 10em;" /></label>
           <section ng-if="sq.type == 'select'">
             <label>{{sq.label}} </label><br /><br /><br />
             <label class="choice" ng-repeat="alt in sq.alternatives track by $index">
