@@ -155,11 +155,16 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             }
             
             // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
-            if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
-                return true;
-            }else{
-                return false;
-            }
+            //if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
+            //    return true;
+            //}else{
+            //    return false;
+            //}
+
+	    // Disallow moving a source enpoint to another source that already have an endpoint
+	    var connections = jsPlumb.getAllConnections();
+	    return new Set(connections.map(conn => conn.sourceId)).size == connections.length
+
         });
 
         jsPlumb.bind("connection", updateBackend);
