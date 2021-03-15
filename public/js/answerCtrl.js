@@ -69,6 +69,25 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     var team_id = $routeParams.team;
     $scope.timesUp = false;
 
+    const wrapper = document.getElementById("pairing-wrapper");
+    const svgScene = wrapper.querySelector("svg");
+    const content = wrapper.querySelector(".content");
+
+    const sources = [];
+    let currentLine = null;
+    let drag = false;
+
+    wrapper.addEventListener("mousedown", drawStart);
+    wrapper.addEventListener("mousemove", drawMove);
+    wrapper.addEventListener("mouseup", drawEnd);
+    
+    wrapper.addEventListener("touchstart", drawStart);
+    wrapper.addEventListener("touchmove", drawMove);
+    wrapper.addEventListener("touchend", drawEnd);
+
+
+
+    
     $http.get('/api/competition/'+competition_id+'/currentView').then(function(resp) {
         $scope.view = resp.data;
         console.log("Current view", resp.data);
@@ -138,72 +157,98 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     }, true);
 
 
-    jsPlumb.ready(function() {
-        jsPlumb.bind("beforeDetach", function(info) {
-            // If no more time is left
-            if($scope.timesUp){
-                return false;
-            }
-            return true;
-        });
-        
-        jsPlumb.bind("beforeDrop", function (info) {
 
-            // If no more time is left
-            if($scope.timesUp){
-                return false;
-            }
-            
-            // If dragged from left to right, or right to left (i.e. not from and to at the same side). 
-            //if(angular.element(info.connection.target).hasClass('left') === angular.element(info.connection.source).hasClass('right')){
-            //    return true;
-            //}else{
-            //    return false;
-            //}
-
-	    // Disallow moving a source enpoint to another source that already have an endpoint
-	    var connections = jsPlumb.getAllConnections();
-	    return new Set(connections.map(conn => conn.sourceId)).size == connections.length
-
-        });
-
-        jsPlumb.bind("connection", updateBackend);
-        jsPlumb.bind("connectionDetached", updateBackend);
-    });
-    
     function loadPairing(pairs) {
-        jsPlumb.setContainer(document.getElementById("pairing-container"));
-        jsPlumb.deleteEveryEndpoint();
-
-        for(var i = 0; i < pairs[0].alternatives.length; i++){
-            jsPlumb.makeSource(pairs[0].alternatives[i], {
-                anchor:"Continuous",
-                endpoint:["Rectangle", { width:40, height:20 }],
-                maxConnections: pairs[0].multiple ? -1 : 1
-            });
-        }
-
-        for(var i = 0; i < pairs[1].alternatives.length; i++){
-            jsPlumb.makeTarget(pairs[1].alternatives[i], {
-                anchor:"Continuous",
-                endpoint:["Rectangle", { width:40, height:20 }],
-                maxConnections: pairs[1].multiple ? -1 : 1
-            });
-        }
-
+	// TODO: Respect pairs[0].multiple and pairs[1].multiple
+	
+	// Answers
         for(var i = 0; i < $scope.team.answers[$scope.view.number].length; i++){
             var pair = $scope.team.answers[$scope.view.number][i].split("&rarr;");
-            jsPlumb.connect({source: pair[0], target: pair[1]});
+	    let startEl = document.getElementById(pair[0]);
+	    let endEl = document.getElementById(pair[1]);
+	    let startRect = startEl.getBoundingClientRect();
+	    let endRect = endEl.getBoundingClientRect();
+	    let lineEl = document.createElementNS('http://www.w3.org/2000/svg','line');
+	    lineEl.setAttribute("x1", startRect.left + (startRect.right-startRect.left)/2 - wrapper.offsetLeft);
+	    lineEl.setAttribute("y1", startRect.top + (startRect.bottom-startRect.top)/2 - wrapper.offsetTop);
+	    lineEl.setAttribute("x2", endRect.left + (endRect.right-endRect.left)/2 - wrapper.offsetLeft);
+	    lineEl.setAttribute("y2", endRect.top + (endRect.bottom-endRect.top)/2 - wrapper.offsetTop);
+	    lineEl.setAttribute("stroke", "blue");
+	    lineEl.setAttribute("stroke-width", "10");
+	    lineEl.classList.add("fixed-line");
+	    lineEl.addEventListener("click", deleteLine);
+	    
+	    svgScene.appendChild(lineEl);
+	    sources.push({line: lineEl, start: startEl, end: endEl});
         }
+    }
+    function  drawStart(e) {
+	if(!e.target.classList.contains("hook")) return;
+	let eventX = e.type == "mousedown" ? e.clientX - wrapper.offsetLeft : e.targetTouches[0].clientX - wrapper.offsetLeft;
+	let eventY = e.type == "mousedown" ? e.clientY - wrapper.offsetTop + window.scrollY : e.targetTouches[0].clientY - wrapper.offsetTop + window.scrollY;
+	
+	let lineEl = document.createElementNS('http://www.w3.org/2000/svg','line');
+	currentLine = lineEl;
+	currentLine.setAttribute("x1", eventX);
+	currentLine.setAttribute("y1", eventY);
+	currentLine.setAttribute("x2", eventX);
+	currentLine.setAttribute("y2", eventY);
+	currentLine.setAttribute("stroke", "blue");
+	currentLine.setAttribute("stroke-width", "10");
+	currentLine.addEventListener("click", deleteLine);
+	
+	svgScene.appendChild(currentLine);
+	sources.push({ line: lineEl, start: e.target, end: null });
+	
+	drag = true;
+    }
+
+    function drawMove(e){
+	if (!drag || currentLine == null) return;
+	let eventX = e.type == "mousemove" ? e.clientX - wrapper.offsetLeft : e.targetTouches[0].clientX - wrapper.offsetLeft;
+	let eventY = e.type == "mousemove" ? e.clientY - wrapper.offsetTop + window.scrollY : e.targetTouches[0].clientY - wrapper.offsetTop + window.scrollY;
+	currentLine.setAttribute("x2", eventX);
+	currentLine.setAttribute("y2", eventY);
+    }
+
+    function drawEnd(e){
+	if (!drag || currentLine == null) return;
+	let targetHook = e.type == "mouseup" ? e.target : document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+
+	let alreadyExists = false;
+	for(var i = 0; i < sources.length; i++){
+	    if ((sources[i].start == sources[sources.length - 1].start && sources[i].end   == targetHook) ||
+		(sources[i].end   == sources[sources.length - 1].start && sources[i].start == targetHook)) {
+		alreadyExists = true;
+	    }
+	}
+	
+	if (!targetHook.classList.contains("hook") || // Kan bara droppa på en cirkel
+	    targetHook == sources[sources.length - 1].start || // Kan inte droppa på samma som den startade ifrån
+	    (targetHook.parentElement.parentElement.classList.contains("left")  && sources[sources.length - 1].start.parentElement.parentElement.classList.contains("left")) || // Kan inte droppa på samma sida som den starta
+	    (targetHook.parentElement.parentElement.classList.contains("right") && sources[sources.length - 1].start.parentElement.parentElement.classList.contains("right")) ||
+	    alreadyExists) { 
+	    currentLine.remove();
+	    sources.splice(sources.length - 1, 1);
+	} else {
+	    sources[sources.length - 1].end = targetHook;
+	    sources[sources.length - 1].line.classList.add("fixed-line");
+	    updateBackend()
+	}
+	drag = false
+    }
+    function deleteLine(e){
+	sources.splice(sources.findIndex(item => item.line === e.target), 1)
+	e.target.remove();
+	updateBackend();
     }
     
 
-    function updateBackend(info) {
+    function updateBackend() {
         $scope.$applyAsync(function () {
-            var connections = jsPlumb.getAllConnections();
             var answer = [];
-            for(var i = 0; i < connections.length; i++){
-                answer.push(connections[i].sourceId + "&rarr;" + connections[i].targetId);
+            for(var i = 0; i < sources.length; i++){
+                answer.push(sources[i].start.parentElement.textContent + "&rarr;" + sources[i].end.parentElement.textContent);
             }
             $scope.team.answers[$scope.view.number] = answer;
         });

@@ -57,16 +57,17 @@
       </ol>
     </div>
     <div ng-show="view.answer.type == 'pairing'">
-      <table id="pairing-container">
-        <tr>
-          <td>
-            <div class="alternativ left" ng-repeat="alt in view.answer.pairs[0].alternatives" ng-attr-id="{{alt}}">{{alt}}</div>
-          </td>
-          <td>
-            <div class="alternativ right" ng-repeat="alt in view.answer.pairs[1].alternatives" ng-attr-id="{{alt}}">{{alt}}</div>
-          </td>
-        </tr>
-      </table>
+      <div id="pairing-wrapper">
+	<svg></svg>
+	<div class="content">
+	  <ul class="left">
+	    <li ng-repeat="alt in view.answer.pairs[0].alternatives">{{alt}}<div class="hook" ng-attr-id="{{alt}}"></div></li>
+	  </ul>
+	  <ul class="right">
+	    <li ng-repeat="alt in view.answer.pairs[1].alternatives"><div class="hook" ng-attr-id="{{alt}}"></div>{{alt}}</li>
+	  </ul>
+	</div>
+      </div>
     </div>
   </main>
 </article>
