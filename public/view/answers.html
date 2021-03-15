@@ -60,10 +60,10 @@
       <div id="pairing-wrapper">
 	<svg></svg>
 	<div class="content">
-	  <ul class="left">
+	  <ul id="left">
 	    <li ng-repeat="alt in view.answer.pairs[0].alternatives">{{alt}}<div class="hook" ng-attr-id="{{alt}}"></div></li>
 	  </ul>
-	  <ul class="right">
+	  <ul id="right">
 	    <li ng-repeat="alt in view.answer.pairs[1].alternatives"><div class="hook" ng-attr-id="{{alt}}"></div>{{alt}}</li>
 	  </ul>
 	</div>

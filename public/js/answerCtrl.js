@@ -159,7 +159,17 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 
 
     function loadPairing(pairs) {
-	// TODO: Respect pairs[0].multiple and pairs[1].multiple
+	// Allow multiple lines from this side
+	if(pairs[0].multiple){
+	    document.getElementById("left").classList.add("multiple-allowed");
+	}else{
+	    document.getElementById("left").classList.remove("multiple-allowed");
+	}
+	if(pairs[1].multiple){
+	    document.getElementById("right").classList.add("multiple-allowed");
+	}else{
+	    document.getElementById("right").classList.remove("multiple-allowed");
+	}
 	
 	// Answers
         for(var i = 0; i < $scope.team.answers[$scope.view.number].length; i++){
@@ -184,6 +194,17 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     }
     function  drawStart(e) {
 	if(!e.target.classList.contains("hook")) return;
+	// If not multiple allowed
+	if(!e.target.parentElement.parentElement.classList.contains("multiple-allowed")){
+	    for(var i = 0; i < sources.length; i++){
+		// If there already exist an endpoint connected to this hook, we return
+		if (sources[i].start == e.target ||
+		    sources[i].end   == e.target) {
+		    return;
+		}
+	    }
+	}
+	
 	let eventX = e.type == "mousedown" ? e.clientX - wrapper.offsetLeft : e.targetTouches[0].clientX - wrapper.offsetLeft;
 	let eventY = e.type == "mousedown" ? e.clientY - wrapper.offsetTop + window.scrollY : e.targetTouches[0].clientY - wrapper.offsetTop + window.scrollY;
 	
@@ -217,16 +238,25 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 
 	let alreadyExists = false;
 	for(var i = 0; i < sources.length; i++){
+	    // If this very same line with start and end already exists
 	    if ((sources[i].start == sources[sources.length - 1].start && sources[i].end   == targetHook) ||
 		(sources[i].end   == sources[sources.length - 1].start && sources[i].start == targetHook)) {
 		alreadyExists = true;
+	    }
+	    // If not multiple allowed
+	    if(!targetHook.parentElement.parentElement.classList.contains("multiple-allowed")){
+		// If there already exist an endpoint connected to this hook, we return
+		if (sources[i].start == targetHook ||
+		    sources[i].end   == targetHook) {
+		    alreadyExists = true;
+		}
 	    }
 	}
 	
 	if (!targetHook.classList.contains("hook") || // Kan bara droppa på en cirkel
 	    targetHook == sources[sources.length - 1].start || // Kan inte droppa på samma som den startade ifrån
-	    (targetHook.parentElement.parentElement.classList.contains("left")  && sources[sources.length - 1].start.parentElement.parentElement.classList.contains("left")) || // Kan inte droppa på samma sida som den starta
-	    (targetHook.parentElement.parentElement.classList.contains("right") && sources[sources.length - 1].start.parentElement.parentElement.classList.contains("right")) ||
+	    (targetHook.parentElement.parentElement.id === "left"  && sources[sources.length - 1].start.parentElement.parentElement.id === "left" ) || // Kan inte droppa på samma sida som den starta
+	    (targetHook.parentElement.parentElement.id === "right" && sources[sources.length - 1].start.parentElement.parentElement.id === "right") ||
 	    alreadyExists) { 
 	    currentLine.remove();
 	    sources.splice(sources.length - 1, 1);
