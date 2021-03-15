@@ -169,6 +169,12 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    document.getElementById("right").classList.add("multiple-allowed");
 	}else{
 	    document.getElementById("right").classList.remove("multiple-allowed");
+	}	
+	sources.length = 0;
+	currentLine = null;
+	drag = false;
+	while (svgScene.lastChild) {
+	    svgScene.removeChild(svgScene.lastChild);
 	}
 	
 	// Answers
