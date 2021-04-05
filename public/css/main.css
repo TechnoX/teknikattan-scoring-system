@@ -725,12 +725,13 @@ button#next{
     justify-content: space-evenly;
     align-items: center;
 }
-#pairing-wrapper .right {
+#pairing-wrapper #right {
     text-align: left;
 }
-#pairing-wrapper .left {
+#pairing-wrapper #left {
     text-align: right;
 }
+
 #pairing-wrapper .hook {
     pointer-events: all;
     background-color: #0066bb;
