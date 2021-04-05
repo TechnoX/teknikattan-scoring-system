@@ -240,6 +240,13 @@ article > footer > time{
     font-weight: bold;
     width: 4em;
 }
+article > header > time{
+    float: right;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.8em;
+    font-weight: bold;
+    width: 4em;
+}
 article > footer > section{
     float: left;
 }
