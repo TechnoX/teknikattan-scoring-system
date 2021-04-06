@@ -133,7 +133,15 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         });
     });
     
-    
+    socket.on('time', function(msg){
+        // Not affecting this page
+        if(msg.competition !== competition_id)
+            return;
+        $scope.$applyAsync(function () {
+            $scope.view.time = msg.time;
+        });
+    });
+
     // Get the team matching the ID given in the url bar
     $http.get('/api/team/'+team_id).then(function(resp) {
         if(resp.data){
