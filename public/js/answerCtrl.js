@@ -208,6 +208,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     }
     function  drawStart(e) {
 	if(!e.target.classList.contains("hook")) return;
+	if($scope.timesUp) return;
 	// If not multiple allowed
 	if(!e.target.parentElement.parentElement.classList.contains("multiple-allowed")){
 	    for(var i = 0; i < sources.length; i++){
@@ -248,6 +249,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 
     function drawEnd(e){
 	if (!drag || currentLine == null) return;
+	if($scope.timesUp){
+	    currentLine.remove();
+	    sources.splice(sources.length - 1, 1);
+	    drag = false;
+	}
 	let targetHook = e.type == "mouseup" ? e.target : document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
 
 	let alreadyExists = false;
@@ -282,6 +288,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	drag = false
     }
     function deleteLine(e){
+	if($scope.timesUp) return;
 	sources.splice(sources.findIndex(item => item.line === e.target), 1)
 	e.target.remove();
 	updateBackend();
