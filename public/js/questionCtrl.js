@@ -36,4 +36,14 @@ app.controller('questionCtrl', ['$scope', '$http', '$routeParams', '$sce', funct
             $scope.currView.time = msg.time;
         });
     });
+
+    var audio = new Audio('/doorbell.wav');
+    socket.on('timesUp', function(msg){
+        // Not affecting this page
+        if(msg.competition != competition_id)
+            return;
+        console.log("Times up!");
+        audio.play();
+    });
+
 }]);
