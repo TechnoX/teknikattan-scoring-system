@@ -2,8 +2,10 @@
   <div class="col-md-3" ng-repeat="team in teams">
   <h2>{{team.name}}</h2>
   <section ng-controller="audienceCtrl">
+    <!--
     <h2>Poäng fråga {{view.number+1}}: {{team.scores[view.number]}}</h2>
     <h2>Total poäng: {{getTotalScore(team)}}</h2>
+    -->
   </section>
   <answer answer="team.answers[view.number]" view="view" current-only="true"></answer>
 </div>

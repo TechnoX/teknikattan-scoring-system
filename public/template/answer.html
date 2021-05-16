@@ -44,7 +44,7 @@
   <div ng-show="view.answer.type == 'multi'">
     <ol type='a'>
       <li ng-repeat="sq in view.answer.subQuestions track by $index">
-        {{sq.label}}: <span ng-bind-html="answer[$index]"></span>
+        {{sq.label}} <span ng-bind-html="answer[$index]"></span>
       </li>
     </ol>
   </div>
