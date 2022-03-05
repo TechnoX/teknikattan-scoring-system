@@ -709,7 +709,7 @@ button#next{
 }
 
 
-#pairing-wrapper {
+#pairing-wrapper, #ordering-wrapper {
     position: relative;
     pointer-events: none;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -720,7 +720,7 @@ button#next{
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     touch-action: none;
 }
-#pairing-wrapper svg {
+#pairing-wrapper svg, #ordering-wrapper svg {
     position: absolute;
     pointer-events: all;
     top: 0;
@@ -736,7 +736,7 @@ button#next{
     cursor: not-allowed;
 }
 
-#pairing-wrapper .content {
+#pairing-wrapper .content, #ordering-wrapper .content {
     position: relative;
     z-index: 2;
     display: flex;
@@ -774,4 +774,38 @@ button#next{
 }
 #pairing-wrapper .hook:hover {
   transform: scale(1.1);
+}
+
+#ordering-wrapper, #ordering-wrapper .content {
+    height: 100%;
+    width: 100%;
+}
+
+#ordering-wrapper ul {
+    list-style-type: none;
+    text-align: center;
+}
+#ordering-wrapper li {
+    border: 2px solid black;
+    border-radius: 0.3em;
+    color: #666666;
+    padding: 0.2em;
+    margin: 0.4em 0.2em;
+    display: inline-block;
+    float: none;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    pointer-events: all;
+    cursor: move;
+    z-index: 9;
+}
+#ordering-wrapper li:before{
+    content: "";
+    width: 2em;
+    height: 2em;
+    position: absolute;
+    top: -1.5em;
+    left: 40%;
+    background: url("/images/clothes_pin.png") no-repeat;
+    background-size: 2em;
 }

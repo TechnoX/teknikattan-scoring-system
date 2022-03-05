@@ -70,5 +70,20 @@
 	</div>
       </div>
     </div>
+    <div ng-show="view.answer.type == 'ordering'">
+      <div id="ordering-wrapper">
+	<svg>
+	  <rect width="100%" height="40%" fill="#bae5f9" />
+	  <rect width="100%" height="60%" y="40%" fill="#b5e081" />
+	  <image href="images/bushes.png" width="100%" height="35%" x="0%" y="25%" />
+	  <image href="images/line.png" width="90%" height="35%" x="5%" y="20%" />
+	</svg>
+	<div class="content">
+	  <ul>
+	    <li ng-repeat="alt in view.answer.order.alternatives" ng-mousedown="dragMouseDown($event)" class="clothespin" ng-init="moveRandom()">{{alt}}</li>
+	  </ul>
+	</div>
+      </div>
+    </div>
   </main>
 </article>

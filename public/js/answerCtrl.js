@@ -304,5 +304,80 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             $scope.team.answers[$scope.view.number] = answer;
         });
     }
+
+
+    $scope.moveRandom = function() {
+	for (el of document.getElementsByClassName("clothespin")){
+	    // get random numbers for each element
+	    randomTop = Math.random() * 30 + 55;
+	    randomLeft = Math.random() * 80 ;
+	    // update top and left position
+	    el.style.top = randomTop +"%";
+	    el.style.left = randomLeft +"%";	
+	}	
+    }
+    
+    $scope.dragMouseDown = function($event){
+	const elmnt = $event.currentTarget || $event.srcElement;
+	e = $event || window.event;
+	e.preventDefault();
+	const rect = elmnt.getBoundingClientRect();
+	// get the mouse cursor position at startup:
+	var start_left = e.clientX - elmnt.offsetLeft;
+	var start_top = e.clientY - elmnt.offsetTop;
+	
+	document.onmouseup = closeDragElement;
+	// call a function whenever the cursor moves:
+	document.onmousemove = elementDrag;
+
+	function elementDrag(e) {
+	    e = e || window.event;
+	    e.preventDefault();
+	    const new_left = e.clientX - start_left;
+	    const new_top = e.clientY - start_top;
+	    // set the element's new position:
+	    elmnt.style.top = new_top + "px";
+	    elmnt.style.left = new_left + "px";
+	    if (new_top > 300){
+		elmnt.style.color = "#666666";
+		elmnt.style.background = "rgba(255, 255, 255, 0.3)";
+		elmnt.classList.remove("hunged");
+		const parts = elmnt.innerHTML.split(" ");
+		if (parts.length > 1){
+		    elmnt.innerHTML = parts[1];
+		}
+
+	    }else{
+		elmnt.style.color = "#000000";
+		elmnt.style.background = "rgba(200, 200, 255, 0.3)";
+		elmnt.classList.add("hunged");
+	    }
+	    
+	    hunged = []
+	    for (el of document.getElementsByClassName("hunged")){
+		const rect = el.getBoundingClientRect();
+		const center = rect.left;// + rect.width/2;
+		hunged.push([center, el])
+	    }
+	    hunged.sort((a,b) => a[0] - b[0])
+	    hunged.forEach(function (el, index) {
+		var parts = el[1].innerHTML.split(" ");
+		if (parts.length > 1){
+		    el[1].innerHTML = (index+1) + " " + parts[1];
+		}else{
+		    el[1].innerHTML = (index+1) + " " + parts[0];
+		}
+	    });
+
+	    
+	}
+
+	function closeDragElement() {
+	    // stop moving when mouse button is released:
+	    document.onmouseup = null;
+	    document.onmousemove = null;
+	}
+    }
+
     
 }]);
