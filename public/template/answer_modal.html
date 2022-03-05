@@ -40,6 +40,7 @@
       <option value="multi">Ett eller flera svar söks</option>
       <option value="practical">Praktisk uppgift (inget digitalt svar söks)</option>
       <option value="pairing">Para ihop svarsalternativ</option>
+      <option value="ordering">Tvättlinefråga</option>
     </select>
   </label>
   <!-- Om flera delfrågor -->
@@ -106,6 +107,30 @@
         </td>
       </tr>
     </table>
+  </section>
+
+  
+  <section ng-show="answer.type == 'ordering'">
+
+    <label>
+      Rubrik under vänster tvättstolpe:
+      <input type="text" ng-model="answer.order.left" />
+    </label>
+    <ol>
+      <li ng-repeat="p in answer.order.alternatives track by $index">
+        <label>
+          Alternativ {{$index + 1}}:
+          <input type="text" ng-model="answer.order.alternatives[$index]"/>
+        </label>
+        <a ng-click="remove(answer.order.alternatives, $index)">Ta bort</a>
+      </li>
+      <li><a ng-click="add(answer.order.alternatives)">Lägg till alternativ</a></li>
+    </ol>
+    
+    <label>
+      Rubrik under höger tvättstolpe:
+      <input type="text" ng-model="answer.order.right"/>
+    </label>
   </section>
 
   
