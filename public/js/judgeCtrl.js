@@ -1,3 +1,19 @@
+
+app.filter("orderByArray",function(){
+    return function(input,sortBy) {
+        var ordered = [];
+        for (const key of sortBy) {
+	    for(const answer of input){
+		var pair = answer.split("&rarr;");
+		if (pair[0] == key){
+		    ordered.push(answer);
+		}
+	    }
+        }
+        return ordered;
+    };
+});
+
 app.controller('judgeCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     var socket = io();
     var competition_id = $routeParams.id;

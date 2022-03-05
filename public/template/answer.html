@@ -49,6 +49,8 @@
     </ol>
   </div>
   <div ng-show="view.answer.type == 'pairing'">
-    <li ng-repeat="x in answer track by $index" ng-bind-html="x"></li>
+    <ol>
+      <li ng-repeat="x in answer | orderByArray:view.answer.pairs[0].alternatives track by $index" ng-bind-html="x"></li>
+    </ol>
   </div>
 </main>
