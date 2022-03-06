@@ -303,7 +303,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
         $scope.$applyAsync(function () {
             var answer = [];
             for(var i = 0; i < sources.length; i++){
-                answer.push(sources[i].start.parentElement.textContent + "&rarr;" + sources[i].end.parentElement.textContent);
+		if(sources[i].start.previousSibling){
+                    answer.push(sources[i].start.id + "&rarr;" + sources[i].end.id);
+		}else{
+		    answer.push(sources[i].end.id + "&rarr;" + sources[i].start.id);
+		}
             }
             $scope.team.answers[$scope.view.number] = answer;
         });

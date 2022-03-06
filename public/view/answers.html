@@ -62,10 +62,10 @@
 	<svg></svg>
 	<div class="content">
 	  <ul id="left">
-	    <li ng-repeat="alt in view.answer.pairs[0].alternatives">{{alt}}<div class="hook" ng-attr-id="{{alt}}"></div></li>
+	    <li ng-repeat="alt in view.answer.pairs[0].alternatives"><span ng-bind-html="alt"></span><div class="hook" ng-attr-id="{{'left'+$index}}"></div></li>
 	  </ul>
 	  <ul id="right">
-	    <li ng-repeat="alt in view.answer.pairs[1].alternatives"><div class="hook" ng-attr-id="{{alt}}"></div>{{alt}}</li>
+	    <li ng-repeat="alt in view.answer.pairs[1].alternatives"><div class="hook" ng-attr-id="{{'right'+$index}}"></div><span ng-bind-html="alt"></span></li>
 	  </ul>
 	</div>
       </div>

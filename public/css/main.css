@@ -780,6 +780,9 @@ button#next{
 #pairing-wrapper .hook:hover {
   transform: scale(1.1);
 }
+#pairing-wrapper img {
+    height: 2.2em;
+}
 
 #ordering-wrapper, #ordering-wrapper .content {
     height: 100%;
