@@ -789,16 +789,20 @@ button#next{
 #ordering-wrapper li {
     border: 2px solid black;
     border-radius: 0.3em;
-    color: #666666;
     padding: 0.2em;
     margin: 0.4em 0.2em;
     display: inline-block;
     float: none;
     position: absolute;
+    color: #666666;
     background: rgba(255, 255, 255, 0.3);
     pointer-events: all;
     cursor: move;
     z-index: 9;
+}
+#ordering-wrapper li.hunged{
+    color: #000000;
+    background: rgba(200, 200, 255, 0.3);
 }
 #ordering-wrapper li:before{
     content: "";

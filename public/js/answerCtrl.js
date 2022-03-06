@@ -95,7 +95,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             $timeout(function() {
                 loadPairing($scope.view.answer.pairs);
             });
-        }
+        }else if($scope.view.answer.type == "ordering"){
+            $timeout(function() {
+                loadClothes();
+            });
+	}
     });
     $http.get('/api/competition/'+competition_id+'/timesup').then(function(resp) {
         $scope.timesUp = resp.data;
@@ -304,18 +308,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
             $scope.team.answers[$scope.view.number] = answer;
         });
     }
-
-
-    $scope.moveRandom = function() {
-	for (el of document.getElementsByClassName("clothespin")){
-	    // get random numbers for each element
-	    randomTop = Math.random() * 30 + 55;
-	    randomLeft = Math.random() * 80 ;
-	    // update top and left position
-	    el.style.top = randomTop +"%";
-	    el.style.left = randomLeft +"%";	
-	}	
-    }
     
     $scope.dragMouseDown = function($event){
 	const elmnt = $event.currentTarget || $event.srcElement;
@@ -323,7 +315,6 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	e.preventDefault();
 	if($scope.timesUp) return;
 	
-	const rect = elmnt.getBoundingClientRect();
 	// get the mouse cursor position at startup:
 	var start_left = e.clientX - elmnt.offsetLeft;
 	var start_top = e.clientY - elmnt.offsetTop;
@@ -335,7 +326,10 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	function elementDrag(e) {
 	    e = e || window.event;
 	    e.preventDefault();
-	    if($scope.timesUp) return;
+	    if($scope.timesUp) {
+		saveClothes();
+		return;
+	    }
 	    
 	    
 	    const new_left = e.clientX - start_left;
@@ -344,17 +338,12 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    elmnt.style.top = new_top + "px";
 	    elmnt.style.left = new_left + "px";
 	    if (new_top > 300){
-		elmnt.style.color = "#666666";
-		elmnt.style.background = "rgba(255, 255, 255, 0.3)";
 		elmnt.classList.remove("hunged");
 		const parts = elmnt.innerHTML.split(" ");
 		if (parts.length > 1){
 		    elmnt.innerHTML = parts[1];
 		}
-
 	    }else{
-		elmnt.style.color = "#000000";
-		elmnt.style.background = "rgba(200, 200, 255, 0.3)";
 		elmnt.classList.add("hunged");
 	    }
 	    
@@ -381,6 +370,50 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    // stop moving when mouse button is released:
 	    document.onmouseup = null;
 	    document.onmousemove = null;
+	    saveClothes();
+	}
+    }
+    function saveClothes(){
+	$scope.$applyAsync(function () {
+	    var answer = [];
+	    for (el of document.getElementsByClassName("clothespin")){
+		const parts = el.innerHTML.split(" ");
+		if (parts.length > 1){
+		    answer.push(el.innerHTML+"⇔"+el.offsetLeft+"x"+el.offsetTop);
+		}
+            }
+            $scope.team.answers[$scope.view.number] = answer;
+        });
+    }
+    
+    function loadClothes() {
+	for (el of document.getElementsByClassName("clothespin")){
+	    var found = false;
+            for(var i = 0; i < $scope.team.answers[$scope.view.number].length; i++){
+		var parts = $scope.team.answers[$scope.view.number][i].split("⇔");
+		var alt = parts[0].split(" ");
+		var coords = parts[1].split("x");
+		if(alt[1] == el.innerHTML){
+		    el.add
+		    found = true;
+		    break;
+		}
+            }
+
+	    if(found){
+		el.classList.add("hunged");
+		el.innerHTML = parts[0];
+		// update top and left position
+		el.style.top = coords[1] +"px";
+		el.style.left = coords[0] +"px";
+	    }else{
+		// get random numbers for each element
+		randomTop = Math.random() * 30 + 55;
+		randomLeft = Math.random() * 80 ;
+		// update top and left position
+		el.style.top = randomTop +"%";
+		el.style.left = randomLeft +"%";
+	    }
 	}
     }
 
