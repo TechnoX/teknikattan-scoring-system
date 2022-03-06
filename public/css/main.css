@@ -779,6 +779,7 @@ button#next{
 #ordering-wrapper, #ordering-wrapper .content {
     height: 100%;
     width: 100%;
+    display: block;
 }
 
 #ordering-wrapper ul {
@@ -808,4 +809,10 @@ button#next{
     left: 40%;
     background: url("/images/clothes_pin.png") no-repeat;
     background-size: 2em;
+}
+#ordering-wrapper .pole {
+    margin: 0.5em;
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: bold;
 }

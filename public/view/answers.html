@@ -79,6 +79,8 @@
 	  <image href="images/line.png" width="90%" height="35%" x="5%" y="20%" />
 	</svg>
 	<div class="content">
+	  <span class="pole">&lArr; {{view.answer.order.left}}</span>
+	  <span style="float: right;" class="pole">{{view.answer.order.right}} &rArr;</span>
 	  <ul>
 	    <li ng-repeat="alt in view.answer.order.alternatives" ng-mousedown="dragMouseDown($event)" class="clothespin" ng-init="moveRandom()">{{alt}}</li>
 	  </ul>
