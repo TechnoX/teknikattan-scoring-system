@@ -799,6 +799,7 @@ button#next{
     border-radius: 0.3em;
     padding: 0.2em;
     margin: 0.4em 0.2em;
+    font-size: 0.8em;
     display: inline-block;
     float: none;
     position: absolute;
@@ -827,4 +828,7 @@ button#next{
     display: inline-block;
     font-size: 1.2em;
     font-weight: bold;
+}
+#ordering-wrapper li img{
+    width: 6em;
 }
