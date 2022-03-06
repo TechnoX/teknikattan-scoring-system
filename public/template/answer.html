@@ -48,12 +48,12 @@
       </li>
     </ol>
   </div>
-  <div ng-show="view.answer.type == 'pairing'">
+  <div ng-if="view.answer.type == 'pairing'">
     <ol>
       <li ng-repeat="x in answer | orderByArray:view.answer.pairs track by $index" ng-bind-html="x"></li>
     </ol>
   </div>
-  <div ng-show="view.answer.type == 'ordering'">
+  <div ng-if="view.answer.type == 'ordering'">
     <ol>
       <li ng-repeat="x in answer | orderBy track by $index" ng-bind-html="x.split('⇔')[0]"></li>
     </ol>
