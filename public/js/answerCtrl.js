@@ -321,6 +321,8 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	const elmnt = $event.currentTarget || $event.srcElement;
 	e = $event || window.event;
 	e.preventDefault();
+	if($scope.timesUp) return;
+	
 	const rect = elmnt.getBoundingClientRect();
 	// get the mouse cursor position at startup:
 	var start_left = e.clientX - elmnt.offsetLeft;
@@ -333,6 +335,9 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	function elementDrag(e) {
 	    e = e || window.event;
 	    e.preventDefault();
+	    if($scope.timesUp) return;
+	    
+	    
 	    const new_left = e.clientX - start_left;
 	    const new_top = e.clientY - start_top;
 	    // set the element's new position:
