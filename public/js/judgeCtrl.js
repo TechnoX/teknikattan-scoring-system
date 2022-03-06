@@ -1,15 +1,24 @@
 
 app.filter("orderByArray",function(){
-    return function(input,sortBy) {
+    return function(answers, pairs) {
         var ordered = [];
-        for (const key of sortBy) {
-	    for(const answer of input){
-		var pair = answer.split("&rarr;");
-		if (pair[0] == key){
-		    ordered.push(answer);
-		}
-	    }
-        }
+
+	answers.sort((a,b) => {
+	    a_pair = a.split("&rarr;");
+	    a_left = parseInt(a_pair[0].substring(4));
+	    b_pair = b.split("&rarr;");
+	    b_left = parseInt(b_pair[0].substring(4));
+	    return a_left - b_left;
+	})
+
+	var ordered = [];
+	for (const answer of answers){
+	    pair = answer.split("&rarr;");
+	    left =  parseInt(pair[0].substring(4));
+	    right = parseInt(pair[1].substring(5));
+	    ordered.push(pairs[0].alternatives[left] + "&rarr;" + pairs[1].alternatives[right]);
+	}
+	
         return ordered;
     };
 });

@@ -50,7 +50,7 @@
   </div>
   <div ng-show="view.answer.type == 'pairing'">
     <ol>
-      <li ng-repeat="x in answer | orderByArray:view.answer.pairs[0].alternatives track by $index" ng-bind-html="x"></li>
+      <li ng-repeat="x in answer | orderByArray:view.answer.pairs track by $index" ng-bind-html="x"></li>
     </ol>
   </div>
 </main>
