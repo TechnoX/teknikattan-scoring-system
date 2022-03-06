@@ -402,7 +402,10 @@ article > header > h1{
 .judge main img, .audience main img, .analytics main img{
     width: 5em;
 }
-
+.judge main img{
+    max-height: 6em;
+    object-fit: contain;
+}
 
 #selectables div{
     margin: 5px;
