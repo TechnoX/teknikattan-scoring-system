@@ -707,7 +707,12 @@ button#next{
 .lundtruefalse td{
     border: 0px;
 }
-
+.projector .quiz img{
+    height: 2.6em;
+}
+.competitor .quiz img{
+    height: 4.5em;
+}
 
 #pairing-wrapper, #ordering-wrapper {
     position: relative;

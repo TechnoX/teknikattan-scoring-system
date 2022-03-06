@@ -22,13 +22,13 @@
     <div ng-show="view.state == 'statements'">
       <span class="statement" ng-bind-html="view.statement"></span>
     </div>
-    <div ng-show="view.state == 'quiz'">
+    <div ng-show="view.state == 'quiz'" class="quiz">
       <p>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</p>
       <ol>
-        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].A}}</li>
-        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].B}}</li>
-        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].C}}</li>
-        <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].D}}</li>
+        <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].A"></li>
+        <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].B"></li>
+        <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].C"></li>
+        <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].D"></li>
       </ol>
     </div>
   </main>

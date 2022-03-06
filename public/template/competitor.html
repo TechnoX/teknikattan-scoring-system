@@ -21,13 +21,13 @@
   <aside ng-show="view.state == 'statements'">
     <span class="statement" ng-bind-html="view.statement"></span>
   </aside>
-  <aside ng-show="view.state == 'quiz'">
+  <aside ng-show="view.state == 'quiz'" class="quiz">
     <p>{{view.quizIndex+1}}. {{view.quiz[view.quizIndex].question}}</p>
     <ol>
-      <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].A}}</li>
-      <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].B}}</li>
-      <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].C}}</li>
-      <li style="list-style-type: upper-alpha;">{{view.quiz[view.quizIndex].D}}</li>
+      <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].A"></li>
+      <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].B"></li>
+      <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].C"></li>
+      <li style="list-style-type: upper-alpha;" ng-bind-html="view.quiz[view.quizIndex].D"></li>
     </ol>
   </aside>
   <footer ng-show="view.state != 'end' && view.state != 'image' && view.state != 'start'">
