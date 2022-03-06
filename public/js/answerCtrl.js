@@ -123,7 +123,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
                 $timeout(function() {
                     loadPairing($scope.view.answer.pairs);
                 });
-            }   
+            }else if($scope.view.answer && $scope.view.answer.type == "ordering"){
+		$timeout(function() {
+                    loadClothes();
+		});
+	    }
         });
     });
 
@@ -397,8 +401,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 		var parts = $scope.team.answers[$scope.view.number][i].split("⇔");
 		var alt = parts[0].split(" ");
 		var coords = parts[1].split("x");
-		if(alt[1] == el.innerHTML){
-		    el.add
+		if(parts[0] == el.innerHTML || alt[1] == el.innerHTML){
 		    found = true;
 		    break;
 		}
