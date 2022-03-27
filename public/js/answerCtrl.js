@@ -331,15 +331,14 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	e = $event || window.event;
 	e.preventDefault();
 	if($scope.timesUp) return;
-	
 	// get the mouse cursor position at startup:
-	var start_left = e.type == "mousemove" ? e.clientX - elmnt.offsetLeft : e.targetTouches[0].clientX - elmnt.offsetLeft;
-	var start_top = e.type == "mousemove" ? e.clientY - elmnt.offsetTop + window.scrollY : e.targetTouches[0].clientY - elmnt.offsetTop + window.scrollY;
+	var start_left = e.type == "mousedown" ? e.clientX - elmnt.offsetLeft : e.targetTouches[0].clientX - elmnt.offsetLeft;
+	var start_top = e.type == "mousedown" ? e.clientY - elmnt.offsetTop + window.scrollY : e.targetTouches[0].clientY - elmnt.offsetTop + window.scrollY;
 
-	//document.onmouseup = closeDragElement;
+	document.onmouseup = closeDragElement;
 	elmnt.addEventListener("touchend", closeDragElement);
 	// call a function whenever the cursor moves:
-	//document.onmousemove = elementDrag;
+	document.onmousemove = elementDrag;
 	elmnt.addEventListener("touchmove", elementDrag);
 	
 	function elementDrag(e) {
@@ -352,10 +351,11 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    
 	    const new_left = e.type == "mousemove" ? e.clientX - start_left : e.targetTouches[0].clientX - start_left;
 	    const new_top = e.type == "mousemove" ? e.clientY - start_top + window.scrollY : e.targetTouches[0].clientY - start_top + window.scrollY;
-	    //console.log(new_left);
+
 	    // set the element's new position:
 	    elmnt.style.top = new_top + "px";
 	    elmnt.style.left = new_left + "px";
+
 	    if (new_top > 300){
 		elmnt.classList.remove("hunged");
 		elmnt.firstChild.textContent = ""; // Remove the order number
