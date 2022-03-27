@@ -334,7 +334,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	if($scope.timesUp) return;
 	// get the mouse cursor position at startup:
 	var start_left = e.type == "mousedown" ? e.clientX - elmnt.offsetLeft : e.targetTouches[0].clientX - elmnt.offsetLeft;
-	var start_top = e.type == "mousedown" ? e.clientY - elmnt.offsetTop + window.scrollY : e.targetTouches[0].clientY - elmnt.offsetTop + window.scrollY;
+	var start_top = e.type == "mousedown" ? e.clientY - elmnt.offsetTop : e.targetTouches[0].clientY - elmnt.offsetTop;
 
 	document.onmouseup = closeDragElement;
 	elmnt.addEventListener("touchend", closeDragElement);
@@ -351,7 +351,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    }
 	    
 	    const new_left = e.type == "mousemove" ? e.clientX - start_left : e.targetTouches[0].clientX - start_left;
-	    const new_top = e.type == "mousemove" ? e.clientY - start_top + window.scrollY : e.targetTouches[0].clientY - start_top + window.scrollY;
+	    const new_top = e.type == "mousemove" ? e.clientY - start_top : e.targetTouches[0].clientY - start_top;
 
 	    // set the element's new position:
 	    elmnt.style.top = new_top + "px";
