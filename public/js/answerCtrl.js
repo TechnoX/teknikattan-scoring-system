@@ -238,7 +238,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	}
 	
 	let eventX = e.type == "mousedown" ? e.clientX - wrapper.offsetLeft : e.targetTouches[0].clientX - wrapper.offsetLeft;
-	let eventY = e.type == "mousedown" ? e.clientY - wrapper.offsetTop + window.scrollY : e.targetTouches[0].clientY - wrapper.offsetTop + window.scrollY;
+	let eventY = e.type == "mousedown" ? e.clientY - wrapper.offsetTop : e.targetTouches[0].clientY - wrapper.offsetTop;
 	
 	let lineEl = document.createElementNS('http://www.w3.org/2000/svg','line');
 	currentLine = lineEl;
@@ -259,7 +259,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
     function drawMove(e){
 	if (!drag || currentLine == null) return;
 	let eventX = e.type == "mousemove" ? e.clientX - wrapper.offsetLeft : e.targetTouches[0].clientX - wrapper.offsetLeft;
-	let eventY = e.type == "mousemove" ? e.clientY - wrapper.offsetTop + window.scrollY : e.targetTouches[0].clientY - wrapper.offsetTop + window.scrollY;
+	let eventY = e.type == "mousemove" ? e.clientY - wrapper.offsetTop : e.targetTouches[0].clientY - wrapper.offsetTop;
 	currentLine.setAttribute("x2", eventX);
 	currentLine.setAttribute("y2", eventY);
     }
@@ -271,8 +271,9 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    sources.splice(sources.length - 1, 1);
 	    drag = false;
 	}
-	let targetHook = e.type == "mouseup" ? e.target : document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-
+	var x = e.changedTouches[0].clientX - window.scrollX;
+	var y = e.changedTouches[0].clientY - window.scrollY;
+	let targetHook = e.type == "mouseup" ? e.target : document.elementFromPoint(x, y);
 	let alreadyExists = false;
 	for(var i = 0; i < sources.length; i++){
 	    // If this very same line with start and end already exists

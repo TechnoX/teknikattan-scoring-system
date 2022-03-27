@@ -2,6 +2,21 @@ html, body, body > div{
     font-family: "Verdana", sans-serif;
     height: 100%;
 }
+
+html {
+  position: fixed;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 a {
     cursor: pointer;
 }
