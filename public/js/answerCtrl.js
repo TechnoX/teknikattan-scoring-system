@@ -61,7 +61,16 @@ app.directive('setFocus', function($timeout, $parse) {
     };
 });
 
-
+app.directive('myTouchstart', ["$parse", function($parse) {
+    return function(scope, element, attr) {	
+        element.on('touchstart', function(event) {
+	    var touchHandler = $parse(attr.myTouchstart);
+	    scope.$apply(function() {
+                touchHandler(scope, {$event: event});
+            });
+        });
+    };
+}]);
 
 app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', function($scope, $http, $routeParams, $timeout){
     var socket = io();
@@ -324,13 +333,15 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	if($scope.timesUp) return;
 	
 	// get the mouse cursor position at startup:
-	var start_left = e.clientX - elmnt.offsetLeft;
-	var start_top = e.clientY - elmnt.offsetTop;
-	
-	document.onmouseup = closeDragElement;
-	// call a function whenever the cursor moves:
-	document.onmousemove = elementDrag;
+	var start_left = e.type == "mousemove" ? e.clientX - elmnt.offsetLeft : e.targetTouches[0].clientX - elmnt.offsetLeft;
+	var start_top = e.type == "mousemove" ? e.clientY - elmnt.offsetTop + window.scrollY : e.targetTouches[0].clientY - elmnt.offsetTop + window.scrollY;
 
+	//document.onmouseup = closeDragElement;
+	elmnt.addEventListener("touchend", closeDragElement);
+	// call a function whenever the cursor moves:
+	//document.onmousemove = elementDrag;
+	elmnt.addEventListener("touchmove", elementDrag);
+	
 	function elementDrag(e) {
 	    e = e || window.event;
 	    e.preventDefault();
@@ -339,18 +350,15 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 		return;
 	    }
 	    
-	    
-	    const new_left = e.clientX - start_left;
-	    const new_top = e.clientY - start_top;
+	    const new_left = e.type == "mousemove" ? e.clientX - start_left : e.targetTouches[0].clientX - start_left;
+	    const new_top = e.type == "mousemove" ? e.clientY - start_top + window.scrollY : e.targetTouches[0].clientY - start_top + window.scrollY;
+	    //console.log(new_left);
 	    // set the element's new position:
 	    elmnt.style.top = new_top + "px";
 	    elmnt.style.left = new_left + "px";
 	    if (new_top > 300){
 		elmnt.classList.remove("hunged");
-		const parts = elmnt.innerHTML.split(" ");
-		if (parts.length > 1){
-		    elmnt.innerHTML = parts[1];
-		}
+		elmnt.firstChild.textContent = ""; // Remove the order number
 	    }else{
 		elmnt.classList.add("hunged");
 	    }
@@ -363,12 +371,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    }
 	    hunged.sort((a,b) => a[0] - b[0])
 	    hunged.forEach(function (el, index) {
-		var parts = el[1].innerHTML.split(" ");
-		if (parts.length > 1){
-		    el[1].innerHTML = (index+1) + " " + parts[1];
-		}else{
-		    el[1].innerHTML = (index+1) + " " + parts[0];
-		}
+		el[1].firstChild.textContent = index+1;
 	    });
 
 	    
@@ -378,17 +381,16 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    // stop moving when mouse button is released:
 	    document.onmouseup = null;
 	    document.onmousemove = null;
+	    elmnt.removeEventListener("touchend", closeDragElement);
+	    elmnt.removeEventListener("touchmove", elementDrag);
 	    saveClothes();
 	}
     }
     function saveClothes(){
 	$scope.$applyAsync(function () {
 	    var answer = [];
-	    for (el of document.getElementsByClassName("clothespin")){
-		const parts = el.innerHTML.split(" ");
-		if (parts.length > 1){
-		    answer.push(el.innerHTML+"⇔"+el.offsetLeft+"x"+el.offsetTop);
-		}
+	    for (el of document.getElementsByClassName("hunged")){
+		answer.push(el.firstChild.textContent + " " + el.lastChild.innerHTML+"⇔"+el.offsetLeft+"x"+el.offsetTop);
             }
             $scope.team.answers[$scope.view.number] = answer;
         });
@@ -401,7 +403,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 		var parts = $scope.team.answers[$scope.view.number][i].split("⇔");
 		var alt = parts[0].split(" ");
 		var coords = parts[1].split("x");
-		if(parts[0] == el.innerHTML || alt[1] == el.innerHTML){
+		if(parts[0] == el.lastChild.innerHTML || alt[1] == el.lastChild.innerHTML){
 		    found = true;
 		    break;
 		}
@@ -409,7 +411,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 
 	    if(found){
 		el.classList.add("hunged");
-		el.innerHTML = parts[0];
+		el.firstChild.textContent = alt[0];
 		// update top and left position
 		el.style.top = coords[1] +"px";
 		el.style.left = coords[0] +"px";
