@@ -271,9 +271,14 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	    sources.splice(sources.length - 1, 1);
 	    drag = false;
 	}
-	var x = e.changedTouches[0].clientX - window.scrollX;
-	var y = e.changedTouches[0].clientY - window.scrollY;
-	let targetHook = e.type == "mouseup" ? e.target : document.elementFromPoint(x, y);
+	let targetHook = null;
+	if (e.type == "mouseup"){
+	    targetHook = e.target;
+	}else{
+	    var x = e.changedTouches[0].clientX - window.scrollX;
+	    var y = e.changedTouches[0].clientY - window.scrollY;
+	    let targetHook = document.elementFromPoint(x, y);
+	}
 	let alreadyExists = false;
 	for(var i = 0; i < sources.length; i++){
 	    // If this very same line with start and end already exists
