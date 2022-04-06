@@ -277,7 +277,7 @@ app.controller('answerCtrl', ['$scope', '$http', '$routeParams', '$timeout', fun
 	}else{
 	    var x = e.changedTouches[0].clientX - window.scrollX;
 	    var y = e.changedTouches[0].clientY - window.scrollY;
-	    let targetHook = document.elementFromPoint(x, y);
+	    targetHook = document.elementFromPoint(x, y);
 	}
 	let alreadyExists = false;
 	for(var i = 0; i < sources.length; i++){
