@@ -77,11 +77,13 @@ exports.get_slide = function(competition_id, offset = 0, callback){
 
 exports.get_index = function(competition_id, callback){
     database.collection('competitions').findOne({_id: ObjectID(competition_id)}, function(err, result) {
-	if (err){
-	    return callback(err);
-	}else{
+	      if (err){
+	          return callback(err);
+	      }else if(!result){// If competition_id is not valid (probably empty)
+            return callback(true);
+        }else{
             return callback(err, result.index);
-	}
+	      }
     });
 }
 
